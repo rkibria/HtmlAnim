@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="Description" content="Generated with HtmlAnim">
+<title>HtmlAnim</title>
+</head>
+<body>
+
+<h1>HtmlAnim - HTML animation library</h1>
+<p>
+Github project: <a href="https://github.com/rkibria/HtmlAnim">https://github.com/rkibria/HtmlAnim</a>
+</p>
+
+<canvas id='anim_canvas_1' width='400' height='300'></canvas>
+<script>
+<!--
+var frame_counter = 0;
+const num_frames = 2;
+var canvas = document.getElementById('anim_canvas_1');
+var wait_counter = 0;
+var num_wait_frames = 20;
+
+function rect(ctx, x, y, w, h, fill) {
+	ctx.beginPath();
+	ctx.rect(x, y, w, h);
+	if(fill)
+		ctx.fill();
+	else
+		ctx.stroke();
+}
+
+function text(ctx, x, y, txt, fill) {
+	ctx.beginPath();
+	if(fill)
+		ctx.fillText(txt, x, y);
+	else
+		ctx.strokeText(txt, x, y);
+}
+
+frames = [
+(function(ctx) {
+text(ctx, 30, 25, `Frame ${frame_counter + 1}/${num_frames}`, true);
+rect(ctx, 10, 5, 30, 40, false);
+rect(ctx, 30, 25, 80, 50, true);
+text(ctx, 30, 99, `This is text!`, true);
+}),
+(function(ctx) {
+text(ctx, 30, 25, `Frame ${frame_counter + 1}/${num_frames}`, true);
+rect(ctx, 50, 50, 90, 60, false);
+rect(ctx, 10, 40, 30, 70, true);
+}),
+];
+
+window.onload = function() {
+	ctx = canvas.getContext('2d'),
+	(function drawFrame () {
+		window.requestAnimationFrame(drawFrame, canvas);
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		(frames[frame_counter])(ctx);
+		wait_counter = (num_wait_frames == 0) ? 0 : ((wait_counter + 1) % num_wait_frames);
+		if(wait_counter == 0)
+			frame_counter = (frame_counter + 1) % num_frames;
+	}());
+}
+
+//-->
+</script>
+<noscript>JavaScript is required to display this content.</noscript>
+
+<hr>
+<small>Generated with HtmlAnim</small>
+
+
+</body>
+</html>
