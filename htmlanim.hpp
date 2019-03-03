@@ -17,8 +17,11 @@ public:
 
 using DrawableVector = std::vector<std::unique_ptr<Drawable>>;
 
-struct Frame {
+class Frame {
 	DrawableVector dwbl_vec;
+public:
+	Frame() {}
+	auto& get_dwbl_vec() {return dwbl_vec;}
 };
 
 using FrameVector = std::vector<std::unique_ptr<Frame>>;
@@ -90,7 +93,7 @@ private:
 	FrameVector frame_vec;
 
 	void add_drawable(std::unique_ptr<Drawable>&& dwbl) {
-		frame_vec.back()->dwbl_vec.emplace_back(std::move(dwbl));}
+		frame_vec.back()->get_dwbl_vec().emplace_back(std::move(dwbl));}
 
 	void write_header(std::ostream& os) const;
 	void write_canvas(std::ostream& os) const;
@@ -162,7 +165,7 @@ void HtmlAnim::write_frames(std::ostream& os) const {
 	for(size_t frame_i = 0; frame_i < frame_vec.size(); ++frame_i) {
 		os << "(function(ctx) {\n";
 
-		for(auto& cur_drw : frame_vec[frame_i]->dwbl_vec) {
+		for(auto& cur_drw : frame_vec[frame_i]->get_dwbl_vec()) {
 			cur_drw->draw(os);
 		}
 
