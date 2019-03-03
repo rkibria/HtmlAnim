@@ -6,7 +6,7 @@
 
 namespace HtmlAnim {
 
-using CoordType = int;
+using CoordType = double;
 using SizeType = unsigned int;
 
 class Drawable {
@@ -24,11 +24,10 @@ struct Frame {
 using FrameVector = std::vector<std::unique_ptr<Frame>>;
 
 class Rectangle : public Drawable {
-	CoordType x, y;
-	SizeType w, h;
+	CoordType x, y, w, h;
 	bool fill;
 public:
-	explicit Rectangle(CoordType x, CoordType y, SizeType w, SizeType h, bool fill)
+	explicit Rectangle(CoordType x, CoordType y, CoordType w, CoordType h, bool fill)
 		: x{x}, y(y), w(w), h(h), fill(fill) {}
 	virtual void draw(std::ostream& os) const override {
 		os << "rect(ctx, " << x << ", " << y << ", " << w << ", " << h << ", " << (fill ? "true" : "false") << ");\n";
@@ -65,7 +64,7 @@ public:
 	auto get_num_frames() const {return frame_vec.size();}
 	void next_frame() {frame_vec.emplace_back(std::make_unique<Frame>());}
 
-	void rectangle(CoordType x, CoordType y, SizeType w, SizeType h, bool fill=false)
+	void rectangle(CoordType x, CoordType y, CoordType w, CoordType h, bool fill=false)
 		{add_drawable(std::make_unique<Rectangle>(x, y, w, h, fill));}
 
 	void text(CoordType x, CoordType y, std::string txt, bool fill=true)

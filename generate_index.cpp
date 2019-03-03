@@ -26,7 +26,7 @@ int main() {
 )");
 
 	auto marker = [&anim](auto x, auto y) {
-		anim.rectangle(static_cast<int>(x), static_cast<int>(y), 10, 10);
+		anim.rectangle(x, y, 10, 10);
 	};
 
 	for(int i = 0; i < 20; ++i) {
