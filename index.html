@@ -36,366 +36,373 @@ function text(ctx, x, y, txt, fill) {
 		ctx.strokeText(txt, x, y);
 }
 
+function draw_bkgnd(ctx) {
+}
+
+function draw_frgnd(ctx) {
+text(ctx, 10, 10, `Frame ${frame_counter + 1}/${num_frames}`, true);
+}
+
 frames = [
 (function(ctx) {
-rect(ctx, 10, 10, 40, 40, false);
-rect(ctx, 70, 10, 40, 40, true);
-rect(ctx, 70, 70, 40, 40, false);
+rect(ctx, 10, 15, 40, 40, false);
+rect(ctx, 70, 15, 40, 40, true);
+rect(ctx, 70, 75, 40, 40, false);
+rect(ctx, 10, 75, 40, 40, true);
+}),
+(function(ctx) {
+rect(ctx, 11, 15, 40, 40, false);
+rect(ctx, 70, 16, 40, 40, true);
+rect(ctx, 69, 75, 40, 40, false);
+rect(ctx, 10, 74, 40, 40, true);
+}),
+(function(ctx) {
+rect(ctx, 12, 15, 40, 40, false);
+rect(ctx, 70, 17, 40, 40, true);
+rect(ctx, 68, 75, 40, 40, false);
+rect(ctx, 10, 73, 40, 40, true);
+}),
+(function(ctx) {
+rect(ctx, 13, 15, 40, 40, false);
+rect(ctx, 70, 18, 40, 40, true);
+rect(ctx, 67, 75, 40, 40, false);
+rect(ctx, 10, 72, 40, 40, true);
+}),
+(function(ctx) {
+rect(ctx, 14, 15, 40, 40, false);
+rect(ctx, 70, 19, 40, 40, true);
+rect(ctx, 66, 75, 40, 40, false);
+rect(ctx, 10, 71, 40, 40, true);
+}),
+(function(ctx) {
+rect(ctx, 15, 15, 40, 40, false);
+rect(ctx, 70, 20, 40, 40, true);
+rect(ctx, 65, 75, 40, 40, false);
 rect(ctx, 10, 70, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 11, 10, 40, 40, false);
-rect(ctx, 70, 11, 40, 40, true);
-rect(ctx, 69, 70, 40, 40, false);
+rect(ctx, 16, 15, 40, 40, false);
+rect(ctx, 70, 21, 40, 40, true);
+rect(ctx, 64, 75, 40, 40, false);
 rect(ctx, 10, 69, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 12, 10, 40, 40, false);
-rect(ctx, 70, 12, 40, 40, true);
-rect(ctx, 68, 70, 40, 40, false);
+rect(ctx, 17, 15, 40, 40, false);
+rect(ctx, 70, 22, 40, 40, true);
+rect(ctx, 63, 75, 40, 40, false);
 rect(ctx, 10, 68, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 13, 10, 40, 40, false);
-rect(ctx, 70, 13, 40, 40, true);
-rect(ctx, 67, 70, 40, 40, false);
+rect(ctx, 18, 15, 40, 40, false);
+rect(ctx, 70, 23, 40, 40, true);
+rect(ctx, 62, 75, 40, 40, false);
 rect(ctx, 10, 67, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 14, 10, 40, 40, false);
-rect(ctx, 70, 14, 40, 40, true);
-rect(ctx, 66, 70, 40, 40, false);
+rect(ctx, 19, 15, 40, 40, false);
+rect(ctx, 70, 24, 40, 40, true);
+rect(ctx, 61, 75, 40, 40, false);
 rect(ctx, 10, 66, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 15, 10, 40, 40, false);
-rect(ctx, 70, 15, 40, 40, true);
-rect(ctx, 65, 70, 40, 40, false);
+rect(ctx, 20, 15, 40, 40, false);
+rect(ctx, 70, 25, 40, 40, true);
+rect(ctx, 60, 75, 40, 40, false);
 rect(ctx, 10, 65, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 16, 10, 40, 40, false);
-rect(ctx, 70, 16, 40, 40, true);
-rect(ctx, 64, 70, 40, 40, false);
+rect(ctx, 21, 15, 40, 40, false);
+rect(ctx, 70, 26, 40, 40, true);
+rect(ctx, 59, 75, 40, 40, false);
 rect(ctx, 10, 64, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 17, 10, 40, 40, false);
-rect(ctx, 70, 17, 40, 40, true);
-rect(ctx, 63, 70, 40, 40, false);
+rect(ctx, 22, 15, 40, 40, false);
+rect(ctx, 70, 27, 40, 40, true);
+rect(ctx, 58, 75, 40, 40, false);
 rect(ctx, 10, 63, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 18, 10, 40, 40, false);
-rect(ctx, 70, 18, 40, 40, true);
-rect(ctx, 62, 70, 40, 40, false);
+rect(ctx, 23, 15, 40, 40, false);
+rect(ctx, 70, 28, 40, 40, true);
+rect(ctx, 57, 75, 40, 40, false);
 rect(ctx, 10, 62, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 19, 10, 40, 40, false);
-rect(ctx, 70, 19, 40, 40, true);
-rect(ctx, 61, 70, 40, 40, false);
+rect(ctx, 24, 15, 40, 40, false);
+rect(ctx, 70, 29, 40, 40, true);
+rect(ctx, 56, 75, 40, 40, false);
 rect(ctx, 10, 61, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 20, 10, 40, 40, false);
-rect(ctx, 70, 20, 40, 40, true);
-rect(ctx, 60, 70, 40, 40, false);
+rect(ctx, 25, 15, 40, 40, false);
+rect(ctx, 70, 30, 40, 40, true);
+rect(ctx, 55, 75, 40, 40, false);
 rect(ctx, 10, 60, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 21, 10, 40, 40, false);
-rect(ctx, 70, 21, 40, 40, true);
-rect(ctx, 59, 70, 40, 40, false);
+rect(ctx, 26, 15, 40, 40, false);
+rect(ctx, 70, 31, 40, 40, true);
+rect(ctx, 54, 75, 40, 40, false);
 rect(ctx, 10, 59, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 22, 10, 40, 40, false);
-rect(ctx, 70, 22, 40, 40, true);
-rect(ctx, 58, 70, 40, 40, false);
+rect(ctx, 27, 15, 40, 40, false);
+rect(ctx, 70, 32, 40, 40, true);
+rect(ctx, 53, 75, 40, 40, false);
 rect(ctx, 10, 58, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 23, 10, 40, 40, false);
-rect(ctx, 70, 23, 40, 40, true);
-rect(ctx, 57, 70, 40, 40, false);
+rect(ctx, 28, 15, 40, 40, false);
+rect(ctx, 70, 33, 40, 40, true);
+rect(ctx, 52, 75, 40, 40, false);
 rect(ctx, 10, 57, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 24, 10, 40, 40, false);
-rect(ctx, 70, 24, 40, 40, true);
-rect(ctx, 56, 70, 40, 40, false);
+rect(ctx, 29, 15, 40, 40, false);
+rect(ctx, 70, 34, 40, 40, true);
+rect(ctx, 51, 75, 40, 40, false);
 rect(ctx, 10, 56, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 25, 10, 40, 40, false);
-rect(ctx, 70, 25, 40, 40, true);
-rect(ctx, 55, 70, 40, 40, false);
+rect(ctx, 30, 15, 40, 40, false);
+rect(ctx, 70, 35, 40, 40, true);
+rect(ctx, 50, 75, 40, 40, false);
 rect(ctx, 10, 55, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 26, 10, 40, 40, false);
-rect(ctx, 70, 26, 40, 40, true);
-rect(ctx, 54, 70, 40, 40, false);
+rect(ctx, 31, 15, 40, 40, false);
+rect(ctx, 70, 36, 40, 40, true);
+rect(ctx, 49, 75, 40, 40, false);
 rect(ctx, 10, 54, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 27, 10, 40, 40, false);
-rect(ctx, 70, 27, 40, 40, true);
-rect(ctx, 53, 70, 40, 40, false);
+rect(ctx, 32, 15, 40, 40, false);
+rect(ctx, 70, 37, 40, 40, true);
+rect(ctx, 48, 75, 40, 40, false);
 rect(ctx, 10, 53, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 28, 10, 40, 40, false);
-rect(ctx, 70, 28, 40, 40, true);
-rect(ctx, 52, 70, 40, 40, false);
+rect(ctx, 33, 15, 40, 40, false);
+rect(ctx, 70, 38, 40, 40, true);
+rect(ctx, 47, 75, 40, 40, false);
 rect(ctx, 10, 52, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 29, 10, 40, 40, false);
-rect(ctx, 70, 29, 40, 40, true);
-rect(ctx, 51, 70, 40, 40, false);
+rect(ctx, 34, 15, 40, 40, false);
+rect(ctx, 70, 39, 40, 40, true);
+rect(ctx, 46, 75, 40, 40, false);
 rect(ctx, 10, 51, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 30, 10, 40, 40, false);
-rect(ctx, 70, 30, 40, 40, true);
-rect(ctx, 50, 70, 40, 40, false);
+rect(ctx, 35, 15, 40, 40, false);
+rect(ctx, 70, 40, 40, 40, true);
+rect(ctx, 45, 75, 40, 40, false);
 rect(ctx, 10, 50, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 31, 10, 40, 40, false);
-rect(ctx, 70, 31, 40, 40, true);
-rect(ctx, 49, 70, 40, 40, false);
+rect(ctx, 36, 15, 40, 40, false);
+rect(ctx, 70, 41, 40, 40, true);
+rect(ctx, 44, 75, 40, 40, false);
 rect(ctx, 10, 49, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 32, 10, 40, 40, false);
-rect(ctx, 70, 32, 40, 40, true);
-rect(ctx, 48, 70, 40, 40, false);
+rect(ctx, 37, 15, 40, 40, false);
+rect(ctx, 70, 42, 40, 40, true);
+rect(ctx, 43, 75, 40, 40, false);
 rect(ctx, 10, 48, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 33, 10, 40, 40, false);
-rect(ctx, 70, 33, 40, 40, true);
-rect(ctx, 47, 70, 40, 40, false);
+rect(ctx, 38, 15, 40, 40, false);
+rect(ctx, 70, 43, 40, 40, true);
+rect(ctx, 42, 75, 40, 40, false);
 rect(ctx, 10, 47, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 34, 10, 40, 40, false);
-rect(ctx, 70, 34, 40, 40, true);
-rect(ctx, 46, 70, 40, 40, false);
+rect(ctx, 39, 15, 40, 40, false);
+rect(ctx, 70, 44, 40, 40, true);
+rect(ctx, 41, 75, 40, 40, false);
 rect(ctx, 10, 46, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 35, 10, 40, 40, false);
-rect(ctx, 70, 35, 40, 40, true);
-rect(ctx, 45, 70, 40, 40, false);
+rect(ctx, 40, 15, 40, 40, false);
+rect(ctx, 70, 45, 40, 40, true);
+rect(ctx, 40, 75, 40, 40, false);
 rect(ctx, 10, 45, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 36, 10, 40, 40, false);
-rect(ctx, 70, 36, 40, 40, true);
-rect(ctx, 44, 70, 40, 40, false);
+rect(ctx, 41, 15, 40, 40, false);
+rect(ctx, 70, 46, 40, 40, true);
+rect(ctx, 39, 75, 40, 40, false);
 rect(ctx, 10, 44, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 37, 10, 40, 40, false);
-rect(ctx, 70, 37, 40, 40, true);
-rect(ctx, 43, 70, 40, 40, false);
+rect(ctx, 42, 15, 40, 40, false);
+rect(ctx, 70, 47, 40, 40, true);
+rect(ctx, 38, 75, 40, 40, false);
 rect(ctx, 10, 43, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 38, 10, 40, 40, false);
-rect(ctx, 70, 38, 40, 40, true);
-rect(ctx, 42, 70, 40, 40, false);
+rect(ctx, 43, 15, 40, 40, false);
+rect(ctx, 70, 48, 40, 40, true);
+rect(ctx, 37, 75, 40, 40, false);
 rect(ctx, 10, 42, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 39, 10, 40, 40, false);
-rect(ctx, 70, 39, 40, 40, true);
-rect(ctx, 41, 70, 40, 40, false);
+rect(ctx, 44, 15, 40, 40, false);
+rect(ctx, 70, 49, 40, 40, true);
+rect(ctx, 36, 75, 40, 40, false);
 rect(ctx, 10, 41, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 40, 10, 40, 40, false);
-rect(ctx, 70, 40, 40, 40, true);
-rect(ctx, 40, 70, 40, 40, false);
+rect(ctx, 45, 15, 40, 40, false);
+rect(ctx, 70, 50, 40, 40, true);
+rect(ctx, 35, 75, 40, 40, false);
 rect(ctx, 10, 40, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 41, 10, 40, 40, false);
-rect(ctx, 70, 41, 40, 40, true);
-rect(ctx, 39, 70, 40, 40, false);
+rect(ctx, 46, 15, 40, 40, false);
+rect(ctx, 70, 51, 40, 40, true);
+rect(ctx, 34, 75, 40, 40, false);
 rect(ctx, 10, 39, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 42, 10, 40, 40, false);
-rect(ctx, 70, 42, 40, 40, true);
-rect(ctx, 38, 70, 40, 40, false);
+rect(ctx, 47, 15, 40, 40, false);
+rect(ctx, 70, 52, 40, 40, true);
+rect(ctx, 33, 75, 40, 40, false);
 rect(ctx, 10, 38, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 43, 10, 40, 40, false);
-rect(ctx, 70, 43, 40, 40, true);
-rect(ctx, 37, 70, 40, 40, false);
+rect(ctx, 48, 15, 40, 40, false);
+rect(ctx, 70, 53, 40, 40, true);
+rect(ctx, 32, 75, 40, 40, false);
 rect(ctx, 10, 37, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 44, 10, 40, 40, false);
-rect(ctx, 70, 44, 40, 40, true);
-rect(ctx, 36, 70, 40, 40, false);
+rect(ctx, 49, 15, 40, 40, false);
+rect(ctx, 70, 54, 40, 40, true);
+rect(ctx, 31, 75, 40, 40, false);
 rect(ctx, 10, 36, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 45, 10, 40, 40, false);
-rect(ctx, 70, 45, 40, 40, true);
-rect(ctx, 35, 70, 40, 40, false);
+rect(ctx, 50, 15, 40, 40, false);
+rect(ctx, 70, 55, 40, 40, true);
+rect(ctx, 30, 75, 40, 40, false);
 rect(ctx, 10, 35, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 46, 10, 40, 40, false);
-rect(ctx, 70, 46, 40, 40, true);
-rect(ctx, 34, 70, 40, 40, false);
+rect(ctx, 51, 15, 40, 40, false);
+rect(ctx, 70, 56, 40, 40, true);
+rect(ctx, 29, 75, 40, 40, false);
 rect(ctx, 10, 34, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 47, 10, 40, 40, false);
-rect(ctx, 70, 47, 40, 40, true);
-rect(ctx, 33, 70, 40, 40, false);
+rect(ctx, 52, 15, 40, 40, false);
+rect(ctx, 70, 57, 40, 40, true);
+rect(ctx, 28, 75, 40, 40, false);
 rect(ctx, 10, 33, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 48, 10, 40, 40, false);
-rect(ctx, 70, 48, 40, 40, true);
-rect(ctx, 32, 70, 40, 40, false);
+rect(ctx, 53, 15, 40, 40, false);
+rect(ctx, 70, 58, 40, 40, true);
+rect(ctx, 27, 75, 40, 40, false);
 rect(ctx, 10, 32, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 49, 10, 40, 40, false);
-rect(ctx, 70, 49, 40, 40, true);
-rect(ctx, 31, 70, 40, 40, false);
+rect(ctx, 54, 15, 40, 40, false);
+rect(ctx, 70, 59, 40, 40, true);
+rect(ctx, 26, 75, 40, 40, false);
 rect(ctx, 10, 31, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 50, 10, 40, 40, false);
-rect(ctx, 70, 50, 40, 40, true);
-rect(ctx, 30, 70, 40, 40, false);
+rect(ctx, 55, 15, 40, 40, false);
+rect(ctx, 70, 60, 40, 40, true);
+rect(ctx, 25, 75, 40, 40, false);
 rect(ctx, 10, 30, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 51, 10, 40, 40, false);
-rect(ctx, 70, 51, 40, 40, true);
-rect(ctx, 29, 70, 40, 40, false);
+rect(ctx, 56, 15, 40, 40, false);
+rect(ctx, 70, 61, 40, 40, true);
+rect(ctx, 24, 75, 40, 40, false);
 rect(ctx, 10, 29, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 52, 10, 40, 40, false);
-rect(ctx, 70, 52, 40, 40, true);
-rect(ctx, 28, 70, 40, 40, false);
+rect(ctx, 57, 15, 40, 40, false);
+rect(ctx, 70, 62, 40, 40, true);
+rect(ctx, 23, 75, 40, 40, false);
 rect(ctx, 10, 28, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 53, 10, 40, 40, false);
-rect(ctx, 70, 53, 40, 40, true);
-rect(ctx, 27, 70, 40, 40, false);
+rect(ctx, 58, 15, 40, 40, false);
+rect(ctx, 70, 63, 40, 40, true);
+rect(ctx, 22, 75, 40, 40, false);
 rect(ctx, 10, 27, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 54, 10, 40, 40, false);
-rect(ctx, 70, 54, 40, 40, true);
-rect(ctx, 26, 70, 40, 40, false);
+rect(ctx, 59, 15, 40, 40, false);
+rect(ctx, 70, 64, 40, 40, true);
+rect(ctx, 21, 75, 40, 40, false);
 rect(ctx, 10, 26, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 55, 10, 40, 40, false);
-rect(ctx, 70, 55, 40, 40, true);
-rect(ctx, 25, 70, 40, 40, false);
+rect(ctx, 60, 15, 40, 40, false);
+rect(ctx, 70, 65, 40, 40, true);
+rect(ctx, 20, 75, 40, 40, false);
 rect(ctx, 10, 25, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 56, 10, 40, 40, false);
-rect(ctx, 70, 56, 40, 40, true);
-rect(ctx, 24, 70, 40, 40, false);
+rect(ctx, 61, 15, 40, 40, false);
+rect(ctx, 70, 66, 40, 40, true);
+rect(ctx, 19, 75, 40, 40, false);
 rect(ctx, 10, 24, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 57, 10, 40, 40, false);
-rect(ctx, 70, 57, 40, 40, true);
-rect(ctx, 23, 70, 40, 40, false);
+rect(ctx, 62, 15, 40, 40, false);
+rect(ctx, 70, 67, 40, 40, true);
+rect(ctx, 18, 75, 40, 40, false);
 rect(ctx, 10, 23, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 58, 10, 40, 40, false);
-rect(ctx, 70, 58, 40, 40, true);
-rect(ctx, 22, 70, 40, 40, false);
+rect(ctx, 63, 15, 40, 40, false);
+rect(ctx, 70, 68, 40, 40, true);
+rect(ctx, 17, 75, 40, 40, false);
 rect(ctx, 10, 22, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 59, 10, 40, 40, false);
-rect(ctx, 70, 59, 40, 40, true);
-rect(ctx, 21, 70, 40, 40, false);
+rect(ctx, 64, 15, 40, 40, false);
+rect(ctx, 70, 69, 40, 40, true);
+rect(ctx, 16, 75, 40, 40, false);
 rect(ctx, 10, 21, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 60, 10, 40, 40, false);
-rect(ctx, 70, 60, 40, 40, true);
-rect(ctx, 20, 70, 40, 40, false);
+rect(ctx, 65, 15, 40, 40, false);
+rect(ctx, 70, 70, 40, 40, true);
+rect(ctx, 15, 75, 40, 40, false);
 rect(ctx, 10, 20, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 61, 10, 40, 40, false);
-rect(ctx, 70, 61, 40, 40, true);
-rect(ctx, 19, 70, 40, 40, false);
+rect(ctx, 66, 15, 40, 40, false);
+rect(ctx, 70, 71, 40, 40, true);
+rect(ctx, 14, 75, 40, 40, false);
 rect(ctx, 10, 19, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 62, 10, 40, 40, false);
-rect(ctx, 70, 62, 40, 40, true);
-rect(ctx, 18, 70, 40, 40, false);
+rect(ctx, 67, 15, 40, 40, false);
+rect(ctx, 70, 72, 40, 40, true);
+rect(ctx, 13, 75, 40, 40, false);
 rect(ctx, 10, 18, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 63, 10, 40, 40, false);
-rect(ctx, 70, 63, 40, 40, true);
-rect(ctx, 17, 70, 40, 40, false);
+rect(ctx, 68, 15, 40, 40, false);
+rect(ctx, 70, 73, 40, 40, true);
+rect(ctx, 12, 75, 40, 40, false);
 rect(ctx, 10, 17, 40, 40, true);
 }),
 (function(ctx) {
-rect(ctx, 64, 10, 40, 40, false);
-rect(ctx, 70, 64, 40, 40, true);
-rect(ctx, 16, 70, 40, 40, false);
+rect(ctx, 69, 15, 40, 40, false);
+rect(ctx, 70, 74, 40, 40, true);
+rect(ctx, 11, 75, 40, 40, false);
 rect(ctx, 10, 16, 40, 40, true);
-}),
-(function(ctx) {
-rect(ctx, 65, 10, 40, 40, false);
-rect(ctx, 70, 65, 40, 40, true);
-rect(ctx, 15, 70, 40, 40, false);
-rect(ctx, 10, 15, 40, 40, true);
-}),
-(function(ctx) {
-rect(ctx, 66, 10, 40, 40, false);
-rect(ctx, 70, 66, 40, 40, true);
-rect(ctx, 14, 70, 40, 40, false);
-rect(ctx, 10, 14, 40, 40, true);
-}),
-(function(ctx) {
-rect(ctx, 67, 10, 40, 40, false);
-rect(ctx, 70, 67, 40, 40, true);
-rect(ctx, 13, 70, 40, 40, false);
-rect(ctx, 10, 13, 40, 40, true);
-}),
-(function(ctx) {
-rect(ctx, 68, 10, 40, 40, false);
-rect(ctx, 70, 68, 40, 40, true);
-rect(ctx, 12, 70, 40, 40, false);
-rect(ctx, 10, 12, 40, 40, true);
-}),
-(function(ctx) {
-rect(ctx, 69, 10, 40, 40, false);
-rect(ctx, 70, 69, 40, 40, true);
-rect(ctx, 11, 70, 40, 40, false);
-rect(ctx, 10, 11, 40, 40, true);
 }),
 ];
 
@@ -403,7 +410,9 @@ window.onload = function() {
 	ctx = canvas.getContext('2d'),
 	(function drawFrame () {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		draw_bkgnd(ctx);
 		(frames[frame_counter])(ctx);
+		draw_frgnd(ctx);
 		wait_counter = (num_wait_frames == 0) ? 0 : ((wait_counter + 1) % num_wait_frames);
 		if(wait_counter == 0)
 			frame_counter = (frame_counter + 1) % num_frames;
@@ -421,11 +430,12 @@ window.onload = function() {
 int main() {
 	HtmlAnim::HtmlAnim anim("Wandering rectangles", 120, 120);
 	const auto n_frames = 60;
+	anim.foreground().text(10, 10, "Frame ${frame_counter + 1}/${num_frames}");
 	for(double frame = 0; frame < n_frames; ++frame) {
-		anim.frame()->rect(10 + frame, 10, 40, 40);
-		anim.frame()->rect(10 + n_frames, 10 + frame, 40, 40, true);
-		anim.frame()->rect(10 + n_frames - frame, 10 + n_frames, 40, 40);
-		anim.frame()->rect(10, 10 + n_frames - frame, 40, 40, true);
+		anim.frame()->rect(10 + frame, 15, 40, 40);
+		anim.frame()->rect(10 + n_frames, 15 + frame, 40, 40, true);
+		anim.frame()->rect(10 + n_frames - frame, 15 + n_frames, 40, 40);
+		anim.frame()->rect(10, 15 + n_frames - frame, 40, 40, true);
 		if(frame != n_frames - 1)
 			anim.next_frame();
 	}

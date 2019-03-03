@@ -50,6 +50,8 @@ public:
 
 	void add_drawable(std::unique_ptr<Drawable>&& dwbl) {dwbl_vec.emplace_back(std::move(dwbl));}
 
+	void clear() {dwbl_vec.clear();}
+
 	void draw(std::ostream& os) const {
 		for(auto& cur_drw : dwbl_vec) {
 			cur_drw->draw(os);
@@ -73,6 +75,8 @@ public:
 		: title(title), width(width), height(height), wait_frames(wait_frames) {clear();}
 
 	void clear() {
+		bkgnd_frame.clear();
+		frgnd_frame.clear();
 		frame_vec.clear();
 		next_frame();
 	}
@@ -80,7 +84,10 @@ public:
 	void set_pre_text(const char* txt) {pre_text = txt;}
 	void set_post_text(const char* txt) {post_text = txt;}
 
+	auto& background() {return bkgnd_frame;}
+	auto& foreground() {return frgnd_frame;}
 	auto& frame() {return frame_vec.back();}
+
 	auto get_num_frames() const {return frame_vec.size();}
 	void next_frame() {frame_vec.emplace_back(std::make_unique<Frame>());}
 
@@ -100,11 +107,14 @@ private:
 
 	FrameVector frame_vec;
 
+	Frame bkgnd_frame, frgnd_frame;
+
 	void write_header(std::ostream& os) const;
 	void write_canvas(std::ostream& os) const;
 
 	void write_script(std::ostream& os) const;
 	void write_definitions(std::ostream& os) const;
+	void write_back_and_foreground(std::ostream& os) const;
 	void write_frames(std::ostream& os) const;
 
 	void write_footer(std::ostream& os) const;
@@ -143,6 +153,8 @@ void HtmlAnim::write_script(std::ostream& os) const {
 	os << "var num_wait_frames = " << wait_frames << ";\n";
 
 	write_definitions(os);
+
+	write_back_and_foreground(os);
 	write_frames(os);
 
 	os << R"(
@@ -150,7 +162,9 @@ window.onload = function() {
 	ctx = canvas.getContext('2d'),
 	(function drawFrame () {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		draw_bkgnd(ctx);
 		(frames[frame_counter])(ctx);
+		draw_frgnd(ctx);
 		wait_counter = (num_wait_frames == 0) ? 0 : ((wait_counter + 1) % num_wait_frames);
 		if(wait_counter == 0)
 			frame_counter = (frame_counter + 1) % num_frames;
@@ -162,6 +176,16 @@ window.onload = function() {
 </script>
 <noscript>JavaScript is required to display this content.</noscript>
 )";
+}
+
+void HtmlAnim::write_back_and_foreground(std::ostream& os) const {
+	os << "function draw_bkgnd(ctx) {\n";
+	bkgnd_frame.draw(os);
+	os << "}\n\n";
+
+	os << "function draw_frgnd(ctx) {\n";
+	frgnd_frame.draw(os);
+	os << "}\n\n";
 }
 
 void HtmlAnim::write_frames(std::ostream& os) const {
