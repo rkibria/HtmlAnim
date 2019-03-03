@@ -432,10 +432,10 @@ int main() {
 	const auto n_frames = 60;
 	anim.foreground().text(10, 10, "Frame ${frame_counter + 1}/${num_frames}");
 	for(double frame = 0; frame < n_frames; ++frame) {
-		anim.frame()->rect(10 + frame, 15, 40, 40);
-		anim.frame()->rect(10 + n_frames, 15 + frame, 40, 40, true);
-		anim.frame()->rect(10 + n_frames - frame, 15 + n_frames, 40, 40);
-		anim.frame()->rect(10, 15 + n_frames - frame, 40, 40, true);
+		anim.frame().rect(10 + frame, 15, 40, 40);
+		anim.frame().rect(10 + n_frames, 15 + frame, 40, 40, true);
+		anim.frame().rect(10 + n_frames - frame, 15 + n_frames, 40, 40);
+		anim.frame().rect(10, 15 + n_frames - frame, 40, 40, true);
 		if(frame != n_frames - 1)
 			anim.next_frame();
 	}

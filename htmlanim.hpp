@@ -86,7 +86,7 @@ public:
 
 	auto& background() {return bkgnd_frame;}
 	auto& foreground() {return frgnd_frame;}
-	auto& frame() {return frame_vec.back();}
+	auto& frame() {return *frame_vec.back();}
 
 	auto get_num_frames() const {return frame_vec.size();}
 	void next_frame() {frame_vec.emplace_back(std::make_unique<Frame>());}
