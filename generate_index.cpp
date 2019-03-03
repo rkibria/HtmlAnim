@@ -16,10 +16,10 @@ int main() {
 	HtmlAnim::HtmlAnim anim("Wandering rectangles", 120, 120);
 	const auto n_frames = 60;
 	for(double frame = 0; frame < n_frames; ++frame) {
-		anim.rect(10 + frame, 10, 40, 40);
-		anim.rect(10 + n_frames, 10 + frame, 40, 40, true);
-		anim.rect(10 + n_frames - frame, 10 + n_frames, 40, 40);
-		anim.rect(10, 10 + n_frames - frame, 40, 40, true);
+		anim.frame()->rect(10 + frame, 10, 40, 40);
+		anim.frame()->rect(10 + n_frames, 10 + frame, 40, 40, true);
+		anim.frame()->rect(10 + n_frames - frame, 10 + n_frames, 40, 40);
+		anim.frame()->rect(10, 10 + n_frames - frame, 40, 40, true);
 		if(frame != n_frames - 1)
 			anim.next_frame();
 	}
@@ -34,13 +34,12 @@ int main() {
 
 	const auto n_frames = 60;
 	for(double frame = 0; frame < n_frames; ++frame) {
-		anim.rect(10 + frame, 10, 40, 40);
-		anim.rect(10 + n_frames, 10 + frame, 40, 40, true);
-		anim.rect(10 + n_frames - frame, 10 + n_frames, 40, 40);
-		anim.rect(10, 10 + n_frames - frame, 40, 40, true);
+		anim.frame()->rect(10 + frame, 10, 40, 40);
+		anim.frame()->rect(10 + n_frames, 10 + frame, 40, 40, true);
+		anim.frame()->rect(10 + n_frames - frame, 10 + n_frames, 40, 40);
+		anim.frame()->rect(10, 10 + n_frames - frame, 40, 40, true);
 		if(frame != n_frames - 1)
 			anim.next_frame();
 	}
-
 	anim.write_file("index.html");
 }

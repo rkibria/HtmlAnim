@@ -47,7 +47,15 @@ class Frame {
 	DrawableVector dwbl_vec;
 public:
 	Frame() {}
+
 	auto& get_dwbl_vec() {return dwbl_vec;}
+	void add_drawable(std::unique_ptr<Drawable>&& dwbl) {dwbl_vec.emplace_back(std::move(dwbl));}
+
+	void rect(CoordType x, CoordType y, CoordType w, CoordType h, bool fill=false)
+		{add_drawable(std::make_unique<Rect>(x, y, w, h, fill));}
+
+	void text(CoordType x, CoordType y, std::string txt, bool fill=true)
+		{add_drawable(std::make_unique<Text>(x, y, txt.c_str(), fill));}
 };
 
 using FrameVector = std::vector<std::unique_ptr<Frame>>;
@@ -67,14 +75,9 @@ public:
 	void set_pre_text(const char* txt) {pre_text = txt;}
 	void set_post_text(const char* txt) {post_text = txt;}
 
+	auto& frame() {return frame_vec.back();}
 	auto get_num_frames() const {return frame_vec.size();}
 	void next_frame() {frame_vec.emplace_back(std::make_unique<Frame>());}
-
-	void rect(CoordType x, CoordType y, CoordType w, CoordType h, bool fill=false)
-		{add_drawable(std::make_unique<Rect>(x, y, w, h, fill));}
-
-	void text(CoordType x, CoordType y, std::string txt, bool fill=true)
-		{add_drawable(std::make_unique<Text>(x, y, txt.c_str(), fill));}
 
 	void write_stream(std::ostream&) const;
 	void write_file(const char*) const;
@@ -91,9 +94,6 @@ private:
 	std::string canvas_name = "anim_canvas_1";
 
 	FrameVector frame_vec;
-
-	void add_drawable(std::unique_ptr<Drawable>&& dwbl) {
-		frame_vec.back()->get_dwbl_vec().emplace_back(std::move(dwbl));}
 
 	void write_header(std::ostream& os) const;
 	void write_canvas(std::ostream& os) const;
