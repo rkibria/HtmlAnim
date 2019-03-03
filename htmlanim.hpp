@@ -15,17 +15,6 @@ public:
 	virtual void draw(std::ostream&) const = 0;
 };
 
-using DrawableVector = std::vector<std::unique_ptr<Drawable>>;
-
-class Frame {
-	DrawableVector dwbl_vec;
-public:
-	Frame() {}
-	auto& get_dwbl_vec() {return dwbl_vec;}
-};
-
-using FrameVector = std::vector<std::unique_ptr<Frame>>;
-
 class Rect : public Drawable {
 	CoordType x, y, w, h;
 	bool fill;
@@ -51,6 +40,17 @@ public:
 			<< ", `" << txt << "`, " << (fill ? "true" : "false") << ");\n";
 	}
 };
+
+using DrawableVector = std::vector<std::unique_ptr<Drawable>>;
+
+class Frame {
+	DrawableVector dwbl_vec;
+public:
+	Frame() {}
+	auto& get_dwbl_vec() {return dwbl_vec;}
+};
+
+using FrameVector = std::vector<std::unique_ptr<Frame>>;
 
 class HtmlAnim {
 public:
