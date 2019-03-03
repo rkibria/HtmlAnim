@@ -23,11 +23,11 @@ struct Frame {
 
 using FrameVector = std::vector<std::unique_ptr<Frame>>;
 
-class Rectangle : public Drawable {
+class Rect : public Drawable {
 	CoordType x, y, w, h;
 	bool fill;
 public:
-	explicit Rectangle(CoordType x, CoordType y, CoordType w, CoordType h, bool fill)
+	explicit Rect(CoordType x, CoordType y, CoordType w, CoordType h, bool fill)
 		: x{x}, y(y), w(w), h(h), fill(fill) {}
 	virtual void draw(std::ostream& os) const override {
 		os << "rect(ctx, " << static_cast<int>(x)
@@ -67,8 +67,8 @@ public:
 	auto get_num_frames() const {return frame_vec.size();}
 	void next_frame() {frame_vec.emplace_back(std::make_unique<Frame>());}
 
-	void rectangle(CoordType x, CoordType y, CoordType w, CoordType h, bool fill=false)
-		{add_drawable(std::make_unique<Rectangle>(x, y, w, h, fill));}
+	void rect(CoordType x, CoordType y, CoordType w, CoordType h, bool fill=false)
+		{add_drawable(std::make_unique<Rect>(x, y, w, h, fill));}
 
 	void text(CoordType x, CoordType y, std::string txt, bool fill=true)
 		{add_drawable(std::make_unique<Text>(x, y, txt.c_str(), fill));}
@@ -141,12 +141,12 @@ void HtmlAnim::write_script(std::ostream& os) const {
 window.onload = function() {
 	ctx = canvas.getContext('2d'),
 	(function drawFrame () {
-		window.requestAnimationFrame(drawFrame, canvas);
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		(frames[frame_counter])(ctx);
 		wait_counter = (num_wait_frames == 0) ? 0 : ((wait_counter + 1) % num_wait_frames);
 		if(wait_counter == 0)
 			frame_counter = (frame_counter + 1) % num_frames;
+		window.requestAnimationFrame(drawFrame, canvas);
 	}());
 }
 
