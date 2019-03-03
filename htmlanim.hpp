@@ -30,7 +30,9 @@ public:
 	explicit Rectangle(CoordType x, CoordType y, CoordType w, CoordType h, bool fill)
 		: x{x}, y(y), w(w), h(h), fill(fill) {}
 	virtual void draw(std::ostream& os) const override {
-		os << "rect(ctx, " << x << ", " << y << ", " << w << ", " << h << ", " << (fill ? "true" : "false") << ");\n";
+		os << "rect(ctx, " << static_cast<int>(x)
+			<< ", " << static_cast<int>(y) << ", " << static_cast<int>(w)
+			<< ", " << static_cast<int>(h) << ", " << (fill ? "true" : "false") << ");\n";
 	}
 };
 
@@ -42,7 +44,8 @@ public:
 	explicit Text(CoordType x, CoordType y, const char* txt, bool fill)
 		: x{x}, y(y), txt(txt), fill(fill) {}
 	virtual void draw(std::ostream& os) const override {
-		os << "text(ctx, " << x << ", " << y << ", `" << txt << "`, " << (fill ? "true" : "false") << ");\n";
+		os << "text(ctx, " << static_cast<int>(x) << ", " << static_cast<int>(y)
+			<< ", `" << txt << "`, " << (fill ? "true" : "false") << ");\n";
 	}
 };
 
@@ -86,7 +89,8 @@ private:
 
 	FrameVector frame_vec;
 
-	void add_drawable(std::unique_ptr<Drawable>&& dwbl) {frame_vec.back()->dwbl_vec.emplace_back(std::move(dwbl));}
+	void add_drawable(std::unique_ptr<Drawable>&& dwbl) {
+		frame_vec.back()->dwbl_vec.emplace_back(std::move(dwbl));}
 
 	void write_header(std::ostream& os) const;
 	void write_canvas(std::ostream& os) const;

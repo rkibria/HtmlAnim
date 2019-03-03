@@ -26,7 +26,8 @@ int main() {
 )");
 
 	auto marker = [&anim](auto x, auto y) {
-		anim.rectangle(x, y, 10, 10);
+		anim.rectangle(x - 2, y - 2, 10, 10);
+		anim.rectangle(x, y, 10, 10, true);
 	};
 
 	for(int i = 0; i < 20; ++i) {
