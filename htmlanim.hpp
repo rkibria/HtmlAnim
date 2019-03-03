@@ -48,8 +48,13 @@ class Frame {
 public:
 	Frame() {}
 
-	auto& get_dwbl_vec() {return dwbl_vec;}
 	void add_drawable(std::unique_ptr<Drawable>&& dwbl) {dwbl_vec.emplace_back(std::move(dwbl));}
+
+	void draw(std::ostream& os) const {
+		for(auto& cur_drw : dwbl_vec) {
+			cur_drw->draw(os);
+		}
+	}
 
 	void rect(CoordType x, CoordType y, CoordType w, CoordType h, bool fill=false)
 		{add_drawable(std::make_unique<Rect>(x, y, w, h, fill));}
@@ -161,17 +166,11 @@ window.onload = function() {
 
 void HtmlAnim::write_frames(std::ostream& os) const {
 	os << "frames = [\n";
-
 	for(size_t frame_i = 0; frame_i < frame_vec.size(); ++frame_i) {
 		os << "(function(ctx) {\n";
-
-		for(auto& cur_drw : frame_vec[frame_i]->get_dwbl_vec()) {
-			cur_drw->draw(os);
-		}
-
+		frame_vec[frame_i]->draw(os);
 		os << "}),\n";
 	}
-
 	os << "];\n";
 }
 
