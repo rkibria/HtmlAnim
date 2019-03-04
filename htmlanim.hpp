@@ -129,8 +129,8 @@ class HtmlAnim {
 public:
 	HtmlAnim() {clear();}
 	explicit HtmlAnim(const char* title = "HtmlAnim",
-		SizeType width = 1024, SizeType height = 768, SizeType wait_frames = 0)
-		: title(title), width(width), height(height), wait_frames(wait_frames) {clear();}
+		SizeType width = 1024, SizeType height = 768)
+		: title{title}, width{width}, height{height} {clear();}
 
 	void clear() {
 		bkgnd_frame.clear();
@@ -141,6 +141,8 @@ public:
 
 	void set_pre_text(const char* txt) {pre_text = txt;}
 	void set_post_text(const char* txt) {post_text = txt;}
+	void set_wait_frames(SizeType waits) {wait_frames = waits;}
+	void set_no_clear(bool do_clear) {no_clear = do_clear;}
 
 	auto& background() {return bkgnd_frame;}
 	auto& foreground() {return frgnd_frame;}
@@ -156,10 +158,12 @@ private:
 	std::string title;
 	SizeType width;
 	SizeType height;
-	SizeType wait_frames;
+	SizeType wait_frames = 0;
 
 	std::string pre_text;
 	std::string post_text;
+
+	bool no_clear = false;
 
 	std::string canvas_name = "anim_canvas_1";
 
@@ -206,9 +210,9 @@ void HtmlAnim::write_script(std::ostream& os) const {
 	os << "var frame_counter = 0;\n";
 	os << "const num_frames = " << get_num_frames() << ";\n";
 	os << "var canvas = document.getElementById('" << canvas_name << "');\n";
-
 	os << "var wait_counter = 0;\n";
 	os << "var num_wait_frames = " << wait_frames << ";\n";
+	os << "var no_clear = " << (no_clear ? "true" : "false") << ";\n";
 
 	write_definitions(os);
 
@@ -219,7 +223,8 @@ void HtmlAnim::write_script(std::ostream& os) const {
 window.onload = function() {
 	ctx = canvas.getContext('2d'),
 	(function drawFrame () {
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		if(frame_counter == 0 || !no_clear)
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
 		draw_bkgnd(ctx);
 		(frames[frame_counter])(ctx);
 		draw_frgnd(ctx);

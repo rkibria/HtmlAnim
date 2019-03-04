@@ -54,6 +54,7 @@ More examples:
 
 void make_example_2() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim example 2", 800, 400);
+	anim.set_no_clear(true);
 
 	anim.set_pre_text(R"(
 <h2>Example 2</h2>
@@ -80,10 +81,8 @@ More examples:
 )");
 
 	const auto n_frames = 60;
-	anim.foreground().text(10, 10, "Frame ${frame_counter + 1}/${num_frames}");
 	for(double frame = 0; frame < n_frames; ++frame) {
 		anim.frame().line(0, 200, 400, frame * 400.0 / n_frames);
-
 		if(frame != n_frames - 1)
 			anim.next_frame();
 	}
