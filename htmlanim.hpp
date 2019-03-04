@@ -3,6 +3,7 @@
 #include <fstream>
 #include <memory>
 #include <vector>
+#include <unordered_set>
 
 namespace HtmlAnim {
 
@@ -12,6 +13,7 @@ using SizeType = unsigned int;
 class Drawable {
 public:
 	virtual ~Drawable() {}
+	virtual void define(std::ostream& os) const = 0;
 	virtual void draw(std::ostream&) const = 0;
 };
 
@@ -21,6 +23,18 @@ class Rect : public Drawable {
 public:
 	explicit Rect(CoordType x, CoordType y, CoordType w, CoordType h, bool fill)
 		: x{x}, y(y), w(w), h(h), fill(fill) {}
+	virtual void define(std::ostream& os) const override {
+		os << R"(
+function rect(ctx, x, y, w, h, fill) {
+	ctx.beginPath();
+	ctx.rect(x, y, w, h);
+	if(fill)
+		ctx.fill();
+	else
+		ctx.stroke();
+}
+)";
+	}
 	virtual void draw(std::ostream& os) const override {
 		os << "rect(ctx, " << static_cast<int>(x)
 			<< ", " << static_cast<int>(y) << ", " << static_cast<int>(w)
@@ -35,6 +49,17 @@ class Text : public Drawable {
 public:
 	explicit Text(CoordType x, CoordType y, const char* txt, bool fill)
 		: x{x}, y(y), txt(txt), fill(fill) {}
+	virtual void define(std::ostream& os) const override {
+		os << R"(
+function text(ctx, x, y, txt, fill) {
+	ctx.beginPath();
+	if(fill)
+		ctx.fillText(txt, x, y);
+	else
+		ctx.strokeText(txt, x, y);
+}
+)";
+	}
 	virtual void draw(std::ostream& os) const override {
 		os << "text(ctx, " << static_cast<int>(x) << ", " << static_cast<int>(y)
 			<< ", `" << txt << "`, " << (fill ? "true" : "false") << ");\n";
@@ -42,6 +67,7 @@ public:
 };
 
 using DrawableVector = std::vector<std::unique_ptr<Drawable>>;
+using TypeHashSet = std::unordered_set<size_t>;
 
 class Frame {
 	DrawableVector dwbl_vec;
@@ -51,6 +77,16 @@ public:
 	void add_drawable(std::unique_ptr<Drawable>&& dwbl) {dwbl_vec.emplace_back(std::move(dwbl));}
 
 	void clear() {dwbl_vec.clear();}
+
+	void define(std::ostream& os, TypeHashSet& done_defs) const {
+		for(auto& cur_drw : dwbl_vec) {
+			const auto drw_type = typeid(*cur_drw).hash_code();
+			if(done_defs.find(drw_type) == done_defs.end()) {
+				done_defs.insert(drw_type);
+				cur_drw->define(os);
+			}
+		}
+	}
 
 	void draw(std::ostream& os) const {
 		for(auto& cur_drw : dwbl_vec) {
@@ -199,25 +235,13 @@ void HtmlAnim::write_frames(std::ostream& os) const {
 }
 
 void HtmlAnim::write_definitions(std::ostream& os) const {
-	os << R"(
-function rect(ctx, x, y, w, h, fill) {
-	ctx.beginPath();
-	ctx.rect(x, y, w, h);
-	if(fill)
-		ctx.fill();
-	else
-		ctx.stroke();
-}
+	TypeHashSet done_defs;
 
-function text(ctx, x, y, txt, fill) {
-	ctx.beginPath();
-	if(fill)
-		ctx.fillText(txt, x, y);
-	else
-		ctx.strokeText(txt, x, y);
-}
-
-)";
+	bkgnd_frame.define(os, done_defs);
+	frgnd_frame.define(os, done_defs);
+	for(const auto& frm : frame_vec) {
+		frm->define(os, done_defs);
+	}
 }
 
 void HtmlAnim::write_footer(std::ostream& os) const {
