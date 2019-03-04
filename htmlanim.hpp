@@ -17,12 +17,33 @@ public:
 	virtual void draw(std::ostream&) const = 0;
 };
 
+class Line : public Drawable {
+	CoordType x1, y1, x2, y2;
+public:
+	explicit Line(CoordType x1, CoordType y1, CoordType x2, CoordType y2)
+		: x1{x1}, y1{y1}, x2{x2}, y2{y2} {}
+	virtual void define(std::ostream& os) const override {
+		os << R"(
+function line(ctx, x1, y1, x2, y2) {
+	ctx.beginPath();
+	ctx.moveTo(x1, y1);
+	ctx.lineTo(x2, y2);
+	ctx.stroke();
+}
+)";
+	}
+	virtual void draw(std::ostream& os) const override {
+		os << "line(ctx, " << static_cast<int>(x1) << ", " << static_cast<int>(y1)
+			<< ", " << static_cast<int>(x2) << ", " << static_cast<int>(y2) << ");\n";
+	}
+};
+
 class Rect : public Drawable {
 	CoordType x, y, w, h;
 	bool fill;
 public:
 	explicit Rect(CoordType x, CoordType y, CoordType w, CoordType h, bool fill)
-		: x{x}, y(y), w(w), h(h), fill(fill) {}
+		: x{x}, y{y}, w{w}, h{h}, fill{fill} {}
 	virtual void define(std::ostream& os) const override {
 		os << R"(
 function rect(ctx, x, y, w, h, fill) {
@@ -48,7 +69,7 @@ class Text : public Drawable {
 	bool fill;
 public:
 	explicit Text(CoordType x, CoordType y, const char* txt, bool fill)
-		: x{x}, y(y), txt(txt), fill(fill) {}
+		: x{x}, y{y}, txt{txt}, fill{fill} {}
 	virtual void define(std::ostream& os) const override {
 		os << R"(
 function text(ctx, x, y, txt, fill) {
@@ -94,9 +115,10 @@ public:
 		}
 	}
 
+	void line(CoordType x1, CoordType y1, CoordType x2, CoordType y2)
+		{add_drawable(std::make_unique<Line>(x1, y1, x2, y2));}
 	void rect(CoordType x, CoordType y, CoordType w, CoordType h, bool fill=false)
 		{add_drawable(std::make_unique<Rect>(x, y, w, h, fill));}
-
 	void text(CoordType x, CoordType y, std::string txt, bool fill=true)
 		{add_drawable(std::make_unique<Text>(x, y, txt.c_str(), fill));}
 };
