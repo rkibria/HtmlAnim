@@ -31,6 +31,7 @@ int main() {
 More examples:
 <ul>
 <li><a href="example2.html">Example 2 - Draw a binary tree</a></li>
+<li><a href="example3.html">Example 3 - Bubble sort visualization</a></li>
 </ul>
 </p>
 <hr>
@@ -99,12 +100,6 @@ int main() {
 	anim.write_file("binarytree.html");
 }
 </pre></p>
-<p>
-More examples:
-<ul>
-<li><a href="index.html">Example 1</a></li>
-</ul>
-</p>
 <hr>
 <p>
 <small>Github project: <a href="https://github.com/rkibria/HtmlAnim">https://github.com/rkibria/HtmlAnim</a></small>
@@ -115,7 +110,34 @@ More examples:
 	anim.write_file("example2.html");
 }
 
+void make_example_3() {
+	HtmlAnim::HtmlAnim anim("HtmlAnim example 3 - Bubble sort visualization", 600, 120);
+
+	anim.set_pre_text(R"(
+<h2>Example 3</h2>
+)");
+
+	anim.set_post_text(R"(
+<p>The animation above can be generated using this code:</p>
+<p><pre>
+#include "htmlanim.hpp"
+int main() {
+	HtmlAnim::HtmlAnim anim("HtmlAnim example 3 - Bubble sort visualization", 400, 600);
+	anim.write_file("binarytree.html");
+}
+</pre></p>
+<hr>
+<p>
+<small>Github project: <a href="https://github.com/rkibria/HtmlAnim">https://github.com/rkibria/HtmlAnim</a></small>
+</p>
+)");
+
+	anim.frame().arc(100, 70, 30);
+	anim.write_file("example3.html");
+}
+
 int main() {
 	make_index();
 	make_example_2();
+	make_example_3();
 }

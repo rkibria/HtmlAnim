@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 #include <unordered_set>
+#include <cmath>
 
 namespace HtmlAnim {
 
@@ -15,6 +16,30 @@ public:
 	virtual ~Drawable() {}
 	virtual void define(std::ostream& os) const = 0;
 	virtual void draw(std::ostream&) const = 0;
+};
+
+class Arc : public Drawable {
+	CoordType x, y, r, sa, ea;
+	bool fill;
+public:
+	explicit Arc(CoordType x, CoordType y, CoordType r, CoordType sa, CoordType ea, bool fill)
+		: x{x}, y{y}, r{r}, sa{sa}, ea{ea}, fill{fill} {}
+	virtual void define(std::ostream& os) const override {
+		os << R"(
+function arc(ctx, x, y, r, sa, ea, fill) {
+	ctx.beginPath();
+	ctx.arc(x, y, r, sa, ea);
+	if(fill)
+		ctx.fill();
+	else
+		ctx.stroke();
+}
+)";
+	}
+	virtual void draw(std::ostream& os) const override {
+		os << "arc(ctx, " << static_cast<int>(x) << ", " << static_cast<int>(y)
+			<< ", " << static_cast<int>(r) << ", " << sa << ", " << ea << ", " << (fill ? "true" : "false") << ");\n";
+	}
 };
 
 class Line : public Drawable {
@@ -115,6 +140,8 @@ public:
 		}
 	}
 
+	void arc(CoordType x, CoordType y, CoordType r, CoordType sa=0.0, CoordType ea=2*M_PI, bool fill=false)
+		{add_drawable(std::make_unique<Arc>(x, y, r, sa, ea, fill));}
 	void line(CoordType x1, CoordType y1, CoordType x2, CoordType y2)
 		{add_drawable(std::make_unique<Line>(x1, y1, x2, y2));}
 	void rect(CoordType x, CoordType y, CoordType w, CoordType h, bool fill=false)
