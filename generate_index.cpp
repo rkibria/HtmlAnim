@@ -1,5 +1,6 @@
 #include <array>
 #include <algorithm>
+#include <string>
 #include "htmlanim.hpp"
 
 void make_index() {
@@ -113,7 +114,7 @@ int main() {
 }
 
 void make_example_3() {
-	HtmlAnim::HtmlAnim anim("HtmlAnim example 3 - Bubble sort visualization", 600, 120);
+	HtmlAnim::HtmlAnim anim("HtmlAnim example 3 - Bubble sort visualization", 800, 180);
 	anim.set_wait_frames(20);
 
 	anim.set_pre_text(R"(
@@ -124,22 +125,20 @@ void make_example_3() {
 <p>The animation above can be generated using this code:</p>
 <p><pre>
 #include "htmlanim.hpp"
+#include &lt;array&gt;
+#include &lt;algorithm&gt;
+#include &lt;string&gt;
 int main() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim example 3 - Bubble sort visualization", 400, 600);
-	anim.write_file("binarytree.html");
-}
-</pre></p>
-<hr>
-<p>
-<small>Github project: <a href="https://github.com/rkibria/HtmlAnim">https://github.com/rkibria/HtmlAnim</a></small>
-</p>
-)");
+	anim.set_wait_frames(20);
 
-	std::array<int, 6> numbers{6, 2, 5, 1, 4, 3};
+	std::array<int, 8> numbers{7, 6, 2, 8, 5, 1, 4, 3};
+	int iteration = 1;
 
-	auto draw = [&anim, &numbers](size_t swap_pos=6) {
+	auto draw = [&iteration, &anim, &numbers](size_t swap_pos=99) {
+		anim.frame().text(10, 150, std::string("Iteration: ") + std::to_string(iteration));
 		for(size_t i = 0; i < numbers.size(); ++i)
-			anim.frame().arc(50 + i * 90, 50, 10 + numbers[i] * 5, i == swap_pos || i == swap_pos + 1);
+			anim.frame().arc(50 + i * 100, 50, 10 + numbers[i] * 5, i == swap_pos || i == swap_pos + 1);
 		anim.next_frame();
 	};
 
@@ -156,6 +155,41 @@ int main() {
 				draw();
 			}
 		}
+		++iteration;
+	} while(swap);
+	anim.write_file("bubblesort.html");
+}
+</pre></p>
+<hr>
+<p>
+<small>Github project: <a href="https://github.com/rkibria/HtmlAnim">https://github.com/rkibria/HtmlAnim</a></small>
+</p>
+)");
+
+	std::array<int, 8> numbers{7, 6, 2, 8, 5, 1, 4, 3};
+	int iteration = 1;
+
+	auto draw = [&iteration, &anim, &numbers](size_t swap_pos=99) {
+		anim.frame().text(10, 150, std::string("Iteration: ") + std::to_string(iteration));
+		for(size_t i = 0; i < numbers.size(); ++i)
+			anim.frame().arc(50 + i * 100, 50, 10 + numbers[i] * 5, i == swap_pos || i == swap_pos + 1);
+		anim.next_frame();
+	};
+
+	bool swap = false;
+	do {
+		draw();
+		swap = false;
+		for(size_t i = 0; i < numbers.size() - 1; ++i) {
+			if(numbers[i] > numbers[i + 1]) {
+				draw(i);
+				swap = true;
+				std::swap(numbers[i], numbers[i + 1]);
+				draw(i);
+				draw();
+			}
+		}
+		++iteration;
 	} while(swap);
 	anim.write_file("example3.html");
 }

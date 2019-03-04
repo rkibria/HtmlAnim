@@ -1,0 +1,839 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="Description" content="Generated with HtmlAnim">
+<title>HtmlAnim example 3 - Bubble sort visualization</title>
+</head>
+<body>
+
+<h2>Example 3</h2>
+
+<canvas id='anim_canvas_1' width='800' height='180'></canvas>
+<script>
+<!--
+var frame_counter = 0;
+const num_frames = 67;
+var canvas = document.getElementById('anim_canvas_1');
+var wait_counter = 0;
+var num_wait_frames = 20;
+var no_clear = false;
+
+function text(ctx, x, y, txt, fill) {
+	ctx.beginPath();
+	if(fill)
+		ctx.fillText(txt, x, y);
+	else
+		ctx.strokeText(txt, x, y);
+}
+
+function arc(ctx, x, y, r, sa, ea, fill) {
+	ctx.beginPath();
+	ctx.arc(x, y, r, sa, ea);
+	if(fill)
+		ctx.fill();
+	else
+		ctx.stroke();
+}
+function draw_bkgnd(ctx) {
+}
+
+function draw_frgnd(ctx) {
+}
+
+frames = [
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 1`, true);
+arc(ctx, 50, 50, 45, 0, 6.28319, false);
+arc(ctx, 150, 50, 40, 0, 6.28319, false);
+arc(ctx, 250, 50, 20, 0, 6.28319, false);
+arc(ctx, 350, 50, 50, 0, 6.28319, false);
+arc(ctx, 450, 50, 35, 0, 6.28319, false);
+arc(ctx, 550, 50, 15, 0, 6.28319, false);
+arc(ctx, 650, 50, 30, 0, 6.28319, false);
+arc(ctx, 750, 50, 25, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 1`, true);
+arc(ctx, 50, 50, 45, 0, 6.28319, true);
+arc(ctx, 150, 50, 40, 0, 6.28319, true);
+arc(ctx, 250, 50, 20, 0, 6.28319, false);
+arc(ctx, 350, 50, 50, 0, 6.28319, false);
+arc(ctx, 450, 50, 35, 0, 6.28319, false);
+arc(ctx, 550, 50, 15, 0, 6.28319, false);
+arc(ctx, 650, 50, 30, 0, 6.28319, false);
+arc(ctx, 750, 50, 25, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 1`, true);
+arc(ctx, 50, 50, 40, 0, 6.28319, true);
+arc(ctx, 150, 50, 45, 0, 6.28319, true);
+arc(ctx, 250, 50, 20, 0, 6.28319, false);
+arc(ctx, 350, 50, 50, 0, 6.28319, false);
+arc(ctx, 450, 50, 35, 0, 6.28319, false);
+arc(ctx, 550, 50, 15, 0, 6.28319, false);
+arc(ctx, 650, 50, 30, 0, 6.28319, false);
+arc(ctx, 750, 50, 25, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 1`, true);
+arc(ctx, 50, 50, 40, 0, 6.28319, false);
+arc(ctx, 150, 50, 45, 0, 6.28319, false);
+arc(ctx, 250, 50, 20, 0, 6.28319, false);
+arc(ctx, 350, 50, 50, 0, 6.28319, false);
+arc(ctx, 450, 50, 35, 0, 6.28319, false);
+arc(ctx, 550, 50, 15, 0, 6.28319, false);
+arc(ctx, 650, 50, 30, 0, 6.28319, false);
+arc(ctx, 750, 50, 25, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 1`, true);
+arc(ctx, 50, 50, 40, 0, 6.28319, false);
+arc(ctx, 150, 50, 45, 0, 6.28319, true);
+arc(ctx, 250, 50, 20, 0, 6.28319, true);
+arc(ctx, 350, 50, 50, 0, 6.28319, false);
+arc(ctx, 450, 50, 35, 0, 6.28319, false);
+arc(ctx, 550, 50, 15, 0, 6.28319, false);
+arc(ctx, 650, 50, 30, 0, 6.28319, false);
+arc(ctx, 750, 50, 25, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 1`, true);
+arc(ctx, 50, 50, 40, 0, 6.28319, false);
+arc(ctx, 150, 50, 20, 0, 6.28319, true);
+arc(ctx, 250, 50, 45, 0, 6.28319, true);
+arc(ctx, 350, 50, 50, 0, 6.28319, false);
+arc(ctx, 450, 50, 35, 0, 6.28319, false);
+arc(ctx, 550, 50, 15, 0, 6.28319, false);
+arc(ctx, 650, 50, 30, 0, 6.28319, false);
+arc(ctx, 750, 50, 25, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 1`, true);
+arc(ctx, 50, 50, 40, 0, 6.28319, false);
+arc(ctx, 150, 50, 20, 0, 6.28319, false);
+arc(ctx, 250, 50, 45, 0, 6.28319, false);
+arc(ctx, 350, 50, 50, 0, 6.28319, false);
+arc(ctx, 450, 50, 35, 0, 6.28319, false);
+arc(ctx, 550, 50, 15, 0, 6.28319, false);
+arc(ctx, 650, 50, 30, 0, 6.28319, false);
+arc(ctx, 750, 50, 25, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 1`, true);
+arc(ctx, 50, 50, 40, 0, 6.28319, false);
+arc(ctx, 150, 50, 20, 0, 6.28319, false);
+arc(ctx, 250, 50, 45, 0, 6.28319, false);
+arc(ctx, 350, 50, 50, 0, 6.28319, true);
+arc(ctx, 450, 50, 35, 0, 6.28319, true);
+arc(ctx, 550, 50, 15, 0, 6.28319, false);
+arc(ctx, 650, 50, 30, 0, 6.28319, false);
+arc(ctx, 750, 50, 25, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 1`, true);
+arc(ctx, 50, 50, 40, 0, 6.28319, false);
+arc(ctx, 150, 50, 20, 0, 6.28319, false);
+arc(ctx, 250, 50, 45, 0, 6.28319, false);
+arc(ctx, 350, 50, 35, 0, 6.28319, true);
+arc(ctx, 450, 50, 50, 0, 6.28319, true);
+arc(ctx, 550, 50, 15, 0, 6.28319, false);
+arc(ctx, 650, 50, 30, 0, 6.28319, false);
+arc(ctx, 750, 50, 25, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 1`, true);
+arc(ctx, 50, 50, 40, 0, 6.28319, false);
+arc(ctx, 150, 50, 20, 0, 6.28319, false);
+arc(ctx, 250, 50, 45, 0, 6.28319, false);
+arc(ctx, 350, 50, 35, 0, 6.28319, false);
+arc(ctx, 450, 50, 50, 0, 6.28319, false);
+arc(ctx, 550, 50, 15, 0, 6.28319, false);
+arc(ctx, 650, 50, 30, 0, 6.28319, false);
+arc(ctx, 750, 50, 25, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 1`, true);
+arc(ctx, 50, 50, 40, 0, 6.28319, false);
+arc(ctx, 150, 50, 20, 0, 6.28319, false);
+arc(ctx, 250, 50, 45, 0, 6.28319, false);
+arc(ctx, 350, 50, 35, 0, 6.28319, false);
+arc(ctx, 450, 50, 50, 0, 6.28319, true);
+arc(ctx, 550, 50, 15, 0, 6.28319, true);
+arc(ctx, 650, 50, 30, 0, 6.28319, false);
+arc(ctx, 750, 50, 25, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 1`, true);
+arc(ctx, 50, 50, 40, 0, 6.28319, false);
+arc(ctx, 150, 50, 20, 0, 6.28319, false);
+arc(ctx, 250, 50, 45, 0, 6.28319, false);
+arc(ctx, 350, 50, 35, 0, 6.28319, false);
+arc(ctx, 450, 50, 15, 0, 6.28319, true);
+arc(ctx, 550, 50, 50, 0, 6.28319, true);
+arc(ctx, 650, 50, 30, 0, 6.28319, false);
+arc(ctx, 750, 50, 25, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 1`, true);
+arc(ctx, 50, 50, 40, 0, 6.28319, false);
+arc(ctx, 150, 50, 20, 0, 6.28319, false);
+arc(ctx, 250, 50, 45, 0, 6.28319, false);
+arc(ctx, 350, 50, 35, 0, 6.28319, false);
+arc(ctx, 450, 50, 15, 0, 6.28319, false);
+arc(ctx, 550, 50, 50, 0, 6.28319, false);
+arc(ctx, 650, 50, 30, 0, 6.28319, false);
+arc(ctx, 750, 50, 25, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 1`, true);
+arc(ctx, 50, 50, 40, 0, 6.28319, false);
+arc(ctx, 150, 50, 20, 0, 6.28319, false);
+arc(ctx, 250, 50, 45, 0, 6.28319, false);
+arc(ctx, 350, 50, 35, 0, 6.28319, false);
+arc(ctx, 450, 50, 15, 0, 6.28319, false);
+arc(ctx, 550, 50, 50, 0, 6.28319, true);
+arc(ctx, 650, 50, 30, 0, 6.28319, true);
+arc(ctx, 750, 50, 25, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 1`, true);
+arc(ctx, 50, 50, 40, 0, 6.28319, false);
+arc(ctx, 150, 50, 20, 0, 6.28319, false);
+arc(ctx, 250, 50, 45, 0, 6.28319, false);
+arc(ctx, 350, 50, 35, 0, 6.28319, false);
+arc(ctx, 450, 50, 15, 0, 6.28319, false);
+arc(ctx, 550, 50, 30, 0, 6.28319, true);
+arc(ctx, 650, 50, 50, 0, 6.28319, true);
+arc(ctx, 750, 50, 25, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 1`, true);
+arc(ctx, 50, 50, 40, 0, 6.28319, false);
+arc(ctx, 150, 50, 20, 0, 6.28319, false);
+arc(ctx, 250, 50, 45, 0, 6.28319, false);
+arc(ctx, 350, 50, 35, 0, 6.28319, false);
+arc(ctx, 450, 50, 15, 0, 6.28319, false);
+arc(ctx, 550, 50, 30, 0, 6.28319, false);
+arc(ctx, 650, 50, 50, 0, 6.28319, false);
+arc(ctx, 750, 50, 25, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 1`, true);
+arc(ctx, 50, 50, 40, 0, 6.28319, false);
+arc(ctx, 150, 50, 20, 0, 6.28319, false);
+arc(ctx, 250, 50, 45, 0, 6.28319, false);
+arc(ctx, 350, 50, 35, 0, 6.28319, false);
+arc(ctx, 450, 50, 15, 0, 6.28319, false);
+arc(ctx, 550, 50, 30, 0, 6.28319, false);
+arc(ctx, 650, 50, 50, 0, 6.28319, true);
+arc(ctx, 750, 50, 25, 0, 6.28319, true);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 1`, true);
+arc(ctx, 50, 50, 40, 0, 6.28319, false);
+arc(ctx, 150, 50, 20, 0, 6.28319, false);
+arc(ctx, 250, 50, 45, 0, 6.28319, false);
+arc(ctx, 350, 50, 35, 0, 6.28319, false);
+arc(ctx, 450, 50, 15, 0, 6.28319, false);
+arc(ctx, 550, 50, 30, 0, 6.28319, false);
+arc(ctx, 650, 50, 25, 0, 6.28319, true);
+arc(ctx, 750, 50, 50, 0, 6.28319, true);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 1`, true);
+arc(ctx, 50, 50, 40, 0, 6.28319, false);
+arc(ctx, 150, 50, 20, 0, 6.28319, false);
+arc(ctx, 250, 50, 45, 0, 6.28319, false);
+arc(ctx, 350, 50, 35, 0, 6.28319, false);
+arc(ctx, 450, 50, 15, 0, 6.28319, false);
+arc(ctx, 550, 50, 30, 0, 6.28319, false);
+arc(ctx, 650, 50, 25, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 2`, true);
+arc(ctx, 50, 50, 40, 0, 6.28319, false);
+arc(ctx, 150, 50, 20, 0, 6.28319, false);
+arc(ctx, 250, 50, 45, 0, 6.28319, false);
+arc(ctx, 350, 50, 35, 0, 6.28319, false);
+arc(ctx, 450, 50, 15, 0, 6.28319, false);
+arc(ctx, 550, 50, 30, 0, 6.28319, false);
+arc(ctx, 650, 50, 25, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 2`, true);
+arc(ctx, 50, 50, 40, 0, 6.28319, true);
+arc(ctx, 150, 50, 20, 0, 6.28319, true);
+arc(ctx, 250, 50, 45, 0, 6.28319, false);
+arc(ctx, 350, 50, 35, 0, 6.28319, false);
+arc(ctx, 450, 50, 15, 0, 6.28319, false);
+arc(ctx, 550, 50, 30, 0, 6.28319, false);
+arc(ctx, 650, 50, 25, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 2`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, true);
+arc(ctx, 150, 50, 40, 0, 6.28319, true);
+arc(ctx, 250, 50, 45, 0, 6.28319, false);
+arc(ctx, 350, 50, 35, 0, 6.28319, false);
+arc(ctx, 450, 50, 15, 0, 6.28319, false);
+arc(ctx, 550, 50, 30, 0, 6.28319, false);
+arc(ctx, 650, 50, 25, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 2`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 40, 0, 6.28319, false);
+arc(ctx, 250, 50, 45, 0, 6.28319, false);
+arc(ctx, 350, 50, 35, 0, 6.28319, false);
+arc(ctx, 450, 50, 15, 0, 6.28319, false);
+arc(ctx, 550, 50, 30, 0, 6.28319, false);
+arc(ctx, 650, 50, 25, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 2`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 40, 0, 6.28319, false);
+arc(ctx, 250, 50, 45, 0, 6.28319, true);
+arc(ctx, 350, 50, 35, 0, 6.28319, true);
+arc(ctx, 450, 50, 15, 0, 6.28319, false);
+arc(ctx, 550, 50, 30, 0, 6.28319, false);
+arc(ctx, 650, 50, 25, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 2`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 40, 0, 6.28319, false);
+arc(ctx, 250, 50, 35, 0, 6.28319, true);
+arc(ctx, 350, 50, 45, 0, 6.28319, true);
+arc(ctx, 450, 50, 15, 0, 6.28319, false);
+arc(ctx, 550, 50, 30, 0, 6.28319, false);
+arc(ctx, 650, 50, 25, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 2`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 40, 0, 6.28319, false);
+arc(ctx, 250, 50, 35, 0, 6.28319, false);
+arc(ctx, 350, 50, 45, 0, 6.28319, false);
+arc(ctx, 450, 50, 15, 0, 6.28319, false);
+arc(ctx, 550, 50, 30, 0, 6.28319, false);
+arc(ctx, 650, 50, 25, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 2`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 40, 0, 6.28319, false);
+arc(ctx, 250, 50, 35, 0, 6.28319, false);
+arc(ctx, 350, 50, 45, 0, 6.28319, true);
+arc(ctx, 450, 50, 15, 0, 6.28319, true);
+arc(ctx, 550, 50, 30, 0, 6.28319, false);
+arc(ctx, 650, 50, 25, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 2`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 40, 0, 6.28319, false);
+arc(ctx, 250, 50, 35, 0, 6.28319, false);
+arc(ctx, 350, 50, 15, 0, 6.28319, true);
+arc(ctx, 450, 50, 45, 0, 6.28319, true);
+arc(ctx, 550, 50, 30, 0, 6.28319, false);
+arc(ctx, 650, 50, 25, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 2`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 40, 0, 6.28319, false);
+arc(ctx, 250, 50, 35, 0, 6.28319, false);
+arc(ctx, 350, 50, 15, 0, 6.28319, false);
+arc(ctx, 450, 50, 45, 0, 6.28319, false);
+arc(ctx, 550, 50, 30, 0, 6.28319, false);
+arc(ctx, 650, 50, 25, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 2`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 40, 0, 6.28319, false);
+arc(ctx, 250, 50, 35, 0, 6.28319, false);
+arc(ctx, 350, 50, 15, 0, 6.28319, false);
+arc(ctx, 450, 50, 45, 0, 6.28319, true);
+arc(ctx, 550, 50, 30, 0, 6.28319, true);
+arc(ctx, 650, 50, 25, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 2`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 40, 0, 6.28319, false);
+arc(ctx, 250, 50, 35, 0, 6.28319, false);
+arc(ctx, 350, 50, 15, 0, 6.28319, false);
+arc(ctx, 450, 50, 30, 0, 6.28319, true);
+arc(ctx, 550, 50, 45, 0, 6.28319, true);
+arc(ctx, 650, 50, 25, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 2`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 40, 0, 6.28319, false);
+arc(ctx, 250, 50, 35, 0, 6.28319, false);
+arc(ctx, 350, 50, 15, 0, 6.28319, false);
+arc(ctx, 450, 50, 30, 0, 6.28319, false);
+arc(ctx, 550, 50, 45, 0, 6.28319, false);
+arc(ctx, 650, 50, 25, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 2`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 40, 0, 6.28319, false);
+arc(ctx, 250, 50, 35, 0, 6.28319, false);
+arc(ctx, 350, 50, 15, 0, 6.28319, false);
+arc(ctx, 450, 50, 30, 0, 6.28319, false);
+arc(ctx, 550, 50, 45, 0, 6.28319, true);
+arc(ctx, 650, 50, 25, 0, 6.28319, true);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 2`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 40, 0, 6.28319, false);
+arc(ctx, 250, 50, 35, 0, 6.28319, false);
+arc(ctx, 350, 50, 15, 0, 6.28319, false);
+arc(ctx, 450, 50, 30, 0, 6.28319, false);
+arc(ctx, 550, 50, 25, 0, 6.28319, true);
+arc(ctx, 650, 50, 45, 0, 6.28319, true);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 2`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 40, 0, 6.28319, false);
+arc(ctx, 250, 50, 35, 0, 6.28319, false);
+arc(ctx, 350, 50, 15, 0, 6.28319, false);
+arc(ctx, 450, 50, 30, 0, 6.28319, false);
+arc(ctx, 550, 50, 25, 0, 6.28319, false);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 3`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 40, 0, 6.28319, false);
+arc(ctx, 250, 50, 35, 0, 6.28319, false);
+arc(ctx, 350, 50, 15, 0, 6.28319, false);
+arc(ctx, 450, 50, 30, 0, 6.28319, false);
+arc(ctx, 550, 50, 25, 0, 6.28319, false);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 3`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 40, 0, 6.28319, true);
+arc(ctx, 250, 50, 35, 0, 6.28319, true);
+arc(ctx, 350, 50, 15, 0, 6.28319, false);
+arc(ctx, 450, 50, 30, 0, 6.28319, false);
+arc(ctx, 550, 50, 25, 0, 6.28319, false);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 3`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 35, 0, 6.28319, true);
+arc(ctx, 250, 50, 40, 0, 6.28319, true);
+arc(ctx, 350, 50, 15, 0, 6.28319, false);
+arc(ctx, 450, 50, 30, 0, 6.28319, false);
+arc(ctx, 550, 50, 25, 0, 6.28319, false);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 3`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 35, 0, 6.28319, false);
+arc(ctx, 250, 50, 40, 0, 6.28319, false);
+arc(ctx, 350, 50, 15, 0, 6.28319, false);
+arc(ctx, 450, 50, 30, 0, 6.28319, false);
+arc(ctx, 550, 50, 25, 0, 6.28319, false);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 3`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 35, 0, 6.28319, false);
+arc(ctx, 250, 50, 40, 0, 6.28319, true);
+arc(ctx, 350, 50, 15, 0, 6.28319, true);
+arc(ctx, 450, 50, 30, 0, 6.28319, false);
+arc(ctx, 550, 50, 25, 0, 6.28319, false);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 3`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 35, 0, 6.28319, false);
+arc(ctx, 250, 50, 15, 0, 6.28319, true);
+arc(ctx, 350, 50, 40, 0, 6.28319, true);
+arc(ctx, 450, 50, 30, 0, 6.28319, false);
+arc(ctx, 550, 50, 25, 0, 6.28319, false);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 3`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 35, 0, 6.28319, false);
+arc(ctx, 250, 50, 15, 0, 6.28319, false);
+arc(ctx, 350, 50, 40, 0, 6.28319, false);
+arc(ctx, 450, 50, 30, 0, 6.28319, false);
+arc(ctx, 550, 50, 25, 0, 6.28319, false);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 3`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 35, 0, 6.28319, false);
+arc(ctx, 250, 50, 15, 0, 6.28319, false);
+arc(ctx, 350, 50, 40, 0, 6.28319, true);
+arc(ctx, 450, 50, 30, 0, 6.28319, true);
+arc(ctx, 550, 50, 25, 0, 6.28319, false);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 3`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 35, 0, 6.28319, false);
+arc(ctx, 250, 50, 15, 0, 6.28319, false);
+arc(ctx, 350, 50, 30, 0, 6.28319, true);
+arc(ctx, 450, 50, 40, 0, 6.28319, true);
+arc(ctx, 550, 50, 25, 0, 6.28319, false);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 3`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 35, 0, 6.28319, false);
+arc(ctx, 250, 50, 15, 0, 6.28319, false);
+arc(ctx, 350, 50, 30, 0, 6.28319, false);
+arc(ctx, 450, 50, 40, 0, 6.28319, false);
+arc(ctx, 550, 50, 25, 0, 6.28319, false);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 3`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 35, 0, 6.28319, false);
+arc(ctx, 250, 50, 15, 0, 6.28319, false);
+arc(ctx, 350, 50, 30, 0, 6.28319, false);
+arc(ctx, 450, 50, 40, 0, 6.28319, true);
+arc(ctx, 550, 50, 25, 0, 6.28319, true);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 3`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 35, 0, 6.28319, false);
+arc(ctx, 250, 50, 15, 0, 6.28319, false);
+arc(ctx, 350, 50, 30, 0, 6.28319, false);
+arc(ctx, 450, 50, 25, 0, 6.28319, true);
+arc(ctx, 550, 50, 40, 0, 6.28319, true);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 3`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 35, 0, 6.28319, false);
+arc(ctx, 250, 50, 15, 0, 6.28319, false);
+arc(ctx, 350, 50, 30, 0, 6.28319, false);
+arc(ctx, 450, 50, 25, 0, 6.28319, false);
+arc(ctx, 550, 50, 40, 0, 6.28319, false);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 4`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 35, 0, 6.28319, false);
+arc(ctx, 250, 50, 15, 0, 6.28319, false);
+arc(ctx, 350, 50, 30, 0, 6.28319, false);
+arc(ctx, 450, 50, 25, 0, 6.28319, false);
+arc(ctx, 550, 50, 40, 0, 6.28319, false);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 4`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 35, 0, 6.28319, true);
+arc(ctx, 250, 50, 15, 0, 6.28319, true);
+arc(ctx, 350, 50, 30, 0, 6.28319, false);
+arc(ctx, 450, 50, 25, 0, 6.28319, false);
+arc(ctx, 550, 50, 40, 0, 6.28319, false);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 4`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 15, 0, 6.28319, true);
+arc(ctx, 250, 50, 35, 0, 6.28319, true);
+arc(ctx, 350, 50, 30, 0, 6.28319, false);
+arc(ctx, 450, 50, 25, 0, 6.28319, false);
+arc(ctx, 550, 50, 40, 0, 6.28319, false);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 4`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 15, 0, 6.28319, false);
+arc(ctx, 250, 50, 35, 0, 6.28319, false);
+arc(ctx, 350, 50, 30, 0, 6.28319, false);
+arc(ctx, 450, 50, 25, 0, 6.28319, false);
+arc(ctx, 550, 50, 40, 0, 6.28319, false);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 4`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 15, 0, 6.28319, false);
+arc(ctx, 250, 50, 35, 0, 6.28319, true);
+arc(ctx, 350, 50, 30, 0, 6.28319, true);
+arc(ctx, 450, 50, 25, 0, 6.28319, false);
+arc(ctx, 550, 50, 40, 0, 6.28319, false);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 4`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 15, 0, 6.28319, false);
+arc(ctx, 250, 50, 30, 0, 6.28319, true);
+arc(ctx, 350, 50, 35, 0, 6.28319, true);
+arc(ctx, 450, 50, 25, 0, 6.28319, false);
+arc(ctx, 550, 50, 40, 0, 6.28319, false);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 4`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 15, 0, 6.28319, false);
+arc(ctx, 250, 50, 30, 0, 6.28319, false);
+arc(ctx, 350, 50, 35, 0, 6.28319, false);
+arc(ctx, 450, 50, 25, 0, 6.28319, false);
+arc(ctx, 550, 50, 40, 0, 6.28319, false);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 4`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 15, 0, 6.28319, false);
+arc(ctx, 250, 50, 30, 0, 6.28319, false);
+arc(ctx, 350, 50, 35, 0, 6.28319, true);
+arc(ctx, 450, 50, 25, 0, 6.28319, true);
+arc(ctx, 550, 50, 40, 0, 6.28319, false);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 4`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 15, 0, 6.28319, false);
+arc(ctx, 250, 50, 30, 0, 6.28319, false);
+arc(ctx, 350, 50, 25, 0, 6.28319, true);
+arc(ctx, 450, 50, 35, 0, 6.28319, true);
+arc(ctx, 550, 50, 40, 0, 6.28319, false);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 4`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 15, 0, 6.28319, false);
+arc(ctx, 250, 50, 30, 0, 6.28319, false);
+arc(ctx, 350, 50, 25, 0, 6.28319, false);
+arc(ctx, 450, 50, 35, 0, 6.28319, false);
+arc(ctx, 550, 50, 40, 0, 6.28319, false);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 5`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, false);
+arc(ctx, 150, 50, 15, 0, 6.28319, false);
+arc(ctx, 250, 50, 30, 0, 6.28319, false);
+arc(ctx, 350, 50, 25, 0, 6.28319, false);
+arc(ctx, 450, 50, 35, 0, 6.28319, false);
+arc(ctx, 550, 50, 40, 0, 6.28319, false);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 5`, true);
+arc(ctx, 50, 50, 20, 0, 6.28319, true);
+arc(ctx, 150, 50, 15, 0, 6.28319, true);
+arc(ctx, 250, 50, 30, 0, 6.28319, false);
+arc(ctx, 350, 50, 25, 0, 6.28319, false);
+arc(ctx, 450, 50, 35, 0, 6.28319, false);
+arc(ctx, 550, 50, 40, 0, 6.28319, false);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 5`, true);
+arc(ctx, 50, 50, 15, 0, 6.28319, true);
+arc(ctx, 150, 50, 20, 0, 6.28319, true);
+arc(ctx, 250, 50, 30, 0, 6.28319, false);
+arc(ctx, 350, 50, 25, 0, 6.28319, false);
+arc(ctx, 450, 50, 35, 0, 6.28319, false);
+arc(ctx, 550, 50, 40, 0, 6.28319, false);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 5`, true);
+arc(ctx, 50, 50, 15, 0, 6.28319, false);
+arc(ctx, 150, 50, 20, 0, 6.28319, false);
+arc(ctx, 250, 50, 30, 0, 6.28319, false);
+arc(ctx, 350, 50, 25, 0, 6.28319, false);
+arc(ctx, 450, 50, 35, 0, 6.28319, false);
+arc(ctx, 550, 50, 40, 0, 6.28319, false);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 5`, true);
+arc(ctx, 50, 50, 15, 0, 6.28319, false);
+arc(ctx, 150, 50, 20, 0, 6.28319, false);
+arc(ctx, 250, 50, 30, 0, 6.28319, true);
+arc(ctx, 350, 50, 25, 0, 6.28319, true);
+arc(ctx, 450, 50, 35, 0, 6.28319, false);
+arc(ctx, 550, 50, 40, 0, 6.28319, false);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 5`, true);
+arc(ctx, 50, 50, 15, 0, 6.28319, false);
+arc(ctx, 150, 50, 20, 0, 6.28319, false);
+arc(ctx, 250, 50, 25, 0, 6.28319, true);
+arc(ctx, 350, 50, 30, 0, 6.28319, true);
+arc(ctx, 450, 50, 35, 0, 6.28319, false);
+arc(ctx, 550, 50, 40, 0, 6.28319, false);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 5`, true);
+arc(ctx, 50, 50, 15, 0, 6.28319, false);
+arc(ctx, 150, 50, 20, 0, 6.28319, false);
+arc(ctx, 250, 50, 25, 0, 6.28319, false);
+arc(ctx, 350, 50, 30, 0, 6.28319, false);
+arc(ctx, 450, 50, 35, 0, 6.28319, false);
+arc(ctx, 550, 50, 40, 0, 6.28319, false);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+text(ctx, 10, 150, `Iteration: 6`, true);
+arc(ctx, 50, 50, 15, 0, 6.28319, false);
+arc(ctx, 150, 50, 20, 0, 6.28319, false);
+arc(ctx, 250, 50, 25, 0, 6.28319, false);
+arc(ctx, 350, 50, 30, 0, 6.28319, false);
+arc(ctx, 450, 50, 35, 0, 6.28319, false);
+arc(ctx, 550, 50, 40, 0, 6.28319, false);
+arc(ctx, 650, 50, 45, 0, 6.28319, false);
+arc(ctx, 750, 50, 50, 0, 6.28319, false);
+}),
+(function(ctx) {
+}),
+];
+
+window.onload = function() {
+	ctx = canvas.getContext('2d'),
+	(function drawFrame () {
+		if(frame_counter == 0 || !no_clear)
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+		draw_bkgnd(ctx);
+		(frames[frame_counter])(ctx);
+		draw_frgnd(ctx);
+		wait_counter = (num_wait_frames == 0) ? 0 : ((wait_counter + 1) % num_wait_frames);
+		if(wait_counter == 0)
+			frame_counter = (frame_counter + 1) % num_frames;
+		window.requestAnimationFrame(drawFrame, canvas);
+	}());
+}
+
+//-->
+</script>
+<noscript>JavaScript is required to display this content.</noscript>
+
+<p>The animation above can be generated using this code:</p>
+<p><pre>
+#include "htmlanim.hpp"
+#include &lt;array&gt;
+#include &lt;algorithm&gt;
+#include &lt;string&gt;
+int main() {
+	HtmlAnim::HtmlAnim anim("HtmlAnim example 3 - Bubble sort visualization", 400, 600);
+	anim.set_wait_frames(20);
+
+	std::array<int, 8> numbers{7, 6, 2, 8, 5, 1, 4, 3};
+	int iteration = 1;
+
+	auto draw = [&iteration, &anim, &numbers](size_t swap_pos=99) {
+		anim.frame().text(10, 150, std::string("Iteration: ") + std::to_string(iteration));
+		for(size_t i = 0; i < numbers.size(); ++i)
+			anim.frame().arc(50 + i * 100, 50, 10 + numbers[i] * 5, i == swap_pos || i == swap_pos + 1);
+		anim.next_frame();
+	};
+
+	bool swap = false;
+	do {
+		draw();
+		swap = false;
+		for(size_t i = 0; i < numbers.size() - 1; ++i) {
+			if(numbers[i] > numbers[i + 1]) {
+				draw(i);
+				swap = true;
+				std::swap(numbers[i], numbers[i + 1]);
+				draw(i);
+				draw();
+			}
+		}
+		++iteration;
+	} while(swap);
+	anim.write_file("bubblesort.html");
+}
+</pre></p>
+<hr>
+<p>
+<small>Github project: <a href="https://github.com/rkibria/HtmlAnim">https://github.com/rkibria/HtmlAnim</a></small>
+</p>
+
+
+</body>
+</html>
