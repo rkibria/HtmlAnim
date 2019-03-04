@@ -30,7 +30,7 @@ int main() {
 <p>
 More examples:
 <ul>
-<li><a href="example2.html">Example 2</a></li>
+<li><a href="example2.html">Example 2 - Draw a binary tree</a></li>
 </ul>
 </p>
 <hr>
@@ -52,8 +52,22 @@ More examples:
 	anim.write_file("index.html");
 }
 
+void draw_binary_tree(HtmlAnim::HtmlAnim& anim, double x, double y, double delta_y, int depth = 0) {
+	if(depth > 7)
+		return;
+	const auto next_x = x + 20;
+	const auto next_y1 = y - delta_y;
+	const auto next_y2 = y + delta_y;
+	anim.frame().line(x, y, next_x, next_y1);
+	anim.next_frame();
+	draw_binary_tree(anim, next_x, next_y1, delta_y / 2, depth + 1);
+	anim.frame().line(x, y, next_x, next_y2);
+	anim.next_frame();
+	draw_binary_tree(anim, next_x, next_y2, delta_y / 2, depth + 1);
+}
+
 void make_example_2() {
-	HtmlAnim::HtmlAnim anim("HtmlAnim example 2", 800, 400);
+	HtmlAnim::HtmlAnim anim("HtmlAnim example 2 - Draw a binary tree", 400, 600);
 	anim.set_no_clear(true);
 
 	anim.set_pre_text(R"(
@@ -64,8 +78,25 @@ void make_example_2() {
 <p>The animation above can be generated using this code:</p>
 <p><pre>
 #include "htmlanim.hpp"
+void draw_binary_tree(HtmlAnim::HtmlAnim& anim, double x, double y, double delta_y, int depth = 0) {
+	if(depth > 7)
+		return;
+	const auto next_x = x + 20;
+	const auto next_y1 = y - delta_y;
+	const auto next_y2 = y + delta_y;
+	anim.frame().line(x, y, next_x, next_y1);
+	anim.next_frame();
+	draw_binary_tree(anim, next_x, next_y1, delta_y / 2, depth + 1);
+	anim.frame().line(x, y, next_x, next_y2);
+	anim.next_frame();
+	draw_binary_tree(anim, next_x, next_y2, delta_y / 2, depth + 1);
+}
+
 int main() {
-	anim.write_file("animation.html");
+	HtmlAnim::HtmlAnim anim("HtmlAnim example 2 - Draw a binary tree", 400, 600);
+	anim.set_no_clear(true);
+	draw_binary_tree(anim, 0, 300, 150);
+	anim.write_file("binarytree.html");
 }
 </pre></p>
 <p>
@@ -80,12 +111,7 @@ More examples:
 </p>
 )");
 
-	const auto n_frames = 60;
-	for(double frame = 0; frame < n_frames; ++frame) {
-		anim.frame().line(0, 200, 400, frame * 400.0 / n_frames);
-		if(frame != n_frames - 1)
-			anim.next_frame();
-	}
+	draw_binary_tree(anim, 0, 300, 150);
 	anim.write_file("example2.html");
 }
 

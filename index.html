@@ -18,6 +18,7 @@ const num_frames = 60;
 var canvas = document.getElementById('anim_canvas_1');
 var wait_counter = 0;
 var num_wait_frames = 0;
+var no_clear = false;
 
 function text(ctx, x, y, txt, fill) {
 	ctx.beginPath();
@@ -408,7 +409,8 @@ rect(ctx, 10, 16, 40, 40, true);
 window.onload = function() {
 	ctx = canvas.getContext('2d'),
 	(function drawFrame () {
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		if(frame_counter == 0 || !no_clear)
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
 		draw_bkgnd(ctx);
 		(frames[frame_counter])(ctx);
 		draw_frgnd(ctx);
@@ -441,6 +443,12 @@ int main() {
 	anim.write_file("animation.html");
 }
 </pre></p>
+<p>
+More examples:
+<ul>
+<li><a href="example2.html">Example 2 - Draw a binary tree</a></li>
+</ul>
+</p>
 <hr>
 <p>
 <small>Github project: <a href="https://github.com/rkibria/HtmlAnim">https://github.com/rkibria/HtmlAnim</a></small>
