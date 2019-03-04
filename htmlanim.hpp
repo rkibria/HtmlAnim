@@ -140,7 +140,7 @@ public:
 		}
 	}
 
-	void arc(CoordType x, CoordType y, CoordType r, CoordType sa=0.0, CoordType ea=2*M_PI, bool fill=false)
+	void arc(CoordType x, CoordType y, CoordType r, bool fill=false, CoordType sa=0.0, CoordType ea=2*M_PI)
 		{add_drawable(std::make_unique<Arc>(x, y, r, sa, ea, fill));}
 	void line(CoordType x1, CoordType y1, CoordType x2, CoordType y2)
 		{add_drawable(std::make_unique<Line>(x1, y1, x2, y2));}

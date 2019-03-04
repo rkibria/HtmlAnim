@@ -1,3 +1,5 @@
+#include <array>
+#include <algorithm>
 #include "htmlanim.hpp"
 
 void make_index() {
@@ -112,6 +114,7 @@ int main() {
 
 void make_example_3() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim example 3 - Bubble sort visualization", 600, 120);
+	anim.set_wait_frames(20);
 
 	anim.set_pre_text(R"(
 <h2>Example 3</h2>
@@ -132,7 +135,28 @@ int main() {
 </p>
 )");
 
-	anim.frame().arc(100, 70, 30);
+	std::array<int, 6> numbers{6, 2, 5, 1, 4, 3};
+
+	auto draw = [&anim, &numbers](size_t swap_pos=6) {
+		for(size_t i = 0; i < numbers.size(); ++i)
+			anim.frame().arc(50 + i * 90, 50, 10 + numbers[i] * 5, i == swap_pos || i == swap_pos + 1);
+		anim.next_frame();
+	};
+
+	bool swap = false;
+	do {
+		draw();
+		swap = false;
+		for(size_t i = 0; i < numbers.size() - 1; ++i) {
+			if(numbers[i] > numbers[i + 1]) {
+				draw(i);
+				swap = true;
+				std::swap(numbers[i], numbers[i + 1]);
+				draw(i);
+				draw();
+			}
+		}
+	} while(swap);
 	anim.write_file("example3.html");
 }
 
