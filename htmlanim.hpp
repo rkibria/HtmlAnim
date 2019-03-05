@@ -214,6 +214,9 @@ public:
 	void write_stream(std::ostream&) const;
 	void write_file(const char*) const;
 
+	auto get_width() const {return width;}
+	auto get_height() const {return height;}
+
 private:
 	std::string title;
 	SizeType width;

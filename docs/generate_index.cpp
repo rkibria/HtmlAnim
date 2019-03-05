@@ -215,15 +215,15 @@ void make_example_4() {
 )");
 
 	const auto n_parts = 16;
-	const auto part_len = 580 / n_parts;
-	auto get_y = [n_parts](auto part, auto y_scale) {return 150 * (1 + 0.75 * y_scale * sin(2 * M_PI / n_parts * part));};
+	const auto part_len = (anim.get_width() - 20) / n_parts;
+	auto get_y = [&anim, n_parts](auto part, auto y_scale)
+		{return anim.get_height() / 2 * (1 + 0.75 * y_scale * sin(2 * M_PI / n_parts * part));};
+	auto ramp = [](auto n_parts, auto i) {return (i < n_parts / 2) ? i : (n_parts - i);};
 	const auto n_frames = 60;
 	for(auto frame = 0; frame < n_frames; ++frame) {
 		const auto y_scale = sin(2 * M_PI / n_frames * frame);
 		for(auto part = 0; part < n_parts; ++part) {
-			const auto width_i = (part + frame / 4) % n_parts;
-			const auto width_scale = 3;
-			anim.frame().line_width((width_i < n_parts/2) ? width_scale*(width_i + 1) : width_scale*(n_parts - width_i));
+			anim.frame().line_width(2 + 3 * ramp(n_parts, (part + frame / 4) % n_parts));
 			anim.frame().stroke_style(HtmlAnim::rgb_color(255 / n_parts * part,
 				255 - 255 / n_parts * part, 128 + 255 / n_parts * part));
 			const auto start_x = 10 + part_len * part;
