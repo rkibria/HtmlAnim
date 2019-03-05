@@ -5,11 +5,22 @@
 #include <vector>
 #include <unordered_set>
 #include <cmath>
+#include <sstream>
+#include <iomanip>
 
 namespace HtmlAnim {
 
 using CoordType = double;
 using SizeType = unsigned int;
+
+std::string rgb_color(SizeType r, SizeType g, SizeType b) {
+	std::stringstream ss;
+	r %= 256;
+	g %= 256;
+	b %= 256;
+	ss << "#" << std::hex << std::setw(2) << std::setfill('0') << r << std::setw(2) << g << std::setw(2) << b;
+	return ss.str();
+}
 
 class Drawable {
 public:
