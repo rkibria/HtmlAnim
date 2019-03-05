@@ -108,6 +108,15 @@ public:
 		{os << "ctx.strokeStyle = \"" << style << "\";\n";}
 };
 
+class LineCap : public Drawable {
+	std::string style;
+public:
+	explicit LineCap(const std::string& style) : style{style} {}
+	virtual void define(std::ostream& os) const override {}
+	virtual void draw(std::ostream& os) const override
+		{os << "ctx.lineCap = \"" << style << "\";\n";}
+};
+
 class LineWidth : public Drawable {
 	SizeType width;
 public:
@@ -173,6 +182,8 @@ public:
 		{add_drawable(std::make_unique<Arc>(x, y, r, sa, ea, fill));}
 	void line(CoordType x1, CoordType y1, CoordType x2, CoordType y2)
 		{add_drawable(std::make_unique<Line>(x1, y1, x2, y2));}
+	void line_cap(const std::string& style)
+		{add_drawable(std::make_unique<LineCap>(style));}
 	void line_width(SizeType width)
 		{add_drawable(std::make_unique<LineWidth>(width));}
 	void rect(CoordType x, CoordType y, CoordType w, CoordType h, bool fill=false)
