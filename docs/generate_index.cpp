@@ -224,8 +224,8 @@ void make_example_4() {
 		const auto y_scale = sin(2 * M_PI / n_frames * frame);
 		for(auto part = 0; part < n_parts; ++part) {
 			anim.frame().line_width(2 + 3 * ramp(n_parts, (part + frame / 4) % n_parts));
-			anim.frame().stroke_style(HtmlAnim::rgb_color(255 / n_parts * part,
-				255 - 255 / n_parts * part, 128 + 255 / n_parts * part));
+			const auto color = 255 / n_parts * (part + frame / 4);
+			anim.frame().stroke_style(HtmlAnim::rgb_color(color, 255 - color, 128 + color));
 			const auto start_x = 10 + part_len * part;
 			anim.frame().line(start_x, get_y(part, y_scale), start_x + part_len, get_y(part + 1, y_scale));
 		}
