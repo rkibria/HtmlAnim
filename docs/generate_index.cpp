@@ -35,8 +35,9 @@ int main() {
 <p>
 More examples:
 <ul>
-<li><a href="example2.html">Example 2 - Draw a binary tree</a></li>
-<li><a href="example3.html">Example 3 - Bubble sort visualization</a></li>
+<li><a href="example2.html">Example 2 - Lines: drawing a binary tree</a></li>
+<li><a href="example3.html">Example 3 - Circles: bubble sort visualization</a></li>
+<li><a href="example4.html">Example 4 - Line colors and styles</a></li>
 </ul>
 </p>
 <hr>
@@ -73,7 +74,7 @@ void draw_binary_tree(HtmlAnim::HtmlAnim& anim, double x, double y, double delta
 }
 
 void make_example_2() {
-	HtmlAnim::HtmlAnim anim("HtmlAnim example 2 - Draw a binary tree", 400, 600);
+	HtmlAnim::HtmlAnim anim("HtmlAnim example 2 - Lines: drawing a binary tree", 400, 600);
 	anim.set_no_clear(true);
 
 	anim.set_pre_text(R"(
@@ -116,7 +117,7 @@ int main() {
 }
 
 void make_example_3() {
-	HtmlAnim::HtmlAnim anim("HtmlAnim example 3 - Bubble sort visualization", 800, 180);
+	HtmlAnim::HtmlAnim anim("HtmlAnim example 3 - Circles: bubble sort visualization", 800, 180);
 	anim.set_wait_frames(20);
 
 	anim.set_pre_text(R"(
@@ -197,7 +198,7 @@ int main() {
 }
 
 void make_example_4() {
-	HtmlAnim::HtmlAnim anim("HtmlAnim example 4 - Stroke and fill styles", 600, 300);
+	HtmlAnim::HtmlAnim anim("HtmlAnim example 4 - Line colors and styles", 600, 300);
 
 	anim.set_pre_text(R"(
 <h2>Example 4</h2>
@@ -206,6 +207,29 @@ void make_example_4() {
 	anim.set_post_text(R"(
 <p>The animation above can be generated using this code:</p>
 <p><pre>
+#include "htmlanim.hpp"
+int main() {
+	HtmlAnim::HtmlAnim anim("HtmlAnim example 4 - Line colors and styles", 600, 300);
+	const auto n_parts = 16;
+	const auto part_len = (anim.get_width() - 60) / n_parts;
+	auto get_y = [&anim, n_parts](auto part, auto y_scale)
+		{return anim.get_height() / 2 * (1 + 0.75 * y_scale * sin(2 * M_PI / n_parts * part));};
+	auto ramp = [](auto n_parts, auto i) {return (i < n_parts / 2) ? i : (n_parts - i);};
+	const auto n_frames = 60;
+	for(auto frame = 0; frame < n_frames; ++frame) {
+		const auto y_scale = sin(2 * M_PI / n_frames * frame);
+		for(auto part = 0; part < n_parts; ++part) {
+			anim.frame().line_cap("round");
+			anim.frame().line_width(5 + 5 * ramp(n_parts, (part + frame / 4) % n_parts));
+			const auto color = 255 / n_parts * (part + frame / 4);
+			anim.frame().stroke_style(HtmlAnim::rgb_color(color, 255 - color, 128 + color));
+			const auto start_x = 30 + part_len * part;
+			anim.frame().line(start_x, get_y(part, y_scale), start_x + part_len, get_y(part + 1, y_scale));
+		}
+		if(frame != n_frames - 1)
+			anim.next_frame();
+	}
+	anim.write_file("colors_lines.html");
 }
 </pre></p>
 <hr>
