@@ -194,8 +194,33 @@ int main() {
 	anim.write_file("example3.html");
 }
 
+void make_example_4() {
+	HtmlAnim::HtmlAnim anim("HtmlAnim example 4 - Stroke and fill styles", 600, 200);
+
+	anim.set_pre_text(R"(
+<h2>Example 4</h2>
+)");
+
+	anim.set_post_text(R"(
+<p>The animation above can be generated using this code:</p>
+<p><pre>
+}
+</pre></p>
+<hr>
+<p>
+<small>Github project: <a href="https://github.com/rkibria/HtmlAnim">https://github.com/rkibria/HtmlAnim</a></small>
+</p>
+)");
+
+	anim.frame().stroke_style("red");
+	anim.frame().line(0, 100, 600, 100);
+	// anim.next_frame();
+	anim.write_file("example4.html");
+}
+
 int main() {
 	make_index();
 	make_example_2();
 	make_example_3();
+	make_example_4();
 }
