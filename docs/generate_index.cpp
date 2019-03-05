@@ -1,6 +1,7 @@
 #include <array>
 #include <algorithm>
 #include <string>
+#include <cmath>
 #include "../htmlanim.hpp"
 
 void make_index() {
@@ -196,6 +197,7 @@ int main() {
 
 void make_example_4() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim example 4 - Stroke and fill styles", 600, 200);
+	anim.set_wait_frames(5);
 
 	anim.set_pre_text(R"(
 <h2>Example 4</h2>
@@ -212,9 +214,20 @@ void make_example_4() {
 </p>
 )");
 
-	anim.frame().stroke_style("red");
-	anim.frame().line(0, 100, 600, 100);
-	// anim.next_frame();
+	const auto n_parts = 16;
+	const auto part_len = 580 / n_parts;
+	auto get_y = [n_parts](auto part, auto y_scale) {return 100 * (1 + y_scale * sin(2 * M_PI / n_parts * part));};
+	const auto n_frames = 30;
+	for(auto frame = 0; frame < n_frames; ++frame) {
+		const auto y_scale = sin(2 * M_PI / n_frames * frame);
+		for(auto part = 0; part < n_parts; ++part) {
+			anim.frame().stroke_style("red");
+			const auto start_x = 10 + part_len * part;
+			anim.frame().line(start_x, get_y(part, y_scale), start_x + part_len, get_y(part + 1, y_scale));
+		}
+		if(frame != n_frames - 1)
+			anim.next_frame();
+	}
 	anim.write_file("example4.html");
 }
 
