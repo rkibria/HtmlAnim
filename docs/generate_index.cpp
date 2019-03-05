@@ -1,7 +1,7 @@
 #include <array>
 #include <algorithm>
 #include <string>
-#include "htmlanim.hpp"
+#include "../htmlanim.hpp"
 
 void make_index() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim", 120, 120);
