@@ -284,6 +284,9 @@ int main() {
 			.scale(1 + 0.5 * sin(rot), 1 + 0.5 * cos(rot))
 			.line_width(3)
 			.arc(0, 0, 80)
+			.fill_style("yellow")
+			.arc(0, 0, 80, true)
+			.fill_style("black")
 			.arc(-30, -30, 10, true)
 			.arc(30, -30, 10, true)
 			.arc(0, 0, 50, false, 0, M_PI);
