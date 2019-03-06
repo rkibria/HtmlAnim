@@ -262,7 +262,7 @@ int main() {
 }
 
 void make_example_5() {
-	HtmlAnim::HtmlAnim anim("HtmlAnim example 5 - Translation, rotation and scaling", 500, 500);
+	HtmlAnim::HtmlAnim anim("HtmlAnim example 5 - Translation, rotation and scaling", 400, 300);
 
 	anim.set_pre_text(R"(
 <h2>Example 5</h2>
@@ -285,10 +285,10 @@ int main() {
 
 	const auto n_frames = 60;
 	for(auto frame = 0; frame < n_frames; ++frame) {
-		auto& transl_frame = anim.frame().translate(frame * 2, frame * 3);
-		transl_frame.rect(0, 0, 20, 20);
-		transl_frame.line(0, 0, 20, 20);
-		transl_frame.line(0, 20, 20, 0);
+		anim.frame()
+			.translate(anim.get_width() / 2, anim.get_height() / 2)
+			.rotate(2 * M_PI / n_frames * frame)
+			.rect(-40, -40, 80, 80);
 		anim.next_frame();
 	}
 	anim.remove_last_frame();

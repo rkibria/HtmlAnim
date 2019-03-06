@@ -189,6 +189,7 @@ function text(ctx, x, y, txt, fill) {
 using DrawableVector = std::vector<std::unique_ptr<Drawable>>;
 
 class Translate;
+class Rotate;
 
 class Frame : public Drawable {
 	DrawableVector dwbl_vec;
@@ -233,6 +234,7 @@ public:
 		{return add_drawable(std::make_unique<Text>(x, y, txt.c_str(), fill));}
 
 	Frame& translate(CoordType x, CoordType y);
+	Frame& rotate(CoordType rot);
 };
 
 class Translate : public Frame {
@@ -241,19 +243,35 @@ public:
 	explicit Translate(CoordType x, CoordType y) : x{x}, y{y} {}
 	virtual bool is_defined(const TypeHashSet& done_defs) const override {return false;}
 	virtual void add_hash(TypeHashSet& done_defs) const override {}
-	virtual void draw(std::ostream& os) const override;
+	virtual void draw(std::ostream& os) const override {
+		os << "ctx.save();\n";
+		os << "ctx.translate(" << static_cast<int>(x) << ", " << static_cast<int>(y) << ");\n";
+		Frame::draw(os);
+		os << "ctx.restore();\n";
+	}
 };
 
-void Translate::draw(std::ostream& os) const {
-	os << "ctx.save();\n";
-	os << "ctx.translate(" << static_cast<int>(x) << ", " << static_cast<int>(y) << ");\n";
-	Frame::draw(os);
-	os << "ctx.restore();\n";
+Frame& Frame::translate(CoordType x, CoordType y) {
+	add_drawable(std::make_unique<Translate>(x, y));
+	return static_cast<Frame&>(*dwbl_vec.back());
 }
 
-Frame& Frame::translate(CoordType x, CoordType y) {
-	auto dwbl = std::make_unique<Translate>(x, y);
-	add_drawable(std::move(dwbl));
+class Rotate : public Frame {
+	CoordType rot;
+public:
+	explicit Rotate(CoordType rot) : rot{rot} {}
+	virtual bool is_defined(const TypeHashSet& done_defs) const override {return false;}
+	virtual void add_hash(TypeHashSet& done_defs) const override {}
+	virtual void draw(std::ostream& os) const override {
+		os << "ctx.save();\n";
+		os << "ctx.rotate(" << rot << ");\n";
+		Frame::draw(os);
+		os << "ctx.restore();\n";
+	}
+};
+
+Frame& Frame::rotate(CoordType rot) {
+	add_drawable(std::make_unique<Rotate>(rot));
 	return static_cast<Frame&>(*dwbl_vec.back());
 }
 
