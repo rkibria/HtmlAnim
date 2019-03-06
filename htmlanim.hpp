@@ -49,10 +49,19 @@ std::string rgb_color(SizeType r, SizeType g, SizeType b) {
 	return ss.str();
 }
 
+using HashType = size_t;
+using TypeHashSet = std::unordered_set<HashType>;
+
 class Drawable {
 public:
 	virtual ~Drawable() {}
-	virtual void define(std::ostream& os) const = 0;
+
+	virtual HashType get_hash() const {return typeid(*this).hash_code();}
+	virtual bool is_defined(const TypeHashSet& done_defs) const {
+		return (done_defs.find(this->get_hash()) != done_defs.end());}
+	virtual void add_hash(TypeHashSet& done_defs) const {done_defs.insert(this->get_hash());}
+
+	virtual void define(std::ostream& os, TypeHashSet& done_defs) const = 0;
 	virtual void draw(std::ostream&) const = 0;
 };
 
@@ -62,7 +71,7 @@ class Arc : public Drawable {
 public:
 	explicit Arc(CoordType x, CoordType y, CoordType r, CoordType sa, CoordType ea, bool fill)
 		: x{x}, y{y}, r{r}, sa{sa}, ea{ea}, fill{fill} {}
-	virtual void define(std::ostream& os) const override {
+	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override {
 		os << R"(
 function arc(ctx, x, y, r, sa, ea, fill) {
 	ctx.beginPath();
@@ -85,7 +94,7 @@ class Line : public Drawable {
 public:
 	explicit Line(CoordType x1, CoordType y1, CoordType x2, CoordType y2)
 		: x1{x1}, y1{y1}, x2{x2}, y2{y2} {}
-	virtual void define(std::ostream& os) const override {
+	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override {
 		os << R"(
 function line(ctx, x1, y1, x2, y2) {
 	ctx.beginPath();
@@ -107,7 +116,7 @@ class Rect : public Drawable {
 public:
 	explicit Rect(CoordType x, CoordType y, CoordType w, CoordType h, bool fill)
 		: x{x}, y{y}, w{w}, h{h}, fill{fill} {}
-	virtual void define(std::ostream& os) const override {
+	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override {
 		os << R"(
 function rect(ctx, x, y, w, h, fill) {
 	ctx.beginPath();
@@ -130,7 +139,7 @@ class StrokeStyle : public Drawable {
 	std::string style;
 public:
 	explicit StrokeStyle(const std::string& style) : style{style} {}
-	virtual void define(std::ostream& os) const override {}
+	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override {}
 	virtual void draw(std::ostream& os) const override
 		{os << "ctx.strokeStyle = \"" << style << "\";\n";}
 };
@@ -139,7 +148,7 @@ class LineCap : public Drawable {
 	std::string style;
 public:
 	explicit LineCap(const std::string& style) : style{style} {}
-	virtual void define(std::ostream& os) const override {}
+	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override {}
 	virtual void draw(std::ostream& os) const override
 		{os << "ctx.lineCap = \"" << style << "\";\n";}
 };
@@ -148,7 +157,7 @@ class LineWidth : public Drawable {
 	SizeType width;
 public:
 	explicit LineWidth(SizeType width) : width{width} {}
-	virtual void define(std::ostream& os) const override {}
+	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override {}
 	virtual void draw(std::ostream& os) const override
 		{os << "ctx.lineWidth = " << width << ";\n";}
 };
@@ -160,7 +169,7 @@ class Text : public Drawable {
 public:
 	explicit Text(CoordType x, CoordType y, const char* txt, bool fill)
 		: x{x}, y{y}, txt{txt}, fill{fill} {}
-	virtual void define(std::ostream& os) const override {
+	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override {
 		os << R"(
 function text(ctx, x, y, txt, fill) {
 	ctx.beginPath();
@@ -177,10 +186,21 @@ function text(ctx, x, y, txt, fill) {
 	}
 };
 
-using DrawableVector = std::vector<std::unique_ptr<Drawable>>;
-using TypeHashSet = std::unordered_set<size_t>;
+class Frame;
 
-class Frame {
+class Translate : public Drawable {
+	std::unique_ptr<Frame> frame;
+public:
+	explicit Translate() : frame{std::make_unique<Frame>()} {}
+	virtual bool is_defined(const TypeHashSet& done_defs) const override {return false;}
+	virtual void add_hash(TypeHashSet& done_defs) const override {}
+	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override;
+	virtual void draw(std::ostream& os) const override;
+};
+
+using DrawableVector = std::vector<std::unique_ptr<Drawable>>;
+
+class Frame : public Drawable {
 	DrawableVector dwbl_vec;
 public:
 	Frame() {}
@@ -194,10 +214,9 @@ public:
 
 	void define(std::ostream& os, TypeHashSet& done_defs) const {
 		for(auto& cur_drw : dwbl_vec) {
-			const auto drw_type = typeid(*cur_drw).hash_code();
-			if(done_defs.find(drw_type) == done_defs.end()) {
-				done_defs.insert(drw_type);
-				cur_drw->define(os);
+			if(!cur_drw->is_defined(done_defs)) {
+				cur_drw->add_hash(done_defs);
+				cur_drw->define(os, done_defs);
 			}
 		}
 	}
@@ -223,6 +242,16 @@ public:
 	Frame& text(CoordType x, CoordType y, std::string txt, bool fill=true)
 		{return add_drawable(std::make_unique<Text>(x, y, txt.c_str(), fill));}
 };
+
+void Translate::define(std::ostream& os, TypeHashSet& done_defs) const {
+	frame->define(os, done_defs);
+}
+
+void Translate::draw(std::ostream& os) const {
+	os << "ctx.save();\n";
+	frame->draw(os);
+	os << "ctx.restore();\n";
+}
 
 using FrameVector = std::vector<std::unique_ptr<Frame>>;
 
