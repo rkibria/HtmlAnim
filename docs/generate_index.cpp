@@ -291,7 +291,11 @@ int main() {
 			.translate(anim.get_width() / 2, anim.get_height() / 2)
 			.rotate(rot)
 			.scale(1 + 0.5 * sin(rot), 1 + 0.5 * cos(rot))
-			.rect(-40, -40, 80, 80);
+			.line_width(3)
+			.arc(0, 0, 80)
+			.arc(-30, -30, 10, true)
+			.arc(30, -30, 10, true)
+			.arc(0, 0, 50, false, 0, M_PI);
 		anim.next_frame();
 	}
 	anim.remove_last_frame();
