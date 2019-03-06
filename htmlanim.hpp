@@ -186,12 +186,39 @@ function text(ctx, x, y, txt, fill) {
 	}
 };
 
+class Scale : public Drawable {
+	CoordType x, y;
+public:
+	explicit Scale(CoordType x, CoordType y) : x{x}, y{y} {}
+	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override {}
+	virtual void draw(std::ostream& os) const override {
+		os << "ctx.scale(" << x << ", " << y << ");\n";
+	}
+};
+
+class Rotate : public Drawable {
+	CoordType rot;
+public:
+	explicit Rotate(CoordType rot) : rot{rot} {}
+	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override {}
+	virtual void draw(std::ostream& os) const override {
+		os << "ctx.rotate(" << rot << ");\n";
+	}
+};
+
+class Translate : public Drawable {
+	CoordType x, y;
+public:
+	explicit Translate(CoordType x, CoordType y) : x{x}, y{y} {}
+	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override {}
+	virtual void draw(std::ostream& os) const override {
+		os << "ctx.translate(" << static_cast<int>(x) << ", " << static_cast<int>(y) << ");\n";
+	}
+};
+
 using DrawableVector = std::vector<std::unique_ptr<Drawable>>;
 
 class Save;
-class Translate;
-class Rotate;
-class Scale;
 
 class Frame : public Drawable {
 	DrawableVector dwbl_vec;
@@ -234,11 +261,14 @@ public:
 		{return add_drawable(std::make_unique<StrokeStyle>(style));}
 	Frame& text(CoordType x, CoordType y, std::string txt, bool fill=true)
 		{return add_drawable(std::make_unique<Text>(x, y, txt.c_str(), fill));}
+	Frame& rotate(CoordType rot)
+		{return add_drawable(std::make_unique<Rotate>(rot));}
+	Frame& translate(CoordType x, CoordType y)
+		{return add_drawable(std::make_unique<Translate>(x, y));}
+	Frame& scale(CoordType x, CoordType y)
+		{return add_drawable(std::make_unique<Scale>(x, y));}
 
 	Frame& save();
-	Frame& scale(CoordType x, CoordType y);
-	Frame& translate(CoordType x, CoordType y);
-	Frame& rotate(CoordType rot);
 };
 
 class Save : public Frame {
@@ -255,57 +285,6 @@ public:
 
 Frame& Frame::save() {
 	add_drawable(std::make_unique<Save>());
-	return static_cast<Frame&>(*dwbl_vec.back());
-}
-
-class Scale : public Frame {
-	CoordType x, y;
-public:
-	explicit Scale(CoordType x, CoordType y) : x{x}, y{y} {}
-	virtual bool is_defined(const TypeHashSet& done_defs) const override {return false;}
-	virtual void add_hash(TypeHashSet& done_defs) const override {}
-	virtual void draw(std::ostream& os) const override {
-		os << "ctx.scale(" << x << ", " << y << ");\n";
-		Frame::draw(os);
-	}
-};
-
-Frame& Frame::scale(CoordType x, CoordType y) {
-	add_drawable(std::make_unique<Scale>(x, y));
-	return static_cast<Frame&>(*dwbl_vec.back());
-}
-
-class Translate : public Frame {
-	CoordType x, y;
-public:
-	explicit Translate(CoordType x, CoordType y) : x{x}, y{y} {}
-	virtual bool is_defined(const TypeHashSet& done_defs) const override {return false;}
-	virtual void add_hash(TypeHashSet& done_defs) const override {}
-	virtual void draw(std::ostream& os) const override {
-		os << "ctx.translate(" << static_cast<int>(x) << ", " << static_cast<int>(y) << ");\n";
-		Frame::draw(os);
-	}
-};
-
-Frame& Frame::translate(CoordType x, CoordType y) {
-	add_drawable(std::make_unique<Translate>(x, y));
-	return static_cast<Frame&>(*dwbl_vec.back());
-}
-
-class Rotate : public Frame {
-	CoordType rot;
-public:
-	explicit Rotate(CoordType rot) : rot{rot} {}
-	virtual bool is_defined(const TypeHashSet& done_defs) const override {return false;}
-	virtual void add_hash(TypeHashSet& done_defs) const override {}
-	virtual void draw(std::ostream& os) const override {
-		os << "ctx.rotate(" << rot << ");\n";
-		Frame::draw(os);
-	}
-};
-
-Frame& Frame::rotate(CoordType rot) {
-	add_drawable(std::make_unique<Rotate>(rot));
 	return static_cast<Frame&>(*dwbl_vec.back());
 }
 
