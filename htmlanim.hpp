@@ -44,10 +44,8 @@ using SizeType = unsigned int;
 
 std::string rgb_color(SizeType r, SizeType g, SizeType b) {
 	std::stringstream ss;
-	r %= 256;
-	g %= 256;
-	b %= 256;
-	ss << "#" << std::hex << std::setw(2) << std::setfill('0') << r << std::setw(2) << g << std::setw(2) << b;
+	ss << "#" << std::hex << std::setw(2) << std::setfill('0') << (r % 256)
+		<< std::setw(2) << (g % 256) << std::setw(2) << (b % 256);
 	return ss.str();
 }
 
