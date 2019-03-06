@@ -186,19 +186,9 @@ function text(ctx, x, y, txt, fill) {
 	}
 };
 
-class Frame;
-
-class Translate : public Drawable {
-	std::unique_ptr<Frame> frame;
-public:
-	explicit Translate() : frame{std::make_unique<Frame>()} {}
-	virtual bool is_defined(const TypeHashSet& done_defs) const override {return false;}
-	virtual void add_hash(TypeHashSet& done_defs) const override {}
-	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override;
-	virtual void draw(std::ostream& os) const override;
-};
-
 using DrawableVector = std::vector<std::unique_ptr<Drawable>>;
+
+class Translate;
 
 class Frame : public Drawable {
 	DrawableVector dwbl_vec;
@@ -213,17 +203,17 @@ public:
 	void clear() {dwbl_vec.clear();}
 
 	void define(std::ostream& os, TypeHashSet& done_defs) const {
-		for(auto& cur_drw : dwbl_vec) {
-			if(!cur_drw->is_defined(done_defs)) {
-				cur_drw->add_hash(done_defs);
-				cur_drw->define(os, done_defs);
+		for(auto& dwbl : dwbl_vec) {
+			if(!dwbl->is_defined(done_defs)) {
+				dwbl->add_hash(done_defs);
+				dwbl->define(os, done_defs);
 			}
 		}
 	}
 
 	void draw(std::ostream& os) const {
-		for(auto& cur_drw : dwbl_vec) {
-			cur_drw->draw(os);
+		for(auto& dwbl : dwbl_vec) {
+			dwbl->draw(os);
 		}
 	}
 
@@ -241,16 +231,30 @@ public:
 		{return add_drawable(std::make_unique<StrokeStyle>(style));}
 	Frame& text(CoordType x, CoordType y, std::string txt, bool fill=true)
 		{return add_drawable(std::make_unique<Text>(x, y, txt.c_str(), fill));}
+
+	Frame& translate(CoordType x, CoordType y);
 };
 
-void Translate::define(std::ostream& os, TypeHashSet& done_defs) const {
-	frame->define(os, done_defs);
-}
+class Translate : public Frame {
+	CoordType x, y;
+public:
+	explicit Translate(CoordType x, CoordType y) : x{x}, y{y} {}
+	virtual bool is_defined(const TypeHashSet& done_defs) const override {return false;}
+	virtual void add_hash(TypeHashSet& done_defs) const override {}
+	virtual void draw(std::ostream& os) const override;
+};
 
 void Translate::draw(std::ostream& os) const {
 	os << "ctx.save();\n";
-	frame->draw(os);
+	os << "ctx.translate(" << static_cast<int>(x) << ", " << static_cast<int>(y) << ");\n";
+	Frame::draw(os);
 	os << "ctx.restore();\n";
+}
+
+Frame& Frame::translate(CoordType x, CoordType y) {
+	auto dwbl = std::make_unique<Translate>(x, y);
+	add_drawable(std::move(dwbl));
+	return static_cast<Frame&>(*dwbl_vec.back());
 }
 
 using FrameVector = std::vector<std::unique_ptr<Frame>>;

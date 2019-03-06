@@ -38,6 +38,7 @@ More examples:
 <li><a href="example2.html">Example 2 - Lines: drawing a binary tree</a></li>
 <li><a href="example3.html">Example 3 - Circles: bubble sort visualization</a></li>
 <li><a href="example4.html">Example 4 - Line colors and styles</a></li>
+<li><a href="example5.html">Example 5 - Translation, rotation and scaling</a></li>
 </ul>
 </p>
 <hr>
@@ -260,9 +261,44 @@ int main() {
 	anim.write_file("example4.html");
 }
 
+void make_example_5() {
+	HtmlAnim::HtmlAnim anim("HtmlAnim example 5 - Translation, rotation and scaling", 500, 500);
+
+	anim.set_pre_text(R"(
+<h2>Example 5</h2>
+)");
+
+	anim.set_post_text(R"(
+<p>The animation above can be generated using this code:</p>
+<p><pre>
+#include "htmlanim.hpp"
+int main() {
+	HtmlAnim::HtmlAnim anim("HtmlAnim example 5 - Translation, rotation and scaling", 600, 300);
+	anim.write_file("colors_lines.html");
+}
+</pre></p>
+<hr>
+<p>
+<small>Github project: <a href="https://github.com/rkibria/HtmlAnim">https://github.com/rkibria/HtmlAnim</a></small>
+</p>
+)");
+
+	const auto n_frames = 60;
+	for(auto frame = 0; frame < n_frames; ++frame) {
+		auto& transl_frame = anim.frame().translate(frame * 2, frame * 3);
+		transl_frame.rect(0, 0, 20, 20);
+		transl_frame.line(0, 0, 20, 20);
+		transl_frame.line(0, 20, 20, 0);
+		anim.next_frame();
+	}
+	anim.remove_last_frame();
+	anim.write_file("example5.html");
+}
+
 int main() {
 	make_index();
 	make_example_2();
 	make_example_3();
 	make_example_4();
+	make_example_5();
 }
