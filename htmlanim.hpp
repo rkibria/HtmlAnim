@@ -191,6 +191,7 @@ using DrawableVector = std::vector<std::unique_ptr<Drawable>>;
 class Save;
 class Translate;
 class Rotate;
+class Scale;
 
 class Frame : public Drawable {
 	DrawableVector dwbl_vec;
@@ -235,6 +236,7 @@ public:
 		{return add_drawable(std::make_unique<Text>(x, y, txt.c_str(), fill));}
 
 	Frame& save();
+	Frame& scale(CoordType x, CoordType y);
 	Frame& translate(CoordType x, CoordType y);
 	Frame& rotate(CoordType rot);
 };
@@ -253,6 +255,23 @@ public:
 
 Frame& Frame::save() {
 	add_drawable(std::make_unique<Save>());
+	return static_cast<Frame&>(*dwbl_vec.back());
+}
+
+class Scale : public Frame {
+	CoordType x, y;
+public:
+	explicit Scale(CoordType x, CoordType y) : x{x}, y{y} {}
+	virtual bool is_defined(const TypeHashSet& done_defs) const override {return false;}
+	virtual void add_hash(TypeHashSet& done_defs) const override {}
+	virtual void draw(std::ostream& os) const override {
+		os << "ctx.scale(" << x << ", " << y << ");\n";
+		Frame::draw(os);
+	}
+};
+
+Frame& Frame::scale(CoordType x, CoordType y) {
+	add_drawable(std::make_unique<Scale>(x, y));
 	return static_cast<Frame&>(*dwbl_vec.back());
 }
 
