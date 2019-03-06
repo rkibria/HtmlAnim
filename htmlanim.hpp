@@ -204,7 +204,7 @@ public:
 
 	void clear() {dwbl_vec.clear();}
 
-	void define(std::ostream& os, TypeHashSet& done_defs) const {
+	void define(std::ostream& os, TypeHashSet& done_defs) const override {
 		for(auto& dwbl : dwbl_vec) {
 			if(!dwbl->is_defined(done_defs)) {
 				dwbl->add_hash(done_defs);
@@ -213,7 +213,7 @@ public:
 		}
 	}
 
-	void draw(std::ostream& os) const {
+	void draw(std::ostream& os) const override {
 		for(auto& dwbl : dwbl_vec) {
 			dwbl->draw(os);
 		}
