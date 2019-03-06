@@ -185,7 +185,10 @@ class Frame {
 public:
 	Frame() {}
 
-	void add_drawable(std::unique_ptr<Drawable>&& dwbl) {dwbl_vec.emplace_back(std::move(dwbl));}
+	Frame& add_drawable(std::unique_ptr<Drawable>&& dwbl) {
+		dwbl_vec.emplace_back(std::move(dwbl));
+		return *this;
+	}
 
 	void clear() {dwbl_vec.clear();}
 
@@ -205,20 +208,20 @@ public:
 		}
 	}
 
-	void arc(CoordType x, CoordType y, CoordType r, bool fill=false, CoordType sa=0.0, CoordType ea=2*M_PI)
-		{add_drawable(std::make_unique<Arc>(x, y, r, sa, ea, fill));}
-	void line(CoordType x1, CoordType y1, CoordType x2, CoordType y2)
-		{add_drawable(std::make_unique<Line>(x1, y1, x2, y2));}
-	void line_cap(const std::string& style)
-		{add_drawable(std::make_unique<LineCap>(style));}
-	void line_width(SizeType width)
-		{add_drawable(std::make_unique<LineWidth>(width));}
-	void rect(CoordType x, CoordType y, CoordType w, CoordType h, bool fill=false)
-		{add_drawable(std::make_unique<Rect>(x, y, w, h, fill));}
-	void stroke_style(const std::string& style)
-		{add_drawable(std::make_unique<StrokeStyle>(style));}
-	void text(CoordType x, CoordType y, std::string txt, bool fill=true)
-		{add_drawable(std::make_unique<Text>(x, y, txt.c_str(), fill));}
+	Frame& arc(CoordType x, CoordType y, CoordType r, bool fill=false, CoordType sa=0.0, CoordType ea=2*M_PI)
+		{return add_drawable(std::make_unique<Arc>(x, y, r, sa, ea, fill));}
+	Frame& line(CoordType x1, CoordType y1, CoordType x2, CoordType y2)
+		{return add_drawable(std::make_unique<Line>(x1, y1, x2, y2));}
+	Frame& line_cap(const std::string& style)
+		{return add_drawable(std::make_unique<LineCap>(style));}
+	Frame& line_width(SizeType width)
+		{return add_drawable(std::make_unique<LineWidth>(width));}
+	Frame& rect(CoordType x, CoordType y, CoordType w, CoordType h, bool fill=false)
+		{return add_drawable(std::make_unique<Rect>(x, y, w, h, fill));}
+	Frame& stroke_style(const std::string& style)
+		{return add_drawable(std::make_unique<StrokeStyle>(style));}
+	Frame& text(CoordType x, CoordType y, std::string txt, bool fill=true)
+		{return add_drawable(std::make_unique<Text>(x, y, txt.c_str(), fill));}
 };
 
 using FrameVector = std::vector<std::unique_ptr<Frame>>;
