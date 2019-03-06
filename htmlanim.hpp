@@ -188,6 +188,7 @@ function text(ctx, x, y, txt, fill) {
 
 using DrawableVector = std::vector<std::unique_ptr<Drawable>>;
 
+class Save;
 class Translate;
 class Rotate;
 
@@ -233,9 +234,27 @@ public:
 	Frame& text(CoordType x, CoordType y, std::string txt, bool fill=true)
 		{return add_drawable(std::make_unique<Text>(x, y, txt.c_str(), fill));}
 
+	Frame& save();
 	Frame& translate(CoordType x, CoordType y);
 	Frame& rotate(CoordType rot);
 };
+
+class Save : public Frame {
+public:
+	explicit Save() {}
+	virtual bool is_defined(const TypeHashSet& done_defs) const override {return false;}
+	virtual void add_hash(TypeHashSet& done_defs) const override {}
+	virtual void draw(std::ostream& os) const override {
+		os << "ctx.save();\n";
+		Frame::draw(os);
+		os << "ctx.restore();\n";
+	}
+};
+
+Frame& Frame::save() {
+	add_drawable(std::make_unique<Save>());
+	return static_cast<Frame&>(*dwbl_vec.back());
+}
 
 class Translate : public Frame {
 	CoordType x, y;
@@ -244,10 +263,8 @@ public:
 	virtual bool is_defined(const TypeHashSet& done_defs) const override {return false;}
 	virtual void add_hash(TypeHashSet& done_defs) const override {}
 	virtual void draw(std::ostream& os) const override {
-		os << "ctx.save();\n";
 		os << "ctx.translate(" << static_cast<int>(x) << ", " << static_cast<int>(y) << ");\n";
 		Frame::draw(os);
-		os << "ctx.restore();\n";
 	}
 };
 
@@ -263,10 +280,8 @@ public:
 	virtual bool is_defined(const TypeHashSet& done_defs) const override {return false;}
 	virtual void add_hash(TypeHashSet& done_defs) const override {}
 	virtual void draw(std::ostream& os) const override {
-		os << "ctx.save();\n";
 		os << "ctx.rotate(" << rot << ");\n";
 		Frame::draw(os);
-		os << "ctx.restore();\n";
 	}
 };
 

@@ -286,6 +286,7 @@ int main() {
 	const auto n_frames = 60;
 	for(auto frame = 0; frame < n_frames; ++frame) {
 		anim.frame()
+			.save()
 			.translate(anim.get_width() / 2, anim.get_height() / 2)
 			.rotate(2 * M_PI / n_frames * frame)
 			.rect(-40, -40, 80, 80);
