@@ -135,6 +135,15 @@ function rect(ctx, x, y, w, h, fill) {
 	}
 };
 
+class FillStyle : public Drawable {
+	std::string style;
+public:
+	explicit FillStyle(const std::string& style) : style{style} {}
+	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override {}
+	virtual void draw(std::ostream& os) const override
+		{os << "ctx.fillStyle = \"" << style << "\";\n";}
+};
+
 class StrokeStyle : public Drawable {
 	std::string style;
 public:
@@ -257,6 +266,8 @@ public:
 		{return add_drawable(std::make_unique<LineWidth>(width));}
 	Frame& rect(CoordType x, CoordType y, CoordType w, CoordType h, bool fill=false)
 		{return add_drawable(std::make_unique<Rect>(x, y, w, h, fill));}
+	Frame& fill_style(const std::string& style)
+		{return add_drawable(std::make_unique<FillStyle>(style));}
 	Frame& stroke_style(const std::string& style)
 		{return add_drawable(std::make_unique<StrokeStyle>(style));}
 	Frame& text(CoordType x, CoordType y, std::string txt, bool fill=true)
