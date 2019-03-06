@@ -248,6 +248,10 @@ public:
 
 	auto get_num_frames() const {return frame_vec.size();}
 	void next_frame() {frame_vec.emplace_back(std::make_unique<Frame>());}
+	void remove_last_frame() {
+		if(!frame_vec.empty())
+			frame_vec.pop_back();
+	}
 
 	void write_stream(std::ostream&) const;
 	void write_file(const char*) const;

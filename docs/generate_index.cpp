@@ -26,9 +26,9 @@ int main() {
 		anim.frame().rect(10 + n_frames, 15 + frame, 40, 40, true);
 		anim.frame().rect(10 + n_frames - frame, 15 + n_frames, 40, 40);
 		anim.frame().rect(10, 15 + n_frames - frame, 40, 40, true);
-		if(frame != n_frames - 1)
-			anim.next_frame();
+		anim.next_frame();
 	}
+	anim.remove_last_frame();
 	anim.write_file("animation.html");
 }
 </pre></p>
@@ -53,9 +53,9 @@ More examples:
 		anim.frame().rect(10 + n_frames, 15 + frame, 40, 40, true);
 		anim.frame().rect(10 + n_frames - frame, 15 + n_frames, 40, 40);
 		anim.frame().rect(10, 15 + n_frames - frame, 40, 40, true);
-		if(frame != n_frames - 1)
-			anim.next_frame();
+		anim.next_frame();
 	}
+	anim.remove_last_frame();
 	anim.write_file("index.html");
 }
 
@@ -226,9 +226,9 @@ int main() {
 			const auto start_x = 30 + part_len * part;
 			anim.frame().line(start_x, get_y(part, y_scale), start_x + part_len, get_y(part + 1, y_scale));
 		}
-		if(frame != n_frames - 1)
-			anim.next_frame();
+		anim.next_frame();
 	}
+	anim.remove_last_frame();
 	anim.write_file("colors_lines.html");
 }
 </pre></p>
@@ -254,9 +254,9 @@ int main() {
 			const auto start_x = 30 + part_len * part;
 			anim.frame().line(start_x, get_y(part, y_scale), start_x + part_len, get_y(part + 1, y_scale));
 		}
-		if(frame != n_frames - 1)
-			anim.next_frame();
+		anim.next_frame();
 	}
+	anim.remove_last_frame();
 	anim.write_file("example4.html");
 }
 
