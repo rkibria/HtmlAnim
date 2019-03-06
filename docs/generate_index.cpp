@@ -38,7 +38,7 @@ More examples:
 <li><a href="example2.html">Example 2 - Lines: drawing a binary tree</a></li>
 <li><a href="example3.html">Example 3 - Circles: bubble sort visualization</a></li>
 <li><a href="example4.html">Example 4 - Line colors and styles</a></li>
-<li><a href="example5.html">Example 5 - Translation, rotation and scaling</a></li>
+<li><a href="example5.html">Example 5 - Context saving, translation, rotation and scaling</a></li>
 </ul>
 </p>
 <hr>
@@ -262,7 +262,7 @@ int main() {
 }
 
 void make_example_5() {
-	HtmlAnim::HtmlAnim anim("HtmlAnim example 5 - Translation, rotation and scaling", 400, 300);
+	HtmlAnim::HtmlAnim anim("HtmlAnim example 5 - Context saving, translation, rotation and scaling", 400, 300);
 
 	anim.set_pre_text(R"(
 <h2>Example 5</h2>
@@ -273,8 +273,24 @@ void make_example_5() {
 <p><pre>
 #include "htmlanim.hpp"
 int main() {
-	HtmlAnim::HtmlAnim anim("HtmlAnim example 5 - Translation, rotation and scaling", 600, 300);
-	anim.write_file("colors_lines.html");
+	HtmlAnim::HtmlAnim anim("HtmlAnim example 5 - Context saving, translation, rotation and scaling", 400, 300);
+	const auto n_frames = 60;
+	for(auto frame = 0; frame < n_frames; ++frame) {
+		const auto rot = 2 * M_PI / n_frames * frame;
+		anim.frame()
+			.save()
+			.translate(anim.get_width() / 2, anim.get_height() / 2)
+			.rotate(rot)
+			.scale(1 + 0.5 * sin(rot), 1 + 0.5 * cos(rot))
+			.line_width(3)
+			.arc(0, 0, 80)
+			.arc(-30, -30, 10, true)
+			.arc(30, -30, 10, true)
+			.arc(0, 0, 50, false, 0, M_PI);
+		anim.next_frame();
+	}
+	anim.remove_last_frame();
+	anim.write_file("trans_rot_scale.html");
 }
 </pre></p>
 <hr>
