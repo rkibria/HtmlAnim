@@ -353,7 +353,11 @@ int main() {
 )");
 
 	anim.frame().line(HtmlAnim::PointVector{
-		HtmlAnim::Point{50, 50}, HtmlAnim::Point{100, 50}, HtmlAnim::Point{75, 100}});
+		HtmlAnim::Point{10, 50}, HtmlAnim::Point{60, 50}, HtmlAnim::Point{35, 100}});
+	anim.frame().line(HtmlAnim::PointVector{
+		HtmlAnim::Point{70, 50}, HtmlAnim::Point{120, 50}, HtmlAnim::Point{95, 100}}, true);
+	anim.frame().line(HtmlAnim::PointVector{
+		HtmlAnim::Point{10, 110}, HtmlAnim::Point{60, 110}, HtmlAnim::Point{35, 160}}, false, true);
 
 	anim.write_file("example6.html");
 }

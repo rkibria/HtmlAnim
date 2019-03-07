@@ -101,11 +101,13 @@ function arc(ctx, x, y, r, sa, ea, fill) {
 
 class Line : public Drawable {
 	PointVector points;
+	bool fill;
+	bool close_path;
 public:
 	explicit Line(CoordType x1, CoordType y1, CoordType x2, CoordType y2)
-		: points{Point(x1, y1), Point(x2, y2)} {}
-	explicit Line(const PointVector& points)
-		: points{points} {
+		: points{Point(x1, y1), Point(x2, y2)}, fill{false}, close_path{false} {}
+	explicit Line(const PointVector& points, bool fill, bool close_path)
+		: points{points}, fill{fill}, close_path{close_path} {
 		if(points.size() < 2)
 			throw std::runtime_error("Need at least 2 points for line");
 	}
@@ -130,7 +132,9 @@ function line(ctx, x1, y1, x2, y2) {
 			for(size_t p_i = 1; p_i < points.size(); ++p_i) {
 				os << "ctx.lineTo(" << static_cast<int>(points[p_i].x) << ", " << static_cast<int>(points[p_i].y) << ");\n";
 			}
-			os << "ctx.stroke();\n";
+			if(close_path)
+				os << "ctx.closePath();\n";
+			os << (fill ? "ctx.fill();\n" : "ctx.stroke();\n");
 		}
 	}
 };
@@ -276,8 +280,8 @@ public:
 		{return add_drawable(std::make_unique<Arc>(x, y, r, sa, ea, fill));}
 	Frame& line(CoordType x1, CoordType y1, CoordType x2, CoordType y2)
 		{return add_drawable(std::make_unique<Line>(x1, y1, x2, y2));}
-	Frame& line(const PointVector& points)
-		{return add_drawable(std::make_unique<Line>(points));}
+	Frame& line(const PointVector& points, bool fill=false, bool close_path=false)
+		{return add_drawable(std::make_unique<Line>(points, fill, close_path));}
 	Frame& line_cap(const std::string& style)
 		{return add_drawable(std::make_unique<LineCap>(style));}
 	Frame& line_width(SizeType width)
