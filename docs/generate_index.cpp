@@ -39,6 +39,7 @@ More examples:
 <li><a href="example3.html">Example 3 - Circles: bubble sort visualization</a></li>
 <li><a href="example4.html">Example 4 - Line colors and styles</a></li>
 <li><a href="example5.html">Example 5 - Macros, context saving, translation, rotation and scaling</a></li>
+<li><a href="example6.html">Example 6 - Polygons</a></li>
 </ul>
 </p>
 <hr>
@@ -330,10 +331,38 @@ int main() {
 	anim.write_file("example5.html");
 }
 
+void make_example_6() {
+	HtmlAnim::HtmlAnim anim("HtmlAnim example 6 - Polygons", 600, 400);
+
+	anim.set_pre_text(R"(
+<h2>Example 6</h2>
+)");
+
+	anim.set_post_text(R"(
+<p>The animation above can be generated using this code:</p>
+<p><pre>
+#include "htmlanim.hpp"
+int main() {
+	anim.write_file("trans_rot_scale.html");
+}
+</pre></p>
+<hr>
+<p>
+<small>Github project: <a href="https://github.com/rkibria/HtmlAnim">https://github.com/rkibria/HtmlAnim</a></small>
+</p>
+)");
+
+	anim.frame().line(HtmlAnim::PointVector{
+		HtmlAnim::Point{50, 50}, HtmlAnim::Point{100, 50}, HtmlAnim::Point{75, 100}});
+
+	anim.write_file("example6.html");
+}
+
 int main() {
 	make_index();
 	make_example_2();
 	make_example_3();
 	make_example_4();
 	make_example_5();
+	make_example_6();
 }

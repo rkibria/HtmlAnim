@@ -36,6 +36,7 @@ SOFTWARE.
 #include <cmath>
 #include <sstream>
 #include <iomanip>
+#include <stdexcept>
 
 namespace HtmlAnim {
 
@@ -103,6 +104,11 @@ class Line : public Drawable {
 public:
 	explicit Line(CoordType x1, CoordType y1, CoordType x2, CoordType y2)
 		: points{Point(x1, y1), Point(x2, y2)} {}
+	explicit Line(const PointVector& points)
+		: points{points} {
+		if(points.size() < 2)
+			throw std::runtime_error("Need at least 2 points for line");
+	}
 	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override {
 		os << R"(
 function line(ctx, x1, y1, x2, y2) {
@@ -117,6 +123,14 @@ function line(ctx, x1, y1, x2, y2) {
 		if(points.size() == 2) {
 			os << "line(ctx, " << static_cast<int>(points[0].x) << ", " << static_cast<int>(points[0].y)
 				<< ", " << static_cast<int>(points[1].x) << ", " << static_cast<int>(points[1].y) << ");\n";
+		}
+		else {
+			os << "ctx.beginPath();\n";
+			os << "ctx.moveTo(" << static_cast<int>(points[0].x) << ", " << static_cast<int>(points[0].y) << ");\n";
+			for(size_t p_i = 1; p_i < points.size(); ++p_i) {
+				os << "ctx.lineTo(" << static_cast<int>(points[p_i].x) << ", " << static_cast<int>(points[p_i].y) << ");\n";
+			}
+			os << "ctx.stroke();\n";
 		}
 	}
 };
@@ -262,6 +276,8 @@ public:
 		{return add_drawable(std::make_unique<Arc>(x, y, r, sa, ea, fill));}
 	Frame& line(CoordType x1, CoordType y1, CoordType x2, CoordType y2)
 		{return add_drawable(std::make_unique<Line>(x1, y1, x2, y2));}
+	Frame& line(const PointVector& points)
+		{return add_drawable(std::make_unique<Line>(points));}
 	Frame& line_cap(const std::string& style)
 		{return add_drawable(std::make_unique<LineCap>(style));}
 	Frame& line_width(SizeType width)
