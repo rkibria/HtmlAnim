@@ -60,8 +60,8 @@ public:
 	virtual bool is_defined(const TypeHashSet& done_defs) const {
 		return (done_defs.find(this->get_hash()) != done_defs.end());}
 	virtual void add_hash(TypeHashSet& done_defs) const {done_defs.insert(this->get_hash());}
+	virtual void define(std::ostream& os, TypeHashSet& done_defs) const {}
 
-	virtual void define(std::ostream& os, TypeHashSet& done_defs) const = 0;
 	virtual void draw(std::ostream&) const = 0;
 };
 
@@ -139,7 +139,6 @@ class FillStyle : public Drawable {
 	std::string style;
 public:
 	explicit FillStyle(const std::string& style) : style{style} {}
-	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override {}
 	virtual void draw(std::ostream& os) const override
 		{os << "ctx.fillStyle = \"" << style << "\";\n";}
 };
@@ -148,7 +147,6 @@ class StrokeStyle : public Drawable {
 	std::string style;
 public:
 	explicit StrokeStyle(const std::string& style) : style{style} {}
-	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override {}
 	virtual void draw(std::ostream& os) const override
 		{os << "ctx.strokeStyle = \"" << style << "\";\n";}
 };
@@ -157,7 +155,6 @@ class LineCap : public Drawable {
 	std::string style;
 public:
 	explicit LineCap(const std::string& style) : style{style} {}
-	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override {}
 	virtual void draw(std::ostream& os) const override
 		{os << "ctx.lineCap = \"" << style << "\";\n";}
 };
@@ -166,7 +163,6 @@ class LineWidth : public Drawable {
 	SizeType width;
 public:
 	explicit LineWidth(SizeType width) : width{width} {}
-	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override {}
 	virtual void draw(std::ostream& os) const override
 		{os << "ctx.lineWidth = " << width << ";\n";}
 };
@@ -199,7 +195,6 @@ class Scale : public Drawable {
 	CoordType x, y;
 public:
 	explicit Scale(CoordType x, CoordType y) : x{x}, y{y} {}
-	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override {}
 	virtual void draw(std::ostream& os) const override {
 		os << "ctx.scale(" << x << ", " << y << ");\n";
 	}
@@ -209,7 +204,6 @@ class Rotate : public Drawable {
 	CoordType rot;
 public:
 	explicit Rotate(CoordType rot) : rot{rot} {}
-	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override {}
 	virtual void draw(std::ostream& os) const override {
 		os << "ctx.rotate(" << rot << ");\n";
 	}
@@ -219,7 +213,6 @@ class Translate : public Drawable {
 	CoordType x, y;
 public:
 	explicit Translate(CoordType x, CoordType y) : x{x}, y{y} {}
-	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override {}
 	virtual void draw(std::ostream& os) const override {
 		os << "ctx.translate(" << static_cast<int>(x) << ", " << static_cast<int>(y) << ");\n";
 	}
