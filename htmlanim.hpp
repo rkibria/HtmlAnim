@@ -40,6 +40,15 @@ SOFTWARE.
 namespace HtmlAnim {
 
 using CoordType = double;
+
+struct Point {
+	CoordType x, y;
+	explicit Point() : x{0}, y{0} {}
+	explicit Point(CoordType x, CoordType y) : x{x}, y{y} {}
+};
+
+using PointVector = std::vector<Point>;
+
 using SizeType = unsigned int;
 
 std::string rgb_color(SizeType r, SizeType g, SizeType b) {
@@ -90,10 +99,10 @@ function arc(ctx, x, y, r, sa, ea, fill) {
 };
 
 class Line : public Drawable {
-	CoordType x1, y1, x2, y2;
+	PointVector points;
 public:
 	explicit Line(CoordType x1, CoordType y1, CoordType x2, CoordType y2)
-		: x1{x1}, y1{y1}, x2{x2}, y2{y2} {}
+		: points{Point(x1, y1), Point(x2, y2)} {}
 	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override {
 		os << R"(
 function line(ctx, x1, y1, x2, y2) {
@@ -105,8 +114,10 @@ function line(ctx, x1, y1, x2, y2) {
 )";
 	}
 	virtual void draw(std::ostream& os) const override {
-		os << "line(ctx, " << static_cast<int>(x1) << ", " << static_cast<int>(y1)
-			<< ", " << static_cast<int>(x2) << ", " << static_cast<int>(y2) << ");\n";
+		if(points.size() == 2) {
+			os << "line(ctx, " << static_cast<int>(points[0].x) << ", " << static_cast<int>(points[0].y)
+				<< ", " << static_cast<int>(points[1].x) << ", " << static_cast<int>(points[1].y) << ");\n";
+		}
 	}
 };
 
