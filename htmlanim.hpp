@@ -220,8 +220,6 @@ public:
 
 using DrawableVector = std::vector<std::unique_ptr<Drawable>>;
 
-class Save;
-
 class Frame : public Drawable {
 	DrawableVector dwbl_vec;
 public:
