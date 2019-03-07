@@ -39,7 +39,7 @@ More examples:
 <li><a href="example3.html">Example 3 - Circles: bubble sort visualization</a></li>
 <li><a href="example4.html">Example 4 - Line colors and styles</a></li>
 <li><a href="example5.html">Example 5 - Macros, context saving, translation, rotation and scaling</a></li>
-<li><a href="example6.html">Example 6 - Polygons</a></li>
+<li><a href="example6.html">Example 6 - Line paths: polygons</a></li>
 </ul>
 </p>
 <hr>
@@ -332,7 +332,8 @@ int main() {
 }
 
 void make_example_6() {
-	HtmlAnim::HtmlAnim anim("HtmlAnim example 6 - Polygons", 600, 400);
+	HtmlAnim::HtmlAnim anim("HtmlAnim example 6 - Line paths: polygons", 600, 250);
+	anim.set_wait_frames(20);
 
 	anim.set_pre_text(R"(
 <h2>Example 6</h2>
@@ -343,7 +344,31 @@ void make_example_6() {
 <p><pre>
 #include "htmlanim.hpp"
 int main() {
-	anim.write_file("trans_rot_scale.html");
+	HtmlAnim::HtmlAnim anim("HtmlAnim example 6 - Line paths: polygons", 600, 250);
+	auto poly_points = [](auto n_points, auto radius) {
+		HtmlAnim::PointVector pv(n_points);
+		for(size_t p_i = 0; p_i < n_points; ++p_i) {
+			const auto phi = 2 * M_PI / n_points * p_i;
+			pv[p_i].x = radius * cos(phi);
+			pv[p_i].y = radius * sin(phi);
+		}
+		return pv;
+	};
+
+	for(size_t n_points = 2; n_points < 9; ++n_points) {
+		const auto points = poly_points(n_points, 100);
+		anim.frame()
+			.save()
+			.translate(110, 110)
+			.line(points, false, true);
+		anim.frame()
+			.save()
+			.translate(320, 110)
+			.line(points, true);
+		anim.next_frame();
+	}
+	anim.remove_last_frame();
+	anim.write_file("polygons.html");
 }
 </pre></p>
 <hr>
@@ -352,13 +377,29 @@ int main() {
 </p>
 )");
 
-	anim.frame().line(HtmlAnim::PointVector{
-		HtmlAnim::Point{10, 50}, HtmlAnim::Point{60, 50}, HtmlAnim::Point{35, 100}});
-	anim.frame().line(HtmlAnim::PointVector{
-		HtmlAnim::Point{70, 50}, HtmlAnim::Point{120, 50}, HtmlAnim::Point{95, 100}}, true);
-	anim.frame().line(HtmlAnim::PointVector{
-		HtmlAnim::Point{10, 110}, HtmlAnim::Point{60, 110}, HtmlAnim::Point{35, 160}}, false, true);
+	auto poly_points = [](auto n_points, auto radius) {
+		HtmlAnim::PointVector pv(n_points);
+		for(size_t p_i = 0; p_i < n_points; ++p_i) {
+			const auto phi = 2 * M_PI / n_points * p_i;
+			pv[p_i].x = radius * cos(phi);
+			pv[p_i].y = radius * sin(phi);
+		}
+		return pv;
+	};
 
+	for(size_t n_points = 2; n_points < 9; ++n_points) {
+		const auto points = poly_points(n_points, 100);
+		anim.frame()
+			.save()
+			.translate(110, 110)
+			.line(points, false, true);
+		anim.frame()
+			.save()
+			.translate(320, 110)
+			.line(points, true);
+		anim.next_frame();
+	}
+	anim.remove_last_frame();
 	anim.write_file("example6.html");
 }
 

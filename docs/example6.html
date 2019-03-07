@@ -1,0 +1,248 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="Description" content="Generated with HtmlAnim">
+<title>HtmlAnim example 6 - Line paths: polygons</title>
+</head>
+<body>
+
+<h2>Example 6</h2>
+
+<canvas id='anim_canvas_1' width='600' height='250'></canvas>
+<script>
+<!--
+var frame_counter = 0;
+const num_frames = 7;
+var canvas = document.getElementById('anim_canvas_1');
+var wait_counter = 0;
+var num_wait_frames = 20;
+var no_clear = false;
+
+function line(ctx, x1, y1, x2, y2) {
+	ctx.beginPath();
+	ctx.moveTo(x1, y1);
+	ctx.lineTo(x2, y2);
+	ctx.stroke();
+}
+function draw_bkgnd(ctx) {
+}
+
+function draw_frgnd(ctx) {
+}
+
+frames = [
+(function(ctx) {
+ctx.save();
+ctx.translate(110, 110);
+line(ctx, 100, 0, -100, 0);
+ctx.restore();
+ctx.save();
+ctx.translate(320, 110);
+line(ctx, 100, 0, -100, 0);
+ctx.restore();
+}),
+(function(ctx) {
+ctx.save();
+ctx.translate(110, 110);
+ctx.beginPath();
+ctx.moveTo(100, 0);
+ctx.lineTo(-49, 86);
+ctx.lineTo(-50, -86);
+ctx.closePath();
+ctx.stroke();
+ctx.restore();
+ctx.save();
+ctx.translate(320, 110);
+ctx.beginPath();
+ctx.moveTo(100, 0);
+ctx.lineTo(-49, 86);
+ctx.lineTo(-50, -86);
+ctx.fill();
+ctx.restore();
+}),
+(function(ctx) {
+ctx.save();
+ctx.translate(110, 110);
+ctx.beginPath();
+ctx.moveTo(100, 0);
+ctx.lineTo(0, 100);
+ctx.lineTo(-100, 0);
+ctx.lineTo(0, -100);
+ctx.closePath();
+ctx.stroke();
+ctx.restore();
+ctx.save();
+ctx.translate(320, 110);
+ctx.beginPath();
+ctx.moveTo(100, 0);
+ctx.lineTo(0, 100);
+ctx.lineTo(-100, 0);
+ctx.lineTo(0, -100);
+ctx.fill();
+ctx.restore();
+}),
+(function(ctx) {
+ctx.save();
+ctx.translate(110, 110);
+ctx.beginPath();
+ctx.moveTo(100, 0);
+ctx.lineTo(30, 95);
+ctx.lineTo(-80, 58);
+ctx.lineTo(-80, -58);
+ctx.lineTo(30, -95);
+ctx.closePath();
+ctx.stroke();
+ctx.restore();
+ctx.save();
+ctx.translate(320, 110);
+ctx.beginPath();
+ctx.moveTo(100, 0);
+ctx.lineTo(30, 95);
+ctx.lineTo(-80, 58);
+ctx.lineTo(-80, -58);
+ctx.lineTo(30, -95);
+ctx.fill();
+ctx.restore();
+}),
+(function(ctx) {
+ctx.save();
+ctx.translate(110, 110);
+ctx.beginPath();
+ctx.moveTo(100, 0);
+ctx.lineTo(50, 86);
+ctx.lineTo(-49, 86);
+ctx.lineTo(-100, 0);
+ctx.lineTo(-50, -86);
+ctx.lineTo(49, -86);
+ctx.closePath();
+ctx.stroke();
+ctx.restore();
+ctx.save();
+ctx.translate(320, 110);
+ctx.beginPath();
+ctx.moveTo(100, 0);
+ctx.lineTo(50, 86);
+ctx.lineTo(-49, 86);
+ctx.lineTo(-100, 0);
+ctx.lineTo(-50, -86);
+ctx.lineTo(49, -86);
+ctx.fill();
+ctx.restore();
+}),
+(function(ctx) {
+ctx.save();
+ctx.translate(110, 110);
+ctx.beginPath();
+ctx.moveTo(100, 0);
+ctx.lineTo(62, 78);
+ctx.lineTo(-22, 97);
+ctx.lineTo(-90, 43);
+ctx.lineTo(-90, -43);
+ctx.lineTo(-22, -97);
+ctx.lineTo(62, -78);
+ctx.closePath();
+ctx.stroke();
+ctx.restore();
+ctx.save();
+ctx.translate(320, 110);
+ctx.beginPath();
+ctx.moveTo(100, 0);
+ctx.lineTo(62, 78);
+ctx.lineTo(-22, 97);
+ctx.lineTo(-90, 43);
+ctx.lineTo(-90, -43);
+ctx.lineTo(-22, -97);
+ctx.lineTo(62, -78);
+ctx.fill();
+ctx.restore();
+}),
+(function(ctx) {
+ctx.save();
+ctx.translate(110, 110);
+ctx.beginPath();
+ctx.moveTo(100, 0);
+ctx.lineTo(70, 70);
+ctx.lineTo(0, 100);
+ctx.lineTo(-70, 70);
+ctx.lineTo(-100, 0);
+ctx.lineTo(-70, -70);
+ctx.lineTo(0, -100);
+ctx.lineTo(70, -70);
+ctx.closePath();
+ctx.stroke();
+ctx.restore();
+ctx.save();
+ctx.translate(320, 110);
+ctx.beginPath();
+ctx.moveTo(100, 0);
+ctx.lineTo(70, 70);
+ctx.lineTo(0, 100);
+ctx.lineTo(-70, 70);
+ctx.lineTo(-100, 0);
+ctx.lineTo(-70, -70);
+ctx.lineTo(0, -100);
+ctx.lineTo(70, -70);
+ctx.fill();
+ctx.restore();
+}),
+];
+
+window.onload = function() {
+	ctx = canvas.getContext('2d'),
+	(function drawFrame () {
+		if(frame_counter == 0 || !no_clear)
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+		draw_bkgnd(ctx);
+		(frames[frame_counter])(ctx);
+		draw_frgnd(ctx);
+		wait_counter = (num_wait_frames == 0) ? 0 : ((wait_counter + 1) % num_wait_frames);
+		if(wait_counter == 0)
+			frame_counter = (frame_counter + 1) % num_frames;
+		window.requestAnimationFrame(drawFrame, canvas);
+	}());
+}
+
+//-->
+</script>
+<noscript>JavaScript is required to display this content.</noscript>
+
+<p>The animation above can be generated using this code:</p>
+<p><pre>
+#include "htmlanim.hpp"
+int main() {
+	HtmlAnim::HtmlAnim anim("HtmlAnim example 6 - Line paths: polygons", 600, 250);
+	auto poly_points = [](auto n_points, auto radius) {
+		HtmlAnim::PointVector pv(n_points);
+		for(size_t p_i = 0; p_i < n_points; ++p_i) {
+			const auto phi = 2 * M_PI / n_points * p_i;
+			pv[p_i].x = radius * cos(phi);
+			pv[p_i].y = radius * sin(phi);
+		}
+		return pv;
+	};
+
+	for(size_t n_points = 2; n_points < 9; ++n_points) {
+		const auto points = poly_points(n_points, 100);
+		anim.frame()
+			.save()
+			.translate(110, 110)
+			.line(points, false, true);
+		anim.frame()
+			.save()
+			.translate(320, 110)
+			.line(points, true);
+		anim.next_frame();
+	}
+	anim.remove_last_frame();
+	anim.write_file("polygons.html");
+}
+</pre></p>
+<hr>
+<p>
+<small>Github project: <a href="https://github.com/rkibria/HtmlAnim">https://github.com/rkibria/HtmlAnim</a></small>
+</p>
+
+
+</body>
+</html>
