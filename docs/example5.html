@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="Description" content="Generated with HtmlAnim">
-<title>HtmlAnim example 5 - Context saving, translation, rotation and scaling</title>
+<title>HtmlAnim example 5 - Macros, context saving, translation, rotation and scaling</title>
 </head>
 <body>
 
@@ -27,6 +27,16 @@ function arc(ctx, x, y, r, sa, ea, fill) {
 	else
 		ctx.stroke();
 }
+function macro_smiley(ctx) {
+ctx.lineWidth = 3;
+arc(ctx, 0, 0, 80, 0, 6.28319, false);
+ctx.fillStyle = "yellow";
+arc(ctx, 0, 0, 80, 0, 6.28319, true);
+ctx.fillStyle = "black";
+arc(ctx, -30, -30, 10, 0, 6.28319, true);
+arc(ctx, 30, -30, 10, 0, 6.28319, true);
+arc(ctx, 0, 0, 50, 0, 3.14159, false);
+}
 function draw_bkgnd(ctx) {
 }
 
@@ -39,14 +49,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(0);
 ctx.scale(1, 1.5);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -54,14 +57,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(0.10472);
 ctx.scale(1.05226, 1.49726);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -69,14 +65,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(0.20944);
 ctx.scale(1.10396, 1.48907);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -84,14 +73,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(0.314159);
 ctx.scale(1.15451, 1.47553);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -99,14 +81,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(0.418879);
 ctx.scale(1.20337, 1.45677);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -114,14 +89,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(0.523599);
 ctx.scale(1.25, 1.43301);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -129,14 +97,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(0.628319);
 ctx.scale(1.29389, 1.40451);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -144,14 +105,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(0.733038);
 ctx.scale(1.33457, 1.37157);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -159,14 +113,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(0.837758);
 ctx.scale(1.37157, 1.33457);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -174,14 +121,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(0.942478);
 ctx.scale(1.40451, 1.29389);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -189,14 +129,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(1.0472);
 ctx.scale(1.43301, 1.25);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -204,14 +137,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(1.15192);
 ctx.scale(1.45677, 1.20337);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -219,14 +145,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(1.25664);
 ctx.scale(1.47553, 1.15451);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -234,14 +153,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(1.36136);
 ctx.scale(1.48907, 1.10396);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -249,14 +161,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(1.46608);
 ctx.scale(1.49726, 1.05226);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -264,14 +169,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(1.5708);
 ctx.scale(1.5, 1);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -279,14 +177,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(1.67552);
 ctx.scale(1.49726, 0.947736);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -294,14 +185,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(1.78024);
 ctx.scale(1.48907, 0.896044);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -309,14 +193,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(1.88496);
 ctx.scale(1.47553, 0.845492);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -324,14 +201,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(1.98968);
 ctx.scale(1.45677, 0.796632);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -339,14 +209,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(2.0944);
 ctx.scale(1.43301, 0.75);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -354,14 +217,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(2.19911);
 ctx.scale(1.40451, 0.706107);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -369,14 +225,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(2.30383);
 ctx.scale(1.37157, 0.665435);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -384,14 +233,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(2.40855);
 ctx.scale(1.33457, 0.628428);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -399,14 +241,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(2.51327);
 ctx.scale(1.29389, 0.595492);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -414,14 +249,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(2.61799);
 ctx.scale(1.25, 0.566987);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -429,14 +257,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(2.72271);
 ctx.scale(1.20337, 0.543227);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -444,14 +265,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(2.82743);
 ctx.scale(1.15451, 0.524472);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -459,14 +273,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(2.93215);
 ctx.scale(1.10396, 0.510926);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -474,14 +281,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(3.03687);
 ctx.scale(1.05226, 0.502739);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -489,14 +289,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(3.14159);
 ctx.scale(1, 0.5);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -504,14 +297,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(3.24631);
 ctx.scale(0.947736, 0.502739);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -519,14 +305,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(3.35103);
 ctx.scale(0.896044, 0.510926);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -534,14 +313,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(3.45575);
 ctx.scale(0.845492, 0.524472);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -549,14 +321,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(3.56047);
 ctx.scale(0.796632, 0.543227);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -564,14 +329,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(3.66519);
 ctx.scale(0.75, 0.566987);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -579,14 +337,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(3.76991);
 ctx.scale(0.706107, 0.595492);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -594,14 +345,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(3.87463);
 ctx.scale(0.665435, 0.628428);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -609,14 +353,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(3.97935);
 ctx.scale(0.628428, 0.665435);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -624,14 +361,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(4.08407);
 ctx.scale(0.595492, 0.706107);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -639,14 +369,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(4.18879);
 ctx.scale(0.566987, 0.75);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -654,14 +377,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(4.29351);
 ctx.scale(0.543227, 0.796632);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -669,14 +385,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(4.39823);
 ctx.scale(0.524472, 0.845492);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -684,14 +393,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(4.50295);
 ctx.scale(0.510926, 0.896044);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -699,14 +401,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(4.60767);
 ctx.scale(0.502739, 0.947736);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -714,14 +409,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(4.71239);
 ctx.scale(0.5, 1);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -729,14 +417,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(4.81711);
 ctx.scale(0.502739, 1.05226);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -744,14 +425,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(4.92183);
 ctx.scale(0.510926, 1.10396);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -759,14 +433,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(5.02655);
 ctx.scale(0.524472, 1.15451);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -774,14 +441,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(5.13127);
 ctx.scale(0.543227, 1.20337);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -789,14 +449,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(5.23599);
 ctx.scale(0.566987, 1.25);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -804,14 +457,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(5.34071);
 ctx.scale(0.595492, 1.29389);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -819,14 +465,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(5.44543);
 ctx.scale(0.628428, 1.33457);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -834,14 +473,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(5.55015);
 ctx.scale(0.665435, 1.37157);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -849,14 +481,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(5.65487);
 ctx.scale(0.706107, 1.40451);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -864,14 +489,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(5.75959);
 ctx.scale(0.75, 1.43301);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -879,14 +497,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(5.86431);
 ctx.scale(0.796632, 1.45677);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -894,14 +505,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(5.96903);
 ctx.scale(0.845492, 1.47553);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -909,14 +513,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(6.07375);
 ctx.scale(0.896044, 1.48907);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 (function(ctx) {
@@ -924,14 +521,7 @@ ctx.save();
 ctx.translate(200, 150);
 ctx.rotate(6.17847);
 ctx.scale(0.947736, 1.49726);
-ctx.lineWidth = 3;
-arc(ctx, 0, 0, 80, 0, 6.28319, false);
-ctx.fillStyle = "yellow";
-arc(ctx, 0, 0, 80, 0, 6.28319, true);
-ctx.fillStyle = "black";
-arc(ctx, -30, -30, 10, 0, 6.28319, true);
-arc(ctx, 30, -30, 10, 0, 6.28319, true);
-arc(ctx, 0, 0, 50, 0, 3.14159, false);
+macro_smiley(ctx);
 ctx.restore();
 }),
 ];
@@ -959,8 +549,18 @@ window.onload = function() {
 <p><pre>
 #include "htmlanim.hpp"
 int main() {
-	HtmlAnim::HtmlAnim anim("HtmlAnim example 5 - Context saving, translation, rotation and scaling", 400, 300);
+	HtmlAnim::HtmlAnim anim("HtmlAnim example 5 - Macros, context saving, translation, rotation and scaling", 400, 300);
 	const auto n_frames = 60;
+	const constexpr char* smiley = "smiley";
+	anim.frame().define_macro(smiley)
+		.line_width(3)
+		.arc(0, 0, 80)
+		.fill_style("yellow")
+		.arc(0, 0, 80, true)
+		.fill_style("black")
+		.arc(-30, -30, 10, true)
+		.arc(30, -30, 10, true)
+		.arc(0, 0, 50, false, 0, M_PI);
 	for(auto frame = 0; frame < n_frames; ++frame) {
 		const auto rot = 2 * M_PI / n_frames * frame;
 		anim.frame()
@@ -968,14 +568,7 @@ int main() {
 			.translate(anim.get_width() / 2, anim.get_height() / 2)
 			.rotate(rot)
 			.scale(1 + 0.5 * sin(rot), 1 + 0.5 * cos(rot))
-			.line_width(3)
-			.arc(0, 0, 80)
-			.fill_style("yellow")
-			.arc(0, 0, 80, true)
-			.fill_style("black")
-			.arc(-30, -30, 10, true)
-			.arc(30, -30, 10, true)
-			.arc(0, 0, 50, false, 0, M_PI);
+			.draw_macro(smiley);
 		anim.next_frame();
 	}
 	anim.remove_last_frame();

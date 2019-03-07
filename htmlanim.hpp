@@ -271,6 +271,8 @@ public:
 		{return add_drawable(std::make_unique<Scale>(x, y));}
 
 	Frame& save();
+	Frame& define_macro(const std::string& name);
+	Frame& draw_macro(const std::string& name);
 };
 
 class Save : public Frame {
@@ -288,6 +290,43 @@ public:
 Frame& Frame::save() {
 	add_drawable(std::make_unique<Save>());
 	return static_cast<Frame&>(*dwbl_vec.back());
+}
+
+class DefineMacro : public Frame {
+	std::string name;
+public:
+	explicit DefineMacro(const std::string& name) : name{name} {}
+	virtual bool is_defined(const TypeHashSet& done_defs) const override {return false;}
+	virtual void add_hash(TypeHashSet& done_defs) const override {}
+	void define(std::ostream& os, TypeHashSet& done_defs) const override {
+		Frame::define(os, done_defs);
+		os << "function macro_" << name << "(ctx) {\n";
+		Frame::draw(os);
+		os << "}\n";
+	}
+	virtual void draw(std::ostream& os) const override {}
+};
+
+Frame& Frame::define_macro(const std::string& name) {
+	add_drawable(std::make_unique<DefineMacro>(name));
+	return static_cast<Frame&>(*dwbl_vec.back());
+}
+
+class DrawMacro : public Frame {
+	std::string name;
+public:
+	explicit DrawMacro(const std::string& name) : name{name} {}
+	virtual bool is_defined(const TypeHashSet& done_defs) const override {return false;}
+	virtual void add_hash(TypeHashSet& done_defs) const override {}
+	void define(std::ostream& os, TypeHashSet& done_defs) const override {}
+	virtual void draw(std::ostream& os) const override {
+		os << "macro_" << name << "(ctx);\n";
+	}
+};
+
+Frame& Frame::draw_macro(const std::string& name) {
+	add_drawable(std::make_unique<DrawMacro>(name));
+	return *this;
 }
 
 using FrameVector = std::vector<std::unique_ptr<Frame>>;
