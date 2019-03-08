@@ -376,8 +376,9 @@ public:
 		next_frame();
 	}
 
-	void set_pre_text(const char* txt) {pre_text = txt;}
-	void set_post_text(const char* txt) {post_text = txt;}
+	auto& pre_text() {return pre_text_stream;}
+	auto& post_text() {return post_text_stream;}
+
 	void set_wait_frames(SizeType waits) {wait_frames = waits;}
 	void set_no_clear(bool do_clear) {no_clear = do_clear;}
 
@@ -404,8 +405,8 @@ private:
 	SizeType height;
 	SizeType wait_frames = 0;
 
-	std::string pre_text;
-	std::string post_text;
+	std::stringstream pre_text_stream;
+	std::stringstream post_text_stream;
 
 	bool no_clear = false;
 
@@ -524,10 +525,10 @@ void HtmlAnim::write_footer(std::ostream& os) const {
 
 void HtmlAnim::write_stream(std::ostream& os) const {
 	write_header(os);
-	os << pre_text << "\n";
+	os << pre_text_stream.str() << "\n";
 	write_canvas(os);
 	write_script(os);
-	os << post_text << "\n";
+	os << post_text_stream.str() << "\n";
 	write_footer(os);
 }
 

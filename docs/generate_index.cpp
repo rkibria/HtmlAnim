@@ -8,12 +8,12 @@
 void make_index() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim", 120, 120);
 
-	anim.set_pre_text(R"(
+	anim.pre_text() << R"(
 <h1>HtmlAnim</h1>
 <h2>A header-only C++ HTML animation library</h2>
-)");
+)";
 
-	anim.set_post_text(R"(
+	anim.post_text() << R"(
 <p>The animation above can be generated using this code:</p>
 <p><pre>
 #include "htmlanim.hpp"
@@ -46,7 +46,7 @@ More examples:
 <p>
 <small>Github project: <a href="https://github.com/rkibria/HtmlAnim">https://github.com/rkibria/HtmlAnim</a></small>
 </p>
-)");
+)";
 
 	const auto n_frames = 60;
 	anim.foreground().text(10, 10, "Frame ${frame_counter + 1}/${num_frames}");
@@ -79,11 +79,9 @@ void make_example_2() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim example 2 - Lines: drawing a binary tree", 400, 600);
 	anim.set_no_clear(true);
 
-	anim.set_pre_text(R"(
-<h2>Example 2</h2>
-)");
+	anim.pre_text() << "<h2>Example 2</h2>";
 
-	anim.set_post_text(R"(
+	anim.post_text() << R"(
 <p>The animation above can be generated using this code:</p>
 <p><pre>
 #include "htmlanim.hpp"
@@ -112,7 +110,7 @@ int main() {
 <p>
 <small>Github project: <a href="https://github.com/rkibria/HtmlAnim">https://github.com/rkibria/HtmlAnim</a></small>
 </p>
-)");
+)";
 
 	draw_binary_tree(anim, 0, 300, 150);
 	anim.write_file("example2.html");
@@ -122,11 +120,9 @@ void make_example_3() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim example 3 - Circles: bubble sort visualization", 800, 180);
 	anim.set_wait_frames(20);
 
-	anim.set_pre_text(R"(
-<h2>Example 3</h2>
-)");
+	anim.pre_text() << "<h2>Example 3</h2>";
 
-	anim.set_post_text(R"(
+	anim.post_text() << R"(
 <p>The animation above can be generated using this code:</p>
 <p><pre>
 #include "htmlanim.hpp"
@@ -169,7 +165,7 @@ int main() {
 <p>
 <small>Github project: <a href="https://github.com/rkibria/HtmlAnim">https://github.com/rkibria/HtmlAnim</a></small>
 </p>
-)");
+)";
 
 	std::array<int, 8> numbers{7, 6, 2, 8, 5, 1, 4, 3};
 	int iteration = 1;
@@ -202,11 +198,9 @@ int main() {
 void make_example_4() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim example 4 - Line colors and styles", 600, 300);
 
-	anim.set_pre_text(R"(
-<h2>Example 4</h2>
-)");
+	anim.pre_text() << "<h2>Example 4</h2>";
 
-	anim.set_post_text(R"(
+	anim.post_text() << R"(
 <p>The animation above can be generated using this code:</p>
 <p><pre>
 #include "htmlanim.hpp"
@@ -238,7 +232,7 @@ int main() {
 <p>
 <small>Github project: <a href="https://github.com/rkibria/HtmlAnim">https://github.com/rkibria/HtmlAnim</a></small>
 </p>
-)");
+)";
 
 	const auto n_parts = 16;
 	const auto part_len = (anim.get_width() - 60) / n_parts;
@@ -265,11 +259,9 @@ int main() {
 void make_example_5() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim example 5 - Macros, context saving, translation, rotation and scaling", 400, 300);
 
-	anim.set_pre_text(R"(
-<h2>Example 5</h2>
-)");
+	anim.pre_text() << "<h2>Example 5</h2>";
 
-	anim.set_post_text(R"(
+	anim.post_text() << R"(
 <p>The animation above can be generated using this code:</p>
 <p><pre>
 #include "htmlanim.hpp"
@@ -304,7 +296,7 @@ int main() {
 <p>
 <small>Github project: <a href="https://github.com/rkibria/HtmlAnim">https://github.com/rkibria/HtmlAnim</a></small>
 </p>
-)");
+)";
 
 	const auto n_frames = 60;
 	const constexpr char* smiley = "smiley";
@@ -335,11 +327,9 @@ void make_example_6() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim example 6 - Line paths: polygons", 600, 250);
 	anim.set_wait_frames(20);
 
-	anim.set_pre_text(R"(
-<h2>Example 6</h2>
-)");
+	anim.pre_text() << "<h2>Example 6</h2>";
 
-	anim.set_post_text(R"(
+	anim.post_text() << R"(
 <p>The animation above can be generated using this code:</p>
 <p><pre>
 #include "htmlanim.hpp"
@@ -375,7 +365,7 @@ int main() {
 <p>
 <small>Github project: <a href="https://github.com/rkibria/HtmlAnim">https://github.com/rkibria/HtmlAnim</a></small>
 </p>
-)");
+)";
 
 	auto poly_points = [](auto n_points, auto radius) {
 		HtmlAnim::PointVector pv(n_points);
