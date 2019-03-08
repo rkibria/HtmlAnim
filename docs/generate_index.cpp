@@ -395,9 +395,21 @@ void make_example_7() {
 	anim.post_text() << R"(
 <p>The animation above can be generated using this code:</p>
 <p><pre>
+// Use the regular polygon drawable from the shapes extension
 #include "htmlanim_shapes.hpp"
 int main() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim example 7 - Extensions", 600, 250);
+	for(size_t n_points = 2; n_points < 9; ++n_points) {
+		anim.frame()
+			.save()
+			.translate(110, 110)
+			.add_drawable(HtmlAnimShapes::make_regular_polygon(0, 0, 100, n_points));
+		anim.frame()
+			.save()
+			.translate(320, 110)
+			.add_drawable(HtmlAnimShapes::make_regular_polygon(0, 0, 100, n_points, true));
+		anim.next_frame();
+	}
 	anim.remove_last_frame();
 	anim.write_file("extensions.html");
 }

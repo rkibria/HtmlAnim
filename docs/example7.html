@@ -1,0 +1,164 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="Description" content="Generated with HtmlAnim">
+<title>HtmlAnim example 7 - Extensions</title>
+</head>
+<body>
+<h2>Example 7</h2>
+<canvas id='anim_canvas_1' width='600' height='250'></canvas>
+<script>
+<!--
+var frame_counter = 0;
+const num_frames = 7;
+var canvas = document.getElementById('anim_canvas_1');
+var wait_counter = 0;
+var num_wait_frames = 20;
+var no_clear = false;
+
+function regular_polygon(ctx, x, y, r, edges, fill) {
+	ctx.beginPath();
+	for(let i = 0; i < edges; ++i) {
+		const phi = 2 * Math.PI / edges * i;
+		px = x + r * Math.cos(phi);
+		py = y + r * Math.sin(phi);
+		if(i == 0)
+			ctx.moveTo(px, py);
+		else
+			ctx.lineTo(px, py);
+	}
+	ctx.closePath();
+	if(fill)
+		ctx.fill();
+	else
+		ctx.stroke();
+}
+function draw_bkgnd(ctx) {
+}
+
+function draw_frgnd(ctx) {
+}
+
+frames = [
+(function(ctx) {
+ctx.save();
+ctx.translate(110, 110);
+regular_polygon(ctx, 0, 0, 100, 2, false);
+ctx.restore();
+ctx.save();
+ctx.translate(320, 110);
+regular_polygon(ctx, 0, 0, 100, 2, true);
+ctx.restore();
+}),
+(function(ctx) {
+ctx.save();
+ctx.translate(110, 110);
+regular_polygon(ctx, 0, 0, 100, 3, false);
+ctx.restore();
+ctx.save();
+ctx.translate(320, 110);
+regular_polygon(ctx, 0, 0, 100, 3, true);
+ctx.restore();
+}),
+(function(ctx) {
+ctx.save();
+ctx.translate(110, 110);
+regular_polygon(ctx, 0, 0, 100, 4, false);
+ctx.restore();
+ctx.save();
+ctx.translate(320, 110);
+regular_polygon(ctx, 0, 0, 100, 4, true);
+ctx.restore();
+}),
+(function(ctx) {
+ctx.save();
+ctx.translate(110, 110);
+regular_polygon(ctx, 0, 0, 100, 5, false);
+ctx.restore();
+ctx.save();
+ctx.translate(320, 110);
+regular_polygon(ctx, 0, 0, 100, 5, true);
+ctx.restore();
+}),
+(function(ctx) {
+ctx.save();
+ctx.translate(110, 110);
+regular_polygon(ctx, 0, 0, 100, 6, false);
+ctx.restore();
+ctx.save();
+ctx.translate(320, 110);
+regular_polygon(ctx, 0, 0, 100, 6, true);
+ctx.restore();
+}),
+(function(ctx) {
+ctx.save();
+ctx.translate(110, 110);
+regular_polygon(ctx, 0, 0, 100, 7, false);
+ctx.restore();
+ctx.save();
+ctx.translate(320, 110);
+regular_polygon(ctx, 0, 0, 100, 7, true);
+ctx.restore();
+}),
+(function(ctx) {
+ctx.save();
+ctx.translate(110, 110);
+regular_polygon(ctx, 0, 0, 100, 8, false);
+ctx.restore();
+ctx.save();
+ctx.translate(320, 110);
+regular_polygon(ctx, 0, 0, 100, 8, true);
+ctx.restore();
+}),
+];
+
+window.onload = function() {
+	ctx = canvas.getContext('2d'),
+	(function drawFrame () {
+		if(frame_counter == 0 || !no_clear)
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+		draw_bkgnd(ctx);
+		(frames[frame_counter])(ctx);
+		draw_frgnd(ctx);
+		wait_counter = (num_wait_frames == 0) ? 0 : ((wait_counter + 1) % num_wait_frames);
+		if(wait_counter == 0)
+			frame_counter = (frame_counter + 1) % num_frames;
+		window.requestAnimationFrame(drawFrame, canvas);
+	}());
+}
+
+//-->
+</script>
+<noscript>JavaScript is required to display this content.</noscript>
+
+<p>The animation above can be generated using this code:</p>
+<p><pre>
+// Use the regular polygon drawable from the shapes extension
+#include "htmlanim_shapes.hpp"
+int main() {
+	HtmlAnim::HtmlAnim anim("HtmlAnim example 7 - Extensions", 600, 250);
+	for(size_t n_points = 2; n_points < 9; ++n_points) {
+		anim.frame()
+			.save()
+			.translate(110, 110)
+			.add_drawable(HtmlAnimShapes::make_regular_polygon(0, 0, 100, n_points));
+		anim.frame()
+			.save()
+			.translate(320, 110)
+			.add_drawable(HtmlAnimShapes::make_regular_polygon(0, 0, 100, n_points, true));
+		anim.next_frame();
+	}
+	anim.remove_last_frame();
+	anim.write_file("extensions.html");
+}
+</pre></p>
+<hr>
+<p>
+<small><a href="index.html">Back to index</a></small><br>
+<small>Github project: <a href="https://github.com/rkibria/HtmlAnim">https://github.com/rkibria/HtmlAnim</a></small>
+</p>
+
+
+</body>
+</html>
