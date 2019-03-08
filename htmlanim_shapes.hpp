@@ -69,7 +69,7 @@ function regular_polygon(ctx, x, y, r, edges, fill) {
 	}
 };
 
-auto make_regular_polygon(CoordType x, CoordType y, CoordType r, SizeType edges, bool fill=false) {
+auto regular_polygon(CoordType x, CoordType y, CoordType r, SizeType edges, bool fill=false) {
 	return std::make_unique<RegularPolygon>(x, y, r, edges, fill);};
 
 } // namespace HtmlAnimShapes

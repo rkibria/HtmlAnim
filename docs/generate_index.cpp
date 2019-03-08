@@ -399,15 +399,16 @@ void make_example_7() {
 #include "htmlanim_shapes.hpp"
 int main() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim example 7 - Extensions", 600, 250);
+	anim.set_wait_frames(20);
 	for(size_t n_points = 2; n_points < 9; ++n_points) {
 		anim.frame()
 			.save()
 			.translate(110, 110)
-			.add_drawable(HtmlAnimShapes::make_regular_polygon(0, 0, 100, n_points));
+			.add_drawable(HtmlAnimShapes::regular_polygon(0, 0, 100, n_points));
 		anim.frame()
 			.save()
 			.translate(320, 110)
-			.add_drawable(HtmlAnimShapes::make_regular_polygon(0, 0, 100, n_points, true));
+			.add_drawable(HtmlAnimShapes::regular_polygon(0, 0, 100, n_points, true));
 		anim.next_frame();
 	}
 	anim.remove_last_frame();
@@ -421,11 +422,11 @@ int main() {
 		anim.frame()
 			.save()
 			.translate(110, 110)
-			.add_drawable(HtmlAnimShapes::make_regular_polygon(0, 0, 100, n_points));
+			.add_drawable(HtmlAnimShapes::regular_polygon(0, 0, 100, n_points));
 		anim.frame()
 			.save()
 			.translate(320, 110)
-			.add_drawable(HtmlAnimShapes::make_regular_polygon(0, 0, 100, n_points, true));
+			.add_drawable(HtmlAnimShapes::regular_polygon(0, 0, 100, n_points, true));
 		anim.next_frame();
 	}
 	anim.remove_last_frame();
