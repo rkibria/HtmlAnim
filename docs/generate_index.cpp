@@ -1,9 +1,11 @@
+#include <htmlanim.hpp>
+#include <htmlanim_shapes.hpp>
+
 #include <iostream>
 #include <array>
 #include <algorithm>
 #include <string>
 #include <cmath>
-#include "../htmlanim.hpp"
 
 static const constexpr auto footer = R"(<hr>
 <p>
@@ -47,6 +49,7 @@ More examples:
 <li><a href="example4.html">Example 4 - Line colors and styles</a></li>
 <li><a href="example5.html">Example 5 - Macros, context saving, translation, rotation and scaling</a></li>
 <li><a href="example6.html">Example 6 - Line paths: polygons</a></li>
+<li><a href="example7.html">Example 7 - Extensions</a></li>
 </ul>
 </p>
 )";
@@ -353,6 +356,7 @@ int main() {
 	anim.write_file("polygons.html");
 }
 </pre></p>
+<p>See <a href="example7.html">Example 7</a> for how to use an extension to draw regular polygons easily.</p>
 )";
 	anim.post_text() << footer;
 
@@ -382,6 +386,40 @@ int main() {
 	anim.write_file("example6.html");
 }
 
+void make_example_7() {
+	HtmlAnim::HtmlAnim anim("HtmlAnim example 7 - Extensions", 600, 250);
+	anim.set_wait_frames(20);
+
+	anim.pre_text() << "<h2>Example 7</h2>";
+
+	anim.post_text() << R"(
+<p>The animation above can be generated using this code:</p>
+<p><pre>
+#include "htmlanim_shapes.hpp"
+int main() {
+	HtmlAnim::HtmlAnim anim("HtmlAnim example 7 - Extensions", 600, 250);
+	anim.remove_last_frame();
+	anim.write_file("extensions.html");
+}
+</pre></p>
+)";
+	anim.post_text() << footer;
+
+	for(size_t n_points = 2; n_points < 9; ++n_points) {
+		anim.frame()
+			.save()
+			.translate(110, 110)
+			.add_drawable(HtmlAnimShapes::make_regular_polygon(0, 0, 100, n_points));
+		anim.frame()
+			.save()
+			.translate(320, 110)
+			.add_drawable(HtmlAnimShapes::make_regular_polygon(0, 0, 100, n_points, true));
+		anim.next_frame();
+	}
+	anim.remove_last_frame();
+	anim.write_file("example7.html");
+}
+
 int main() {
 	make_index();
 	make_example_2();
@@ -389,4 +427,5 @@ int main() {
 	make_example_4();
 	make_example_5();
 	make_example_6();
+	make_example_7();
 }
