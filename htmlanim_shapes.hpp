@@ -46,6 +46,16 @@ public:
 		os << R"(
 function regular_polygon(ctx, x, y, r, edges, fill) {
 	ctx.beginPath();
+	for(let i = 0; i < edges; ++i) {
+		const phi = 2 * Math.PI / edges * i;
+		px = x + r * Math.cos(phi);
+		py = y + r * Math.sin(phi);
+		if(i == 0)
+			ctx.moveTo(px, py);
+		else
+			ctx.lineTo(px, py);
+	}
+	ctx.closePath();
 	if(fill)
 		ctx.fill();
 	else
