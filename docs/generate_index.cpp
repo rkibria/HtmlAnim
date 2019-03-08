@@ -5,6 +5,13 @@
 #include <cmath>
 #include "../htmlanim.hpp"
 
+static const constexpr auto footer = R"(<hr>
+<p>
+<small><a href="index.html">Back to index</a></small><br>
+<small>Github project: <a href="https://github.com/rkibria/HtmlAnim">https://github.com/rkibria/HtmlAnim</a></small>
+</p>
+)";
+
 void make_index() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim", 120, 120);
 
@@ -42,11 +49,8 @@ More examples:
 <li><a href="example6.html">Example 6 - Line paths: polygons</a></li>
 </ul>
 </p>
-<hr>
-<p>
-<small>Github project: <a href="https://github.com/rkibria/HtmlAnim">https://github.com/rkibria/HtmlAnim</a></small>
-</p>
 )";
+	anim.post_text() << footer;
 
 	const auto n_frames = 60;
 	anim.foreground().text(10, 10, "Frame ${frame_counter + 1}/${num_frames}");
@@ -106,11 +110,8 @@ int main() {
 	anim.write_file("binarytree.html");
 }
 </pre></p>
-<hr>
-<p>
-<small>Github project: <a href="https://github.com/rkibria/HtmlAnim">https://github.com/rkibria/HtmlAnim</a></small>
-</p>
 )";
+	anim.post_text() << footer;
 
 	draw_binary_tree(anim, 0, 300, 150);
 	anim.write_file("example2.html");
@@ -161,11 +162,8 @@ int main() {
 	anim.write_file("bubblesort.html");
 }
 </pre></p>
-<hr>
-<p>
-<small>Github project: <a href="https://github.com/rkibria/HtmlAnim">https://github.com/rkibria/HtmlAnim</a></small>
-</p>
 )";
+	anim.post_text() << footer;
 
 	std::array<int, 8> numbers{7, 6, 2, 8, 5, 1, 4, 3};
 	int iteration = 1;
@@ -228,11 +226,8 @@ int main() {
 	anim.write_file("colors_lines.html");
 }
 </pre></p>
-<hr>
-<p>
-<small>Github project: <a href="https://github.com/rkibria/HtmlAnim">https://github.com/rkibria/HtmlAnim</a></small>
-</p>
 )";
+	anim.post_text() << footer;
 
 	const auto n_parts = 16;
 	const auto part_len = (anim.get_width() - 60) / n_parts;
@@ -292,11 +287,8 @@ int main() {
 	anim.write_file("trans_rot_scale.html");
 }
 </pre></p>
-<hr>
-<p>
-<small>Github project: <a href="https://github.com/rkibria/HtmlAnim">https://github.com/rkibria/HtmlAnim</a></small>
-</p>
 )";
+	anim.post_text() << footer;
 
 	const auto n_frames = 60;
 	const constexpr char* smiley = "smiley";
@@ -361,11 +353,8 @@ int main() {
 	anim.write_file("polygons.html");
 }
 </pre></p>
-<hr>
-<p>
-<small>Github project: <a href="https://github.com/rkibria/HtmlAnim">https://github.com/rkibria/HtmlAnim</a></small>
-</p>
 )";
+	anim.post_text() << footer;
 
 	auto poly_points = [](auto n_points, auto radius) {
 		HtmlAnim::PointVector pv(n_points);
