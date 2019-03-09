@@ -433,6 +433,26 @@ int main() {
 	anim.write_file("example7.html");
 }
 
+void make_demo_coordinates() {
+	HtmlAnim::HtmlAnim anim("HtmlAnim - Demo: coordinate system", 600, 400);
+	anim.set_wait_frames(20);
+
+	anim.pre_text() << "<h2>Demo: coordinate system</h2>";
+
+	anim.post_text() << R"(
+<p>The animation above can be generated using this code:</p>
+<p><pre>
+#include "htmlanim_shapes.hpp"
+int main() {
+}
+</pre></p>
+)";
+	anim.post_text() << footer;
+
+	anim.frame().add_drawable(HtmlAnimShapes::grid(10, 15, 50, 30, 4, 3));
+	anim.write_file("demo_coordinates.html");
+}
+
 int main() {
 	make_index();
 	make_example_2();
@@ -441,4 +461,6 @@ int main() {
 	make_example_5();
 	make_example_6();
 	make_example_7();
+
+	make_demo_coordinates();
 }

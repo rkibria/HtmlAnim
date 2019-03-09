@@ -69,6 +69,48 @@ function regular_polygon(ctx, x, y, r, edges, fill) {
 	}
 };
 
+class Grid : public Drawable {
+	CoordType x, y, dx, dy;
+	SizeType nx, ny;
+public:
+	explicit Grid(CoordType x, CoordType y, CoordType dx, CoordType dy, SizeType nx, SizeType ny)
+		: x{x}, y{y}, dx{dx}, dy{dy}, nx{nx}, ny{ny} {}
+	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override {
+		os << R"(
+function grid(ctx, x, y, dx, dy, nx, ny) {
+	const max_y = ny * dy;
+	for(let ix = 0; ix < nx; ++ix) {
+		ctx.beginPath();
+		const lx = x + ix * dx;
+		ctx.moveTo(lx, y);
+		ctx.lineTo(lx, y + max_y);
+		ctx.closePath();
+		ctx.stroke();
+	}
+	const max_x = nx * dx;
+	for(let iy = 0; iy < ny; ++iy) {
+		ctx.beginPath();
+		const ly = y + iy * dy;
+		ctx.moveTo(x, ly);
+		ctx.lineTo(x + max_x, ly);
+		ctx.closePath();
+		ctx.stroke();
+	}
+}
+)";
+	}
+	virtual void draw(std::ostream& os) const override {
+		os << "grid(ctx, " << static_cast<int>(x) << ", " << static_cast<int>(y)
+			<< ", " << static_cast<int>(dx) << ", " << static_cast<int>(dy)
+			<< ", " << nx << ", " << ny
+			<< ");\n";
+	}
+};
+
+
+auto grid(CoordType x, CoordType y, CoordType dx, CoordType dy, SizeType nx, SizeType ny) {
+	return std::make_unique<Grid>(x, y, dx, dy, nx, ny);};
+
 auto regular_polygon(CoordType x, CoordType y, CoordType r, SizeType edges, bool fill=false) {
 	return std::make_unique<RegularPolygon>(x, y, r, edges, fill);};
 
