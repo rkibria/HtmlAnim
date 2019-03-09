@@ -449,7 +449,7 @@ int main() {
 )";
 	anim.post_text() << footer;
 
-	anim.frame().add_drawable(HtmlAnimShapes::grid(10, 15, 50, 30, 4, 3));
+	anim.frame().add_drawable(HtmlAnimShapes::subdivided_grid(10, 15, 50, 30, 4, 3));
 	anim.write_file("demo_coordinates.html");
 }
 
