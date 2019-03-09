@@ -110,12 +110,16 @@ function grid(ctx, x, y, dx, dy, nx, ny) {
 class SubdividedGrid : public Drawable {
 	Grid grid;
 	CoordType x, y, dx, dy;
-	SizeType nx, ny;
+	SizeType nx, ny, nnx, nny;
 public:
-	explicit SubdividedGrid(CoordType x, CoordType y, CoordType dx, CoordType dy, SizeType nx, SizeType ny)
-		: grid(0, 0, 0, 0, 0, 0), x{x}, y{y}, dx{dx}, dy{dy}, nx{nx}, ny{ny} {}
+	explicit SubdividedGrid(CoordType x, CoordType y, CoordType dx, CoordType dy, SizeType nx, SizeType ny,
+		SizeType nnx, SizeType nny)
+		: grid(0, 0, 0, 0, 0, 0), x{x}, y{y}, dx{dx}, dy{dy}, nx{nx}, ny{ny}, nnx{nnx}, nny{nny} {}
 	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override {
-		grid.define(os, done_defs);
+		if(!grid.is_defined(done_defs)) {
+			grid.add_hash(done_defs);
+			grid.define(os, done_defs);
+		}
 		os << R"(
 function subdivided_grid(ctx, x, y, dx, dy, nx, ny) {
 }
@@ -136,7 +140,8 @@ auto grid(CoordType x, CoordType y, CoordType dx, CoordType dy, SizeType nx, Siz
 auto regular_polygon(CoordType x, CoordType y, CoordType r, SizeType edges, bool fill=false) {
 	return std::make_unique<RegularPolygon>(x, y, r, edges, fill);};
 
-auto subdivided_grid(CoordType x, CoordType y, CoordType dx, CoordType dy, SizeType nx, SizeType ny) {
-	return std::make_unique<SubdividedGrid>(x, y, dx, dy, nx, ny);};
+auto subdivided_grid(CoordType x, CoordType y, CoordType dx, CoordType dy, SizeType nx, SizeType ny,
+	SizeType nnx, SizeType nny) {
+	return std::make_unique<SubdividedGrid>(x, y, dx, dy, nx, ny, nnx, nny);};
 
 } // namespace HtmlAnimShapes
