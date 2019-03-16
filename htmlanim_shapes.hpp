@@ -79,7 +79,7 @@ public:
 		os << R"(
 function grid(ctx, x, y, dx, dy, nx, ny) {
 	const max_y = ny * dy;
-	for(let ix = 0; ix < nx; ++ix) {
+	for(let ix = 0; ix < nx + 1; ++ix) {
 		ctx.beginPath();
 		const lx = x + ix * dx;
 		ctx.moveTo(lx, y);
@@ -88,7 +88,7 @@ function grid(ctx, x, y, dx, dy, nx, ny) {
 		ctx.stroke();
 	}
 	const max_x = nx * dx;
-	for(let iy = 0; iy < ny; ++iy) {
+	for(let iy = 0; iy < ny + 1; ++iy) {
 		ctx.beginPath();
 		const ly = y + iy * dy;
 		ctx.moveTo(x, ly);
@@ -110,18 +110,27 @@ function grid(ctx, x, y, dx, dy, nx, ny) {
 class SubdividedGrid : public Drawable {
 	Grid grid;
 	CoordType x, y, dx, dy;
-	SizeType nx, ny, nnx, nny;
+	SizeType nx, ny, sx, sy;
+	std::string bgstyle, fgstyle;
 public:
 	explicit SubdividedGrid(CoordType x, CoordType y, CoordType dx, CoordType dy, SizeType nx, SizeType ny,
-		SizeType nnx, SizeType nny)
-		: grid(0, 0, 0, 0, 0, 0), x{x}, y{y}, dx{dx}, dy{dy}, nx{nx}, ny{ny}, nnx{nnx}, nny{nny} {}
+		SizeType sx, SizeType sy, const std::string& bgstyle, const std::string& fgstyle)
+		: grid(0, 0, 0, 0, 0, 0),
+		x{x}, y{y}, dx{dx}, dy{dy}, nx{nx}, ny{ny}, sx{sx}, sy{sy},
+		bgstyle{bgstyle}, fgstyle{fgstyle} {}
 	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override {
 		if(!grid.is_defined(done_defs)) {
 			grid.add_hash(done_defs);
 			grid.define(os, done_defs);
 		}
 		os << R"(
-function subdivided_grid(ctx, x, y, dx, dy, nx, ny) {
+function subdivided_grid(ctx, x, y, dx, dy, nx, ny, sx, sy, bgstyle, fgstyle) {
+	ctx.save();
+	ctx.strokeStyle = bgstyle;
+	grid(ctx, x, y, dx / sx, dy / sy, nx * sx, ny * sy);
+	ctx.strokeStyle = fgstyle;
+	grid(ctx, x, y, dx, dy, nx, ny);
+	ctx.restore();
 }
 )";
 	}
@@ -129,6 +138,8 @@ function subdivided_grid(ctx, x, y, dx, dy, nx, ny) {
 		os << "subdivided_grid(ctx, " << static_cast<int>(x) << ", " << static_cast<int>(y)
 			<< ", " << static_cast<int>(dx) << ", " << static_cast<int>(dy)
 			<< ", " << nx << ", " << ny
+			<< ", " << sx << ", " << sy
+			<< ", \"" << bgstyle << "\", \"" << fgstyle << "\""
 			<< ");\n";
 	}
 };
@@ -141,7 +152,7 @@ auto regular_polygon(CoordType x, CoordType y, CoordType r, SizeType edges, bool
 	return std::make_unique<RegularPolygon>(x, y, r, edges, fill);};
 
 auto subdivided_grid(CoordType x, CoordType y, CoordType dx, CoordType dy, SizeType nx, SizeType ny,
-	SizeType nnx, SizeType nny) {
-	return std::make_unique<SubdividedGrid>(x, y, dx, dy, nx, ny, nnx, nny);};
+	SizeType sx, SizeType sy, const std::string& bgstyle = "silver", const std::string& fgstyle = "gray") {
+	return std::make_unique<SubdividedGrid>(x, y, dx, dy, nx, ny, sx, sy, bgstyle, fgstyle);};
 
 } // namespace HtmlAnimShapes
