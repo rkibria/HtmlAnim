@@ -50,6 +50,7 @@ More examples:
 <li><a href="example5.html">Example 5 - Macros, context saving, translation, rotation and scaling</a></li>
 <li><a href="example6.html">Example 6 - Line paths: polygons</a></li>
 <li><a href="example7.html">Example 7 - Extensions</a></li>
+<li><a href="example8.html">Example 8 - Rewind</a></li>
 </ul>
 </p>
 )";
@@ -433,6 +434,89 @@ int main() {
 	anim.write_file("example7.html");
 }
 
+auto count = 0;
+
+void rec_circles(HtmlAnim::HtmlAnim& anim, double x, double y, double r, bool inside, int d=0) {
+	if(d > 5)
+		return;
+
+	anim.frame().arc(x, y, r);
+
+	const auto f = 0.5;
+	if(inside) {
+		rec_circles(anim, x - f*r, y, r*f, inside, d+1);
+		rec_circles(anim, x + f*r, y, r*f, inside, d+1);
+		rec_circles(anim, x, y + f*r, r*f, inside, d+1);
+		rec_circles(anim, x, y - f*r, r*f, inside, d+1);
+	}
+	else {
+		rec_circles(anim, x - r - f*r, y, f*r, inside, d+1);
+		rec_circles(anim, x + r + f*r, y, f*r, inside, d+1);
+		rec_circles(anim, x, y + r + f*r, f*r, inside, d+1);
+		rec_circles(anim, x, y - r - f*r, f*r, inside, d+1);
+	}
+
+	if(++count % 10 == 0)
+		anim.next_frame();
+}
+
+void make_example_8() {
+	HtmlAnim::HtmlAnim anim("HtmlAnim example 8 - Rewind", 800, 400);
+	anim.set_no_clear(true);
+
+	anim.pre_text() << "<h2>Example 8</h2>";
+
+	anim.post_text() << R"(
+<p>The animation above can be generated using this code:</p>
+<p><pre>
+#include "htmlanim.hpp"
+
+auto count = 0;
+void rec_circles(HtmlAnim::HtmlAnim& anim, double x, double y, double r, bool inside, int d=0) {
+	if(d > 5)
+		return;
+
+	anim.frame().arc(x, y, r);
+
+	const auto f = 0.5;
+	if(inside) {
+		rec_circles(anim, x - f*r, y, r*f, inside, d+1);
+		rec_circles(anim, x + f*r, y, r*f, inside, d+1);
+		rec_circles(anim, x, y + f*r, r*f, inside, d+1);
+		rec_circles(anim, x, y - f*r, r*f, inside, d+1);
+	}
+	else {
+		rec_circles(anim, x - r - f*r, y, f*r, inside, d+1);
+		rec_circles(anim, x + r + f*r, y, f*r, inside, d+1);
+		rec_circles(anim, x, y + r + f*r, f*r, inside, d+1);
+		rec_circles(anim, x, y - r - f*r, f*r, inside, d+1);
+	}
+
+	if(++count % 10 == 0)
+		anim.next_frame();
+}
+
+int main() {
+	HtmlAnim::HtmlAnim anim("HtmlAnim example 8 - Rewind", 800, 400);
+	anim.set_no_clear(true);
+	rec_circles(anim, 200, 200, 90, true);
+	anim.rewind();
+	rec_circles(anim, 600, 200, 45, false);
+	anim.remove_last_frame();
+	anim.write_file("rewind.html");
+}
+</pre></p>
+)";
+	anim.post_text() << footer;
+
+	rec_circles(anim, 200, 200, 90, true);
+	anim.rewind();
+	rec_circles(anim, 600, 200, 45, false);
+
+	anim.remove_last_frame();
+	anim.write_file("example8.html");
+}
+
 void make_demo_coordinates() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim - Demo: coordinate system", 600, 400);
 	anim.set_wait_frames(20);
@@ -462,6 +546,7 @@ int main() {
 	make_example_5();
 	make_example_6();
 	make_example_7();
+	make_example_8();
 
 	make_demo_coordinates();
 }

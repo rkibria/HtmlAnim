@@ -377,6 +377,7 @@ private:
 	const std::string canvas_name = "anim_canvas_1";
 
 	FrameVector frame_vec;
+	size_t cur_frame;
 
 	Frame bkgnd_frame, frgnd_frame;
 
@@ -389,8 +390,10 @@ public:
 	void clear() {
 		bkgnd_frame.clear();
 		frgnd_frame.clear();
+
 		frame_vec.clear();
-		next_frame();
+		cur_frame = 0;
+		frame_vec.emplace_back(std::make_unique<Frame>());
 	}
 
 	auto& pre_text() {return pre_text_stream;}
@@ -401,10 +404,22 @@ public:
 
 	auto& background() {return bkgnd_frame;}
 	auto& foreground() {return frgnd_frame;}
-	auto& frame() {return *frame_vec.back();}
+
+	auto& frame() {return *frame_vec[cur_frame];}
 
 	auto get_num_frames() const {return frame_vec.size();}
-	void next_frame() {frame_vec.emplace_back(std::make_unique<Frame>());}
+
+	void rewind() {cur_frame = 0;}
+
+	auto get_frame_index() const {return cur_frame;}
+
+	void next_frame() {
+		if(cur_frame == frame_vec.size() - 1) {
+			frame_vec.emplace_back(std::make_unique<Frame>());
+		}
+		++cur_frame;
+	}
+
 	void remove_last_frame() {
 		if(!frame_vec.empty())
 			frame_vec.pop_back();
