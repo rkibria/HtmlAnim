@@ -363,6 +363,23 @@ Frame& Frame::draw_macro(const std::string& name) {
 using FrameVector = std::vector<std::unique_ptr<Frame>>;
 
 class HtmlAnim {
+private:
+	std::string title;
+	SizeType width;
+	SizeType height;
+	SizeType wait_frames = 0;
+
+	std::stringstream pre_text_stream;
+	std::stringstream post_text_stream;
+
+	bool no_clear = false;
+
+	const std::string canvas_name = "anim_canvas_1";
+
+	FrameVector frame_vec;
+
+	Frame bkgnd_frame, frgnd_frame;
+
 public:
 	HtmlAnim() {clear();}
 	explicit HtmlAnim(const char* title = "HtmlAnim",
@@ -400,22 +417,6 @@ public:
 	auto get_height() const {return height;}
 
 private:
-	std::string title;
-	SizeType width;
-	SizeType height;
-	SizeType wait_frames = 0;
-
-	std::stringstream pre_text_stream;
-	std::stringstream post_text_stream;
-
-	bool no_clear = false;
-
-	std::string canvas_name = "anim_canvas_1";
-
-	FrameVector frame_vec;
-
-	Frame bkgnd_frame, frgnd_frame;
-
 	void write_header(std::ostream& os) const;
 	void write_canvas(std::ostream& os) const;
 
