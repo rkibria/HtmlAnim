@@ -82,7 +82,6 @@ public:
 	}
 
 	void write_if_undefined(const HashType &hash, const char* def_code) {
-		std::cout << hash << std::endl;
 		if(is_drawable_defined(hash))
 			return;
 		set_drawable_defined(hash);

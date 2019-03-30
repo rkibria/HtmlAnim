@@ -70,6 +70,7 @@ function regular_polygon(ctx, x, y, r, edges, fill) {
 };
 
 class Grid : public Drawable {
+protected:
 	CoordType x, y, dx, dy;
 	SizeType nx, ny;
 public:
@@ -107,19 +108,15 @@ function grid(ctx, x, y, dx, dy, nx, ny) {
 	}
 };
 
-class SubdividedGrid : public Drawable {
-	CoordType x, y, dx, dy;
-	SizeType nx, ny, sx, sy;
+class SubdividedGrid : public Grid {
+	SizeType sx, sy;
 	std::string bgstyle, fgstyle;
 public:
 	explicit SubdividedGrid(CoordType x, CoordType y, CoordType dx, CoordType dy, SizeType nx, SizeType ny,
 		SizeType sx, SizeType sy, const std::string& bgstyle, const std::string& fgstyle)
-		: x{x}, y{y}, dx{dx}, dy{dy}, nx{nx}, ny{ny}, sx{sx}, sy{sy}, bgstyle{bgstyle}, fgstyle{fgstyle} {}
+		: Grid(x, y, dx, dy, nx, ny), sx{sx}, sy{sy}, bgstyle{bgstyle}, fgstyle{fgstyle} {}
 	virtual void define(DefinitionsStream &ds) const override {
-		if(!ds.is_drawable_defined(typeid(Grid).hash_code())) {
-			Grid grid(0, 0, 0, 0, 0, 0);
-			grid.define(ds);
-		}
+		Grid::define(ds);
 		ds.write_if_undefined(typeid(SubdividedGrid).hash_code(), R"(
 function subdivided_grid(ctx, x, y, dx, dy, nx, ny, sx, sy, bgstyle, fgstyle) {
 	ctx.save();
