@@ -29,6 +29,7 @@ SOFTWARE.
 
 #pragma once
 
+#include <iostream>
 #include <fstream>
 #include <memory>
 #include <vector>
@@ -62,17 +63,41 @@ std::string rgb_color(SizeType r, SizeType g, SizeType b) {
 using HashType = size_t;
 using TypeHashSet = std::unordered_set<HashType>;
 
+class Drawable;
+
+class DefinitionsStream {
+private:
+	std::ostream &output_stream;
+	TypeHashSet defined_drawables;
+
+public:
+	explicit DefinitionsStream(std::ostream &os) : output_stream{os} {}
+
+	bool is_drawable_defined(const HashType &hash) const {
+		return (defined_drawables.find(hash) != defined_drawables.end());
+	}
+
+	void set_drawable_defined(const HashType &hash) {
+		defined_drawables.insert(hash);
+	}
+
+	void write_if_undefined(const HashType &hash, const char* def_code) {
+		std::cout << hash << std::endl;
+		if(is_drawable_defined(hash))
+			return;
+		set_drawable_defined(hash);
+		output_stream << def_code;
+	}
+
+	auto& stream() {return output_stream;}
+};
+
 class Drawable {
 public:
 	virtual ~Drawable() {}
 
-	virtual HashType get_hash() const {return typeid(*this).hash_code();}
-	virtual bool is_defined(const TypeHashSet& done_defs) const {
-		return (done_defs.find(this->get_hash()) != done_defs.end());}
-	virtual void add_hash(TypeHashSet& done_defs) const {done_defs.insert(this->get_hash());}
-	virtual void define(std::ostream& os, TypeHashSet& done_defs) const {}
-
-	virtual void draw(std::ostream&) const = 0;
+	virtual void define(DefinitionsStream&) const = 0;
+	virtual void draw(std::ostream &os) const = 0;
 };
 
 class Arc : public Drawable {
@@ -81,8 +106,8 @@ class Arc : public Drawable {
 public:
 	explicit Arc(CoordType x, CoordType y, CoordType r, CoordType sa, CoordType ea, bool fill)
 		: x{x}, y{y}, r{r}, sa{sa}, ea{ea}, fill{fill} {}
-	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override {
-		os << R"(
+	virtual void define(DefinitionsStream& ds) const override {
+		ds.write_if_undefined(typeid(Arc).hash_code(), R"(
 function arc(ctx, x, y, r, sa, ea, fill) {
 	ctx.beginPath();
 	ctx.arc(x, y, r, sa, ea);
@@ -91,14 +116,40 @@ function arc(ctx, x, y, r, sa, ea, fill) {
 	else
 		ctx.stroke();
 }
-)";
+)");
 	}
-	virtual void draw(std::ostream& os) const override {
+	virtual void draw(std::ostream &os) const override {
 		os << "arc(ctx, " << static_cast<int>(x) << ", " << static_cast<int>(y)
 			<< ", " << static_cast<int>(r) << ", " << sa << ", " << ea << ", " << (fill ? "true" : "false") << ");\n";
 	}
 };
 
+class Rect : public Drawable {
+	CoordType x, y, w, h;
+	bool fill;
+public:
+	explicit Rect(CoordType x, CoordType y, CoordType w, CoordType h, bool fill)
+		: x{x}, y{y}, w{w}, h{h}, fill{fill} {}
+	virtual void define(DefinitionsStream &ds) const override {
+		ds.write_if_undefined(typeid(Rect).hash_code(), R"(
+function rect(ctx, x, y, w, h, fill) {
+	ctx.beginPath();
+	ctx.rect(x, y, w, h);
+	if(fill)
+		ctx.fill();
+	else
+		ctx.stroke();
+}
+)");
+	}
+	virtual void draw(std::ostream& os) const override {
+		os << "rect(ctx, " << static_cast<int>(x)
+			<< ", " << static_cast<int>(y) << ", " << static_cast<int>(w)
+			<< ", " << static_cast<int>(h) << ", " << (fill ? "true" : "false") << ");\n";
+	}
+};
+
+/*
 class Line : public Drawable {
 	PointVector points;
 	bool fill;
@@ -136,31 +187,6 @@ function line(ctx, x1, y1, x2, y2) {
 				os << "ctx.closePath();\n";
 			os << (fill ? "ctx.fill();\n" : "ctx.stroke();\n");
 		}
-	}
-};
-
-class Rect : public Drawable {
-	CoordType x, y, w, h;
-	bool fill;
-public:
-	explicit Rect(CoordType x, CoordType y, CoordType w, CoordType h, bool fill)
-		: x{x}, y{y}, w{w}, h{h}, fill{fill} {}
-	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override {
-		os << R"(
-function rect(ctx, x, y, w, h, fill) {
-	ctx.beginPath();
-	ctx.rect(x, y, w, h);
-	if(fill)
-		ctx.fill();
-	else
-		ctx.stroke();
-}
-)";
-	}
-	virtual void draw(std::ostream& os) const override {
-		os << "rect(ctx, " << static_cast<int>(x)
-			<< ", " << static_cast<int>(y) << ", " << static_cast<int>(w)
-			<< ", " << static_cast<int>(h) << ", " << (fill ? "true" : "false") << ");\n";
 	}
 };
 
@@ -246,6 +272,7 @@ public:
 		os << "ctx.translate(" << static_cast<int>(x) << ", " << static_cast<int>(y) << ");\n";
 	}
 };
+*/
 
 using DrawableVector = std::vector<std::unique_ptr<Drawable>>;
 
@@ -261,12 +288,9 @@ public:
 
 	void clear() {dwbl_vec.clear();}
 
-	void define(std::ostream& os, TypeHashSet& done_defs) const override {
+	void define(DefinitionsStream &ds) const override {
 		for(auto& dwbl : dwbl_vec) {
-			if(!dwbl->is_defined(done_defs)) {
-				dwbl->add_hash(done_defs);
-				dwbl->define(os, done_defs);
-			}
+			dwbl->define(ds);
 		}
 	}
 
@@ -278,7 +302,9 @@ public:
 
 	Frame& arc(CoordType x, CoordType y, CoordType r, bool fill=false, CoordType sa=0.0, CoordType ea=2*M_PI)
 		{return add_drawable(std::make_unique<Arc>(x, y, r, sa, ea, fill));}
-	Frame& line(CoordType x1, CoordType y1, CoordType x2, CoordType y2)
+	Frame& rect(CoordType x, CoordType y, CoordType w, CoordType h, bool fill=false)
+		{return add_drawable(std::make_unique<Rect>(x, y, w, h, fill));}
+/*	Frame& line(CoordType x1, CoordType y1, CoordType x2, CoordType y2)
 		{return add_drawable(std::make_unique<Line>(x1, y1, x2, y2));}
 	Frame& line(const PointVector& points, bool fill=false, bool close_path=false)
 		{return add_drawable(std::make_unique<Line>(points, fill, close_path));}
@@ -286,8 +312,6 @@ public:
 		{return add_drawable(std::make_unique<LineCap>(style));}
 	Frame& line_width(SizeType width)
 		{return add_drawable(std::make_unique<LineWidth>(width));}
-	Frame& rect(CoordType x, CoordType y, CoordType w, CoordType h, bool fill=false)
-		{return add_drawable(std::make_unique<Rect>(x, y, w, h, fill));}
 	Frame& fill_style(const std::string& style)
 		{return add_drawable(std::make_unique<FillStyle>(style));}
 	Frame& stroke_style(const std::string& style)
@@ -300,12 +324,12 @@ public:
 		{return add_drawable(std::make_unique<Translate>(x, y));}
 	Frame& scale(CoordType x, CoordType y)
 		{return add_drawable(std::make_unique<Scale>(x, y));}
-
+*/
 	Frame& save();
 	Frame& define_macro(const std::string& name);
 	Frame& draw_macro(const std::string& name);
 };
-
+/*
 class Save : public Frame {
 public:
 	explicit Save() {}
@@ -359,7 +383,7 @@ Frame& Frame::draw_macro(const std::string& name) {
 	add_drawable(std::make_unique<DrawMacro>(name));
 	return *this;
 }
-
+*/
 using FrameVector = std::vector<std::unique_ptr<Frame>>;
 
 class HtmlAnim {
@@ -523,12 +547,11 @@ void HtmlAnim::write_frames(std::ostream& os) const {
 }
 
 void HtmlAnim::write_definitions(std::ostream& os) const {
-	TypeHashSet done_defs;
-
-	bkgnd_frame.define(os, done_defs);
-	frgnd_frame.define(os, done_defs);
+	DefinitionsStream ds(os);
+	bkgnd_frame.define(ds);
+	frgnd_frame.define(ds);
 	for(const auto& frm : frame_vec) {
-		frm->define(os, done_defs);
+		frm->define(ds);
 	}
 }
 
