@@ -42,8 +42,8 @@ class RegularPolygon : public Drawable {
 public:
 	explicit RegularPolygon(CoordType x, CoordType y, CoordType r, SizeType edges, bool fill)
 		: x{x}, y{y}, r{r}, edges{edges}, fill{fill} {}
-	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override {
-		os << R"(
+	virtual void define(DefinitionsStream &ds) const override {
+		ds.write_if_undefined(typeid(RegularPolygon).hash_code(), R"(
 function regular_polygon(ctx, x, y, r, edges, fill) {
 	ctx.beginPath();
 	for(let i = 0; i < edges; ++i) {
@@ -61,7 +61,7 @@ function regular_polygon(ctx, x, y, r, edges, fill) {
 	else
 		ctx.stroke();
 }
-)";
+)");
 	}
 	virtual void draw(std::ostream& os) const override {
 		os << "regular_polygon(ctx, " << static_cast<int>(x) << ", " << static_cast<int>(y)
@@ -75,8 +75,8 @@ class Grid : public Drawable {
 public:
 	explicit Grid(CoordType x, CoordType y, CoordType dx, CoordType dy, SizeType nx, SizeType ny)
 		: x{x}, y{y}, dx{dx}, dy{dy}, nx{nx}, ny{ny} {}
-	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override {
-		os << R"(
+	virtual void define(DefinitionsStream &ds) const override {
+		ds.write_if_undefined(typeid(Grid).hash_code(), R"(
 function grid(ctx, x, y, dx, dy, nx, ny) {
 	const max_y = ny * dy;
 	for(let ix = 0; ix < nx + 1; ++ix) {
@@ -97,7 +97,7 @@ function grid(ctx, x, y, dx, dy, nx, ny) {
 		ctx.stroke();
 	}
 }
-)";
+)");
 	}
 	virtual void draw(std::ostream& os) const override {
 		os << "grid(ctx, " << static_cast<int>(x) << ", " << static_cast<int>(y)
@@ -108,22 +108,19 @@ function grid(ctx, x, y, dx, dy, nx, ny) {
 };
 
 class SubdividedGrid : public Drawable {
-	Grid grid;
 	CoordType x, y, dx, dy;
 	SizeType nx, ny, sx, sy;
 	std::string bgstyle, fgstyle;
 public:
 	explicit SubdividedGrid(CoordType x, CoordType y, CoordType dx, CoordType dy, SizeType nx, SizeType ny,
 		SizeType sx, SizeType sy, const std::string& bgstyle, const std::string& fgstyle)
-		: grid(0, 0, 0, 0, 0, 0),
-		x{x}, y{y}, dx{dx}, dy{dy}, nx{nx}, ny{ny}, sx{sx}, sy{sy},
-		bgstyle{bgstyle}, fgstyle{fgstyle} {}
-	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override {
-		if(!grid.is_defined(done_defs)) {
-			grid.add_hash(done_defs);
-			grid.define(os, done_defs);
+		: x{x}, y{y}, dx{dx}, dy{dy}, nx{nx}, ny{ny}, sx{sx}, sy{sy}, bgstyle{bgstyle}, fgstyle{fgstyle} {}
+	virtual void define(DefinitionsStream &ds) const override {
+		if(!ds.is_drawable_defined(typeid(Grid).hash_code())) {
+			Grid grid(0, 0, 0, 0, 0, 0);
+			grid.define(ds);
 		}
-		os << R"(
+		ds.write_if_undefined(typeid(SubdividedGrid).hash_code(), R"(
 function subdivided_grid(ctx, x, y, dx, dy, nx, ny, sx, sy, bgstyle, fgstyle) {
 	ctx.save();
 	ctx.strokeStyle = bgstyle;
@@ -132,7 +129,7 @@ function subdivided_grid(ctx, x, y, dx, dy, nx, ny, sx, sy, bgstyle, fgstyle) {
 	grid(ctx, x, y, dx, dy, nx, ny);
 	ctx.restore();
 }
-)";
+)");
 	}
 	virtual void draw(std::ostream& os) const override {
 		os << "subdivided_grid(ctx, " << static_cast<int>(x) << ", " << static_cast<int>(y)
