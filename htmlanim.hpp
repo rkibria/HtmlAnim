@@ -96,7 +96,7 @@ class Drawable {
 public:
 	virtual ~Drawable() {}
 
-	virtual void define(DefinitionsStream&) const = 0;
+	virtual void define(DefinitionsStream&) const {}
 	virtual void draw(std::ostream &os) const = 0;
 };
 
@@ -149,7 +149,6 @@ function rect(ctx, x, y, w, h, fill) {
 	}
 };
 
-/*
 class Line : public Drawable {
 	PointVector points;
 	bool fill;
@@ -162,15 +161,15 @@ public:
 		if(points.size() < 2)
 			throw std::runtime_error("Need at least 2 points for line");
 	}
-	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override {
-		os << R"(
+	virtual void define(DefinitionsStream &ds) const override {
+		ds.write_if_undefined(typeid(Line).hash_code(), R"(
 function line(ctx, x1, y1, x2, y2) {
 	ctx.beginPath();
 	ctx.moveTo(x1, y1);
 	ctx.lineTo(x2, y2);
 	ctx.stroke();
 }
-)";
+)");
 	}
 	virtual void draw(std::ostream& os) const override {
 		if(points.size() == 2) {
@@ -229,8 +228,8 @@ class Text : public Drawable {
 public:
 	explicit Text(CoordType x, CoordType y, const char* txt, bool fill)
 		: x{x}, y{y}, txt{txt}, fill{fill} {}
-	virtual void define(std::ostream& os, TypeHashSet& done_defs) const override {
-		os << R"(
+	virtual void define(DefinitionsStream &ds) const override {
+		ds.write_if_undefined(typeid(Text).hash_code(), R"(
 function text(ctx, x, y, txt, fill) {
 	ctx.beginPath();
 	if(fill)
@@ -238,7 +237,7 @@ function text(ctx, x, y, txt, fill) {
 	else
 		ctx.strokeText(txt, x, y);
 }
-)";
+)");
 	}
 	virtual void draw(std::ostream& os) const override {
 		os << "text(ctx, " << static_cast<int>(x) << ", " << static_cast<int>(y)
@@ -272,7 +271,15 @@ public:
 		os << "ctx.translate(" << static_cast<int>(x) << ", " << static_cast<int>(y) << ");\n";
 	}
 };
-*/
+
+class DrawMacro : public Drawable {
+	std::string name;
+public:
+	explicit DrawMacro(const std::string& name) : name{name} {}
+	virtual void draw(std::ostream& os) const override {
+		os << "macro_" << name << "(ctx);\n";
+	}
+};
 
 using DrawableVector = std::vector<std::unique_ptr<Drawable>>;
 
@@ -304,7 +311,7 @@ public:
 		{return add_drawable(std::make_unique<Arc>(x, y, r, sa, ea, fill));}
 	Frame& rect(CoordType x, CoordType y, CoordType w, CoordType h, bool fill=false)
 		{return add_drawable(std::make_unique<Rect>(x, y, w, h, fill));}
-/*	Frame& line(CoordType x1, CoordType y1, CoordType x2, CoordType y2)
+	Frame& line(CoordType x1, CoordType y1, CoordType x2, CoordType y2)
 		{return add_drawable(std::make_unique<Line>(x1, y1, x2, y2));}
 	Frame& line(const PointVector& points, bool fill=false, bool close_path=false)
 		{return add_drawable(std::make_unique<Line>(points, fill, close_path));}
@@ -324,17 +331,16 @@ public:
 		{return add_drawable(std::make_unique<Translate>(x, y));}
 	Frame& scale(CoordType x, CoordType y)
 		{return add_drawable(std::make_unique<Scale>(x, y));}
-*/
+	Frame& draw_macro(const std::string& name) {
+		return add_drawable(std::make_unique<DrawMacro>(name));}
+
 	Frame& save();
 	Frame& define_macro(const std::string& name);
-	Frame& draw_macro(const std::string& name);
 };
-/*
+
 class Save : public Frame {
 public:
 	explicit Save() {}
-	virtual bool is_defined(const TypeHashSet& done_defs) const override {return false;}
-	virtual void add_hash(TypeHashSet& done_defs) const override {}
 	virtual void draw(std::ostream& os) const override {
 		os << "ctx.save();\n";
 		Frame::draw(os);
@@ -351,13 +357,11 @@ class DefineMacro : public Frame {
 	std::string name;
 public:
 	explicit DefineMacro(const std::string& name) : name{name} {}
-	virtual bool is_defined(const TypeHashSet& done_defs) const override {return false;}
-	virtual void add_hash(TypeHashSet& done_defs) const override {}
-	void define(std::ostream& os, TypeHashSet& done_defs) const override {
-		Frame::define(os, done_defs);
-		os << "function macro_" << name << "(ctx) {\n";
-		Frame::draw(os);
-		os << "}\n";
+	void define(DefinitionsStream &ds) const override {
+		Frame::define(ds);
+		ds.stream() << "function macro_" << name << "(ctx) {\n";
+		Frame::draw(ds.stream());
+		ds.stream() << "}\n";
 	}
 	virtual void draw(std::ostream& os) const override {}
 };
@@ -367,23 +371,6 @@ Frame& Frame::define_macro(const std::string& name) {
 	return static_cast<Frame&>(*dwbl_vec.back());
 }
 
-class DrawMacro : public Frame {
-	std::string name;
-public:
-	explicit DrawMacro(const std::string& name) : name{name} {}
-	virtual bool is_defined(const TypeHashSet& done_defs) const override {return false;}
-	virtual void add_hash(TypeHashSet& done_defs) const override {}
-	void define(std::ostream& os, TypeHashSet& done_defs) const override {}
-	virtual void draw(std::ostream& os) const override {
-		os << "macro_" << name << "(ctx);\n";
-	}
-};
-
-Frame& Frame::draw_macro(const std::string& name) {
-	add_drawable(std::make_unique<DrawMacro>(name));
-	return *this;
-}
-*/
 using FrameVector = std::vector<std::unique_ptr<Frame>>;
 
 class HtmlAnim {
