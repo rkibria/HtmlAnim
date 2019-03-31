@@ -63,8 +63,6 @@ std::string rgb_color(SizeType r, SizeType g, SizeType b) {
 using HashType = size_t;
 using TypeHashSet = std::unordered_set<HashType>;
 
-class Drawable;
-
 class DefinitionsStream {
 private:
 	std::ostream &output_stream;

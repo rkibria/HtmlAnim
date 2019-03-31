@@ -51,6 +51,7 @@ More examples:
 <li><a href="example6.html">Example 6 - Line paths: polygons</a></li>
 <li><a href="example7.html">Example 7 - Extensions</a></li>
 <li><a href="example8.html">Example 8 - Rewind</a></li>
+<li><a href="demo_sierpinski.html">Demo - Sierpinski triangle</a></li>
 </ul>
 </p>
 )";
@@ -538,6 +539,40 @@ int main() {
 	anim.write_file("demo_coordinates.html");
 }
 
+void equilateral_triangle(HtmlAnim::HtmlAnim &anim, double x, double y, double d) {
+	HtmlAnim::PointVector points = {
+		HtmlAnim::Point(x, y),
+		HtmlAnim::Point(x + d, y),
+		HtmlAnim::Point(x + d/2, y - d * sin(M_PI/3))};
+	anim.frame().line(points, false, true);
+}
+
+void sierpinski(HtmlAnim::HtmlAnim &anim, double x, double y, double d, int depth=0) {
+	if(depth > 7)
+		return;
+
+	equilateral_triangle(anim, x, y, d);
+
+	sierpinski(anim, x, y, d/2, depth+1);
+	sierpinski(anim, x + d/2, y, d/2, depth+1);
+	sierpinski(anim, x + d/4, y - d/2 * sin(M_PI/3), d/2, depth+1);
+
+	if(++count % 10 == 0)
+		anim.next_frame();
+}
+
+void make_demo_sierpinski() {
+	HtmlAnim::HtmlAnim anim("HtmlAnim - Demo: Sierpinski triangle", 600, 500);
+	anim.set_no_clear(true);
+	anim.pre_text() << "<h2>Demo: Sierpinski triangle</h2>";
+	anim.post_text() << R"(
+<p>See function make_demo_sierpinski() in file docs/generate_index.cpp for code.</p>
+)";
+	anim.post_text() << footer;
+	sierpinski(anim, 10, 490, 560);
+	anim.write_file("demo_sierpinski.html");
+}
+
 int main() {
 	make_index();
 	make_example_2();
@@ -549,4 +584,5 @@ int main() {
 	make_example_8();
 
 	make_demo_coordinates();
+	make_demo_sierpinski();
 }
