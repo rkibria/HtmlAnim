@@ -52,8 +52,9 @@ More examples:
 <li><a href="example6.html">Example 6 - Line paths: polygons</a></li>
 <li><a href="example7.html">Example 7 - Extensions</a></li>
 <li><a href="example8.html">Example 8 - Rewind</a></li>
+<li><a href="example9.html">Example 9 - Fonts: normal distribution</a></li>
+
 <li><a href="demo_sierpinski.html">Demo - Sierpinski triangle</a></li>
-<li><a href="demo_normal_distribution.html">Demo - Normal distribution</a></li>
 </ul>
 </p>
 )";
@@ -520,26 +521,29 @@ int main() {
 	anim.write_file("example8.html");
 }
 
-void make_demo_normal_distribution() {
-	HtmlAnim::HtmlAnim anim("HtmlAnim - Demo: Normal distribution", 520, 620);
+void make_example_9() {
+	HtmlAnim::HtmlAnim anim("HtmlAnim example 9: Fonts: normal distribution", 520, 620);
 	anim.set_wait_frames(2);
 
-	anim.pre_text() << "<h2>Demo: Normal distribution</h2>";
+	anim.pre_text() << "<h2>Example 9</h2>";
 
 	anim.post_text() << R"(
-<p>See function make_demo_normal_distribution() in file docs/generate_index.cpp for code.</p>
-)";
-	anim.post_text() << footer;
-
-	anim.background().add_drawable(HtmlAnimShapes::subdivided_grid(10,10, 50,50, 10,12, 5,5));
-
+<p>The animation above can be generated using this code:</p>
+<p><pre>
+#include "htmlanim_shapes.hpp"
+#include &lt;random&gt;
+int main() {
+	HtmlAnim::HtmlAnim anim("HtmlAnim example 9: Fonts: normal distribution", 520, 620);
+	anim.set_wait_frames(2);
+	anim.background()
+		.add_drawable(HtmlAnimShapes::subdivided_grid(10,10, 50,50, 10,12, 5,5))
+		.font("bold 20px sans-serif");
 	std::default_random_engine generator;
 	std::normal_distribution<double> distribution(25.0, 7.5);
-
 	std::array<int, 50> bins;
 	bins.fill(0);
-
 	for(int j = 0; j < 100; ++j) {
+		anim.frame().text(10, 10+50, std::string("Samples: ") + std::to_string((j+1) * 100));
 		for(int i = 0; i < 100; ++i) {
 			const auto number = distribution(generator);
 			if((number >= 0.0) && (number < 50.0))
@@ -551,8 +555,33 @@ void make_demo_normal_distribution() {
 		}
 		anim.next_frame();
 	}
+	anim.write_file("normal_distribution.html");
+}
+</pre></p>
+)";
+	anim.post_text() << footer;
 
-	anim.write_file("demo_normal_distribution.html");
+	anim.background()
+		.add_drawable(HtmlAnimShapes::subdivided_grid(10,10, 50,50, 10,12, 5,5))
+		.font("bold 20px sans-serif");
+	std::default_random_engine generator;
+	std::normal_distribution<double> distribution(25.0, 7.5);
+	std::array<int, 50> bins;
+	bins.fill(0);
+	for(int j = 0; j < 100; ++j) {
+		anim.frame().text(10, 10+50, std::string("Samples: ") + std::to_string((j+1) * 100));
+		for(int i = 0; i < 100; ++i) {
+			const auto number = distribution(generator);
+			if((number >= 0.0) && (number < 50.0))
+				++bins[static_cast<int>(number)];
+		}
+		for (int i = 0; i < 50; ++i) {
+			const auto count = bins[i];
+			anim.frame().rect(10+i*10,10+12*50 - count, 10,count, true);
+		}
+		anim.next_frame();
+	}
+	anim.write_file("example9.html");
 }
 
 void equilateral_triangle(HtmlAnim::HtmlAnim &anim, double x, double y, double d) {
@@ -598,7 +627,7 @@ int main() {
 	make_example_6();
 	make_example_7();
 	make_example_8();
+	make_example_9();
 
 	make_demo_sierpinski();
-	make_demo_normal_distribution();
 }
