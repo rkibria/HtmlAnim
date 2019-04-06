@@ -43,6 +43,11 @@ int main() {
 }
 </pre></p>
 <p>
+<ul>
+<li><a href="doxygen/html/index.html">Doygen-generated API documentation.</a></li>
+</ul>
+</p>
+<p>
 More examples:
 <ul>
 <li><a href="example2.html">Example 2 - Lines: drawing a binary tree</a></li>
