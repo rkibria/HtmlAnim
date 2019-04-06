@@ -186,6 +186,14 @@ function line(ctx, x1, y1, x2, y2) {
 	}
 };
 
+class Font : public Drawable {
+	std::string font;
+public:
+	explicit Font(const std::string& font) : font{font} {}
+	virtual void draw(std::ostream& os) const override
+		{os << "ctx.font = \"" << font << "\";\n";}
+};
+
 class FillStyle : public Drawable {
 	std::string style;
 public:
@@ -330,6 +338,8 @@ public:
 		{return add_drawable(std::make_unique<Scale>(x, y));}
 	Frame& draw_macro(const std::string& name) {
 		return add_drawable(std::make_unique<DrawMacro>(name));}
+	Frame& font(const std::string& font)
+		{return add_drawable(std::make_unique<Font>(font));}
 
 	Frame& save();
 	Frame& define_macro(const std::string& name);
