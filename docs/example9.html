@@ -5407,14 +5407,14 @@ int main() {
 		.font("bold 20px sans-serif");
 	std::default_random_engine generator;
 	std::normal_distribution<double> distribution(25.0, 7.5);
-	std::array<int, 50> bins;
+	std::array&lt;int, 50&gt; bins;
 	bins.fill(0);
 	for(int j = 0; j < 100; ++j) {
 		anim.frame().text(10, 10+50, std::string("Samples: ") + std::to_string((j+1) * 100));
 		for(int i = 0; i < 100; ++i) {
 			const auto number = distribution(generator);
 			if((number >= 0.0) && (number < 50.0))
-				++bins[static_cast<int>(number)];
+				++bins[static_cast&lt;int&gt;(number)];
 		}
 		for (int i = 0; i < 50; ++i) {
 			const auto count = bins[i];
