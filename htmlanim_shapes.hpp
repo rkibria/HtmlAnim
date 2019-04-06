@@ -139,12 +139,14 @@ function subdivided_grid(ctx, x, y, dx, dy, nx, ny, sx, sy, bgstyle, fgstyle) {
 };
 
 
+/// Draw a nx-by-ny grid starting at x,y of dx,dy pixels size
 auto grid(CoordType x, CoordType y, CoordType dx, CoordType dy, SizeType nx, SizeType ny) {
 	return std::make_unique<Grid>(x, y, dx, dy, nx, ny);};
 
 auto regular_polygon(CoordType x, CoordType y, CoordType r, SizeType edges, bool fill=false) {
 	return std::make_unique<RegularPolygon>(x, y, r, edges, fill);};
 
+/// Draw a nx-by-ny grid starting at x,y of dx,dy pixels size with each block subdivided into sx/sy elements
 auto subdivided_grid(CoordType x, CoordType y, CoordType dx, CoordType dy, SizeType nx, SizeType ny,
 	SizeType sx, SizeType sy, const std::string& bgstyle = "silver", const std::string& fgstyle = "gray") {
 	return std::make_unique<SubdividedGrid>(x, y, dx, dy, nx, ny, sx, sy, bgstyle, fgstyle);};
