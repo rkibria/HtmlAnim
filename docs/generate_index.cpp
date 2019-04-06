@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <string>
 #include <cmath>
+#include <random>
 
 static const constexpr auto footer = R"(<hr>
 <p>
@@ -52,6 +53,7 @@ More examples:
 <li><a href="example7.html">Example 7 - Extensions</a></li>
 <li><a href="example8.html">Example 8 - Rewind</a></li>
 <li><a href="demo_sierpinski.html">Demo - Sierpinski triangle</a></li>
+<li><a href="demo_normal_distribution.html">Demo - Normal distribution</a></li>
 </ul>
 </p>
 )";
@@ -518,25 +520,39 @@ int main() {
 	anim.write_file("example8.html");
 }
 
-void make_demo_coordinates() {
-	HtmlAnim::HtmlAnim anim("HtmlAnim - Demo: coordinate system", 600, 400);
-	anim.set_wait_frames(20);
+void make_demo_normal_distribution() {
+	HtmlAnim::HtmlAnim anim("HtmlAnim - Demo: Normal distribution", 520, 620);
+	anim.set_wait_frames(2);
 
-	anim.pre_text() << "<h2>Demo: coordinate system</h2>";
+	anim.pre_text() << "<h2>Demo: Normal distribution</h2>";
 
 	anim.post_text() << R"(
-<p>The animation above can be generated using this code:</p>
-<p><pre>
-#include "htmlanim_shapes.hpp"
-int main() {
-}
-</pre></p>
+<p>See function make_demo_normal_distribution() in file docs/generate_index.cpp for code.</p>
 )";
 	anim.post_text() << footer;
 
-	// anim.frame().add_drawable(HtmlAnimShapes::grid(55, 30, 20, 15, 3, 2));
-	anim.frame().add_drawable(HtmlAnimShapes::subdivided_grid(10, 10, 60, 40, 4, 3, 3, 2));
-	anim.write_file("demo_coordinates.html");
+	anim.background().add_drawable(HtmlAnimShapes::subdivided_grid(10,10, 50,50, 10,12, 5,5));
+
+	std::default_random_engine generator;
+	std::normal_distribution<double> distribution(25.0, 7.5);
+
+	std::array<int, 50> bins;
+	bins.fill(0);
+
+	for(int j = 0; j < 100; ++j) {
+		for(int i = 0; i < 100; ++i) {
+			const auto number = distribution(generator);
+			if((number >= 0.0) && (number < 50.0))
+				++bins[static_cast<int>(number)];
+		}
+		for (int i = 0; i < 50; ++i) {
+			const auto count = bins[i];
+			anim.frame().rect(10+i*10,10+12*50 - count, 10,count, true);
+		}
+		anim.next_frame();
+	}
+
+	anim.write_file("demo_normal_distribution.html");
 }
 
 void equilateral_triangle(HtmlAnim::HtmlAnim &anim, double x, double y, double d) {
@@ -583,6 +599,6 @@ int main() {
 	make_example_7();
 	make_example_8();
 
-	make_demo_coordinates();
 	make_demo_sierpinski();
+	make_demo_normal_distribution();
 }
