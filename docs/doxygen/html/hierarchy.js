@@ -25,5 +25,5 @@ var hierarchy =
       [ "HtmlAnimShapes::RegularPolygon", "class_html_anim_shapes_1_1_regular_polygon.html", null ]
     ] ],
     [ "HtmlAnim::HtmlAnim", "class_html_anim_1_1_html_anim.html", null ],
-    [ "HtmlAnim::Point", "struct_html_anim_1_1_point.html", null ]
+    [ "HtmlAnim::Vector2D", "struct_html_anim_1_1_vector2_d.html", null ]
 ];

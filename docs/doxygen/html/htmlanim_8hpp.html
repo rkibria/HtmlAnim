@@ -110,7 +110,7 @@ $(document).ready(function(){initNavTree('htmlanim_8hpp.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_html_anim_1_1_point.html">HtmlAnim::Point</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_html_anim_1_1_vector2_d.html">HtmlAnim::Vector2D</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_html_anim_1_1_definitions_stream.html">HtmlAnim::DefinitionsStream</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -160,8 +160,8 @@ Namespaces</h2></td></tr>
 Typedefs</h2></td></tr>
 <tr class="memitem:a2fc824484df6898c086991aa17f8f121"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_html_anim.html#a2fc824484df6898c086991aa17f8f121">HtmlAnim::CoordType</a> = double</td></tr>
 <tr class="separator:a2fc824484df6898c086991aa17f8f121"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac1f1d26df0918b1bc27cf6087431fece"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_html_anim.html#ac1f1d26df0918b1bc27cf6087431fece">HtmlAnim::PointVector</a> = std::vector&lt; Point &gt;</td></tr>
-<tr class="separator:ac1f1d26df0918b1bc27cf6087431fece"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80a21f17b2327dad4df4403529532597"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_html_anim.html#a80a21f17b2327dad4df4403529532597">HtmlAnim::Vector2DVector</a> = std::vector&lt; Vector2D &gt;</td></tr>
+<tr class="separator:a80a21f17b2327dad4df4403529532597"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6690b109e3bafb7a2092640f760ff107"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_html_anim.html#a6690b109e3bafb7a2092640f760ff107">HtmlAnim::SizeType</a> = unsigned int</td></tr>
 <tr class="separator:a6690b109e3bafb7a2092640f760ff107"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed26b687a1fb27de957beb40d86f23d8"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_html_anim.html#aed26b687a1fb27de957beb40d86f23d8">HtmlAnim::HashType</a> = size_t</td></tr>
@@ -175,6 +175,14 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a2f139f603870d162a57e6db385260c9e"><td class="memItemLeft" align="right" valign="top">Vector2D&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_html_anim.html#a2f139f603870d162a57e6db385260c9e">HtmlAnim::operator+</a> (const Vector2D &amp;lhs, const Vector2D &amp;rhs)</td></tr>
+<tr class="separator:a2f139f603870d162a57e6db385260c9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02716db5912a4e87490036c34dc1195a"><td class="memItemLeft" align="right" valign="top">Vector2D&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_html_anim.html#a02716db5912a4e87490036c34dc1195a">HtmlAnim::operator-</a> (const Vector2D &amp;lhs, const Vector2D &amp;rhs)</td></tr>
+<tr class="separator:a02716db5912a4e87490036c34dc1195a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad59ee5d943eab9e7de960fa11cd18c07"><td class="memItemLeft" align="right" valign="top">Vector2D&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_html_anim.html#ad59ee5d943eab9e7de960fa11cd18c07">HtmlAnim::operator *</a> (const CoordType &amp;lhs, const Vector2D &amp;rhs)</td></tr>
+<tr class="separator:ad59ee5d943eab9e7de960fa11cd18c07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8fe037b849c369b280bca49c2752b92"><td class="memItemLeft" align="right" valign="top">Vector2D&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_html_anim.html#ae8fe037b849c369b280bca49c2752b92">HtmlAnim::operator *</a> (const Vector2D &amp;lhs, const CoordType &amp;rhs)</td></tr>
+<tr class="separator:ae8fe037b849c369b280bca49c2752b92"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0df5ea0f07a103cc2a6e0a081eb44250"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_html_anim.html#a0df5ea0f07a103cc2a6e0a081eb44250">HtmlAnim::rgb_color</a> (SizeType r, SizeType g, SizeType b)</td></tr>
 <tr class="separator:a0df5ea0f07a103cc2a6e0a081eb44250"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>

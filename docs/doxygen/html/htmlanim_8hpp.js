@@ -1,6 +1,6 @@
 var htmlanim_8hpp =
 [
-    [ "Point", "struct_html_anim_1_1_point.html", "struct_html_anim_1_1_point" ],
+    [ "Vector2D", "struct_html_anim_1_1_vector2_d.html", "struct_html_anim_1_1_vector2_d" ],
     [ "DefinitionsStream", "class_html_anim_1_1_definitions_stream.html", "class_html_anim_1_1_definitions_stream" ],
     [ "Drawable", "class_html_anim_1_1_drawable.html", "class_html_anim_1_1_drawable" ],
     [ "Arc", "class_html_anim_1_1_arc.html", "class_html_anim_1_1_arc" ],
@@ -24,8 +24,12 @@ var htmlanim_8hpp =
     [ "DrawableVector", "htmlanim_8hpp.html#a681952f20b92dba4719816c0d737f611", null ],
     [ "FrameVector", "htmlanim_8hpp.html#a304e5422ef26db11a8538754a750537d", null ],
     [ "HashType", "htmlanim_8hpp.html#aed26b687a1fb27de957beb40d86f23d8", null ],
-    [ "PointVector", "htmlanim_8hpp.html#ac1f1d26df0918b1bc27cf6087431fece", null ],
     [ "SizeType", "htmlanim_8hpp.html#a6690b109e3bafb7a2092640f760ff107", null ],
     [ "TypeHashSet", "htmlanim_8hpp.html#a90b4be16eca50cd0711be5d00f897c47", null ],
+    [ "Vector2DVector", "htmlanim_8hpp.html#a80a21f17b2327dad4df4403529532597", null ],
+    [ "operator *", "htmlanim_8hpp.html#ad59ee5d943eab9e7de960fa11cd18c07", null ],
+    [ "operator *", "htmlanim_8hpp.html#ae8fe037b849c369b280bca49c2752b92", null ],
+    [ "operator+", "htmlanim_8hpp.html#a2f139f603870d162a57e6db385260c9e", null ],
+    [ "operator-", "htmlanim_8hpp.html#a02716db5912a4e87490036c34dc1195a", null ],
     [ "rgb_color", "htmlanim_8hpp.html#a0df5ea0f07a103cc2a6e0a081eb44250", null ]
 ];

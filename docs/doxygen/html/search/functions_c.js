@@ -1,13 +1,10 @@
 var searchData=
 [
-  ['save',['save',['../class_html_anim_1_1_frame.html#a967785b06768da2701ec5eff1c048fd9',1,'HtmlAnim::Frame::save()'],['../class_html_anim_1_1_save.html#a1a2442acfa37388ee3842321131a48fd',1,'HtmlAnim::Save::Save()']]],
-  ['scale',['Scale',['../class_html_anim_1_1_scale.html#a51ae495081dfe69915da4a08460b2251',1,'HtmlAnim::Scale::Scale()'],['../class_html_anim_1_1_frame.html#a8f03e2e14a556502eac0e64e356ae4c3',1,'HtmlAnim::Frame::scale()']]],
-  ['set_5fdrawable_5fdefined',['set_drawable_defined',['../class_html_anim_1_1_definitions_stream.html#a785086d477593f9348900f5fd955ba1b',1,'HtmlAnim::DefinitionsStream']]],
-  ['set_5fno_5fclear',['set_no_clear',['../class_html_anim_1_1_html_anim.html#a97e863d0f27a7ad0e715c8e88a88026d',1,'HtmlAnim::HtmlAnim']]],
-  ['set_5fwait_5fframes',['set_wait_frames',['../class_html_anim_1_1_html_anim.html#afbed82430ef9763b20048258a8d09050',1,'HtmlAnim::HtmlAnim']]],
-  ['stream',['stream',['../class_html_anim_1_1_definitions_stream.html#aba5468299b59e39b2d498e5c0e235c04',1,'HtmlAnim::DefinitionsStream']]],
-  ['stroke_5fstyle',['stroke_style',['../class_html_anim_1_1_frame.html#a5f7d58143b88d24ccc3b75800430e9e3',1,'HtmlAnim::Frame']]],
-  ['strokestyle',['StrokeStyle',['../class_html_anim_1_1_stroke_style.html#af4c7fd3abe3cf5a683cb431fa3c07c59',1,'HtmlAnim::StrokeStyle']]],
-  ['subdivided_5fgrid',['subdivided_grid',['../namespace_html_anim_shapes.html#aa3fee084d15304307c6daf3d08438b41',1,'HtmlAnimShapes']]],
-  ['subdividedgrid',['SubdividedGrid',['../class_html_anim_shapes_1_1_subdivided_grid.html#afa18a0f4f752fd9923a3b743fa2f15f6',1,'HtmlAnimShapes::SubdividedGrid']]]
+  ['rect',['rect',['../class_html_anim_1_1_frame.html#ae9237b81c46e4ecdd56eba203c7a432e',1,'HtmlAnim::Frame::rect()'],['../class_html_anim_1_1_rect.html#af0b1745bfc0d85d996e7c6ea631fdfa3',1,'HtmlAnim::Rect::Rect()']]],
+  ['regular_5fpolygon',['regular_polygon',['../namespace_html_anim_shapes.html#abbf3f06c2ce43ea249fa6fb2ea8a659a',1,'HtmlAnimShapes']]],
+  ['regularpolygon',['RegularPolygon',['../class_html_anim_shapes_1_1_regular_polygon.html#ab1726962a9ae5b561ebd8638539704c6',1,'HtmlAnimShapes::RegularPolygon']]],
+  ['remove_5flast_5fframe',['remove_last_frame',['../class_html_anim_1_1_html_anim.html#a100d5ff38fd0e160fae0ad065aa44ca2',1,'HtmlAnim::HtmlAnim']]],
+  ['rewind',['rewind',['../class_html_anim_1_1_html_anim.html#a6d12e6547c3f123e9337d5b02ca5766b',1,'HtmlAnim::HtmlAnim']]],
+  ['rgb_5fcolor',['rgb_color',['../namespace_html_anim.html#a0df5ea0f07a103cc2a6e0a081eb44250',1,'HtmlAnim']]],
+  ['rotate',['rotate',['../class_html_anim_1_1_frame.html#a0053acca811e9b7345117e83892c7cd6',1,'HtmlAnim::Frame::rotate()'],['../class_html_anim_1_1_rotate.html#a535c9429311bc12c678a145c873d1c4e',1,'HtmlAnim::Rotate::Rotate()']]]
 ];

@@ -43,13 +43,40 @@ namespace HtmlAnim {
 
 using CoordType = double;
 
-struct Point {
+struct Vector2D {
 	CoordType x, y;
-	explicit Point() : x{0}, y{0} {}
-	explicit Point(CoordType x, CoordType y) : x{x}, y{y} {}
+	explicit Vector2D() : x{0}, y{0} {}
+	explicit Vector2D(CoordType x, CoordType y) : x{x}, y{y} {}
+
+	Vector2D operator-() const {
+		return Vector2D{-x, -y};
+	}
+
+	Vector2D& operator+=(const Vector2D& rhs) {
+		x += rhs.x;
+		y += rhs.y;
+		return *this;
+	}
+
+	Vector2D& operator-=(const Vector2D& rhs) {
+		x -= rhs.x;
+		y -= rhs.y;
+		return *this;
+	}
+
+	Vector2D& operator*=(CoordType a) {
+		x *= a;
+		y *= a;
+		return *this;
+	}
 };
 
-using PointVector = std::vector<Point>;
+Vector2D operator+(const Vector2D& lhs, const Vector2D& rhs) {return Vector2D{lhs.x + rhs.x, lhs.y + lhs.y};}
+Vector2D operator-(const Vector2D& lhs, const Vector2D& rhs) {return Vector2D{lhs.x - rhs.x, lhs.y - lhs.y};}
+Vector2D operator*(const CoordType& lhs, const Vector2D& rhs) {return Vector2D{lhs * rhs.x, lhs * rhs.y};}
+Vector2D operator*(const Vector2D& lhs, const CoordType& rhs) {return Vector2D{lhs.x * rhs, lhs.y * rhs};}
+
+using Vector2DVector = std::vector<Vector2D>;
 
 using SizeType = unsigned int;
 
@@ -147,13 +174,13 @@ function rect(ctx, x, y, w, h, fill) {
 };
 
 class Line : public Drawable {
-	PointVector points;
+	Vector2DVector points;
 	bool fill;
 	bool close_path;
 public:
 	explicit Line(CoordType x1, CoordType y1, CoordType x2, CoordType y2)
-		: points{Point(x1, y1), Point(x2, y2)}, fill{false}, close_path{false} {}
-	explicit Line(const PointVector& points, bool fill, bool close_path)
+		: points{Vector2D(x1, y1), Vector2D(x2, y2)}, fill{false}, close_path{false} {}
+	explicit Line(const Vector2DVector& points, bool fill, bool close_path)
 		: points{points}, fill{fill}, close_path{close_path} {
 		if(points.size() < 2)
 			throw std::runtime_error("Need at least 2 points for line");
@@ -318,7 +345,7 @@ public:
 		{return add_drawable(std::make_unique<Rect>(x, y, w, h, fill));}
 	Frame& line(CoordType x1, CoordType y1, CoordType x2, CoordType y2)
 		{return add_drawable(std::make_unique<Line>(x1, y1, x2, y2));}
-	Frame& line(const PointVector& points, bool fill=false, bool close_path=false)
+	Frame& line(const Vector2DVector& points, bool fill=false, bool close_path=false)
 		{return add_drawable(std::make_unique<Line>(points, fill, close_path));}
 	Frame& line_cap(const std::string& style)
 		{return add_drawable(std::make_unique<LineCap>(style));}

@@ -211,7 +211,7 @@ window.onload = function() {
 int main() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim example 6 - Line paths: polygons", 600, 250);
 	auto poly_points = [](auto n_points, auto radius) {
-		HtmlAnim::PointVector pv(n_points);
+		HtmlAnim::Vector2DVector pv(n_points);
 		for(size_t p_i = 0; p_i < n_points; ++p_i) {
 			const auto phi = 2 * M_PI / n_points * p_i;
 			pv[p_i].x = radius * cos(phi);

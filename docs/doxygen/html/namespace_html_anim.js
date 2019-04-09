@@ -12,12 +12,12 @@ var namespace_html_anim =
     [ "Line", "class_html_anim_1_1_line.html", "class_html_anim_1_1_line" ],
     [ "LineCap", "class_html_anim_1_1_line_cap.html", "class_html_anim_1_1_line_cap" ],
     [ "LineWidth", "class_html_anim_1_1_line_width.html", "class_html_anim_1_1_line_width" ],
-    [ "Point", "struct_html_anim_1_1_point.html", "struct_html_anim_1_1_point" ],
     [ "Rect", "class_html_anim_1_1_rect.html", "class_html_anim_1_1_rect" ],
     [ "Rotate", "class_html_anim_1_1_rotate.html", "class_html_anim_1_1_rotate" ],
     [ "Save", "class_html_anim_1_1_save.html", "class_html_anim_1_1_save" ],
     [ "Scale", "class_html_anim_1_1_scale.html", "class_html_anim_1_1_scale" ],
     [ "StrokeStyle", "class_html_anim_1_1_stroke_style.html", "class_html_anim_1_1_stroke_style" ],
     [ "Text", "class_html_anim_1_1_text.html", "class_html_anim_1_1_text" ],
-    [ "Translate", "class_html_anim_1_1_translate.html", "class_html_anim_1_1_translate" ]
+    [ "Translate", "class_html_anim_1_1_translate.html", "class_html_anim_1_1_translate" ],
+    [ "Vector2D", "struct_html_anim_1_1_vector2_d.html", "struct_html_anim_1_1_vector2_d" ]
 ];

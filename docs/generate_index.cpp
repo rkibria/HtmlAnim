@@ -341,7 +341,7 @@ void make_example_6() {
 int main() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim example 6 - Line paths: polygons", 600, 250);
 	auto poly_points = [](auto n_points, auto radius) {
-		HtmlAnim::PointVector pv(n_points);
+		HtmlAnim::Vector2DVector pv(n_points);
 		for(size_t p_i = 0; p_i < n_points; ++p_i) {
 			const auto phi = 2 * M_PI / n_points * p_i;
 			pv[p_i].x = radius * cos(phi);
@@ -371,7 +371,7 @@ int main() {
 	anim.post_text() << footer;
 
 	auto poly_points = [](auto n_points, auto radius) {
-		HtmlAnim::PointVector pv(n_points);
+		HtmlAnim::Vector2DVector pv(n_points);
 		for(size_t p_i = 0; p_i < n_points; ++p_i) {
 			const auto phi = 2 * M_PI / n_points * p_i;
 			pv[p_i].x = radius * cos(phi);
@@ -590,10 +590,10 @@ int main() {
 }
 
 void equilateral_triangle(HtmlAnim::HtmlAnim &anim, double x, double y, double d) {
-	HtmlAnim::PointVector points = {
-		HtmlAnim::Point(x, y),
-		HtmlAnim::Point(x + d, y),
-		HtmlAnim::Point(x + d/2, y - d * sin(M_PI/3))};
+	HtmlAnim::Vector2DVector points = {
+		HtmlAnim::Vector2D(x, y),
+		HtmlAnim::Vector2D(x + d, y),
+		HtmlAnim::Vector2D(x + d/2, y - d * sin(M_PI/3))};
 	anim.frame().line(points, false, true);
 }
 

@@ -11,7 +11,7 @@ var class_html_anim_1_1_frame =
     [ "fill_style", "class_html_anim_1_1_frame.html#ac6fe352dc0b71f344a919522e8305ad0", null ],
     [ "font", "class_html_anim_1_1_frame.html#a39490e7eb6075d80573359026ef2b28e", null ],
     [ "line", "class_html_anim_1_1_frame.html#a988f7800b688d78e656a8d158ef6585e", null ],
-    [ "line", "class_html_anim_1_1_frame.html#aa1966ae865146d1e9eaa84757461a648", null ],
+    [ "line", "class_html_anim_1_1_frame.html#a9032c8e0aba8f025827743ecaddfc7b0", null ],
     [ "line_cap", "class_html_anim_1_1_frame.html#aeaf49aa1c1c38fea48c97761e4a99174", null ],
     [ "line_width", "class_html_anim_1_1_frame.html#a2d10ba43d1120ab9598783cc34f6383e", null ],
     [ "rect", "class_html_anim_1_1_frame.html#ae9237b81c46e4ecdd56eba203c7a432e", null ],
