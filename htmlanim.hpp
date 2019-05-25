@@ -134,6 +134,14 @@ public:
 	virtual std::string value() const = 0;
 };
 
+class IntExpressionValue {
+	std::string v;
+public:
+	IntExpressionValue(const std::string& v) : v{ v } {}
+	IntExpressionValue(const int& v) : v{ std::to_string(v) } {}
+	std::string value() const { return v; }
+};
+
 class CoordExpressionValue {
 	std::string v;
 public:
@@ -142,12 +150,21 @@ public:
 	std::string value() const { return v; }
 };
 
-class Arc : public Drawable {
-	CoordExpressionValue x, y, r, sa, ea;
-	bool fill;
+class BoolExpressionValue {
+	std::string v;
 public:
-	explicit Arc(CoordExpressionValue x, CoordExpressionValue y, CoordExpressionValue r,
-		CoordExpressionValue sa, CoordExpressionValue ea, bool fill)
+	BoolExpressionValue(const std::string& v) : v{ v } {}
+	BoolExpressionValue(const bool& v) : v{ (v ? "true" : "false") } {}
+	std::string value() const { return v; }
+};
+
+class Arc : public Drawable {
+	IntExpressionValue x, y, r;
+	CoordExpressionValue sa, ea;
+	BoolExpressionValue fill;
+public:
+	explicit Arc(IntExpressionValue x, IntExpressionValue y, IntExpressionValue r,
+		CoordExpressionValue sa, CoordExpressionValue ea, BoolExpressionValue fill)
 		: x{ x }, y{ y }, r{ r }, sa{ sa }, ea{ ea }, fill{ fill } {}
 	virtual void define(DefinitionsStream& ds) const override {
 		ds.write_if_undefined(typeid(Arc).hash_code(), R"(
@@ -167,7 +184,7 @@ function arc(ctx, x, y, r, sa, ea, fill) {
 			<< r.value() << ", "
 			<< sa.value() << ", "
 			<< ea.value() << ", "
-			<< (fill ? "true" : "false") << ");\n";
+			<< fill.value() << ");\n";
 	}
 };
 
