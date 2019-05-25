@@ -33,20 +33,16 @@ void draw(CoordExpressionValue x) {
 
 
 int main() {
-	draw(1.3);
-	auto inc = IncrementingCoordExpression(100.123);
-	draw(inc);
-	draw(inc);
-	draw(inc);
+	// draw(1.3);
+	// auto inc = IncrementingCoordExpression(100.123);
+	// draw(inc);
+	// draw(inc);
+	// draw(inc);
 
-	// HtmlAnim::HtmlAnim anim("expressions1", 400, 600);
-	// anim.set_wait_frames(20);
-
-	// for(int i=1; i < 10; ++i) {
-		// anim.frame().arc(200, 200, i * 5);
-		// anim.next_frame();
-	// }
-	// anim.remove_last_frame();
-
-	// anim.write_file("expressions.html");
+	HtmlAnim::HtmlAnim anim("expressions1", 400, 600);
+	// anim.set_wait_frames(30);
+	anim.frame().arc(200, 200, 50);
+	anim.next_frame();
+	anim.frame().arc(300, 200, 50);
+	anim.write_file("expressions.html");
 }

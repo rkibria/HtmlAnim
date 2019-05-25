@@ -519,6 +519,7 @@ void HtmlAnim::write_script(std::ostream& os) const {
 	os << "var wait_counter = 0;\n";
 	os << "var num_wait_frames = " << wait_frames << ";\n";
 	os << "var no_clear = " << (no_clear ? "true" : "false") << ";\n";
+	os << "var repeat_current_frame = false;\n";
 
 	write_definitions(os);
 
@@ -531,11 +532,12 @@ window.onload = function() {
 	(function drawFrame () {
 		if(frame_counter == 0 || !no_clear)
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
+		repeat_current_frame = false;
 		draw_bkgnd(ctx);
 		(frames[frame_counter])(ctx);
 		draw_frgnd(ctx);
 		wait_counter = (num_wait_frames == 0) ? 0 : ((wait_counter + 1) % num_wait_frames);
-		if(wait_counter == 0)
+		if(wait_counter == 0 && !repeat_current_frame)
 			frame_counter = (frame_counter + 1) % num_frames;
 		window.requestAnimationFrame(drawFrame, canvas);
 	}());
