@@ -2,15 +2,6 @@
 using namespace HtmlAnim;
 
 
-class CoordExpressionValue {
-	std::string payload;
-public:
-	CoordExpressionValue(const std::string& v) : payload{v} {}
-	CoordExpressionValue(const CoordType& v) : payload{std::to_string(v)} {}
-	std::string value() const {return payload;}
-};
-
-
 class CoordExpression {
 public:
 	virtual std::string value() = 0;
@@ -41,6 +32,7 @@ int main() {
 
 	HtmlAnim::HtmlAnim anim("expressions1", 400, 600);
 	// anim.set_wait_frames(30);
+	// anim.frame().arc(200, 200, anim.frame().range_expr(50, 100));
 	anim.frame().arc(200, 200, 50);
 	anim.next_frame();
 	anim.frame().arc(300, 200, 50);

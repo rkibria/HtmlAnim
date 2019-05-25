@@ -124,12 +124,31 @@ public:
 	virtual void draw(std::ostream &os) const = 0;
 };
 
+class Expression {
+public:
+	virtual ~Expression() {}
+
+	virtual void init(std::ostream& os) const {}
+	virtual void exit(std::ostream& os) const {}
+
+	virtual std::string value() const = 0;
+};
+
+class CoordExpressionValue {
+	std::string v;
+public:
+	CoordExpressionValue(const std::string& v) : v{ v } {}
+	CoordExpressionValue(const CoordType& v) : v{ std::to_string(v) } {}
+	std::string value() const { return v; }
+};
+
 class Arc : public Drawable {
-	CoordType x, y, r, sa, ea;
+	CoordExpressionValue x, y, r, sa, ea;
 	bool fill;
 public:
-	explicit Arc(CoordType x, CoordType y, CoordType r, CoordType sa, CoordType ea, bool fill)
-		: x{x}, y{y}, r{r}, sa{sa}, ea{ea}, fill{fill} {}
+	explicit Arc(CoordExpressionValue x, CoordExpressionValue y, CoordExpressionValue r,
+		CoordExpressionValue sa, CoordExpressionValue ea, bool fill)
+		: x{ x }, y{ y }, r{ r }, sa{ sa }, ea{ ea }, fill{ fill } {}
 	virtual void define(DefinitionsStream& ds) const override {
 		ds.write_if_undefined(typeid(Arc).hash_code(), R"(
 function arc(ctx, x, y, r, sa, ea, fill) {
@@ -143,8 +162,12 @@ function arc(ctx, x, y, r, sa, ea, fill) {
 )");
 	}
 	virtual void draw(std::ostream &os) const override {
-		os << "arc(ctx, " << static_cast<int>(x) << ", " << static_cast<int>(y)
-			<< ", " << static_cast<int>(r) << ", " << sa << ", " << ea << ", " << (fill ? "true" : "false") << ");\n";
+		os << "arc(ctx, " << x.value() << ", "
+			<< y.value() << ", "
+			<< r.value() << ", "
+			<< sa.value() << ", "
+			<< ea.value() << ", "
+			<< (fill ? "true" : "false") << ");\n";
 	}
 };
 
