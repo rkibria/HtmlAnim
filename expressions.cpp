@@ -1,5 +1,4 @@
 #include "htmlanim.hpp"
-using namespace HtmlAnim;
 
 /*
 class CoordExpression {
@@ -16,11 +15,11 @@ public:
 	virtual std::string value() {return std::to_string(current += 1);}
 	operator CoordExpressionValue() {return CoordExpressionValue(value());}
 };
-*/
 
 void draw(ExpressionValue x) {
 	std::cout << "drawing coord " << x.to_string() << std::endl;
 }
+*/
 
 int main() {
 	// draw(1.3);

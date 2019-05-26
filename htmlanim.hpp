@@ -34,7 +34,12 @@ SOFTWARE.
 #include <memory>
 #include <vector>
 #include <unordered_set>
+
 #include <cmath>
+#ifndef M_PI
+constexpr double M_PI = 3.14159265358979323846;
+#endif
+
 #include <sstream>
 #include <iomanip>
 #include <stdexcept>
