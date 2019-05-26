@@ -147,26 +147,23 @@ public:
 
 class CoordRangeExpression : public Expression {
 	CoordType start, stop, inc;
-	size_t current;
+	std::string var_name;
 	static size_t count;
 public:
 	CoordRangeExpression(CoordType start, CoordType stop, CoordType inc)
-		: start{ start }, stop{ stop }, inc{ inc }, current{ count++ } {}
+		: start{ start }, stop{ stop }, inc{ inc },
+		var_name{ std::string("this.coord_range_") + std::to_string(count++) } {}
 	virtual void init(std::ostream& os) const override {
-		const auto var = value().to_string();
-		os << "if(" << var << " == null) " << var << " = " << start << ";\n";
+		os << "if(" << var_name << " == null) " << var_name << " = " << start << ";\n";
 	}
 	virtual void exit(std::ostream& os) const override {
-		const auto var = value().to_string();
-		os << "if(" << var << " < " << stop << ") {\n"
-			<< var << " += " << inc << ";\n"
+		os << "if(" << var_name << " < " << stop << ") {\n"
+			<< var_name << " += " << inc << ";\n"
 			<< "repeat_current_frame = true;\n"
 			<< "}\n"
-			"else {" << var << " = null;}\n";
+			"else {" << var_name << " = null;}\n";
 	}
-	virtual ExpressionValue value() const override {
-		return ExpressionValue(std::string("this.coord_range_") + std::to_string(current));
-	}
+	virtual ExpressionValue value() const override { return var_name; }
 };
 size_t CoordRangeExpression::count = 0;
 
