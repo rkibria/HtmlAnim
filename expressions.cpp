@@ -29,12 +29,15 @@ int main() {
 	// draw(inc);
 	// draw(inc);
 
-	HtmlAnim::HtmlAnim anim("expressions1", 400, 600);
+	HtmlAnim::HtmlAnim anim("expressions1", 600, 600);
 	// anim.set_wait_frames(30);
 	// anim.frame().arc(200, 200, anim.frame().range_expr(50, 100));
 	// auto radius = CoordRangeExpression(50, 100, 5);
 	// anim.frame().add_expression(std::make_unique<CoordRangeExpression>(50, 100, 5));
-	anim.frame().arc(200, 200, anim.frame().add_expression(std::make_unique<CoordRangeExpression>(5, 50, 1)));
+	//anim.frame().arc(200, 200, anim.frame().add_expression(std::make_unique<CoordRangeExpression>(5, 50, 1)));
+	anim.frame().arc(200, 200, anim.frame().range_expr(5, 150, 1));
+	anim.frame().arc(anim.frame().range_expr(10, 50, 1), 20, 10);
+	//anim.frame().arc(20, anim.frame().range_expr(200, 30, -5), 10);
 
 	//anim.frame().add_drawable(
 	//	std::make_unique<Arc>(200, 200,

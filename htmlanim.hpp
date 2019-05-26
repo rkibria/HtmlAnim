@@ -152,7 +152,7 @@ class CoordRangeExpression : public Expression {
 public:
 	CoordRangeExpression(CoordType start, CoordType stop, CoordType inc)
 		: start{ start }, stop{ stop }, inc{ inc },
-		var_name{ std::string("this.coord_range_") + std::to_string(count++) } {}
+		var_name{ std::string("expressions.coord_range_") + std::to_string(count++) } {}
 	virtual void init(std::ostream& os) const override {
 		os << "if(" << var_name << " == null) " << var_name << " = " << start << ";\n";
 	}
@@ -160,8 +160,7 @@ public:
 		os << "if(" << var_name << " < " << stop << ") {\n"
 			<< var_name << " += " << inc << ";\n"
 			<< "repeat_current_frame = true;\n"
-			<< "}\n"
-			"else {" << var_name << " = null;}\n";
+			<< "}\n";
 	}
 	virtual ExpressionValue value() const override { return var_name; }
 };
@@ -428,6 +427,11 @@ public:
 	Frame& font(const std::string& font)
 		{return add_drawable(std::make_unique<Font>(font));}
 
+	ExpressionValue range_expr(CoordType start, CoordType stop, CoordType inc)
+	{
+		return add_expression(std::make_unique<CoordRangeExpression>(start, stop, inc));
+	}
+
 	Frame& save();
 	Frame& define_macro(const std::string& name);
 };
@@ -580,6 +584,7 @@ void HtmlAnim::write_script(std::ostream& os) const {
 	os << "var num_wait_frames = " << wait_frames << ";\n";
 	os << "var no_clear = " << (no_clear ? "true" : "false") << ";\n";
 	os << "var repeat_current_frame = false;\n";
+	os << "var expressions = {};\n";
 
 	write_definitions(os);
 
@@ -597,8 +602,10 @@ window.onload = function() {
 		(frames[frame_counter])(ctx);
 		draw_frgnd(ctx);
 		wait_counter = (num_wait_frames == 0) ? 0 : ((wait_counter + 1) % num_wait_frames);
-		if(wait_counter == 0 && !repeat_current_frame)
+		if(wait_counter == 0 && !repeat_current_frame) {
 			frame_counter = (frame_counter + 1) % num_frames;
+			expressions = {};
+		}
 		window.requestAnimationFrame(drawFrame, canvas);
 	}());
 }
