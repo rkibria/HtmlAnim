@@ -476,7 +476,6 @@ private:
 	std::string title;
 	SizeType width;
 	SizeType height;
-	SizeType wait_frames = 0;
 
 	std::stringstream pre_text_stream;
 	std::stringstream post_text_stream;
@@ -508,7 +507,6 @@ public:
 	auto& pre_text() {return pre_text_stream;}
 	auto& post_text() {return post_text_stream;}
 
-	void set_wait_frames(SizeType waits) {wait_frames = waits;}
 	void set_no_clear(bool do_clear) {no_clear = do_clear;}
 
 	auto& background() {return bkgnd_frame;}
@@ -580,8 +578,6 @@ void HtmlAnim::write_script(std::ostream& os) const {
 	os << "var frame_counter = 0;\n";
 	os << "const num_frames = " << get_num_frames() << ";\n";
 	os << "var canvas = document.getElementById('" << canvas_name << "');\n";
-	os << "var wait_counter = 0;\n";
-	os << "var num_wait_frames = " << wait_frames << ";\n";
 	os << "var no_clear = " << (no_clear ? "true" : "false") << ";\n";
 	os << "var repeat_current_frame = false;\n";
 	os << "var expressions = {};\n";
@@ -601,8 +597,7 @@ window.onload = function() {
 		draw_bkgnd(ctx);
 		(frames[frame_counter])(ctx);
 		draw_frgnd(ctx);
-		wait_counter = (num_wait_frames == 0) ? 0 : ((wait_counter + 1) % num_wait_frames);
-		if(wait_counter == 0 && !repeat_current_frame) {
+		if(!repeat_current_frame) {
 			frame_counter = (frame_counter + 1) % num_frames;
 			expressions = {};
 		}
