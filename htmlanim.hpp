@@ -398,34 +398,61 @@ public:
 		}
 	}
 
-	Frame& arc(ExpressionValue x, ExpressionValue y, ExpressionValue r, ExpressionValue fill=false, ExpressionValue sa=0.0, ExpressionValue ea=2*M_PI)
-		{return add_drawable(std::make_unique<Arc>(x, y, r, sa, ea, fill));}
-	Frame& rect(CoordType x, CoordType y, CoordType w, CoordType h, bool fill=false)
-		{return add_drawable(std::make_unique<Rect>(x, y, w, h, fill));}
+	Frame& arc(ExpressionValue x, ExpressionValue y, ExpressionValue r, ExpressionValue fill = false, ExpressionValue sa = 0.0, ExpressionValue ea = 2 * M_PI)
+	{
+		return add_drawable(std::make_unique<Arc>(x, y, r, sa, ea, fill));
+	}
+	Frame& rect(CoordType x, CoordType y, CoordType w, CoordType h, bool fill = false)
+	{
+		return add_drawable(std::make_unique<Rect>(x, y, w, h, fill));
+	}
 	Frame& line(CoordType x1, CoordType y1, CoordType x2, CoordType y2)
-		{return add_drawable(std::make_unique<Line>(x1, y1, x2, y2));}
-	Frame& line(const Vector2DVector& points, bool fill=false, bool close_path=false)
-		{return add_drawable(std::make_unique<Line>(points, fill, close_path));}
+	{
+		return add_drawable(std::make_unique<Line>(x1, y1, x2, y2));
+	}
+	Frame& line(const Vector2DVector& points, bool fill = false, bool close_path = false)
+	{
+		return add_drawable(std::make_unique<Line>(points, fill, close_path));
+	}
 	Frame& line_cap(const std::string& style)
-		{return add_drawable(std::make_unique<LineCap>(style));}
+	{
+		return add_drawable(std::make_unique<LineCap>(style));
+	}
 	Frame& line_width(SizeType width)
-		{return add_drawable(std::make_unique<LineWidth>(width));}
+	{
+		return add_drawable(std::make_unique<LineWidth>(width));
+	}
 	Frame& fill_style(const std::string& style)
-		{return add_drawable(std::make_unique<FillStyle>(style));}
+	{
+		return add_drawable(std::make_unique<FillStyle>(style));
+	}
 	Frame& stroke_style(const std::string& style)
-		{return add_drawable(std::make_unique<StrokeStyle>(style));}
-	Frame& text(CoordType x, CoordType y, std::string txt, bool fill=true)
-		{return add_drawable(std::make_unique<Text>(x, y, txt.c_str(), fill));}
+	{
+		return add_drawable(std::make_unique<StrokeStyle>(style));
+	}
+	Frame& text(CoordType x, CoordType y, std::string txt, bool fill = true)
+	{
+		return add_drawable(std::make_unique<Text>(x, y, txt.c_str(), fill));
+	}
 	Frame& rotate(CoordType rot)
-		{return add_drawable(std::make_unique<Rotate>(rot));}
+	{
+		return add_drawable(std::make_unique<Rotate>(rot));
+	}
 	Frame& translate(CoordType x, CoordType y)
-		{return add_drawable(std::make_unique<Translate>(x, y));}
+	{
+		return add_drawable(std::make_unique<Translate>(x, y));
+	}
 	Frame& scale(CoordType x, CoordType y)
-		{return add_drawable(std::make_unique<Scale>(x, y));}
+	{
+		return add_drawable(std::make_unique<Scale>(x, y));
+	}
 	Frame& draw_macro(const std::string& name) {
-		return add_drawable(std::make_unique<DrawMacro>(name));}
+		return add_drawable(std::make_unique<DrawMacro>(name));
+	}
 	Frame& font(const std::string& font)
-		{return add_drawable(std::make_unique<Font>(font));}
+	{
+		return add_drawable(std::make_unique<Font>(font));
+	}
 
 	ExpressionValue range_expr(CoordType start, CoordType stop, CoordType inc)
 	{
