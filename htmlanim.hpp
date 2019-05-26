@@ -134,28 +134,30 @@ public:
 	virtual std::string value() const = 0;
 };
 
-class IntExpressionValue {
+class ExpressionValue {
+protected:
 	std::string v;
 public:
-	IntExpressionValue(const std::string& v) : v{ v } {}
-	IntExpressionValue(const int& v) : v{ std::to_string(v) } {}
+	ExpressionValue(const std::string& v) : v{ v } {}
 	std::string value() const { return v; }
 };
 
-class CoordExpressionValue {
-	std::string v;
+class IntExpressionValue : public ExpressionValue {
 public:
-	CoordExpressionValue(const std::string& v) : v{ v } {}
-	CoordExpressionValue(const CoordType& v) : v{ std::to_string(v) } {}
-	std::string value() const { return v; }
+	IntExpressionValue(const std::string& v) : ExpressionValue{ v } {}
+	IntExpressionValue(const int& v) : ExpressionValue{ std::to_string(v) } {}
 };
 
-class BoolExpressionValue {
-	std::string v;
+class CoordExpressionValue : public ExpressionValue {
 public:
-	BoolExpressionValue(const std::string& v) : v{ v } {}
-	BoolExpressionValue(const bool& v) : v{ (v ? "true" : "false") } {}
-	std::string value() const { return v; }
+	CoordExpressionValue(const std::string& v) : ExpressionValue{ v } {}
+	CoordExpressionValue(const CoordType& v) : ExpressionValue{ std::to_string(v) } {}
+};
+
+class BoolExpressionValue : public ExpressionValue {
+public:
+	BoolExpressionValue(const std::string& v) : ExpressionValue{ v } {}
+	BoolExpressionValue(const bool& v) : ExpressionValue{ (v ? "true" : "false") } {}
 };
 
 class Arc : public Drawable {
