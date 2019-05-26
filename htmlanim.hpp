@@ -124,6 +124,17 @@ public:
 	virtual void draw(std::ostream &os) const = 0;
 };
 
+class ExpressionValue {
+protected:
+	std::string v;
+public:
+	ExpressionValue(const std::string& v) : v{ v } {}
+	ExpressionValue(const int& v) : v{ std::to_string(v) } {}
+	ExpressionValue(const CoordType& v) : v{ std::to_string(v) } {}
+	ExpressionValue(const bool& v) : v{ (v ? "true" : "false") } {}
+	std::string to_string() const { return v; }
+};
+
 class Expression {
 public:
 	virtual ~Expression() {}
@@ -131,33 +142,7 @@ public:
 	virtual void init(std::ostream& os) const {}
 	virtual void exit(std::ostream& os) const {}
 
-	virtual std::string value() const = 0;
-};
-
-class ExpressionValue {
-protected:
-	std::string v;
-public:
-	ExpressionValue(const std::string& v) : v{ v } {}
-	std::string value() const { return v; }
-};
-
-class IntExpressionValue : public ExpressionValue {
-public:
-	IntExpressionValue(const std::string& v) : ExpressionValue{ v } {}
-	IntExpressionValue(const int& v) : ExpressionValue{ std::to_string(v) } {}
-};
-
-class CoordExpressionValue : public ExpressionValue {
-public:
-	CoordExpressionValue(const std::string& v) : ExpressionValue{ v } {}
-	CoordExpressionValue(const CoordType& v) : ExpressionValue{ std::to_string(v) } {}
-};
-
-class BoolExpressionValue : public ExpressionValue {
-public:
-	BoolExpressionValue(const std::string& v) : ExpressionValue{ v } {}
-	BoolExpressionValue(const bool& v) : ExpressionValue{ (v ? "true" : "false") } {}
+	virtual ExpressionValue value() const = 0;
 };
 
 class CoordRangeExpression : public Expression {
@@ -168,30 +153,28 @@ public:
 	CoordRangeExpression(CoordType start, CoordType stop, CoordType inc)
 		: start{ start }, stop{ stop }, inc{ inc }, current{ count++ } {}
 	virtual void init(std::ostream& os) const override {
-		const auto var = value();
-		os << "if(this." << var << " == null) this." << var << " = " << start << ";\n";
+		const auto var = value().to_string();
+		os << "if(" << var << " == null) " << var << " = " << start << ";\n";
 	}
 	virtual void exit(std::ostream& os) const override {
-		const auto var = value();
-		os << "if(this." << var << " < " << stop << ") {\n"
-			<< "this." << var << " += " << inc << ";\n"
+		const auto var = value().to_string();
+		os << "if(" << var << " < " << stop << ") {\n"
+			<< var << " += " << inc << ";\n"
 			<< "repeat_current_frame = true;\n"
 			<< "}\n"
-			"else {this." << var << " = null;}\n";
+			"else {" << var << " = null;}\n";
 	}
-	virtual std::string value() const override {
-		return std::string("coord_range_") + std::to_string(current);
+	virtual ExpressionValue value() const override {
+		return ExpressionValue(std::string("this.coord_range_") + std::to_string(current));
 	}
 };
 size_t CoordRangeExpression::count = 0;
 
 class Arc : public Drawable {
-	IntExpressionValue x, y, r;
-	CoordExpressionValue sa, ea;
-	BoolExpressionValue fill;
+	ExpressionValue x, y, r, sa, ea, fill;
 public:
-	explicit Arc(IntExpressionValue x, IntExpressionValue y, IntExpressionValue r,
-		CoordExpressionValue sa, CoordExpressionValue ea, BoolExpressionValue fill)
+	explicit Arc(ExpressionValue x, ExpressionValue y, ExpressionValue r,
+		ExpressionValue sa, ExpressionValue ea, ExpressionValue fill)
 		: x{ x }, y{ y }, r{ r }, sa{ sa }, ea{ ea }, fill{ fill } {}
 	virtual void define(DefinitionsStream& ds) const override {
 		ds.write_if_undefined(typeid(Arc).hash_code(), R"(
@@ -206,12 +189,12 @@ function arc(ctx, x, y, r, sa, ea, fill) {
 )");
 	}
 	virtual void draw(std::ostream &os) const override {
-		os << "arc(ctx, " << x.value() << ", "
-			<< y.value() << ", "
-			<< r.value() << ", "
-			<< sa.value() << ", "
-			<< ea.value() << ", "
-			<< fill.value() << ");\n";
+		os << "arc(ctx, " << x.to_string() << ", "
+			<< y.to_string() << ", "
+			<< r.to_string() << ", "
+			<< sa.to_string() << ", "
+			<< ea.to_string() << ", "
+			<< fill.to_string() << ");\n";
 	}
 };
 
@@ -394,9 +377,9 @@ public:
 		return *this;
 	}
 
-	Frame& add_expression(std::unique_ptr<Expression>&& expr) {
+	ExpressionValue add_expression(std::unique_ptr<Expression>&& expr) {
 		expr_vec.emplace_back(std::move(expr));
-		return *this;
+		return expr_vec.back()->value();
 	}
 
 	void clear() {dwbl_vec.clear();}
