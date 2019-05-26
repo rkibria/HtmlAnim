@@ -33,6 +33,8 @@ int main() {
 	HtmlAnim::HtmlAnim anim("expressions1", 400, 600);
 	// anim.set_wait_frames(30);
 	// anim.frame().arc(200, 200, anim.frame().range_expr(50, 100));
+	// auto radius = CoordRangeExpression(50, 100, 5);
+	anim.frame().add_expression(std::make_unique<CoordRangeExpression>(50, 100, 5));
 	anim.frame().arc(200, 200, 50);
 	anim.next_frame();
 	anim.frame().arc(300, 200, 50);

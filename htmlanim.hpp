@@ -160,6 +160,31 @@ public:
 	BoolExpressionValue(const bool& v) : ExpressionValue{ (v ? "true" : "false") } {}
 };
 
+class CoordRangeExpression : public Expression {
+	CoordType start, stop, inc;
+	size_t current;
+	static size_t count;
+public:
+	CoordRangeExpression(CoordType start, CoordType stop, CoordType inc)
+		: start{ start }, stop{ stop }, inc{ inc }, current{ count++ } {}
+	virtual void init(std::ostream& os) const override {
+		const auto var = value();
+		os << "if(this." << var << " == null) this." << var << " = " << start << ";\n";
+	}
+	virtual void exit(std::ostream& os) const override {
+		const auto var = value();
+		os << "if(this." << var << " < " << stop << ") {\n"
+			<< "this." << var << " += " << inc << ";\n"
+			<< "repeat_current_frame = true;\n"
+			<< "}\n"
+			"else {this." << var << " = null;}\n";
+	}
+	virtual std::string value() const override {
+		return std::string("coord_range_") + std::to_string(current);
+	}
+};
+size_t CoordRangeExpression::count = 0;
+
 class Arc : public Drawable {
 	IntExpressionValue x, y, r;
 	CoordExpressionValue sa, ea;
@@ -356,14 +381,21 @@ public:
 };
 
 using DrawableVector = std::vector<std::unique_ptr<Drawable>>;
+using ExpressionVector = std::vector<std::unique_ptr<Expression>>;
 
 class Frame : public Drawable {
 	DrawableVector dwbl_vec;
+	ExpressionVector expr_vec;
 public:
 	Frame() {}
 
 	Frame& add_drawable(std::unique_ptr<Drawable>&& dwbl) {
 		dwbl_vec.emplace_back(std::move(dwbl));
+		return *this;
+	}
+
+	Frame& add_expression(std::unique_ptr<Expression>&& expr) {
+		expr_vec.emplace_back(std::move(expr));
 		return *this;
 	}
 
@@ -376,8 +408,14 @@ public:
 	}
 
 	void draw(std::ostream& os) const override {
+		for(auto& expr : expr_vec) {
+			expr->init(os);
+		}
 		for(auto& dwbl : dwbl_vec) {
 			dwbl->draw(os);
+		}
+		for (auto& expr : expr_vec) {
+			expr->exit(os);
 		}
 	}
 
