@@ -34,12 +34,14 @@ int main() {
 	// anim.frame().arc(200, 200, anim.frame().range_expr(50, 100));
 	// auto radius = CoordRangeExpression(50, 100, 5);
 	// anim.frame().add_expression(std::make_unique<CoordRangeExpression>(50, 100, 5));
-	// anim.frame().arc(200, 200, anim.frame().add_expression(std::make_unique<CoordRangeExpression>(50, 100, 5)));
-	anim.frame().add_drawable(
-		std::make_unique<Arc>(200, 200,
-			anim.frame().add_expression(std::make_unique<CoordRangeExpression>(5, 50, 1)),
-			0.0, 2 * M_PI, false)
-	);
+	anim.frame().arc(200, 200, anim.frame().add_expression(std::make_unique<CoordRangeExpression>(5, 50, 1)));
+
+	//anim.frame().add_drawable(
+	//	std::make_unique<Arc>(200, 200,
+	//		anim.frame().add_expression(std::make_unique<CoordRangeExpression>(5, 50, 1)),
+	//		0.0, 2 * M_PI, false)
+	//);
+
 	// anim.frame().arc(200, 200, 50);
 	anim.next_frame();
 	anim.frame().arc(300, 200, 50);

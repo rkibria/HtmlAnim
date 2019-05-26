@@ -399,7 +399,7 @@ public:
 		}
 	}
 
-	Frame& arc(CoordType x, CoordType y, CoordType r, bool fill=false, CoordType sa=0.0, CoordType ea=2*M_PI)
+	Frame& arc(ExpressionValue x, ExpressionValue y, ExpressionValue r, ExpressionValue fill=false, ExpressionValue sa=0.0, ExpressionValue ea=2*M_PI)
 		{return add_drawable(std::make_unique<Arc>(x, y, r, sa, ea, fill));}
 	Frame& rect(CoordType x, CoordType y, CoordType w, CoordType h, bool fill=false)
 		{return add_drawable(std::make_unique<Rect>(x, y, w, h, fill));}
