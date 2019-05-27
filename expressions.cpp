@@ -39,7 +39,7 @@ int main() {
 
 	anim.frame().arc(anim.frame().range_expr(10, 50, 1), 20, 10);
 
-	//anim.frame().arc(20, anim.frame().range_expr(200, 30, -5), 10);
+	anim.frame().arc(20, anim.frame().range_expr(200, 30, 5), 10);
 
 	const auto test_val1 = HtmlAnim::CoordExpressionValue(123);
 

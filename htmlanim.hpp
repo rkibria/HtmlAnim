@@ -162,21 +162,29 @@ public:
 };
 
 class CoordRangeExpression : public Expression {
-	CoordType start, stop, inc;
+	CoordType start, stop, step;
 	CoordExpressionValue var_name;
 	static SizeType count;
 public:
-	CoordRangeExpression(CoordType start, CoordType stop, CoordType inc)
-		: start{ start }, stop{ stop }, inc{ inc },
+	CoordRangeExpression(CoordType start, CoordType stop, CoordType step)
+		: start{ start }, stop{ stop }, step{ step },
 		var_name{ std::string("expressions.coord_range_") + std::to_string(count++) } {}
 	virtual void init(std::ostream& os) const override {
 		os << "if(" << var_name.to_string() << " == null) " << var_name.to_string() << " = " << start << ";\n";
 	}
 	virtual void exit(std::ostream& os) const override {
-		os << "if(" << var_name.to_string() << " < " << stop << ") {\n"
-			<< var_name.to_string() << " += " << inc << ";\n"
-			<< "repeat_current_frame = true;\n"
-			<< "}\n";
+		if (start < stop) {
+			os << "if(" << var_name.to_string() << " < " << stop << ") {\n"
+				<< var_name.to_string() << " += " << step << ";\n"
+				<< "repeat_current_frame = true;\n"
+				<< "}\n";
+		}
+		else {
+			os << "if(" << var_name.to_string() << " > " << stop << ") {\n"
+				<< var_name.to_string() << " -= " << step << ";\n"
+				<< "repeat_current_frame = true;\n"
+				<< "}\n";
+		}
 	}
 	virtual const ExpressionValue& value() const override { return var_name; }
 };
