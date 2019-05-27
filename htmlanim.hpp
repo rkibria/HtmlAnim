@@ -153,7 +153,7 @@ public:
 class CoordRangeExpression : public Expression {
 	CoordType start, stop, inc;
 	std::string var_name;
-	static size_t count;
+	static SizeType count;
 public:
 	CoordRangeExpression(CoordType start, CoordType stop, CoordType inc)
 		: start{ start }, stop{ stop }, inc{ inc },
@@ -169,7 +169,7 @@ public:
 	}
 	virtual ExpressionValue value() const override { return var_name; }
 };
-size_t CoordRangeExpression::count = 0;
+SizeType CoordRangeExpression::count = 0;
 
 class Arc : public Drawable {
 	ExpressionValue x, y, r, sa, ea, fill;
