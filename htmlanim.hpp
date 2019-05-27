@@ -162,26 +162,29 @@ public:
 };
 
 class CoordRangeExpression : public Expression {
-	CoordType start, stop, step;
+	CoordType start, stop;
+	SizeType steps;
 	CoordExpressionValue var_name;
 	static SizeType count;
 public:
-	CoordRangeExpression(CoordType start, CoordType stop, CoordType step)
-		: start{ start }, stop{ stop }, step{ step },
+	CoordRangeExpression(CoordType start, CoordType stop, SizeType steps)
+		: start{ start }, stop{ stop }, steps{ steps },
 		var_name{ std::string("expressions.coord_range_") + std::to_string(count++) } {}
 	virtual void init(std::ostream& os) const override {
 		os << "if(" << var_name.to_string() << " == null) " << var_name.to_string() << " = " << start << ";\n";
 	}
 	virtual void exit(std::ostream& os) const override {
 		if (start < stop) {
+			const auto inc = (stop - start) / steps;
 			os << "if(" << var_name.to_string() << " < " << stop << ") {\n"
-				<< var_name.to_string() << " += " << step << ";\n"
+				<< var_name.to_string() << " += " << inc << ";\n"
 				<< "repeat_current_frame = true;\n"
 				<< "}\n";
 		}
 		else {
+			const auto inc = (start - stop) / steps;
 			os << "if(" << var_name.to_string() << " > " << stop << ") {\n"
-				<< var_name.to_string() << " -= " << step << ";\n"
+				<< var_name.to_string() << " -= " << inc << ";\n"
 				<< "repeat_current_frame = true;\n"
 				<< "}\n";
 		}
