@@ -34,18 +34,27 @@ int main() {
 	// auto radius = CoordRangeExpression(50, 100, 5);
 	// anim.frame().add_expression(std::make_unique<CoordRangeExpression>(50, 100, 5));
 	//anim.frame().arc(200, 200, anim.frame().add_expression(std::make_unique<CoordRangeExpression>(5, 50, 1)));
+	
 	anim.frame().arc(200, 200, anim.frame().range_expr(5, 150, 1));
+
 	anim.frame().arc(anim.frame().range_expr(10, 50, 1), 20, 10);
+
 	//anim.frame().arc(20, anim.frame().range_expr(200, 30, -5), 10);
 
+	const auto test_val1 = HtmlAnim::CoordExpressionValue(123);
+
 	//anim.frame().add_drawable(
-	//	std::make_unique<Arc>(200, 200,
-	//		anim.frame().add_expression(std::make_unique<CoordRangeExpression>(5, 50, 1)),
-	//		0.0, 2 * M_PI, false)
+	//	std::make_unique<HtmlAnim::Arc>(200, 200,
+	//		anim.frame().add_coord_expression(std::make_unique<HtmlAnim::CoordRangeExpression>(5, 50, 1)),
+	//		0.0, 2 * M_PI,
+	//		false
+	//		)
 	//);
 
 	// anim.frame().arc(200, 200, 50);
+
 	anim.next_frame();
 	anim.frame().arc(300, 200, 50);
+
 	anim.write_file("expressions.html");
 }

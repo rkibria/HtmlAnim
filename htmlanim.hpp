@@ -131,13 +131,24 @@ public:
 
 class ExpressionValue {
 protected:
-	std::string v;
+	std::string str_val;
 public:
-	ExpressionValue(const std::string& v) : v{ v } {}
-	ExpressionValue(const int& v) : v{ std::to_string(v) } {}
-	ExpressionValue(const CoordType& v) : v{ std::to_string(v) } {}
-	ExpressionValue(const bool& v) : v{ (v ? "true" : "false") } {}
-	std::string to_string() const { return v; }
+	virtual ~ExpressionValue() = default;
+	ExpressionValue(const std::string& v) : str_val{ v } {}
+	const std::string& to_string() const { return str_val; }
+};
+
+class CoordExpressionValue : public ExpressionValue {
+public:
+	CoordExpressionValue(const std::string& v) : ExpressionValue{ v } {}
+	CoordExpressionValue(const int& v) : ExpressionValue{ std::to_string(v) } {}
+	CoordExpressionValue(const CoordType& v) : ExpressionValue{ std::to_string(v) } {}
+};
+
+class BoolExpressionValue : public ExpressionValue {
+public:
+	BoolExpressionValue(const std::string& v) : ExpressionValue{ v } {}
+	BoolExpressionValue(const bool& b) : ExpressionValue{ (b ? "true" : "false") } {}
 };
 
 class Expression {
@@ -147,35 +158,36 @@ public:
 	virtual void init(std::ostream& os) const {}
 	virtual void exit(std::ostream& os) const {}
 
-	virtual ExpressionValue value() const = 0;
+	virtual const ExpressionValue& value() const = 0;
 };
 
 class CoordRangeExpression : public Expression {
 	CoordType start, stop, inc;
-	std::string var_name;
+	CoordExpressionValue var_name;
 	static SizeType count;
 public:
 	CoordRangeExpression(CoordType start, CoordType stop, CoordType inc)
 		: start{ start }, stop{ stop }, inc{ inc },
 		var_name{ std::string("expressions.coord_range_") + std::to_string(count++) } {}
 	virtual void init(std::ostream& os) const override {
-		os << "if(" << var_name << " == null) " << var_name << " = " << start << ";\n";
+		os << "if(" << var_name.to_string() << " == null) " << var_name.to_string() << " = " << start << ";\n";
 	}
 	virtual void exit(std::ostream& os) const override {
-		os << "if(" << var_name << " < " << stop << ") {\n"
-			<< var_name << " += " << inc << ";\n"
+		os << "if(" << var_name.to_string() << " < " << stop << ") {\n"
+			<< var_name.to_string() << " += " << inc << ";\n"
 			<< "repeat_current_frame = true;\n"
 			<< "}\n";
 	}
-	virtual ExpressionValue value() const override { return var_name; }
+	virtual const ExpressionValue& value() const override { return var_name; }
 };
 SizeType CoordRangeExpression::count = 0;
 
 class Arc : public Drawable {
-	ExpressionValue x, y, r, sa, ea, fill;
+	CoordExpressionValue x, y, r, sa, ea;
+	BoolExpressionValue fill;
 public:
-	explicit Arc(ExpressionValue x, ExpressionValue y, ExpressionValue r,
-		ExpressionValue sa, ExpressionValue ea, ExpressionValue fill)
+	explicit Arc(const CoordExpressionValue& x, const CoordExpressionValue& y, const CoordExpressionValue& r,
+		const CoordExpressionValue& sa, const CoordExpressionValue& ea, const BoolExpressionValue& fill)
 		: x{ x }, y{ y }, r{ r }, sa{ sa }, ea{ ea }, fill{ fill } {}
 	virtual void define(DefinitionsStream& ds) const override {
 		ds.write_if_undefined(typeid(Arc).hash_code(), R"(
@@ -378,9 +390,9 @@ public:
 		return *this;
 	}
 
-	ExpressionValue add_expression(std::unique_ptr<Expression>&& expr) {
+	const CoordExpressionValue& add_coord_expression(std::unique_ptr<Expression>&& expr) {
 		expr_vec.emplace_back(std::move(expr));
-		return expr_vec.back()->value();
+		return dynamic_cast<const CoordExpressionValue&>(expr_vec.back()->value());
 	}
 
 	void clear() {dwbl_vec.clear();}
@@ -403,7 +415,8 @@ public:
 		}
 	}
 
-	Frame& arc(ExpressionValue x, ExpressionValue y, ExpressionValue r, ExpressionValue fill = false, ExpressionValue sa = 0.0, ExpressionValue ea = 2 * M_PI)
+	Frame& arc(const CoordExpressionValue& x, CoordExpressionValue y, CoordExpressionValue r,
+		BoolExpressionValue fill = false, CoordExpressionValue sa = 0.0, CoordExpressionValue ea = 2 * M_PI)
 	{
 		return add_drawable(std::make_unique<Arc>(x, y, r, sa, ea, fill));
 	}
@@ -459,9 +472,9 @@ public:
 		return add_drawable(std::make_unique<Font>(font));
 	}
 
-	ExpressionValue range_expr(CoordType start, CoordType stop, CoordType inc)
+	const CoordExpressionValue& range_expr(CoordType start, CoordType stop, CoordType inc)
 	{
-		return add_expression(std::make_unique<CoordRangeExpression>(start, stop, inc));
+		return add_coord_expression(std::make_unique<CoordRangeExpression>(start, stop, inc));
 	}
 
 	Frame& save();
