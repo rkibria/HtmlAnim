@@ -132,7 +132,7 @@ int main() {
 
 void make_example_3() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim example 3 - Circles: bubble sort visualization", 800, 180);
-	anim.set_wait_frames(20);
+	// anim.set_wait_frames(20);
 
 	anim.pre_text() << "<h2>Example 3</h2>";
 
@@ -330,7 +330,7 @@ int main() {
 
 void make_example_6() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim example 6 - Line paths: polygons", 600, 250);
-	anim.set_wait_frames(20);
+	//anim.set_wait_frames(20);
 
 	anim.pre_text() << "<h2>Example 6</h2>";
 
@@ -398,7 +398,7 @@ int main() {
 
 void make_example_7() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim example 7 - Extensions", 600, 250);
-	anim.set_wait_frames(20);
+	//anim.set_wait_frames(20);
 
 	anim.pre_text() << "<h2>Example 7</h2>";
 
@@ -528,7 +528,7 @@ int main() {
 
 void make_example_9() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim example 9: Fonts: normal distribution", 520, 620);
-	anim.set_wait_frames(2);
+	//anim.set_wait_frames(2);
 
 	anim.pre_text() << "<h2>Example 9</h2>";
 
