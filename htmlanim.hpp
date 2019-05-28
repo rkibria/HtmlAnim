@@ -250,11 +250,13 @@ function arc(ctx, x, y, r, sa, ea, fill) {
 };
 
 class Rect : public Drawable {
-	CoordType x, y, w, h;
-	bool fill;
+	CoordExpressionValue x, y, w, h;
+	BoolExpressionValue fill;
 public:
-	explicit Rect(CoordType x, CoordType y, CoordType w, CoordType h, bool fill)
-		: x{x}, y{y}, w{w}, h{h}, fill{fill} {}
+	explicit Rect(const CoordExpressionValue& x, const CoordExpressionValue& y,
+		const CoordExpressionValue& w, const CoordExpressionValue& h,
+		const BoolExpressionValue& fill)
+		: x{ x }, y{ y }, w{ w }, h{ h }, fill{ fill } {}
 	virtual void define(DefinitionsStream &ds) const override {
 		ds.write_if_undefined(typeid(Rect).hash_code(), R"(
 function rect(ctx, x, y, w, h, fill) {
@@ -268,9 +270,9 @@ function rect(ctx, x, y, w, h, fill) {
 )");
 	}
 	virtual void draw(std::ostream& os) const override {
-		os << "rect(ctx, " << static_cast<int>(x)
-			<< ", " << static_cast<int>(y) << ", " << static_cast<int>(w)
-			<< ", " << static_cast<int>(h) << ", " << (fill ? "true" : "false") << ");\n";
+		os << "rect(ctx, " << x.to_string() << ", " << y.to_string() << ", "
+			<< w.to_string() << ", " << h.to_string() << ", "
+			<< fill.to_string() << ");\n";
 	}
 };
 
@@ -473,7 +475,7 @@ public:
 	{
 		return add_drawable(std::make_unique<Arc>(p.to_string(), p.to_string_2(), r, sa, ea, fill));
 	}
-	Frame& rect(CoordType x, CoordType y, CoordType w, CoordType h, bool fill = false)
+	Frame& rect(const CoordExpressionValue& x, const CoordExpressionValue& y, const CoordExpressionValue& w, const CoordExpressionValue& h, const BoolExpressionValue& fill = false)
 	{
 		return add_drawable(std::make_unique<Rect>(x, y, w, h, fill));
 	}

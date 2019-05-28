@@ -29,16 +29,13 @@ void make_index() {
 #include "htmlanim.hpp"
 int main() {
 	HtmlAnim::HtmlAnim anim("Wandering rectangles", 120, 120);
-	const auto n_frames = 60;
-	anim.foreground().text(10, 10, "Frame ${frame_counter + 1}/${num_frames}");
-	for(double frame = 0; frame < n_frames; ++frame) {
-		anim.frame().rect(10 + frame, 15, 40, 40);
-		anim.frame().rect(10 + n_frames, 15 + frame, 40, 40, true);
-		anim.frame().rect(10 + n_frames - frame, 15 + n_frames, 40, 40);
-		anim.frame().rect(10, 15 + n_frames - frame, 40, 40, true);
-		anim.next_frame();
-	}
-	anim.remove_last_frame();
+	constexpr auto n_frames = 60;
+	constexpr auto w = 40;
+	constexpr auto h = 40;
+	anim.frame().rect(anim.frame().linear_range(10, 10 + n_frames, 60), 15, w, h);
+	anim.frame().rect(10 + n_frames, anim.frame().linear_range(15, 15 + n_frames, 60), w, h, true);
+	anim.frame().rect(anim.frame().linear_range(10 + n_frames, 10, 60), 15 + n_frames, w, h);
+	anim.frame().rect(10, anim.frame().linear_range(15 + n_frames, 15, 60), w, h, true);
 	anim.write_file("animation.html");
 }
 </pre></p>
@@ -65,16 +62,13 @@ More examples:
 )";
 	anim.post_text() << footer;
 
-	const auto n_frames = 60;
-	anim.foreground().text(10, 10, "Frame ${frame_counter + 1}/${num_frames}");
-	for(double frame = 0; frame < n_frames; ++frame) {
-		anim.frame().rect(10 + frame, 15, 40, 40);
-		anim.frame().rect(10 + n_frames, 15 + frame, 40, 40, true);
-		anim.frame().rect(10 + n_frames - frame, 15 + n_frames, 40, 40);
-		anim.frame().rect(10, 15 + n_frames - frame, 40, 40, true);
-		anim.next_frame();
-	}
-	anim.remove_last_frame();
+	constexpr auto n_frames = 60;
+	constexpr auto w = 40;
+	constexpr auto h = 40;
+	anim.frame().rect(anim.frame().linear_range(10, 10 + n_frames, 60), 15, w, h);
+	anim.frame().rect(10 + n_frames, anim.frame().linear_range(15, 15 + n_frames, 60), w, h, true);
+	anim.frame().rect(anim.frame().linear_range(10 + n_frames, 10, 60), 15 + n_frames, w, h);
+	anim.frame().rect(10, anim.frame().linear_range(15 + n_frames, 15, 60), w, h, true);
 	anim.write_file("index.html");
 }
 
