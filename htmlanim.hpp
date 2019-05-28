@@ -151,10 +151,10 @@ public:
 	BoolExpressionValue(const bool& b) : ExpressionValue{ (b ? "true" : "false") } {}
 };
 
-class Vec2ExpressionValue : public ExpressionValue {
+class PointExpressionValue : public ExpressionValue {
 	std::string str_val_2;
 public:
-	Vec2ExpressionValue(const std::string& v, const std::string& v2) : ExpressionValue{ v }, str_val_2{ v2 } {}
+	PointExpressionValue(const std::string& v, const std::string& v2) : ExpressionValue{ v }, str_val_2{ v2 } {}
 	virtual const std::string& to_string_2() const { return str_val_2; }
 };
 
@@ -430,6 +430,11 @@ public:
 		return dynamic_cast<const CoordExpressionValue&>(expr_vec.back()->value());
 	}
 
+	const PointExpressionValue& add_point_expression(std::unique_ptr<Expression>&& expr) {
+		expr_vec.emplace_back(std::move(expr));
+		return dynamic_cast<const PointExpressionValue&>(expr_vec.back()->value());
+	}
+
 	void clear() {dwbl_vec.clear();}
 
 	void define(DefinitionsStream &ds) const override {
@@ -507,9 +512,13 @@ public:
 		return add_drawable(std::make_unique<Font>(font));
 	}
 
-	const CoordExpressionValue& linear_range(CoordType start, CoordType stop, CoordType inc)
+	const CoordExpressionValue& linear_range(CoordType start, CoordType stop, SizeType inc)
 	{
 		return add_coord_expression(std::make_unique<LinearRangeExpression>(start, stop, inc));
+	}
+	const PointExpressionValue& linear_point(const Vec2& start, const Vec2& stop, CoordType inc)
+	{
+		return add_point_expression(std::make_unique<LinearPointExpression>(start, stop, inc));
 	}
 
 	Frame& save();
