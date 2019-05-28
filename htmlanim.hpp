@@ -176,7 +176,7 @@ class LinearRangeExpression : public Expression {
 public:
 	LinearRangeExpression(CoordType start, CoordType stop, SizeType steps)
 		: start{ start }, stop{ stop }, steps{ steps },
-		var_name{ std::string("expressions.coord_range_") + std::to_string(count++) } {}
+		var_name{ std::string("expressions.linear_range_") + std::to_string(count++) } {}
 	virtual void init(std::ostream& os) const override {
 		os << "if(" << var_name.to_string() << " == null) " << var_name.to_string() << " = " << start << ";\n";
 	}
