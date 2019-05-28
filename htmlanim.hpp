@@ -457,6 +457,11 @@ public:
 		}
 	}
 
+	Frame& wait(SizeType n_frames)
+	{
+		add_coord_expression(std::make_unique<LinearRangeExpression>(0, n_frames, n_frames));
+		return *this;
+	}
 	Frame& arc(const CoordExpressionValue& x, const CoordExpressionValue& y, const CoordExpressionValue& r,
 		const BoolExpressionValue& fill = false, const CoordExpressionValue& sa = 0.0, const CoordExpressionValue& ea = 2 * M_PI)
 	{

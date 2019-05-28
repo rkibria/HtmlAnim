@@ -13,9 +13,9 @@
 var frame_counter = 0;
 const num_frames = 7;
 var canvas = document.getElementById('anim_canvas_1');
-var wait_counter = 0;
-var num_wait_frames = 20;
 var no_clear = false;
+var repeat_current_frame = false;
+var expressions = {};
 
 function line(ctx, x1, y1, x2, y2) {
 	ctx.beginPath();
@@ -31,6 +31,7 @@ function draw_frgnd(ctx) {
 
 frames = [
 (function(ctx) {
+if(expressions.linear_range_66 == null) expressions.linear_range_66 = 0;
 ctx.save();
 ctx.translate(110, 110);
 line(ctx, 100, 0, -100, 0);
@@ -39,8 +40,13 @@ ctx.save();
 ctx.translate(320, 110);
 line(ctx, 100, 0, -100, 0);
 ctx.restore();
+if(expressions.linear_range_66 < 20) {
+expressions.linear_range_66 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_67 == null) expressions.linear_range_67 = 0;
 ctx.save();
 ctx.translate(110, 110);
 ctx.beginPath();
@@ -58,8 +64,13 @@ ctx.lineTo(-49, 86);
 ctx.lineTo(-50, -86);
 ctx.fill();
 ctx.restore();
+if(expressions.linear_range_67 < 20) {
+expressions.linear_range_67 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_68 == null) expressions.linear_range_68 = 0;
 ctx.save();
 ctx.translate(110, 110);
 ctx.beginPath();
@@ -79,8 +90,13 @@ ctx.lineTo(-100, 0);
 ctx.lineTo(0, -100);
 ctx.fill();
 ctx.restore();
+if(expressions.linear_range_68 < 20) {
+expressions.linear_range_68 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_69 == null) expressions.linear_range_69 = 0;
 ctx.save();
 ctx.translate(110, 110);
 ctx.beginPath();
@@ -102,8 +118,13 @@ ctx.lineTo(-80, -58);
 ctx.lineTo(30, -95);
 ctx.fill();
 ctx.restore();
+if(expressions.linear_range_69 < 20) {
+expressions.linear_range_69 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_70 == null) expressions.linear_range_70 = 0;
 ctx.save();
 ctx.translate(110, 110);
 ctx.beginPath();
@@ -127,8 +148,13 @@ ctx.lineTo(-50, -86);
 ctx.lineTo(49, -86);
 ctx.fill();
 ctx.restore();
+if(expressions.linear_range_70 < 20) {
+expressions.linear_range_70 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_71 == null) expressions.linear_range_71 = 0;
 ctx.save();
 ctx.translate(110, 110);
 ctx.beginPath();
@@ -154,8 +180,13 @@ ctx.lineTo(-22, -97);
 ctx.lineTo(62, -78);
 ctx.fill();
 ctx.restore();
+if(expressions.linear_range_71 < 20) {
+expressions.linear_range_71 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_72 == null) expressions.linear_range_72 = 0;
 ctx.save();
 ctx.translate(110, 110);
 ctx.beginPath();
@@ -183,6 +214,10 @@ ctx.lineTo(0, -100);
 ctx.lineTo(70, -70);
 ctx.fill();
 ctx.restore();
+if(expressions.linear_range_72 < 20) {
+expressions.linear_range_72 += 1;
+repeat_current_frame = true;
+}
 }),
 ];
 
@@ -191,12 +226,14 @@ window.onload = function() {
 	(function drawFrame () {
 		if(frame_counter == 0 || !no_clear)
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
+		repeat_current_frame = false;
 		draw_bkgnd(ctx);
 		(frames[frame_counter])(ctx);
 		draw_frgnd(ctx);
-		wait_counter = (num_wait_frames == 0) ? 0 : ((wait_counter + 1) % num_wait_frames);
-		if(wait_counter == 0)
+		if(!repeat_current_frame) {
 			frame_counter = (frame_counter + 1) % num_frames;
+			expressions = {};
+		}
 		window.requestAnimationFrame(drawFrame, canvas);
 	}());
 }

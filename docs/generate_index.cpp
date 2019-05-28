@@ -132,7 +132,6 @@ int main() {
 
 void make_example_3() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim example 3 - Circles: bubble sort visualization", 800, 180);
-	// anim.set_wait_frames(20);
 
 	anim.pre_text() << "<h2>Example 3</h2>";
 
@@ -145,7 +144,6 @@ void make_example_3() {
 #include &lt;string&gt;
 int main() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim example 3 - Bubble sort visualization", 400, 600);
-	anim.set_wait_frames(20);
 
 	std::array<int, 8> numbers{7, 6, 2, 8, 5, 1, 4, 3};
 	int iteration = 1;
@@ -154,6 +152,7 @@ int main() {
 		anim.frame().text(10, 150, std::string("Iteration: ") + std::to_string(iteration));
 		for(size_t i = 0; i < numbers.size(); ++i)
 			anim.frame().arc(50 + i * 100, 50, 10 + numbers[i] * 5, i == swap_pos || i == swap_pos + 1);
+		anim.frame().wait(20);
 		anim.next_frame();
 	};
 
@@ -185,6 +184,7 @@ int main() {
 		anim.frame().text(10, 150, std::string("Iteration: ") + std::to_string(iteration));
 		for(size_t i = 0; i < numbers.size(); ++i)
 			anim.frame().arc(50 + i * 100, 50, 10 + numbers[i] * 5, i == swap_pos || i == swap_pos + 1);
+		anim.frame().wait(20);
 		anim.next_frame();
 	};
 
@@ -330,7 +330,6 @@ int main() {
 
 void make_example_6() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim example 6 - Line paths: polygons", 600, 250);
-	//anim.set_wait_frames(20);
 
 	anim.pre_text() << "<h2>Example 6</h2>";
 
@@ -360,6 +359,7 @@ int main() {
 			.save()
 			.translate(320, 110)
 			.line(points, true);
+		anim.frame().wait(20);
 		anim.next_frame();
 	}
 	anim.remove_last_frame();
@@ -390,6 +390,7 @@ int main() {
 			.save()
 			.translate(320, 110)
 			.line(points, true);
+		anim.frame().wait(20);
 		anim.next_frame();
 	}
 	anim.remove_last_frame();
@@ -398,7 +399,6 @@ int main() {
 
 void make_example_7() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim example 7 - Extensions", 600, 250);
-	//anim.set_wait_frames(20);
 
 	anim.pre_text() << "<h2>Example 7</h2>";
 
@@ -409,7 +409,6 @@ void make_example_7() {
 #include "htmlanim_shapes.hpp"
 int main() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim example 7 - Extensions", 600, 250);
-	anim.set_wait_frames(20);
 	for(size_t n_points = 2; n_points < 9; ++n_points) {
 		anim.frame()
 			.save()
@@ -419,6 +418,7 @@ int main() {
 			.save()
 			.translate(320, 110)
 			.add_drawable(HtmlAnimShapes::regular_polygon(0, 0, 100, n_points, true));
+		anim.frame().wait(20);
 		anim.next_frame();
 	}
 	anim.remove_last_frame();
@@ -437,6 +437,7 @@ int main() {
 			.save()
 			.translate(320, 110)
 			.add_drawable(HtmlAnimShapes::regular_polygon(0, 0, 100, n_points, true));
+		anim.frame().wait(20);
 		anim.next_frame();
 	}
 	anim.remove_last_frame();
@@ -528,7 +529,6 @@ int main() {
 
 void make_example_9() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim example 9: Fonts: normal distribution", 520, 620);
-	//anim.set_wait_frames(2);
 
 	anim.pre_text() << "<h2>Example 9</h2>";
 
@@ -539,7 +539,6 @@ void make_example_9() {
 #include &lt;random&gt;
 int main() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim example 9: Fonts: normal distribution", 520, 620);
-	anim.set_wait_frames(2);
 	anim.background()
 		.add_drawable(HtmlAnimShapes::subdivided_grid(10,10, 50,50, 10,12, 5,5))
 		.font("bold 20px sans-serif");
@@ -558,6 +557,7 @@ int main() {
 			const auto count = bins[i];
 			anim.frame().rect(10+i*10,10+12*50 - count, 10,count, true);
 		}
+		anim.frame().wait(2);
 		anim.next_frame();
 	}
 	anim.write_file("normal_distribution.html");
@@ -584,6 +584,7 @@ int main() {
 			const auto count = bins[i];
 			anim.frame().rect(10+i*10,10+12*50 - count, 10,count, true);
 		}
+		anim.frame().wait(2);
 		anim.next_frame();
 	}
 	anim.write_file("example9.html");

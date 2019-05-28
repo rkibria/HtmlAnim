@@ -13,9 +13,9 @@
 var frame_counter = 0;
 const num_frames = 101;
 var canvas = document.getElementById('anim_canvas_1');
-var wait_counter = 0;
-var num_wait_frames = 2;
 var no_clear = false;
+var repeat_current_frame = false;
+var expressions = {};
 
 function grid(ctx, x, y, dx, dy, nx, ny) {
 	const max_y = ny * dy;
@@ -73,6 +73,7 @@ function draw_frgnd(ctx) {
 
 frames = [
 (function(ctx) {
+if(expressions.linear_range_80 == null) expressions.linear_range_80 = 0;
 text(ctx, 10, 60, `Samples: 100`, true);
 rect(ctx, 10, 610, 10, 0, true);
 rect(ctx, 20, 610, 10, 0, true);
@@ -124,8 +125,13 @@ rect(ctx, 470, 610, 10, 0, true);
 rect(ctx, 480, 610, 10, 0, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_80 < 2) {
+expressions.linear_range_80 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_81 == null) expressions.linear_range_81 = 0;
 text(ctx, 10, 60, `Samples: 200`, true);
 rect(ctx, 10, 610, 10, 0, true);
 rect(ctx, 20, 610, 10, 0, true);
@@ -177,8 +183,13 @@ rect(ctx, 470, 610, 10, 0, true);
 rect(ctx, 480, 610, 10, 0, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_81 < 2) {
+expressions.linear_range_81 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_82 == null) expressions.linear_range_82 = 0;
 text(ctx, 10, 60, `Samples: 300`, true);
 rect(ctx, 10, 610, 10, 0, true);
 rect(ctx, 20, 610, 10, 0, true);
@@ -230,8 +241,13 @@ rect(ctx, 470, 610, 10, 0, true);
 rect(ctx, 480, 610, 10, 0, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_82 < 2) {
+expressions.linear_range_82 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_83 == null) expressions.linear_range_83 = 0;
 text(ctx, 10, 60, `Samples: 400`, true);
 rect(ctx, 10, 610, 10, 0, true);
 rect(ctx, 20, 610, 10, 0, true);
@@ -283,8 +299,13 @@ rect(ctx, 470, 610, 10, 0, true);
 rect(ctx, 480, 610, 10, 0, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_83 < 2) {
+expressions.linear_range_83 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_84 == null) expressions.linear_range_84 = 0;
 text(ctx, 10, 60, `Samples: 500`, true);
 rect(ctx, 10, 610, 10, 0, true);
 rect(ctx, 20, 610, 10, 0, true);
@@ -336,8 +357,13 @@ rect(ctx, 470, 610, 10, 0, true);
 rect(ctx, 480, 610, 10, 0, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_84 < 2) {
+expressions.linear_range_84 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_85 == null) expressions.linear_range_85 = 0;
 text(ctx, 10, 60, `Samples: 600`, true);
 rect(ctx, 10, 610, 10, 0, true);
 rect(ctx, 20, 610, 10, 0, true);
@@ -389,8 +415,13 @@ rect(ctx, 470, 610, 10, 0, true);
 rect(ctx, 480, 610, 10, 0, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_85 < 2) {
+expressions.linear_range_85 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_86 == null) expressions.linear_range_86 = 0;
 text(ctx, 10, 60, `Samples: 700`, true);
 rect(ctx, 10, 610, 10, 0, true);
 rect(ctx, 20, 610, 10, 0, true);
@@ -442,8 +473,13 @@ rect(ctx, 470, 609, 10, 1, true);
 rect(ctx, 480, 610, 10, 0, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_86 < 2) {
+expressions.linear_range_86 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_87 == null) expressions.linear_range_87 = 0;
 text(ctx, 10, 60, `Samples: 800`, true);
 rect(ctx, 10, 610, 10, 0, true);
 rect(ctx, 20, 610, 10, 0, true);
@@ -495,8 +531,13 @@ rect(ctx, 470, 609, 10, 1, true);
 rect(ctx, 480, 610, 10, 0, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_87 < 2) {
+expressions.linear_range_87 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_88 == null) expressions.linear_range_88 = 0;
 text(ctx, 10, 60, `Samples: 900`, true);
 rect(ctx, 10, 610, 10, 0, true);
 rect(ctx, 20, 610, 10, 0, true);
@@ -548,8 +589,13 @@ rect(ctx, 470, 609, 10, 1, true);
 rect(ctx, 480, 610, 10, 0, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_88 < 2) {
+expressions.linear_range_88 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_89 == null) expressions.linear_range_89 = 0;
 text(ctx, 10, 60, `Samples: 1000`, true);
 rect(ctx, 10, 610, 10, 0, true);
 rect(ctx, 20, 610, 10, 0, true);
@@ -601,8 +647,13 @@ rect(ctx, 470, 609, 10, 1, true);
 rect(ctx, 480, 610, 10, 0, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_89 < 2) {
+expressions.linear_range_89 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_90 == null) expressions.linear_range_90 = 0;
 text(ctx, 10, 60, `Samples: 1100`, true);
 rect(ctx, 10, 610, 10, 0, true);
 rect(ctx, 20, 610, 10, 0, true);
@@ -654,8 +705,13 @@ rect(ctx, 470, 609, 10, 1, true);
 rect(ctx, 480, 610, 10, 0, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_90 < 2) {
+expressions.linear_range_90 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_91 == null) expressions.linear_range_91 = 0;
 text(ctx, 10, 60, `Samples: 1200`, true);
 rect(ctx, 10, 610, 10, 0, true);
 rect(ctx, 20, 610, 10, 0, true);
@@ -707,8 +763,13 @@ rect(ctx, 470, 609, 10, 1, true);
 rect(ctx, 480, 609, 10, 1, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_91 < 2) {
+expressions.linear_range_91 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_92 == null) expressions.linear_range_92 = 0;
 text(ctx, 10, 60, `Samples: 1300`, true);
 rect(ctx, 10, 610, 10, 0, true);
 rect(ctx, 20, 609, 10, 1, true);
@@ -760,8 +821,13 @@ rect(ctx, 470, 609, 10, 1, true);
 rect(ctx, 480, 609, 10, 1, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_92 < 2) {
+expressions.linear_range_92 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_93 == null) expressions.linear_range_93 = 0;
 text(ctx, 10, 60, `Samples: 1400`, true);
 rect(ctx, 10, 610, 10, 0, true);
 rect(ctx, 20, 609, 10, 1, true);
@@ -813,8 +879,13 @@ rect(ctx, 470, 609, 10, 1, true);
 rect(ctx, 480, 609, 10, 1, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_93 < 2) {
+expressions.linear_range_93 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_94 == null) expressions.linear_range_94 = 0;
 text(ctx, 10, 60, `Samples: 1500`, true);
 rect(ctx, 10, 610, 10, 0, true);
 rect(ctx, 20, 609, 10, 1, true);
@@ -866,8 +937,13 @@ rect(ctx, 470, 609, 10, 1, true);
 rect(ctx, 480, 609, 10, 1, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_94 < 2) {
+expressions.linear_range_94 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_95 == null) expressions.linear_range_95 = 0;
 text(ctx, 10, 60, `Samples: 1600`, true);
 rect(ctx, 10, 610, 10, 0, true);
 rect(ctx, 20, 609, 10, 1, true);
@@ -919,8 +995,13 @@ rect(ctx, 470, 609, 10, 1, true);
 rect(ctx, 480, 609, 10, 1, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_95 < 2) {
+expressions.linear_range_95 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_96 == null) expressions.linear_range_96 = 0;
 text(ctx, 10, 60, `Samples: 1700`, true);
 rect(ctx, 10, 610, 10, 0, true);
 rect(ctx, 20, 609, 10, 1, true);
@@ -972,8 +1053,13 @@ rect(ctx, 470, 608, 10, 2, true);
 rect(ctx, 480, 609, 10, 1, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_96 < 2) {
+expressions.linear_range_96 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_97 == null) expressions.linear_range_97 = 0;
 text(ctx, 10, 60, `Samples: 1800`, true);
 rect(ctx, 10, 610, 10, 0, true);
 rect(ctx, 20, 609, 10, 1, true);
@@ -1025,8 +1111,13 @@ rect(ctx, 470, 608, 10, 2, true);
 rect(ctx, 480, 609, 10, 1, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_97 < 2) {
+expressions.linear_range_97 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_98 == null) expressions.linear_range_98 = 0;
 text(ctx, 10, 60, `Samples: 1900`, true);
 rect(ctx, 10, 610, 10, 0, true);
 rect(ctx, 20, 609, 10, 1, true);
@@ -1078,8 +1169,13 @@ rect(ctx, 470, 608, 10, 2, true);
 rect(ctx, 480, 609, 10, 1, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_98 < 2) {
+expressions.linear_range_98 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_99 == null) expressions.linear_range_99 = 0;
 text(ctx, 10, 60, `Samples: 2000`, true);
 rect(ctx, 10, 609, 10, 1, true);
 rect(ctx, 20, 609, 10, 1, true);
@@ -1131,8 +1227,13 @@ rect(ctx, 470, 608, 10, 2, true);
 rect(ctx, 480, 609, 10, 1, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_99 < 2) {
+expressions.linear_range_99 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_100 == null) expressions.linear_range_100 = 0;
 text(ctx, 10, 60, `Samples: 2100`, true);
 rect(ctx, 10, 609, 10, 1, true);
 rect(ctx, 20, 609, 10, 1, true);
@@ -1184,8 +1285,13 @@ rect(ctx, 470, 608, 10, 2, true);
 rect(ctx, 480, 609, 10, 1, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_100 < 2) {
+expressions.linear_range_100 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_101 == null) expressions.linear_range_101 = 0;
 text(ctx, 10, 60, `Samples: 2200`, true);
 rect(ctx, 10, 609, 10, 1, true);
 rect(ctx, 20, 609, 10, 1, true);
@@ -1237,8 +1343,13 @@ rect(ctx, 470, 608, 10, 2, true);
 rect(ctx, 480, 609, 10, 1, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_101 < 2) {
+expressions.linear_range_101 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_102 == null) expressions.linear_range_102 = 0;
 text(ctx, 10, 60, `Samples: 2300`, true);
 rect(ctx, 10, 609, 10, 1, true);
 rect(ctx, 20, 609, 10, 1, true);
@@ -1290,8 +1401,13 @@ rect(ctx, 470, 608, 10, 2, true);
 rect(ctx, 480, 608, 10, 2, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_102 < 2) {
+expressions.linear_range_102 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_103 == null) expressions.linear_range_103 = 0;
 text(ctx, 10, 60, `Samples: 2400`, true);
 rect(ctx, 10, 609, 10, 1, true);
 rect(ctx, 20, 609, 10, 1, true);
@@ -1343,8 +1459,13 @@ rect(ctx, 470, 608, 10, 2, true);
 rect(ctx, 480, 608, 10, 2, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_103 < 2) {
+expressions.linear_range_103 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_104 == null) expressions.linear_range_104 = 0;
 text(ctx, 10, 60, `Samples: 2500`, true);
 rect(ctx, 10, 609, 10, 1, true);
 rect(ctx, 20, 609, 10, 1, true);
@@ -1396,8 +1517,13 @@ rect(ctx, 470, 608, 10, 2, true);
 rect(ctx, 480, 608, 10, 2, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_104 < 2) {
+expressions.linear_range_104 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_105 == null) expressions.linear_range_105 = 0;
 text(ctx, 10, 60, `Samples: 2600`, true);
 rect(ctx, 10, 609, 10, 1, true);
 rect(ctx, 20, 609, 10, 1, true);
@@ -1449,8 +1575,13 @@ rect(ctx, 470, 607, 10, 3, true);
 rect(ctx, 480, 608, 10, 2, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_105 < 2) {
+expressions.linear_range_105 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_106 == null) expressions.linear_range_106 = 0;
 text(ctx, 10, 60, `Samples: 2700`, true);
 rect(ctx, 10, 609, 10, 1, true);
 rect(ctx, 20, 609, 10, 1, true);
@@ -1502,8 +1633,13 @@ rect(ctx, 470, 607, 10, 3, true);
 rect(ctx, 480, 608, 10, 2, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_106 < 2) {
+expressions.linear_range_106 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_107 == null) expressions.linear_range_107 = 0;
 text(ctx, 10, 60, `Samples: 2800`, true);
 rect(ctx, 10, 608, 10, 2, true);
 rect(ctx, 20, 609, 10, 1, true);
@@ -1555,8 +1691,13 @@ rect(ctx, 470, 607, 10, 3, true);
 rect(ctx, 480, 608, 10, 2, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_107 < 2) {
+expressions.linear_range_107 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_108 == null) expressions.linear_range_108 = 0;
 text(ctx, 10, 60, `Samples: 2900`, true);
 rect(ctx, 10, 608, 10, 2, true);
 rect(ctx, 20, 609, 10, 1, true);
@@ -1608,8 +1749,13 @@ rect(ctx, 470, 607, 10, 3, true);
 rect(ctx, 480, 608, 10, 2, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_108 < 2) {
+expressions.linear_range_108 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_109 == null) expressions.linear_range_109 = 0;
 text(ctx, 10, 60, `Samples: 3000`, true);
 rect(ctx, 10, 608, 10, 2, true);
 rect(ctx, 20, 609, 10, 1, true);
@@ -1661,8 +1807,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 608, 10, 2, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_109 < 2) {
+expressions.linear_range_109 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_110 == null) expressions.linear_range_110 = 0;
 text(ctx, 10, 60, `Samples: 3100`, true);
 rect(ctx, 10, 608, 10, 2, true);
 rect(ctx, 20, 609, 10, 1, true);
@@ -1714,8 +1865,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 608, 10, 2, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_110 < 2) {
+expressions.linear_range_110 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_111 == null) expressions.linear_range_111 = 0;
 text(ctx, 10, 60, `Samples: 3200`, true);
 rect(ctx, 10, 608, 10, 2, true);
 rect(ctx, 20, 609, 10, 1, true);
@@ -1767,8 +1923,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 608, 10, 2, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_111 < 2) {
+expressions.linear_range_111 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_112 == null) expressions.linear_range_112 = 0;
 text(ctx, 10, 60, `Samples: 3300`, true);
 rect(ctx, 10, 608, 10, 2, true);
 rect(ctx, 20, 609, 10, 1, true);
@@ -1820,8 +1981,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 608, 10, 2, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_112 < 2) {
+expressions.linear_range_112 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_113 == null) expressions.linear_range_113 = 0;
 text(ctx, 10, 60, `Samples: 3400`, true);
 rect(ctx, 10, 608, 10, 2, true);
 rect(ctx, 20, 609, 10, 1, true);
@@ -1873,8 +2039,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 608, 10, 2, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_113 < 2) {
+expressions.linear_range_113 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_114 == null) expressions.linear_range_114 = 0;
 text(ctx, 10, 60, `Samples: 3500`, true);
 rect(ctx, 10, 608, 10, 2, true);
 rect(ctx, 20, 609, 10, 1, true);
@@ -1926,8 +2097,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 607, 10, 3, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_114 < 2) {
+expressions.linear_range_114 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_115 == null) expressions.linear_range_115 = 0;
 text(ctx, 10, 60, `Samples: 3600`, true);
 rect(ctx, 10, 608, 10, 2, true);
 rect(ctx, 20, 609, 10, 1, true);
@@ -1979,8 +2155,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 607, 10, 3, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_115 < 2) {
+expressions.linear_range_115 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_116 == null) expressions.linear_range_116 = 0;
 text(ctx, 10, 60, `Samples: 3700`, true);
 rect(ctx, 10, 608, 10, 2, true);
 rect(ctx, 20, 609, 10, 1, true);
@@ -2032,8 +2213,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 607, 10, 3, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_116 < 2) {
+expressions.linear_range_116 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_117 == null) expressions.linear_range_117 = 0;
 text(ctx, 10, 60, `Samples: 3800`, true);
 rect(ctx, 10, 607, 10, 3, true);
 rect(ctx, 20, 609, 10, 1, true);
@@ -2085,8 +2271,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 607, 10, 3, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_117 < 2) {
+expressions.linear_range_117 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_118 == null) expressions.linear_range_118 = 0;
 text(ctx, 10, 60, `Samples: 3900`, true);
 rect(ctx, 10, 607, 10, 3, true);
 rect(ctx, 20, 609, 10, 1, true);
@@ -2138,8 +2329,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 607, 10, 3, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_118 < 2) {
+expressions.linear_range_118 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_119 == null) expressions.linear_range_119 = 0;
 text(ctx, 10, 60, `Samples: 4000`, true);
 rect(ctx, 10, 607, 10, 3, true);
 rect(ctx, 20, 609, 10, 1, true);
@@ -2191,8 +2387,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 607, 10, 3, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
+if(expressions.linear_range_119 < 2) {
+expressions.linear_range_119 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_120 == null) expressions.linear_range_120 = 0;
 text(ctx, 10, 60, `Samples: 4100`, true);
 rect(ctx, 10, 607, 10, 3, true);
 rect(ctx, 20, 608, 10, 2, true);
@@ -2244,8 +2445,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 607, 10, 3, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 609, 10, 1, true);
+if(expressions.linear_range_120 < 2) {
+expressions.linear_range_120 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_121 == null) expressions.linear_range_121 = 0;
 text(ctx, 10, 60, `Samples: 4200`, true);
 rect(ctx, 10, 607, 10, 3, true);
 rect(ctx, 20, 608, 10, 2, true);
@@ -2297,8 +2503,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 607, 10, 3, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 609, 10, 1, true);
+if(expressions.linear_range_121 < 2) {
+expressions.linear_range_121 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_122 == null) expressions.linear_range_122 = 0;
 text(ctx, 10, 60, `Samples: 4300`, true);
 rect(ctx, 10, 607, 10, 3, true);
 rect(ctx, 20, 608, 10, 2, true);
@@ -2350,8 +2561,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 607, 10, 3, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_122 < 2) {
+expressions.linear_range_122 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_123 == null) expressions.linear_range_123 = 0;
 text(ctx, 10, 60, `Samples: 4400`, true);
 rect(ctx, 10, 607, 10, 3, true);
 rect(ctx, 20, 608, 10, 2, true);
@@ -2403,8 +2619,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 607, 10, 3, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_123 < 2) {
+expressions.linear_range_123 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_124 == null) expressions.linear_range_124 = 0;
 text(ctx, 10, 60, `Samples: 4500`, true);
 rect(ctx, 10, 607, 10, 3, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -2456,8 +2677,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 607, 10, 3, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_124 < 2) {
+expressions.linear_range_124 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_125 == null) expressions.linear_range_125 = 0;
 text(ctx, 10, 60, `Samples: 4600`, true);
 rect(ctx, 10, 607, 10, 3, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -2509,8 +2735,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 607, 10, 3, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_125 < 2) {
+expressions.linear_range_125 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_126 == null) expressions.linear_range_126 = 0;
 text(ctx, 10, 60, `Samples: 4700`, true);
 rect(ctx, 10, 607, 10, 3, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -2562,8 +2793,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 607, 10, 3, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_126 < 2) {
+expressions.linear_range_126 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_127 == null) expressions.linear_range_127 = 0;
 text(ctx, 10, 60, `Samples: 4800`, true);
 rect(ctx, 10, 607, 10, 3, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -2615,8 +2851,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 607, 10, 3, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_127 < 2) {
+expressions.linear_range_127 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_128 == null) expressions.linear_range_128 = 0;
 text(ctx, 10, 60, `Samples: 4900`, true);
 rect(ctx, 10, 607, 10, 3, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -2668,8 +2909,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 607, 10, 3, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_128 < 2) {
+expressions.linear_range_128 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_129 == null) expressions.linear_range_129 = 0;
 text(ctx, 10, 60, `Samples: 5000`, true);
 rect(ctx, 10, 607, 10, 3, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -2721,8 +2967,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 607, 10, 3, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_129 < 2) {
+expressions.linear_range_129 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_130 == null) expressions.linear_range_130 = 0;
 text(ctx, 10, 60, `Samples: 5100`, true);
 rect(ctx, 10, 607, 10, 3, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -2774,8 +3025,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 607, 10, 3, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_130 < 2) {
+expressions.linear_range_130 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_131 == null) expressions.linear_range_131 = 0;
 text(ctx, 10, 60, `Samples: 5200`, true);
 rect(ctx, 10, 607, 10, 3, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -2827,8 +3083,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 607, 10, 3, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_131 < 2) {
+expressions.linear_range_131 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_132 == null) expressions.linear_range_132 = 0;
 text(ctx, 10, 60, `Samples: 5300`, true);
 rect(ctx, 10, 607, 10, 3, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -2880,8 +3141,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 607, 10, 3, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_132 < 2) {
+expressions.linear_range_132 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_133 == null) expressions.linear_range_133 = 0;
 text(ctx, 10, 60, `Samples: 5400`, true);
 rect(ctx, 10, 607, 10, 3, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -2933,8 +3199,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 607, 10, 3, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_133 < 2) {
+expressions.linear_range_133 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_134 == null) expressions.linear_range_134 = 0;
 text(ctx, 10, 60, `Samples: 5500`, true);
 rect(ctx, 10, 607, 10, 3, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -2986,8 +3257,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 607, 10, 3, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_134 < 2) {
+expressions.linear_range_134 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_135 == null) expressions.linear_range_135 = 0;
 text(ctx, 10, 60, `Samples: 5600`, true);
 rect(ctx, 10, 607, 10, 3, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -3039,8 +3315,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 606, 10, 4, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_135 < 2) {
+expressions.linear_range_135 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_136 == null) expressions.linear_range_136 = 0;
 text(ctx, 10, 60, `Samples: 5700`, true);
 rect(ctx, 10, 607, 10, 3, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -3092,8 +3373,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 606, 10, 4, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_136 < 2) {
+expressions.linear_range_136 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_137 == null) expressions.linear_range_137 = 0;
 text(ctx, 10, 60, `Samples: 5800`, true);
 rect(ctx, 10, 607, 10, 3, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -3145,8 +3431,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 606, 10, 4, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_137 < 2) {
+expressions.linear_range_137 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_138 == null) expressions.linear_range_138 = 0;
 text(ctx, 10, 60, `Samples: 5900`, true);
 rect(ctx, 10, 607, 10, 3, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -3198,8 +3489,13 @@ rect(ctx, 470, 605, 10, 5, true);
 rect(ctx, 480, 606, 10, 4, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_138 < 2) {
+expressions.linear_range_138 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_139 == null) expressions.linear_range_139 = 0;
 text(ctx, 10, 60, `Samples: 6000`, true);
 rect(ctx, 10, 607, 10, 3, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -3251,8 +3547,13 @@ rect(ctx, 470, 605, 10, 5, true);
 rect(ctx, 480, 606, 10, 4, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_139 < 2) {
+expressions.linear_range_139 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_140 == null) expressions.linear_range_140 = 0;
 text(ctx, 10, 60, `Samples: 6100`, true);
 rect(ctx, 10, 607, 10, 3, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -3304,8 +3605,13 @@ rect(ctx, 470, 605, 10, 5, true);
 rect(ctx, 480, 606, 10, 4, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_140 < 2) {
+expressions.linear_range_140 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_141 == null) expressions.linear_range_141 = 0;
 text(ctx, 10, 60, `Samples: 6200`, true);
 rect(ctx, 10, 607, 10, 3, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -3357,8 +3663,13 @@ rect(ctx, 470, 605, 10, 5, true);
 rect(ctx, 480, 606, 10, 4, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_141 < 2) {
+expressions.linear_range_141 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_142 == null) expressions.linear_range_142 = 0;
 text(ctx, 10, 60, `Samples: 6300`, true);
 rect(ctx, 10, 607, 10, 3, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -3410,8 +3721,13 @@ rect(ctx, 470, 605, 10, 5, true);
 rect(ctx, 480, 606, 10, 4, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_142 < 2) {
+expressions.linear_range_142 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_143 == null) expressions.linear_range_143 = 0;
 text(ctx, 10, 60, `Samples: 6400`, true);
 rect(ctx, 10, 607, 10, 3, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -3463,8 +3779,13 @@ rect(ctx, 470, 605, 10, 5, true);
 rect(ctx, 480, 606, 10, 4, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_143 < 2) {
+expressions.linear_range_143 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_144 == null) expressions.linear_range_144 = 0;
 text(ctx, 10, 60, `Samples: 6500`, true);
 rect(ctx, 10, 607, 10, 3, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -3516,8 +3837,13 @@ rect(ctx, 470, 605, 10, 5, true);
 rect(ctx, 480, 606, 10, 4, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_144 < 2) {
+expressions.linear_range_144 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_145 == null) expressions.linear_range_145 = 0;
 text(ctx, 10, 60, `Samples: 6600`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -3569,8 +3895,13 @@ rect(ctx, 470, 605, 10, 5, true);
 rect(ctx, 480, 606, 10, 4, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_145 < 2) {
+expressions.linear_range_145 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_146 == null) expressions.linear_range_146 = 0;
 text(ctx, 10, 60, `Samples: 6700`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -3622,8 +3953,13 @@ rect(ctx, 470, 605, 10, 5, true);
 rect(ctx, 480, 606, 10, 4, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_146 < 2) {
+expressions.linear_range_146 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_147 == null) expressions.linear_range_147 = 0;
 text(ctx, 10, 60, `Samples: 6800`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -3675,8 +4011,13 @@ rect(ctx, 470, 605, 10, 5, true);
 rect(ctx, 480, 606, 10, 4, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_147 < 2) {
+expressions.linear_range_147 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_148 == null) expressions.linear_range_148 = 0;
 text(ctx, 10, 60, `Samples: 6900`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -3728,8 +4069,13 @@ rect(ctx, 470, 605, 10, 5, true);
 rect(ctx, 480, 606, 10, 4, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_148 < 2) {
+expressions.linear_range_148 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_149 == null) expressions.linear_range_149 = 0;
 text(ctx, 10, 60, `Samples: 7000`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -3781,8 +4127,13 @@ rect(ctx, 470, 604, 10, 6, true);
 rect(ctx, 480, 606, 10, 4, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_149 < 2) {
+expressions.linear_range_149 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_150 == null) expressions.linear_range_150 = 0;
 text(ctx, 10, 60, `Samples: 7100`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -3834,8 +4185,13 @@ rect(ctx, 470, 604, 10, 6, true);
 rect(ctx, 480, 606, 10, 4, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_150 < 2) {
+expressions.linear_range_150 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_151 == null) expressions.linear_range_151 = 0;
 text(ctx, 10, 60, `Samples: 7200`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -3887,8 +4243,13 @@ rect(ctx, 470, 603, 10, 7, true);
 rect(ctx, 480, 606, 10, 4, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_151 < 2) {
+expressions.linear_range_151 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_152 == null) expressions.linear_range_152 = 0;
 text(ctx, 10, 60, `Samples: 7300`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -3940,8 +4301,13 @@ rect(ctx, 470, 603, 10, 7, true);
 rect(ctx, 480, 606, 10, 4, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_152 < 2) {
+expressions.linear_range_152 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_153 == null) expressions.linear_range_153 = 0;
 text(ctx, 10, 60, `Samples: 7400`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -3993,8 +4359,13 @@ rect(ctx, 470, 603, 10, 7, true);
 rect(ctx, 480, 606, 10, 4, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_153 < 2) {
+expressions.linear_range_153 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_154 == null) expressions.linear_range_154 = 0;
 text(ctx, 10, 60, `Samples: 7500`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -4046,8 +4417,13 @@ rect(ctx, 470, 603, 10, 7, true);
 rect(ctx, 480, 605, 10, 5, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_154 < 2) {
+expressions.linear_range_154 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_155 == null) expressions.linear_range_155 = 0;
 text(ctx, 10, 60, `Samples: 7600`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -4099,8 +4475,13 @@ rect(ctx, 470, 602, 10, 8, true);
 rect(ctx, 480, 605, 10, 5, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_155 < 2) {
+expressions.linear_range_155 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_156 == null) expressions.linear_range_156 = 0;
 text(ctx, 10, 60, `Samples: 7700`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -4152,8 +4533,13 @@ rect(ctx, 470, 602, 10, 8, true);
 rect(ctx, 480, 605, 10, 5, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_156 < 2) {
+expressions.linear_range_156 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_157 == null) expressions.linear_range_157 = 0;
 text(ctx, 10, 60, `Samples: 7800`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -4205,8 +4591,13 @@ rect(ctx, 470, 602, 10, 8, true);
 rect(ctx, 480, 605, 10, 5, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_157 < 2) {
+expressions.linear_range_157 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_158 == null) expressions.linear_range_158 = 0;
 text(ctx, 10, 60, `Samples: 7900`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 605, 10, 5, true);
@@ -4258,8 +4649,13 @@ rect(ctx, 470, 602, 10, 8, true);
 rect(ctx, 480, 605, 10, 5, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_158 < 2) {
+expressions.linear_range_158 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_159 == null) expressions.linear_range_159 = 0;
 text(ctx, 10, 60, `Samples: 8000`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 605, 10, 5, true);
@@ -4311,8 +4707,13 @@ rect(ctx, 470, 602, 10, 8, true);
 rect(ctx, 480, 605, 10, 5, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_159 < 2) {
+expressions.linear_range_159 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_160 == null) expressions.linear_range_160 = 0;
 text(ctx, 10, 60, `Samples: 8100`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 605, 10, 5, true);
@@ -4364,8 +4765,13 @@ rect(ctx, 470, 602, 10, 8, true);
 rect(ctx, 480, 605, 10, 5, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_160 < 2) {
+expressions.linear_range_160 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_161 == null) expressions.linear_range_161 = 0;
 text(ctx, 10, 60, `Samples: 8200`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 605, 10, 5, true);
@@ -4417,8 +4823,13 @@ rect(ctx, 470, 602, 10, 8, true);
 rect(ctx, 480, 605, 10, 5, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_161 < 2) {
+expressions.linear_range_161 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_162 == null) expressions.linear_range_162 = 0;
 text(ctx, 10, 60, `Samples: 8300`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 605, 10, 5, true);
@@ -4470,8 +4881,13 @@ rect(ctx, 470, 602, 10, 8, true);
 rect(ctx, 480, 605, 10, 5, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_162 < 2) {
+expressions.linear_range_162 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_163 == null) expressions.linear_range_163 = 0;
 text(ctx, 10, 60, `Samples: 8400`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 605, 10, 5, true);
@@ -4523,8 +4939,13 @@ rect(ctx, 470, 602, 10, 8, true);
 rect(ctx, 480, 605, 10, 5, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_163 < 2) {
+expressions.linear_range_163 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_164 == null) expressions.linear_range_164 = 0;
 text(ctx, 10, 60, `Samples: 8500`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 605, 10, 5, true);
@@ -4576,8 +4997,13 @@ rect(ctx, 470, 602, 10, 8, true);
 rect(ctx, 480, 605, 10, 5, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_164 < 2) {
+expressions.linear_range_164 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_165 == null) expressions.linear_range_165 = 0;
 text(ctx, 10, 60, `Samples: 8600`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 605, 10, 5, true);
@@ -4629,8 +5055,13 @@ rect(ctx, 470, 602, 10, 8, true);
 rect(ctx, 480, 605, 10, 5, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_165 < 2) {
+expressions.linear_range_165 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_166 == null) expressions.linear_range_166 = 0;
 text(ctx, 10, 60, `Samples: 8700`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 605, 10, 5, true);
@@ -4682,8 +5113,13 @@ rect(ctx, 470, 602, 10, 8, true);
 rect(ctx, 480, 605, 10, 5, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_166 < 2) {
+expressions.linear_range_166 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_167 == null) expressions.linear_range_167 = 0;
 text(ctx, 10, 60, `Samples: 8800`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 605, 10, 5, true);
@@ -4735,8 +5171,13 @@ rect(ctx, 470, 602, 10, 8, true);
 rect(ctx, 480, 604, 10, 6, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_167 < 2) {
+expressions.linear_range_167 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_168 == null) expressions.linear_range_168 = 0;
 text(ctx, 10, 60, `Samples: 8900`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 605, 10, 5, true);
@@ -4788,8 +5229,13 @@ rect(ctx, 470, 602, 10, 8, true);
 rect(ctx, 480, 604, 10, 6, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_168 < 2) {
+expressions.linear_range_168 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_169 == null) expressions.linear_range_169 = 0;
 text(ctx, 10, 60, `Samples: 9000`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 605, 10, 5, true);
@@ -4841,8 +5287,13 @@ rect(ctx, 470, 602, 10, 8, true);
 rect(ctx, 480, 604, 10, 6, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_169 < 2) {
+expressions.linear_range_169 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_170 == null) expressions.linear_range_170 = 0;
 text(ctx, 10, 60, `Samples: 9100`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 605, 10, 5, true);
@@ -4894,8 +5345,13 @@ rect(ctx, 470, 602, 10, 8, true);
 rect(ctx, 480, 604, 10, 6, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_170 < 2) {
+expressions.linear_range_170 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_171 == null) expressions.linear_range_171 = 0;
 text(ctx, 10, 60, `Samples: 9200`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 605, 10, 5, true);
@@ -4947,8 +5403,13 @@ rect(ctx, 470, 602, 10, 8, true);
 rect(ctx, 480, 604, 10, 6, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_171 < 2) {
+expressions.linear_range_171 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_172 == null) expressions.linear_range_172 = 0;
 text(ctx, 10, 60, `Samples: 9300`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 605, 10, 5, true);
@@ -5000,8 +5461,13 @@ rect(ctx, 470, 602, 10, 8, true);
 rect(ctx, 480, 604, 10, 6, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_172 < 2) {
+expressions.linear_range_172 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_173 == null) expressions.linear_range_173 = 0;
 text(ctx, 10, 60, `Samples: 9400`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 605, 10, 5, true);
@@ -5053,8 +5519,13 @@ rect(ctx, 470, 602, 10, 8, true);
 rect(ctx, 480, 604, 10, 6, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_173 < 2) {
+expressions.linear_range_173 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_174 == null) expressions.linear_range_174 = 0;
 text(ctx, 10, 60, `Samples: 9500`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 605, 10, 5, true);
@@ -5106,8 +5577,13 @@ rect(ctx, 470, 602, 10, 8, true);
 rect(ctx, 480, 604, 10, 6, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_174 < 2) {
+expressions.linear_range_174 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_175 == null) expressions.linear_range_175 = 0;
 text(ctx, 10, 60, `Samples: 9600`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 605, 10, 5, true);
@@ -5159,8 +5635,13 @@ rect(ctx, 470, 602, 10, 8, true);
 rect(ctx, 480, 604, 10, 6, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_175 < 2) {
+expressions.linear_range_175 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_176 == null) expressions.linear_range_176 = 0;
 text(ctx, 10, 60, `Samples: 9700`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 605, 10, 5, true);
@@ -5212,8 +5693,13 @@ rect(ctx, 470, 602, 10, 8, true);
 rect(ctx, 480, 604, 10, 6, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_176 < 2) {
+expressions.linear_range_176 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_177 == null) expressions.linear_range_177 = 0;
 text(ctx, 10, 60, `Samples: 9800`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 605, 10, 5, true);
@@ -5265,8 +5751,13 @@ rect(ctx, 470, 602, 10, 8, true);
 rect(ctx, 480, 604, 10, 6, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_177 < 2) {
+expressions.linear_range_177 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_178 == null) expressions.linear_range_178 = 0;
 text(ctx, 10, 60, `Samples: 9900`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 605, 10, 5, true);
@@ -5318,8 +5809,13 @@ rect(ctx, 470, 602, 10, 8, true);
 rect(ctx, 480, 604, 10, 6, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_178 < 2) {
+expressions.linear_range_178 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_179 == null) expressions.linear_range_179 = 0;
 text(ctx, 10, 60, `Samples: 10000`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 605, 10, 5, true);
@@ -5371,6 +5867,10 @@ rect(ctx, 470, 602, 10, 8, true);
 rect(ctx, 480, 604, 10, 6, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
+if(expressions.linear_range_179 < 2) {
+expressions.linear_range_179 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
 }),
@@ -5381,12 +5881,14 @@ window.onload = function() {
 	(function drawFrame () {
 		if(frame_counter == 0 || !no_clear)
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
+		repeat_current_frame = false;
 		draw_bkgnd(ctx);
 		(frames[frame_counter])(ctx);
 		draw_frgnd(ctx);
-		wait_counter = (num_wait_frames == 0) ? 0 : ((wait_counter + 1) % num_wait_frames);
-		if(wait_counter == 0)
+		if(!repeat_current_frame) {
 			frame_counter = (frame_counter + 1) % num_frames;
+			expressions = {};
+		}
 		window.requestAnimationFrame(drawFrame, canvas);
 	}());
 }
@@ -5401,7 +5903,6 @@ window.onload = function() {
 #include &lt;random&gt;
 int main() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim example 9: Fonts: normal distribution", 520, 620);
-	anim.set_wait_frames(2);
 	anim.background()
 		.add_drawable(HtmlAnimShapes::subdivided_grid(10,10, 50,50, 10,12, 5,5))
 		.font("bold 20px sans-serif");
@@ -5420,6 +5921,7 @@ int main() {
 			const auto count = bins[i];
 			anim.frame().rect(10+i*10,10+12*50 - count, 10,count, true);
 		}
+		anim.frame().wait(2);
 		anim.next_frame();
 	}
 	anim.write_file("normal_distribution.html");

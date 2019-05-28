@@ -13,9 +13,9 @@
 var frame_counter = 0;
 const num_frames = 67;
 var canvas = document.getElementById('anim_canvas_1');
-var wait_counter = 0;
-var num_wait_frames = 20;
 var no_clear = false;
+var repeat_current_frame = false;
+var expressions = {};
 
 function text(ctx, x, y, txt, fill) {
 	ctx.beginPath();
@@ -41,730 +41,1060 @@ function draw_frgnd(ctx) {
 
 frames = [
 (function(ctx) {
+if(expressions.linear_range_0 == null) expressions.linear_range_0 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
-arc(ctx, 50, 50, 45, 0, 6.28319, false);
-arc(ctx, 150, 50, 40, 0, 6.28319, false);
-arc(ctx, 250, 50, 20, 0, 6.28319, false);
-arc(ctx, 350, 50, 50, 0, 6.28319, false);
-arc(ctx, 450, 50, 35, 0, 6.28319, false);
-arc(ctx, 550, 50, 15, 0, 6.28319, false);
-arc(ctx, 650, 50, 30, 0, 6.28319, false);
-arc(ctx, 750, 50, 25, 0, 6.28319, false);
+arc(ctx, 50, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 50, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 25, 0.000000, 6.283185, false);
+if(expressions.linear_range_0 < 20) {
+expressions.linear_range_0 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_1 == null) expressions.linear_range_1 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
-arc(ctx, 50, 50, 45, 0, 6.28319, true);
-arc(ctx, 150, 50, 40, 0, 6.28319, true);
-arc(ctx, 250, 50, 20, 0, 6.28319, false);
-arc(ctx, 350, 50, 50, 0, 6.28319, false);
-arc(ctx, 450, 50, 35, 0, 6.28319, false);
-arc(ctx, 550, 50, 15, 0, 6.28319, false);
-arc(ctx, 650, 50, 30, 0, 6.28319, false);
-arc(ctx, 750, 50, 25, 0, 6.28319, false);
+arc(ctx, 50, 50, 45, 0.000000, 6.283185, true);
+arc(ctx, 150, 50, 40, 0.000000, 6.283185, true);
+arc(ctx, 250, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 50, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 25, 0.000000, 6.283185, false);
+if(expressions.linear_range_1 < 20) {
+expressions.linear_range_1 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_2 == null) expressions.linear_range_2 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
-arc(ctx, 50, 50, 40, 0, 6.28319, true);
-arc(ctx, 150, 50, 45, 0, 6.28319, true);
-arc(ctx, 250, 50, 20, 0, 6.28319, false);
-arc(ctx, 350, 50, 50, 0, 6.28319, false);
-arc(ctx, 450, 50, 35, 0, 6.28319, false);
-arc(ctx, 550, 50, 15, 0, 6.28319, false);
-arc(ctx, 650, 50, 30, 0, 6.28319, false);
-arc(ctx, 750, 50, 25, 0, 6.28319, false);
+arc(ctx, 50, 50, 40, 0.000000, 6.283185, true);
+arc(ctx, 150, 50, 45, 0.000000, 6.283185, true);
+arc(ctx, 250, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 50, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 25, 0.000000, 6.283185, false);
+if(expressions.linear_range_2 < 20) {
+expressions.linear_range_2 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_3 == null) expressions.linear_range_3 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
-arc(ctx, 50, 50, 40, 0, 6.28319, false);
-arc(ctx, 150, 50, 45, 0, 6.28319, false);
-arc(ctx, 250, 50, 20, 0, 6.28319, false);
-arc(ctx, 350, 50, 50, 0, 6.28319, false);
-arc(ctx, 450, 50, 35, 0, 6.28319, false);
-arc(ctx, 550, 50, 15, 0, 6.28319, false);
-arc(ctx, 650, 50, 30, 0, 6.28319, false);
-arc(ctx, 750, 50, 25, 0, 6.28319, false);
+arc(ctx, 50, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 50, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 25, 0.000000, 6.283185, false);
+if(expressions.linear_range_3 < 20) {
+expressions.linear_range_3 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_4 == null) expressions.linear_range_4 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
-arc(ctx, 50, 50, 40, 0, 6.28319, false);
-arc(ctx, 150, 50, 45, 0, 6.28319, true);
-arc(ctx, 250, 50, 20, 0, 6.28319, true);
-arc(ctx, 350, 50, 50, 0, 6.28319, false);
-arc(ctx, 450, 50, 35, 0, 6.28319, false);
-arc(ctx, 550, 50, 15, 0, 6.28319, false);
-arc(ctx, 650, 50, 30, 0, 6.28319, false);
-arc(ctx, 750, 50, 25, 0, 6.28319, false);
+arc(ctx, 50, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 45, 0.000000, 6.283185, true);
+arc(ctx, 250, 50, 20, 0.000000, 6.283185, true);
+arc(ctx, 350, 50, 50, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 25, 0.000000, 6.283185, false);
+if(expressions.linear_range_4 < 20) {
+expressions.linear_range_4 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_5 == null) expressions.linear_range_5 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
-arc(ctx, 50, 50, 40, 0, 6.28319, false);
-arc(ctx, 150, 50, 20, 0, 6.28319, true);
-arc(ctx, 250, 50, 45, 0, 6.28319, true);
-arc(ctx, 350, 50, 50, 0, 6.28319, false);
-arc(ctx, 450, 50, 35, 0, 6.28319, false);
-arc(ctx, 550, 50, 15, 0, 6.28319, false);
-arc(ctx, 650, 50, 30, 0, 6.28319, false);
-arc(ctx, 750, 50, 25, 0, 6.28319, false);
+arc(ctx, 50, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 20, 0.000000, 6.283185, true);
+arc(ctx, 250, 50, 45, 0.000000, 6.283185, true);
+arc(ctx, 350, 50, 50, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 25, 0.000000, 6.283185, false);
+if(expressions.linear_range_5 < 20) {
+expressions.linear_range_5 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_6 == null) expressions.linear_range_6 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
-arc(ctx, 50, 50, 40, 0, 6.28319, false);
-arc(ctx, 150, 50, 20, 0, 6.28319, false);
-arc(ctx, 250, 50, 45, 0, 6.28319, false);
-arc(ctx, 350, 50, 50, 0, 6.28319, false);
-arc(ctx, 450, 50, 35, 0, 6.28319, false);
-arc(ctx, 550, 50, 15, 0, 6.28319, false);
-arc(ctx, 650, 50, 30, 0, 6.28319, false);
-arc(ctx, 750, 50, 25, 0, 6.28319, false);
+arc(ctx, 50, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 50, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 25, 0.000000, 6.283185, false);
+if(expressions.linear_range_6 < 20) {
+expressions.linear_range_6 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_7 == null) expressions.linear_range_7 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
-arc(ctx, 50, 50, 40, 0, 6.28319, false);
-arc(ctx, 150, 50, 20, 0, 6.28319, false);
-arc(ctx, 250, 50, 45, 0, 6.28319, false);
-arc(ctx, 350, 50, 50, 0, 6.28319, true);
-arc(ctx, 450, 50, 35, 0, 6.28319, true);
-arc(ctx, 550, 50, 15, 0, 6.28319, false);
-arc(ctx, 650, 50, 30, 0, 6.28319, false);
-arc(ctx, 750, 50, 25, 0, 6.28319, false);
+arc(ctx, 50, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 50, 0.000000, 6.283185, true);
+arc(ctx, 450, 50, 35, 0.000000, 6.283185, true);
+arc(ctx, 550, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 25, 0.000000, 6.283185, false);
+if(expressions.linear_range_7 < 20) {
+expressions.linear_range_7 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_8 == null) expressions.linear_range_8 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
-arc(ctx, 50, 50, 40, 0, 6.28319, false);
-arc(ctx, 150, 50, 20, 0, 6.28319, false);
-arc(ctx, 250, 50, 45, 0, 6.28319, false);
-arc(ctx, 350, 50, 35, 0, 6.28319, true);
-arc(ctx, 450, 50, 50, 0, 6.28319, true);
-arc(ctx, 550, 50, 15, 0, 6.28319, false);
-arc(ctx, 650, 50, 30, 0, 6.28319, false);
-arc(ctx, 750, 50, 25, 0, 6.28319, false);
+arc(ctx, 50, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 35, 0.000000, 6.283185, true);
+arc(ctx, 450, 50, 50, 0.000000, 6.283185, true);
+arc(ctx, 550, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 25, 0.000000, 6.283185, false);
+if(expressions.linear_range_8 < 20) {
+expressions.linear_range_8 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_9 == null) expressions.linear_range_9 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
-arc(ctx, 50, 50, 40, 0, 6.28319, false);
-arc(ctx, 150, 50, 20, 0, 6.28319, false);
-arc(ctx, 250, 50, 45, 0, 6.28319, false);
-arc(ctx, 350, 50, 35, 0, 6.28319, false);
-arc(ctx, 450, 50, 50, 0, 6.28319, false);
-arc(ctx, 550, 50, 15, 0, 6.28319, false);
-arc(ctx, 650, 50, 30, 0, 6.28319, false);
-arc(ctx, 750, 50, 25, 0, 6.28319, false);
+arc(ctx, 50, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 50, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 25, 0.000000, 6.283185, false);
+if(expressions.linear_range_9 < 20) {
+expressions.linear_range_9 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_10 == null) expressions.linear_range_10 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
-arc(ctx, 50, 50, 40, 0, 6.28319, false);
-arc(ctx, 150, 50, 20, 0, 6.28319, false);
-arc(ctx, 250, 50, 45, 0, 6.28319, false);
-arc(ctx, 350, 50, 35, 0, 6.28319, false);
-arc(ctx, 450, 50, 50, 0, 6.28319, true);
-arc(ctx, 550, 50, 15, 0, 6.28319, true);
-arc(ctx, 650, 50, 30, 0, 6.28319, false);
-arc(ctx, 750, 50, 25, 0, 6.28319, false);
+arc(ctx, 50, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 50, 0.000000, 6.283185, true);
+arc(ctx, 550, 50, 15, 0.000000, 6.283185, true);
+arc(ctx, 650, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 25, 0.000000, 6.283185, false);
+if(expressions.linear_range_10 < 20) {
+expressions.linear_range_10 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_11 == null) expressions.linear_range_11 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
-arc(ctx, 50, 50, 40, 0, 6.28319, false);
-arc(ctx, 150, 50, 20, 0, 6.28319, false);
-arc(ctx, 250, 50, 45, 0, 6.28319, false);
-arc(ctx, 350, 50, 35, 0, 6.28319, false);
-arc(ctx, 450, 50, 15, 0, 6.28319, true);
-arc(ctx, 550, 50, 50, 0, 6.28319, true);
-arc(ctx, 650, 50, 30, 0, 6.28319, false);
-arc(ctx, 750, 50, 25, 0, 6.28319, false);
+arc(ctx, 50, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 15, 0.000000, 6.283185, true);
+arc(ctx, 550, 50, 50, 0.000000, 6.283185, true);
+arc(ctx, 650, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 25, 0.000000, 6.283185, false);
+if(expressions.linear_range_11 < 20) {
+expressions.linear_range_11 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_12 == null) expressions.linear_range_12 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
-arc(ctx, 50, 50, 40, 0, 6.28319, false);
-arc(ctx, 150, 50, 20, 0, 6.28319, false);
-arc(ctx, 250, 50, 45, 0, 6.28319, false);
-arc(ctx, 350, 50, 35, 0, 6.28319, false);
-arc(ctx, 450, 50, 15, 0, 6.28319, false);
-arc(ctx, 550, 50, 50, 0, 6.28319, false);
-arc(ctx, 650, 50, 30, 0, 6.28319, false);
-arc(ctx, 750, 50, 25, 0, 6.28319, false);
+arc(ctx, 50, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 50, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 25, 0.000000, 6.283185, false);
+if(expressions.linear_range_12 < 20) {
+expressions.linear_range_12 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_13 == null) expressions.linear_range_13 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
-arc(ctx, 50, 50, 40, 0, 6.28319, false);
-arc(ctx, 150, 50, 20, 0, 6.28319, false);
-arc(ctx, 250, 50, 45, 0, 6.28319, false);
-arc(ctx, 350, 50, 35, 0, 6.28319, false);
-arc(ctx, 450, 50, 15, 0, 6.28319, false);
-arc(ctx, 550, 50, 50, 0, 6.28319, true);
-arc(ctx, 650, 50, 30, 0, 6.28319, true);
-arc(ctx, 750, 50, 25, 0, 6.28319, false);
+arc(ctx, 50, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 50, 0.000000, 6.283185, true);
+arc(ctx, 650, 50, 30, 0.000000, 6.283185, true);
+arc(ctx, 750, 50, 25, 0.000000, 6.283185, false);
+if(expressions.linear_range_13 < 20) {
+expressions.linear_range_13 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_14 == null) expressions.linear_range_14 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
-arc(ctx, 50, 50, 40, 0, 6.28319, false);
-arc(ctx, 150, 50, 20, 0, 6.28319, false);
-arc(ctx, 250, 50, 45, 0, 6.28319, false);
-arc(ctx, 350, 50, 35, 0, 6.28319, false);
-arc(ctx, 450, 50, 15, 0, 6.28319, false);
-arc(ctx, 550, 50, 30, 0, 6.28319, true);
-arc(ctx, 650, 50, 50, 0, 6.28319, true);
-arc(ctx, 750, 50, 25, 0, 6.28319, false);
+arc(ctx, 50, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 30, 0.000000, 6.283185, true);
+arc(ctx, 650, 50, 50, 0.000000, 6.283185, true);
+arc(ctx, 750, 50, 25, 0.000000, 6.283185, false);
+if(expressions.linear_range_14 < 20) {
+expressions.linear_range_14 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_15 == null) expressions.linear_range_15 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
-arc(ctx, 50, 50, 40, 0, 6.28319, false);
-arc(ctx, 150, 50, 20, 0, 6.28319, false);
-arc(ctx, 250, 50, 45, 0, 6.28319, false);
-arc(ctx, 350, 50, 35, 0, 6.28319, false);
-arc(ctx, 450, 50, 15, 0, 6.28319, false);
-arc(ctx, 550, 50, 30, 0, 6.28319, false);
-arc(ctx, 650, 50, 50, 0, 6.28319, false);
-arc(ctx, 750, 50, 25, 0, 6.28319, false);
+arc(ctx, 50, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 50, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 25, 0.000000, 6.283185, false);
+if(expressions.linear_range_15 < 20) {
+expressions.linear_range_15 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_16 == null) expressions.linear_range_16 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
-arc(ctx, 50, 50, 40, 0, 6.28319, false);
-arc(ctx, 150, 50, 20, 0, 6.28319, false);
-arc(ctx, 250, 50, 45, 0, 6.28319, false);
-arc(ctx, 350, 50, 35, 0, 6.28319, false);
-arc(ctx, 450, 50, 15, 0, 6.28319, false);
-arc(ctx, 550, 50, 30, 0, 6.28319, false);
-arc(ctx, 650, 50, 50, 0, 6.28319, true);
-arc(ctx, 750, 50, 25, 0, 6.28319, true);
+arc(ctx, 50, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 50, 0.000000, 6.283185, true);
+arc(ctx, 750, 50, 25, 0.000000, 6.283185, true);
+if(expressions.linear_range_16 < 20) {
+expressions.linear_range_16 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_17 == null) expressions.linear_range_17 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
-arc(ctx, 50, 50, 40, 0, 6.28319, false);
-arc(ctx, 150, 50, 20, 0, 6.28319, false);
-arc(ctx, 250, 50, 45, 0, 6.28319, false);
-arc(ctx, 350, 50, 35, 0, 6.28319, false);
-arc(ctx, 450, 50, 15, 0, 6.28319, false);
-arc(ctx, 550, 50, 30, 0, 6.28319, false);
-arc(ctx, 650, 50, 25, 0, 6.28319, true);
-arc(ctx, 750, 50, 50, 0, 6.28319, true);
+arc(ctx, 50, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 25, 0.000000, 6.283185, true);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, true);
+if(expressions.linear_range_17 < 20) {
+expressions.linear_range_17 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_18 == null) expressions.linear_range_18 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
-arc(ctx, 50, 50, 40, 0, 6.28319, false);
-arc(ctx, 150, 50, 20, 0, 6.28319, false);
-arc(ctx, 250, 50, 45, 0, 6.28319, false);
-arc(ctx, 350, 50, 35, 0, 6.28319, false);
-arc(ctx, 450, 50, 15, 0, 6.28319, false);
-arc(ctx, 550, 50, 30, 0, 6.28319, false);
-arc(ctx, 650, 50, 25, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_18 < 20) {
+expressions.linear_range_18 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_19 == null) expressions.linear_range_19 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
-arc(ctx, 50, 50, 40, 0, 6.28319, false);
-arc(ctx, 150, 50, 20, 0, 6.28319, false);
-arc(ctx, 250, 50, 45, 0, 6.28319, false);
-arc(ctx, 350, 50, 35, 0, 6.28319, false);
-arc(ctx, 450, 50, 15, 0, 6.28319, false);
-arc(ctx, 550, 50, 30, 0, 6.28319, false);
-arc(ctx, 650, 50, 25, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_19 < 20) {
+expressions.linear_range_19 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_20 == null) expressions.linear_range_20 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
-arc(ctx, 50, 50, 40, 0, 6.28319, true);
-arc(ctx, 150, 50, 20, 0, 6.28319, true);
-arc(ctx, 250, 50, 45, 0, 6.28319, false);
-arc(ctx, 350, 50, 35, 0, 6.28319, false);
-arc(ctx, 450, 50, 15, 0, 6.28319, false);
-arc(ctx, 550, 50, 30, 0, 6.28319, false);
-arc(ctx, 650, 50, 25, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 40, 0.000000, 6.283185, true);
+arc(ctx, 150, 50, 20, 0.000000, 6.283185, true);
+arc(ctx, 250, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_20 < 20) {
+expressions.linear_range_20 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_21 == null) expressions.linear_range_21 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, true);
-arc(ctx, 150, 50, 40, 0, 6.28319, true);
-arc(ctx, 250, 50, 45, 0, 6.28319, false);
-arc(ctx, 350, 50, 35, 0, 6.28319, false);
-arc(ctx, 450, 50, 15, 0, 6.28319, false);
-arc(ctx, 550, 50, 30, 0, 6.28319, false);
-arc(ctx, 650, 50, 25, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, true);
+arc(ctx, 150, 50, 40, 0.000000, 6.283185, true);
+arc(ctx, 250, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_21 < 20) {
+expressions.linear_range_21 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_22 == null) expressions.linear_range_22 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 40, 0, 6.28319, false);
-arc(ctx, 250, 50, 45, 0, 6.28319, false);
-arc(ctx, 350, 50, 35, 0, 6.28319, false);
-arc(ctx, 450, 50, 15, 0, 6.28319, false);
-arc(ctx, 550, 50, 30, 0, 6.28319, false);
-arc(ctx, 650, 50, 25, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_22 < 20) {
+expressions.linear_range_22 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_23 == null) expressions.linear_range_23 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 40, 0, 6.28319, false);
-arc(ctx, 250, 50, 45, 0, 6.28319, true);
-arc(ctx, 350, 50, 35, 0, 6.28319, true);
-arc(ctx, 450, 50, 15, 0, 6.28319, false);
-arc(ctx, 550, 50, 30, 0, 6.28319, false);
-arc(ctx, 650, 50, 25, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 45, 0.000000, 6.283185, true);
+arc(ctx, 350, 50, 35, 0.000000, 6.283185, true);
+arc(ctx, 450, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_23 < 20) {
+expressions.linear_range_23 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_24 == null) expressions.linear_range_24 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 40, 0, 6.28319, false);
-arc(ctx, 250, 50, 35, 0, 6.28319, true);
-arc(ctx, 350, 50, 45, 0, 6.28319, true);
-arc(ctx, 450, 50, 15, 0, 6.28319, false);
-arc(ctx, 550, 50, 30, 0, 6.28319, false);
-arc(ctx, 650, 50, 25, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 35, 0.000000, 6.283185, true);
+arc(ctx, 350, 50, 45, 0.000000, 6.283185, true);
+arc(ctx, 450, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_24 < 20) {
+expressions.linear_range_24 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_25 == null) expressions.linear_range_25 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 40, 0, 6.28319, false);
-arc(ctx, 250, 50, 35, 0, 6.28319, false);
-arc(ctx, 350, 50, 45, 0, 6.28319, false);
-arc(ctx, 450, 50, 15, 0, 6.28319, false);
-arc(ctx, 550, 50, 30, 0, 6.28319, false);
-arc(ctx, 650, 50, 25, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_25 < 20) {
+expressions.linear_range_25 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_26 == null) expressions.linear_range_26 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 40, 0, 6.28319, false);
-arc(ctx, 250, 50, 35, 0, 6.28319, false);
-arc(ctx, 350, 50, 45, 0, 6.28319, true);
-arc(ctx, 450, 50, 15, 0, 6.28319, true);
-arc(ctx, 550, 50, 30, 0, 6.28319, false);
-arc(ctx, 650, 50, 25, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 45, 0.000000, 6.283185, true);
+arc(ctx, 450, 50, 15, 0.000000, 6.283185, true);
+arc(ctx, 550, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_26 < 20) {
+expressions.linear_range_26 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_27 == null) expressions.linear_range_27 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 40, 0, 6.28319, false);
-arc(ctx, 250, 50, 35, 0, 6.28319, false);
-arc(ctx, 350, 50, 15, 0, 6.28319, true);
-arc(ctx, 450, 50, 45, 0, 6.28319, true);
-arc(ctx, 550, 50, 30, 0, 6.28319, false);
-arc(ctx, 650, 50, 25, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 15, 0.000000, 6.283185, true);
+arc(ctx, 450, 50, 45, 0.000000, 6.283185, true);
+arc(ctx, 550, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_27 < 20) {
+expressions.linear_range_27 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_28 == null) expressions.linear_range_28 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 40, 0, 6.28319, false);
-arc(ctx, 250, 50, 35, 0, 6.28319, false);
-arc(ctx, 350, 50, 15, 0, 6.28319, false);
-arc(ctx, 450, 50, 45, 0, 6.28319, false);
-arc(ctx, 550, 50, 30, 0, 6.28319, false);
-arc(ctx, 650, 50, 25, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_28 < 20) {
+expressions.linear_range_28 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_29 == null) expressions.linear_range_29 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 40, 0, 6.28319, false);
-arc(ctx, 250, 50, 35, 0, 6.28319, false);
-arc(ctx, 350, 50, 15, 0, 6.28319, false);
-arc(ctx, 450, 50, 45, 0, 6.28319, true);
-arc(ctx, 550, 50, 30, 0, 6.28319, true);
-arc(ctx, 650, 50, 25, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 45, 0.000000, 6.283185, true);
+arc(ctx, 550, 50, 30, 0.000000, 6.283185, true);
+arc(ctx, 650, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_29 < 20) {
+expressions.linear_range_29 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_30 == null) expressions.linear_range_30 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 40, 0, 6.28319, false);
-arc(ctx, 250, 50, 35, 0, 6.28319, false);
-arc(ctx, 350, 50, 15, 0, 6.28319, false);
-arc(ctx, 450, 50, 30, 0, 6.28319, true);
-arc(ctx, 550, 50, 45, 0, 6.28319, true);
-arc(ctx, 650, 50, 25, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 30, 0.000000, 6.283185, true);
+arc(ctx, 550, 50, 45, 0.000000, 6.283185, true);
+arc(ctx, 650, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_30 < 20) {
+expressions.linear_range_30 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_31 == null) expressions.linear_range_31 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 40, 0, 6.28319, false);
-arc(ctx, 250, 50, 35, 0, 6.28319, false);
-arc(ctx, 350, 50, 15, 0, 6.28319, false);
-arc(ctx, 450, 50, 30, 0, 6.28319, false);
-arc(ctx, 550, 50, 45, 0, 6.28319, false);
-arc(ctx, 650, 50, 25, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_31 < 20) {
+expressions.linear_range_31 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_32 == null) expressions.linear_range_32 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 40, 0, 6.28319, false);
-arc(ctx, 250, 50, 35, 0, 6.28319, false);
-arc(ctx, 350, 50, 15, 0, 6.28319, false);
-arc(ctx, 450, 50, 30, 0, 6.28319, false);
-arc(ctx, 550, 50, 45, 0, 6.28319, true);
-arc(ctx, 650, 50, 25, 0, 6.28319, true);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 45, 0.000000, 6.283185, true);
+arc(ctx, 650, 50, 25, 0.000000, 6.283185, true);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_32 < 20) {
+expressions.linear_range_32 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_33 == null) expressions.linear_range_33 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 40, 0, 6.28319, false);
-arc(ctx, 250, 50, 35, 0, 6.28319, false);
-arc(ctx, 350, 50, 15, 0, 6.28319, false);
-arc(ctx, 450, 50, 30, 0, 6.28319, false);
-arc(ctx, 550, 50, 25, 0, 6.28319, true);
-arc(ctx, 650, 50, 45, 0, 6.28319, true);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 25, 0.000000, 6.283185, true);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, true);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_33 < 20) {
+expressions.linear_range_33 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_34 == null) expressions.linear_range_34 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 40, 0, 6.28319, false);
-arc(ctx, 250, 50, 35, 0, 6.28319, false);
-arc(ctx, 350, 50, 15, 0, 6.28319, false);
-arc(ctx, 450, 50, 30, 0, 6.28319, false);
-arc(ctx, 550, 50, 25, 0, 6.28319, false);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_34 < 20) {
+expressions.linear_range_34 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_35 == null) expressions.linear_range_35 = 0;
 text(ctx, 10, 150, `Iteration: 3`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 40, 0, 6.28319, false);
-arc(ctx, 250, 50, 35, 0, 6.28319, false);
-arc(ctx, 350, 50, 15, 0, 6.28319, false);
-arc(ctx, 450, 50, 30, 0, 6.28319, false);
-arc(ctx, 550, 50, 25, 0, 6.28319, false);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_35 < 20) {
+expressions.linear_range_35 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_36 == null) expressions.linear_range_36 = 0;
 text(ctx, 10, 150, `Iteration: 3`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 40, 0, 6.28319, true);
-arc(ctx, 250, 50, 35, 0, 6.28319, true);
-arc(ctx, 350, 50, 15, 0, 6.28319, false);
-arc(ctx, 450, 50, 30, 0, 6.28319, false);
-arc(ctx, 550, 50, 25, 0, 6.28319, false);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 40, 0.000000, 6.283185, true);
+arc(ctx, 250, 50, 35, 0.000000, 6.283185, true);
+arc(ctx, 350, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_36 < 20) {
+expressions.linear_range_36 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_37 == null) expressions.linear_range_37 = 0;
 text(ctx, 10, 150, `Iteration: 3`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 35, 0, 6.28319, true);
-arc(ctx, 250, 50, 40, 0, 6.28319, true);
-arc(ctx, 350, 50, 15, 0, 6.28319, false);
-arc(ctx, 450, 50, 30, 0, 6.28319, false);
-arc(ctx, 550, 50, 25, 0, 6.28319, false);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 35, 0.000000, 6.283185, true);
+arc(ctx, 250, 50, 40, 0.000000, 6.283185, true);
+arc(ctx, 350, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_37 < 20) {
+expressions.linear_range_37 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_38 == null) expressions.linear_range_38 = 0;
 text(ctx, 10, 150, `Iteration: 3`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 35, 0, 6.28319, false);
-arc(ctx, 250, 50, 40, 0, 6.28319, false);
-arc(ctx, 350, 50, 15, 0, 6.28319, false);
-arc(ctx, 450, 50, 30, 0, 6.28319, false);
-arc(ctx, 550, 50, 25, 0, 6.28319, false);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_38 < 20) {
+expressions.linear_range_38 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_39 == null) expressions.linear_range_39 = 0;
 text(ctx, 10, 150, `Iteration: 3`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 35, 0, 6.28319, false);
-arc(ctx, 250, 50, 40, 0, 6.28319, true);
-arc(ctx, 350, 50, 15, 0, 6.28319, true);
-arc(ctx, 450, 50, 30, 0, 6.28319, false);
-arc(ctx, 550, 50, 25, 0, 6.28319, false);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 40, 0.000000, 6.283185, true);
+arc(ctx, 350, 50, 15, 0.000000, 6.283185, true);
+arc(ctx, 450, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_39 < 20) {
+expressions.linear_range_39 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_40 == null) expressions.linear_range_40 = 0;
 text(ctx, 10, 150, `Iteration: 3`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 35, 0, 6.28319, false);
-arc(ctx, 250, 50, 15, 0, 6.28319, true);
-arc(ctx, 350, 50, 40, 0, 6.28319, true);
-arc(ctx, 450, 50, 30, 0, 6.28319, false);
-arc(ctx, 550, 50, 25, 0, 6.28319, false);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 15, 0.000000, 6.283185, true);
+arc(ctx, 350, 50, 40, 0.000000, 6.283185, true);
+arc(ctx, 450, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_40 < 20) {
+expressions.linear_range_40 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_41 == null) expressions.linear_range_41 = 0;
 text(ctx, 10, 150, `Iteration: 3`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 35, 0, 6.28319, false);
-arc(ctx, 250, 50, 15, 0, 6.28319, false);
-arc(ctx, 350, 50, 40, 0, 6.28319, false);
-arc(ctx, 450, 50, 30, 0, 6.28319, false);
-arc(ctx, 550, 50, 25, 0, 6.28319, false);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_41 < 20) {
+expressions.linear_range_41 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_42 == null) expressions.linear_range_42 = 0;
 text(ctx, 10, 150, `Iteration: 3`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 35, 0, 6.28319, false);
-arc(ctx, 250, 50, 15, 0, 6.28319, false);
-arc(ctx, 350, 50, 40, 0, 6.28319, true);
-arc(ctx, 450, 50, 30, 0, 6.28319, true);
-arc(ctx, 550, 50, 25, 0, 6.28319, false);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 40, 0.000000, 6.283185, true);
+arc(ctx, 450, 50, 30, 0.000000, 6.283185, true);
+arc(ctx, 550, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_42 < 20) {
+expressions.linear_range_42 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_43 == null) expressions.linear_range_43 = 0;
 text(ctx, 10, 150, `Iteration: 3`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 35, 0, 6.28319, false);
-arc(ctx, 250, 50, 15, 0, 6.28319, false);
-arc(ctx, 350, 50, 30, 0, 6.28319, true);
-arc(ctx, 450, 50, 40, 0, 6.28319, true);
-arc(ctx, 550, 50, 25, 0, 6.28319, false);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 30, 0.000000, 6.283185, true);
+arc(ctx, 450, 50, 40, 0.000000, 6.283185, true);
+arc(ctx, 550, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_43 < 20) {
+expressions.linear_range_43 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_44 == null) expressions.linear_range_44 = 0;
 text(ctx, 10, 150, `Iteration: 3`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 35, 0, 6.28319, false);
-arc(ctx, 250, 50, 15, 0, 6.28319, false);
-arc(ctx, 350, 50, 30, 0, 6.28319, false);
-arc(ctx, 450, 50, 40, 0, 6.28319, false);
-arc(ctx, 550, 50, 25, 0, 6.28319, false);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_44 < 20) {
+expressions.linear_range_44 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_45 == null) expressions.linear_range_45 = 0;
 text(ctx, 10, 150, `Iteration: 3`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 35, 0, 6.28319, false);
-arc(ctx, 250, 50, 15, 0, 6.28319, false);
-arc(ctx, 350, 50, 30, 0, 6.28319, false);
-arc(ctx, 450, 50, 40, 0, 6.28319, true);
-arc(ctx, 550, 50, 25, 0, 6.28319, true);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 40, 0.000000, 6.283185, true);
+arc(ctx, 550, 50, 25, 0.000000, 6.283185, true);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_45 < 20) {
+expressions.linear_range_45 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_46 == null) expressions.linear_range_46 = 0;
 text(ctx, 10, 150, `Iteration: 3`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 35, 0, 6.28319, false);
-arc(ctx, 250, 50, 15, 0, 6.28319, false);
-arc(ctx, 350, 50, 30, 0, 6.28319, false);
-arc(ctx, 450, 50, 25, 0, 6.28319, true);
-arc(ctx, 550, 50, 40, 0, 6.28319, true);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 25, 0.000000, 6.283185, true);
+arc(ctx, 550, 50, 40, 0.000000, 6.283185, true);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_46 < 20) {
+expressions.linear_range_46 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_47 == null) expressions.linear_range_47 = 0;
 text(ctx, 10, 150, `Iteration: 3`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 35, 0, 6.28319, false);
-arc(ctx, 250, 50, 15, 0, 6.28319, false);
-arc(ctx, 350, 50, 30, 0, 6.28319, false);
-arc(ctx, 450, 50, 25, 0, 6.28319, false);
-arc(ctx, 550, 50, 40, 0, 6.28319, false);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_47 < 20) {
+expressions.linear_range_47 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_48 == null) expressions.linear_range_48 = 0;
 text(ctx, 10, 150, `Iteration: 4`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 35, 0, 6.28319, false);
-arc(ctx, 250, 50, 15, 0, 6.28319, false);
-arc(ctx, 350, 50, 30, 0, 6.28319, false);
-arc(ctx, 450, 50, 25, 0, 6.28319, false);
-arc(ctx, 550, 50, 40, 0, 6.28319, false);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_48 < 20) {
+expressions.linear_range_48 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_49 == null) expressions.linear_range_49 = 0;
 text(ctx, 10, 150, `Iteration: 4`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 35, 0, 6.28319, true);
-arc(ctx, 250, 50, 15, 0, 6.28319, true);
-arc(ctx, 350, 50, 30, 0, 6.28319, false);
-arc(ctx, 450, 50, 25, 0, 6.28319, false);
-arc(ctx, 550, 50, 40, 0, 6.28319, false);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 35, 0.000000, 6.283185, true);
+arc(ctx, 250, 50, 15, 0.000000, 6.283185, true);
+arc(ctx, 350, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_49 < 20) {
+expressions.linear_range_49 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_50 == null) expressions.linear_range_50 = 0;
 text(ctx, 10, 150, `Iteration: 4`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 15, 0, 6.28319, true);
-arc(ctx, 250, 50, 35, 0, 6.28319, true);
-arc(ctx, 350, 50, 30, 0, 6.28319, false);
-arc(ctx, 450, 50, 25, 0, 6.28319, false);
-arc(ctx, 550, 50, 40, 0, 6.28319, false);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 15, 0.000000, 6.283185, true);
+arc(ctx, 250, 50, 35, 0.000000, 6.283185, true);
+arc(ctx, 350, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_50 < 20) {
+expressions.linear_range_50 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_51 == null) expressions.linear_range_51 = 0;
 text(ctx, 10, 150, `Iteration: 4`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 15, 0, 6.28319, false);
-arc(ctx, 250, 50, 35, 0, 6.28319, false);
-arc(ctx, 350, 50, 30, 0, 6.28319, false);
-arc(ctx, 450, 50, 25, 0, 6.28319, false);
-arc(ctx, 550, 50, 40, 0, 6.28319, false);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_51 < 20) {
+expressions.linear_range_51 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_52 == null) expressions.linear_range_52 = 0;
 text(ctx, 10, 150, `Iteration: 4`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 15, 0, 6.28319, false);
-arc(ctx, 250, 50, 35, 0, 6.28319, true);
-arc(ctx, 350, 50, 30, 0, 6.28319, true);
-arc(ctx, 450, 50, 25, 0, 6.28319, false);
-arc(ctx, 550, 50, 40, 0, 6.28319, false);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 35, 0.000000, 6.283185, true);
+arc(ctx, 350, 50, 30, 0.000000, 6.283185, true);
+arc(ctx, 450, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_52 < 20) {
+expressions.linear_range_52 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_53 == null) expressions.linear_range_53 = 0;
 text(ctx, 10, 150, `Iteration: 4`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 15, 0, 6.28319, false);
-arc(ctx, 250, 50, 30, 0, 6.28319, true);
-arc(ctx, 350, 50, 35, 0, 6.28319, true);
-arc(ctx, 450, 50, 25, 0, 6.28319, false);
-arc(ctx, 550, 50, 40, 0, 6.28319, false);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 30, 0.000000, 6.283185, true);
+arc(ctx, 350, 50, 35, 0.000000, 6.283185, true);
+arc(ctx, 450, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_53 < 20) {
+expressions.linear_range_53 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_54 == null) expressions.linear_range_54 = 0;
 text(ctx, 10, 150, `Iteration: 4`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 15, 0, 6.28319, false);
-arc(ctx, 250, 50, 30, 0, 6.28319, false);
-arc(ctx, 350, 50, 35, 0, 6.28319, false);
-arc(ctx, 450, 50, 25, 0, 6.28319, false);
-arc(ctx, 550, 50, 40, 0, 6.28319, false);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_54 < 20) {
+expressions.linear_range_54 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_55 == null) expressions.linear_range_55 = 0;
 text(ctx, 10, 150, `Iteration: 4`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 15, 0, 6.28319, false);
-arc(ctx, 250, 50, 30, 0, 6.28319, false);
-arc(ctx, 350, 50, 35, 0, 6.28319, true);
-arc(ctx, 450, 50, 25, 0, 6.28319, true);
-arc(ctx, 550, 50, 40, 0, 6.28319, false);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 35, 0.000000, 6.283185, true);
+arc(ctx, 450, 50, 25, 0.000000, 6.283185, true);
+arc(ctx, 550, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_55 < 20) {
+expressions.linear_range_55 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_56 == null) expressions.linear_range_56 = 0;
 text(ctx, 10, 150, `Iteration: 4`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 15, 0, 6.28319, false);
-arc(ctx, 250, 50, 30, 0, 6.28319, false);
-arc(ctx, 350, 50, 25, 0, 6.28319, true);
-arc(ctx, 450, 50, 35, 0, 6.28319, true);
-arc(ctx, 550, 50, 40, 0, 6.28319, false);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 25, 0.000000, 6.283185, true);
+arc(ctx, 450, 50, 35, 0.000000, 6.283185, true);
+arc(ctx, 550, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_56 < 20) {
+expressions.linear_range_56 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_57 == null) expressions.linear_range_57 = 0;
 text(ctx, 10, 150, `Iteration: 4`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 15, 0, 6.28319, false);
-arc(ctx, 250, 50, 30, 0, 6.28319, false);
-arc(ctx, 350, 50, 25, 0, 6.28319, false);
-arc(ctx, 450, 50, 35, 0, 6.28319, false);
-arc(ctx, 550, 50, 40, 0, 6.28319, false);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_57 < 20) {
+expressions.linear_range_57 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_58 == null) expressions.linear_range_58 = 0;
 text(ctx, 10, 150, `Iteration: 5`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, false);
-arc(ctx, 150, 50, 15, 0, 6.28319, false);
-arc(ctx, 250, 50, 30, 0, 6.28319, false);
-arc(ctx, 350, 50, 25, 0, 6.28319, false);
-arc(ctx, 450, 50, 35, 0, 6.28319, false);
-arc(ctx, 550, 50, 40, 0, 6.28319, false);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_58 < 20) {
+expressions.linear_range_58 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_59 == null) expressions.linear_range_59 = 0;
 text(ctx, 10, 150, `Iteration: 5`, true);
-arc(ctx, 50, 50, 20, 0, 6.28319, true);
-arc(ctx, 150, 50, 15, 0, 6.28319, true);
-arc(ctx, 250, 50, 30, 0, 6.28319, false);
-arc(ctx, 350, 50, 25, 0, 6.28319, false);
-arc(ctx, 450, 50, 35, 0, 6.28319, false);
-arc(ctx, 550, 50, 40, 0, 6.28319, false);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 20, 0.000000, 6.283185, true);
+arc(ctx, 150, 50, 15, 0.000000, 6.283185, true);
+arc(ctx, 250, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_59 < 20) {
+expressions.linear_range_59 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_60 == null) expressions.linear_range_60 = 0;
 text(ctx, 10, 150, `Iteration: 5`, true);
-arc(ctx, 50, 50, 15, 0, 6.28319, true);
-arc(ctx, 150, 50, 20, 0, 6.28319, true);
-arc(ctx, 250, 50, 30, 0, 6.28319, false);
-arc(ctx, 350, 50, 25, 0, 6.28319, false);
-arc(ctx, 450, 50, 35, 0, 6.28319, false);
-arc(ctx, 550, 50, 40, 0, 6.28319, false);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 15, 0.000000, 6.283185, true);
+arc(ctx, 150, 50, 20, 0.000000, 6.283185, true);
+arc(ctx, 250, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_60 < 20) {
+expressions.linear_range_60 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_61 == null) expressions.linear_range_61 = 0;
 text(ctx, 10, 150, `Iteration: 5`, true);
-arc(ctx, 50, 50, 15, 0, 6.28319, false);
-arc(ctx, 150, 50, 20, 0, 6.28319, false);
-arc(ctx, 250, 50, 30, 0, 6.28319, false);
-arc(ctx, 350, 50, 25, 0, 6.28319, false);
-arc(ctx, 450, 50, 35, 0, 6.28319, false);
-arc(ctx, 550, 50, 40, 0, 6.28319, false);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_61 < 20) {
+expressions.linear_range_61 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_62 == null) expressions.linear_range_62 = 0;
 text(ctx, 10, 150, `Iteration: 5`, true);
-arc(ctx, 50, 50, 15, 0, 6.28319, false);
-arc(ctx, 150, 50, 20, 0, 6.28319, false);
-arc(ctx, 250, 50, 30, 0, 6.28319, true);
-arc(ctx, 350, 50, 25, 0, 6.28319, true);
-arc(ctx, 450, 50, 35, 0, 6.28319, false);
-arc(ctx, 550, 50, 40, 0, 6.28319, false);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 30, 0.000000, 6.283185, true);
+arc(ctx, 350, 50, 25, 0.000000, 6.283185, true);
+arc(ctx, 450, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_62 < 20) {
+expressions.linear_range_62 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_63 == null) expressions.linear_range_63 = 0;
 text(ctx, 10, 150, `Iteration: 5`, true);
-arc(ctx, 50, 50, 15, 0, 6.28319, false);
-arc(ctx, 150, 50, 20, 0, 6.28319, false);
-arc(ctx, 250, 50, 25, 0, 6.28319, true);
-arc(ctx, 350, 50, 30, 0, 6.28319, true);
-arc(ctx, 450, 50, 35, 0, 6.28319, false);
-arc(ctx, 550, 50, 40, 0, 6.28319, false);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 25, 0.000000, 6.283185, true);
+arc(ctx, 350, 50, 30, 0.000000, 6.283185, true);
+arc(ctx, 450, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_63 < 20) {
+expressions.linear_range_63 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_64 == null) expressions.linear_range_64 = 0;
 text(ctx, 10, 150, `Iteration: 5`, true);
-arc(ctx, 50, 50, 15, 0, 6.28319, false);
-arc(ctx, 150, 50, 20, 0, 6.28319, false);
-arc(ctx, 250, 50, 25, 0, 6.28319, false);
-arc(ctx, 350, 50, 30, 0, 6.28319, false);
-arc(ctx, 450, 50, 35, 0, 6.28319, false);
-arc(ctx, 550, 50, 40, 0, 6.28319, false);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_64 < 20) {
+expressions.linear_range_64 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
+if(expressions.linear_range_65 == null) expressions.linear_range_65 = 0;
 text(ctx, 10, 150, `Iteration: 6`, true);
-arc(ctx, 50, 50, 15, 0, 6.28319, false);
-arc(ctx, 150, 50, 20, 0, 6.28319, false);
-arc(ctx, 250, 50, 25, 0, 6.28319, false);
-arc(ctx, 350, 50, 30, 0, 6.28319, false);
-arc(ctx, 450, 50, 35, 0, 6.28319, false);
-arc(ctx, 550, 50, 40, 0, 6.28319, false);
-arc(ctx, 650, 50, 45, 0, 6.28319, false);
-arc(ctx, 750, 50, 50, 0, 6.28319, false);
+arc(ctx, 50, 50, 15, 0.000000, 6.283185, false);
+arc(ctx, 150, 50, 20, 0.000000, 6.283185, false);
+arc(ctx, 250, 50, 25, 0.000000, 6.283185, false);
+arc(ctx, 350, 50, 30, 0.000000, 6.283185, false);
+arc(ctx, 450, 50, 35, 0.000000, 6.283185, false);
+arc(ctx, 550, 50, 40, 0.000000, 6.283185, false);
+arc(ctx, 650, 50, 45, 0.000000, 6.283185, false);
+arc(ctx, 750, 50, 50, 0.000000, 6.283185, false);
+if(expressions.linear_range_65 < 20) {
+expressions.linear_range_65 += 1;
+repeat_current_frame = true;
+}
 }),
 (function(ctx) {
 }),
@@ -775,12 +1105,14 @@ window.onload = function() {
 	(function drawFrame () {
 		if(frame_counter == 0 || !no_clear)
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
+		repeat_current_frame = false;
 		draw_bkgnd(ctx);
 		(frames[frame_counter])(ctx);
 		draw_frgnd(ctx);
-		wait_counter = (num_wait_frames == 0) ? 0 : ((wait_counter + 1) % num_wait_frames);
-		if(wait_counter == 0)
+		if(!repeat_current_frame) {
 			frame_counter = (frame_counter + 1) % num_frames;
+			expressions = {};
+		}
 		window.requestAnimationFrame(drawFrame, canvas);
 	}());
 }
@@ -797,7 +1129,6 @@ window.onload = function() {
 #include &lt;string&gt;
 int main() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim example 3 - Bubble sort visualization", 400, 600);
-	anim.set_wait_frames(20);
 
 	std::array<int, 8> numbers{7, 6, 2, 8, 5, 1, 4, 3};
 	int iteration = 1;
@@ -806,6 +1137,7 @@ int main() {
 		anim.frame().text(10, 150, std::string("Iteration: ") + std::to_string(iteration));
 		for(size_t i = 0; i < numbers.size(); ++i)
 			anim.frame().arc(50 + i * 100, 50, 10 + numbers[i] * 5, i == swap_pos || i == swap_pos + 1);
+		anim.frame().wait(20);
 		anim.next_frame();
 	};
 
