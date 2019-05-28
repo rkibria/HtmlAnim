@@ -154,7 +154,7 @@ public:
 class Vec2ExpressionValue : public ExpressionValue {
 	std::string str_val_2;
 public:
-	Vec2ExpressionValue(const std::string& v) : ExpressionValue{ v } {}
+	Vec2ExpressionValue(const std::string& v, const std::string& v2) : ExpressionValue{ v }, str_val_2{ v2 } {}
 	virtual const std::string& to_string_2() const { return str_val_2; }
 };
 
@@ -199,6 +199,23 @@ public:
 	virtual const ExpressionValue& value() const override { return var_name; }
 };
 SizeType LinearRangeExpression::count = 0;
+
+class LinearPointExpression : public Expression {
+	LinearRangeExpression range_1, range_2;
+public:
+	LinearPointExpression(const Vec2& start, const Vec2& stop, SizeType steps)
+		: range_1( start.x, stop.x, steps ), range_2( start.y, stop.y, steps ) {}
+	virtual void init(std::ostream& os) const override {
+		range_1.init(os);
+		range_2.init(os);
+	}
+	virtual void exit(std::ostream& os) const override {
+		range_1.exit(os);
+		range_2.exit(os);
+	}
+	virtual const ExpressionValue& value() const override { return range_1.value(); }
+	virtual const ExpressionValue& value_2() const { return range_2.value(); }
+};
 
 class Arc : public Drawable {
 	CoordExpressionValue x, y, r, sa, ea;
