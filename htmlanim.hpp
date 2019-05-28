@@ -34,17 +34,18 @@ SOFTWARE.
 #include <memory>
 #include <vector>
 #include <unordered_set>
-
 #include <cmath>
-#ifndef M_PI
-constexpr double M_PI = 3.14159265358979323846;
-#endif
-
 #include <sstream>
 #include <iomanip>
 #include <stdexcept>
 
 namespace HtmlAnim {
+
+#ifndef M_PI
+constexpr double PI = 3.14159265358979323846;
+#else
+constexpr double PI = M_PI;
+#endif
 
 using CoordType = double;
 
@@ -463,12 +464,12 @@ public:
 		return *this;
 	}
 	Frame& arc(const CoordExpressionValue& x, const CoordExpressionValue& y, const CoordExpressionValue& r,
-		const BoolExpressionValue& fill = false, const CoordExpressionValue& sa = 0.0, const CoordExpressionValue& ea = 2 * M_PI)
+		const BoolExpressionValue& fill = false, const CoordExpressionValue& sa = 0.0, const CoordExpressionValue& ea = 2 * PI)
 	{
 		return add_drawable(std::make_unique<Arc>(x, y, r, sa, ea, fill));
 	}
 	Frame& arc(const PointExpressionValue& p, const CoordExpressionValue& r,
-		const BoolExpressionValue& fill = false, const CoordExpressionValue& sa = 0.0, const CoordExpressionValue & ea = 2 * M_PI)
+		const BoolExpressionValue& fill = false, const CoordExpressionValue& sa = 0.0, const CoordExpressionValue & ea = 2 * PI)
 	{
 		return add_drawable(std::make_unique<Arc>(p.to_string(), p.to_string_2(), r, sa, ea, fill));
 	}

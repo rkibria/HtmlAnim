@@ -245,11 +245,11 @@ int main() {
 	const auto n_parts = 16;
 	const auto part_len = (anim.get_width() - 60) / n_parts;
 	auto get_y = [&anim, n_parts](auto part, auto y_scale)
-		{return anim.get_height() / 2 * (1 + 0.75 * y_scale * sin(2 * M_PI / n_parts * part));};
+		{return anim.get_height() / 2 * (1 + 0.75 * y_scale * sin(2 * HtmlAnim::PI / n_parts * part));};
 	auto ramp = [](auto n_parts, auto i) {return (i < n_parts / 2) ? i : (n_parts - i);};
 	const auto n_frames = 60;
 	for(auto frame = 0; frame < n_frames; ++frame) {
-		const auto y_scale = sin(2 * M_PI / n_frames * frame);
+		const auto y_scale = sin(2 * HtmlAnim::PI / n_frames * frame);
 		for(auto part = 0; part < n_parts; ++part) {
 			anim.frame().line_cap("round");
 			anim.frame().line_width(5 + 5 * ramp(n_parts, (part + frame / 4) % n_parts));
@@ -313,9 +313,9 @@ int main() {
 		.fill_style("black")
 		.arc(-30, -30, 10, true)
 		.arc(30, -30, 10, true)
-		.arc(0, 0, 50, false, 0, M_PI);
+		.arc(0, 0, 50, false, 0, HtmlAnim::PI);
 	for(auto frame = 0; frame < n_frames; ++frame) {
-		const auto rot = 2 * M_PI / n_frames * frame;
+		const auto rot = 2 * HtmlAnim::PI / n_frames * frame;
 		anim.frame()
 			.save()
 			.translate(anim.get_width() / 2, anim.get_height() / 2)
@@ -373,7 +373,7 @@ int main() {
 	auto poly_points = [](auto n_points, auto radius) {
 		HtmlAnim::Vec2Vector pv(n_points);
 		for(size_t p_i = 0; p_i < n_points; ++p_i) {
-			const auto phi = 2 * M_PI / n_points * p_i;
+			const auto phi = 2 * HtmlAnim::PI / n_points * p_i;
 			pv[p_i].x = radius * cos(phi);
 			pv[p_i].y = radius * sin(phi);
 		}
@@ -594,7 +594,7 @@ void equilateral_triangle(HtmlAnim::HtmlAnim &anim, double x, double y, double d
 	HtmlAnim::Vec2Vector points = {
 		HtmlAnim::Vec2(x, y),
 		HtmlAnim::Vec2(x + d, y),
-		HtmlAnim::Vec2(x + d/2, y - d * sin(M_PI/3))};
+		HtmlAnim::Vec2(x + d/2, y - d * sin(HtmlAnim::PI/3))};
 	anim.frame().line(points, false, true);
 }
 
@@ -606,7 +606,7 @@ void sierpinski(HtmlAnim::HtmlAnim &anim, double x, double y, double d, int dept
 
 	sierpinski(anim, x, y, d/2, depth+1);
 	sierpinski(anim, x + d/2, y, d/2, depth+1);
-	sierpinski(anim, x + d/4, y - d/2 * sin(M_PI/3), d/2, depth+1);
+	sierpinski(anim, x + d/4, y - d/2 * sin(HtmlAnim::PI/3), d/2, depth+1);
 
 	if(++count % 10 == 0)
 		anim.next_frame();

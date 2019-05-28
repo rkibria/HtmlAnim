@@ -10,7 +10,7 @@ int main() {
 	anim.frame().add_drawable(
 		std::make_unique<HtmlAnim::Arc>(200, 200,
 			anim.frame().add_coord_expression(std::make_unique<HtmlAnim::LinearRangeExpression>(5, 50, 45)),
-			0.0, 2 * M_PI,
+			0.0, 2 * HtmlAnim::PI,
 			false
 			)
 	);
