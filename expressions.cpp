@@ -7,13 +7,13 @@ int main() {
 	anim.frame().arc(anim.frame().range_expr(100, 10, 120), 40, 10);
 	anim.frame().arc(anim.frame().range_expr(10, 100, 180), 60, 10);
 
-	//anim.frame().add_drawable(
-	//	std::make_unique<HtmlAnim::Arc>(200, 200,
-	//		anim.frame().add_coord_expression(std::make_unique<HtmlAnim::CoordRangeExpression>(5, 50, 1)),
-	//		0.0, 2 * M_PI,
-	//		false
-	//		)
-	//);
+	anim.frame().add_drawable(
+		std::make_unique<HtmlAnim::Arc>(200, 200,
+			anim.frame().add_coord_expression(std::make_unique<HtmlAnim::CoordRangeExpression>(5, 50, 45)),
+			0.0, 2 * M_PI,
+			false
+			)
+	);
 
 	// anim.frame().arc(200, 200, 50);
 

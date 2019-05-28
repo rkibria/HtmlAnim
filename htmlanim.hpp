@@ -135,7 +135,7 @@ protected:
 public:
 	virtual ~ExpressionValue() = default;
 	ExpressionValue(const std::string& v) : str_val{ v } {}
-	const std::string& to_string() const { return str_val; }
+	virtual const std::string& to_string() const { return str_val; }
 };
 
 class CoordExpressionValue : public ExpressionValue {
@@ -149,6 +149,13 @@ class BoolExpressionValue : public ExpressionValue {
 public:
 	BoolExpressionValue(const std::string& v) : ExpressionValue{ v } {}
 	BoolExpressionValue(const bool& b) : ExpressionValue{ (b ? "true" : "false") } {}
+};
+
+class Vec2ExpressionValue : public ExpressionValue {
+	std::string str_val_2;
+public:
+	Vec2ExpressionValue(const std::string& v) : ExpressionValue{ v } {}
+	virtual const std::string& to_string_2() const { return str_val_2; }
 };
 
 class Expression {
