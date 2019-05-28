@@ -15,7 +15,7 @@ int main() {
 			)
 	);
 
-	// anim.frame().arc(200, 200, 50);
+	anim.frame().arc(anim.frame().linear_point_range(HtmlAnim::Vec2(30, 40), HtmlAnim::Vec2(90, 120), 100), 20, true);
 
 	anim.next_frame();
 	anim.frame().arc(300, 200, 50);

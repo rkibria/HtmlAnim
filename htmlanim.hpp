@@ -202,9 +202,11 @@ SizeType LinearRangeExpression::count = 0;
 
 class LinearPointExpression : public Expression {
 	LinearRangeExpression range_1, range_2;
+	PointExpressionValue point;
 public:
 	LinearPointExpression(const Vec2& start, const Vec2& stop, SizeType steps)
-		: range_1( start.x, stop.x, steps ), range_2( start.y, stop.y, steps ) {}
+		: range_1( start.x, stop.x, steps ), range_2( start.y, stop.y, steps ),
+		point(range_1.value().to_string(), range_2.value().to_string()) {}
 	virtual void init(std::ostream& os) const override {
 		range_1.init(os);
 		range_2.init(os);
@@ -213,8 +215,7 @@ public:
 		range_1.exit(os);
 		range_2.exit(os);
 	}
-	virtual const ExpressionValue& value() const override { return range_1.value(); }
-	virtual const ExpressionValue& value_2() const { return range_2.value(); }
+	virtual const ExpressionValue& value() const override { return point; }
 };
 
 class Arc : public Drawable {
@@ -455,10 +456,15 @@ public:
 		}
 	}
 
-	Frame& arc(const CoordExpressionValue& x, CoordExpressionValue y, CoordExpressionValue r,
-		BoolExpressionValue fill = false, CoordExpressionValue sa = 0.0, CoordExpressionValue ea = 2 * M_PI)
+	Frame& arc(const CoordExpressionValue& x, const CoordExpressionValue& y, const CoordExpressionValue& r,
+		const BoolExpressionValue& fill = false, const CoordExpressionValue& sa = 0.0, const CoordExpressionValue& ea = 2 * M_PI)
 	{
 		return add_drawable(std::make_unique<Arc>(x, y, r, sa, ea, fill));
+	}
+	Frame& arc(const PointExpressionValue& p, const CoordExpressionValue& r,
+		const BoolExpressionValue& fill = false, const CoordExpressionValue& sa = 0.0, const CoordExpressionValue & ea = 2 * M_PI)
+	{
+		return add_drawable(std::make_unique<Arc>(p.to_string(), p.to_string_2(), r, sa, ea, fill));
 	}
 	Frame& rect(CoordType x, CoordType y, CoordType w, CoordType h, bool fill = false)
 	{
@@ -516,7 +522,7 @@ public:
 	{
 		return add_coord_expression(std::make_unique<LinearRangeExpression>(start, stop, inc));
 	}
-	const PointExpressionValue& linear_point(const Vec2& start, const Vec2& stop, CoordType inc)
+	const PointExpressionValue& linear_point_range(const Vec2& start, const Vec2& stop, SizeType inc)
 	{
 		return add_point_expression(std::make_unique<LinearPointExpression>(start, stop, inc));
 	}
