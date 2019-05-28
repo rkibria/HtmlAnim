@@ -168,13 +168,13 @@ public:
 	virtual const ExpressionValue& value() const = 0;
 };
 
-class CoordRangeExpression : public Expression {
+class LinearRangeExpression : public Expression {
 	CoordType start, stop;
 	SizeType steps;
 	CoordExpressionValue var_name;
 	static SizeType count;
 public:
-	CoordRangeExpression(CoordType start, CoordType stop, SizeType steps)
+	LinearRangeExpression(CoordType start, CoordType stop, SizeType steps)
 		: start{ start }, stop{ stop }, steps{ steps },
 		var_name{ std::string("expressions.coord_range_") + std::to_string(count++) } {}
 	virtual void init(std::ostream& os) const override {
@@ -198,7 +198,7 @@ public:
 	}
 	virtual const ExpressionValue& value() const override { return var_name; }
 };
-SizeType CoordRangeExpression::count = 0;
+SizeType LinearRangeExpression::count = 0;
 
 class Arc : public Drawable {
 	CoordExpressionValue x, y, r, sa, ea;
@@ -490,9 +490,9 @@ public:
 		return add_drawable(std::make_unique<Font>(font));
 	}
 
-	const CoordExpressionValue& range_expr(CoordType start, CoordType stop, CoordType inc)
+	const CoordExpressionValue& linear_range(CoordType start, CoordType stop, CoordType inc)
 	{
-		return add_coord_expression(std::make_unique<CoordRangeExpression>(start, stop, inc));
+		return add_coord_expression(std::make_unique<LinearRangeExpression>(start, stop, inc));
 	}
 
 	Frame& save();
