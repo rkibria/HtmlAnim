@@ -402,11 +402,12 @@ public:
 };
 
 class Translate : public Drawable {
-	CoordType x, y;
+	CoordExpressionValue x, y;
 public:
-	explicit Translate(CoordType x, CoordType y) : x{x}, y{y} {}
+	explicit Translate(const CoordExpressionValue& x, const CoordExpressionValue& y)
+		: x{ x }, y{ y } {}
 	virtual void draw(std::ostream& os) const override {
-		os << "ctx.translate(" << static_cast<int>(x) << ", " << static_cast<int>(y) << ");\n";
+		os << "ctx.translate(" << x.to_string() << ", " << y.to_string() << ");\n";
 	}
 };
 
