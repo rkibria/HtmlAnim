@@ -585,6 +585,7 @@ private:
 	SizeType width;
 	SizeType height;
 
+	std::stringstream css_style_stream;
 	std::stringstream pre_text_stream;
 	std::stringstream post_text_stream;
 
@@ -601,7 +602,10 @@ public:
 	HtmlAnim() {clear();}
 	explicit HtmlAnim(const char* title = "HtmlAnim",
 		SizeType width = 1024, SizeType height = 768)
-		: title{title}, width{width}, height{height} {clear();}
+		: title{title}, width{width}, height{height} {
+		clear();
+		css_style_stream << "body{background-color:#f2f2f2;color:#000000;font-family:sans-serif;font-size:medium;font-weight:normal;}";
+	}
 
 	void clear() {
 		bkgnd_frame.clear();
@@ -612,6 +616,7 @@ public:
 		frame_vec.emplace_back(std::make_unique<Frame>());
 	}
 
+	auto& css_style() {return css_style_stream;}
 	auto& pre_text() {return pre_text_stream;}
 	auto& post_text() {return post_text_stream;}
 
@@ -668,9 +673,9 @@ void HtmlAnim::write_header(std::ostream& os) const {
 
 	os << "<title>" << title << "</title>\n";
 
-	os << R"(</head>
-<body>
-)";
+	os << "</head>\n";
+	os << "<style type='text/css'>" << css_style_stream.str() << "</style>\n";
+	os << "<body>\n";
 }
 
 void HtmlAnim::write_canvas(std::ostream& os) const {
