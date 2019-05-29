@@ -511,15 +511,15 @@ public:
 	{
 		return add_drawable(std::make_unique<Text>(x, y, txt.c_str(), fill));
 	}
-	Frame& rotate(CoordType rot)
+	Frame& rotate(const CoordExpressionValue& rot)
 	{
 		return add_drawable(std::make_unique<Rotate>(rot));
 	}
-	Frame& translate(CoordType x, CoordType y)
+	Frame& translate(const CoordExpressionValue& x, const CoordExpressionValue& y)
 	{
 		return add_drawable(std::make_unique<Translate>(x, y));
 	}
-	Frame& scale(CoordType x, CoordType y)
+	Frame& scale(const CoordExpressionValue& x, const CoordExpressionValue& y)
 	{
 		return add_drawable(std::make_unique<Scale>(x, y));
 	}
