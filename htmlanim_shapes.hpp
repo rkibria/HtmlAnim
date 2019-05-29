@@ -72,14 +72,17 @@ function regular_polygon(ctx, x, y, r, edges, fill) {
 
 class Grid : public Drawable {
 protected:
-	CoordType x, y, dx, dy;
-	SizeType nx, ny;
+	CoordExpressionValue x, y, dx, dy, nx, ny;
 public:
-	explicit Grid(CoordType x, CoordType y, CoordType dx, CoordType dy, SizeType nx, SizeType ny)
-		: x{x}, y{y}, dx{dx}, dy{dy}, nx{nx}, ny{ny} {}
+	explicit Grid(const CoordExpressionValue& x, const CoordExpressionValue& y,
+		const CoordExpressionValue& dx, const CoordExpressionValue& dy,
+		const CoordExpressionValue& nx, const CoordExpressionValue& ny)
+		: x{ x }, y{ y }, dx{ dx }, dy{ dy }, nx{ nx }, ny{ ny } {}
 	virtual void define(DefinitionsStream &ds) const override {
 		ds.write_if_undefined(typeid(Grid).hash_code(), R"(
 function grid(ctx, x, y, dx, dy, nx, ny) {
+	nx = Math.trunc(nx);
+	ny = Math.trunc(ny);
 	const max_y = ny * dy;
 	for(let ix = 0; ix < nx + 1; ++ix) {
 		ctx.beginPath();
@@ -102,24 +105,29 @@ function grid(ctx, x, y, dx, dy, nx, ny) {
 )");
 	}
 	virtual void draw(std::ostream& os) const override {
-		os << "grid(ctx, " << static_cast<int>(x) << ", " << static_cast<int>(y)
-			<< ", " << static_cast<int>(dx) << ", " << static_cast<int>(dy)
-			<< ", " << nx << ", " << ny
+		os << "grid(ctx, " << x.to_string() << ", " << y.to_string()
+			<< ", " << dx.to_string() << ", " << dy.to_string()
+			<< ", " << nx.to_string() << ", " << ny.to_string()
 			<< ");\n";
 	}
 };
 
 class SubdividedGrid : public Grid {
-	SizeType sx, sy;
+	CoordExpressionValue sx, sy;
 	std::string bgstyle, fgstyle;
 public:
-	explicit SubdividedGrid(CoordType x, CoordType y, CoordType dx, CoordType dy, SizeType nx, SizeType ny,
-		SizeType sx, SizeType sy, const std::string& bgstyle, const std::string& fgstyle)
-		: Grid(x, y, dx, dy, nx, ny), sx{sx}, sy{sy}, bgstyle{bgstyle}, fgstyle{fgstyle} {}
+	explicit SubdividedGrid(const CoordExpressionValue& x, const CoordExpressionValue& y,
+		const CoordExpressionValue& dx, const CoordExpressionValue& dy,
+		const CoordExpressionValue& nx, const CoordExpressionValue& ny,
+		const CoordExpressionValue& sx, const CoordExpressionValue& sy,
+		const std::string& bgstyle, const std::string& fgstyle)
+		: Grid(x, y, dx, dy, nx, ny), sx{ sx }, sy{ sy }, bgstyle{ bgstyle }, fgstyle{ fgstyle } {}
 	virtual void define(DefinitionsStream &ds) const override {
 		Grid::define(ds);
 		ds.write_if_undefined(typeid(SubdividedGrid).hash_code(), R"(
 function subdivided_grid(ctx, x, y, dx, dy, nx, ny, sx, sy, bgstyle, fgstyle) {
+	sx = Math.trunc(sx);
+	sy = Math.trunc(sy);
 	ctx.save();
 	ctx.strokeStyle = bgstyle;
 	grid(ctx, x, y, dx / sx, dy / sy, nx * sx, ny * sy);
@@ -130,10 +138,10 @@ function subdivided_grid(ctx, x, y, dx, dy, nx, ny, sx, sy, bgstyle, fgstyle) {
 )");
 	}
 	virtual void draw(std::ostream& os) const override {
-		os << "subdivided_grid(ctx, " << static_cast<int>(x) << ", " << static_cast<int>(y)
-			<< ", " << static_cast<int>(dx) << ", " << static_cast<int>(dy)
-			<< ", " << nx << ", " << ny
-			<< ", " << sx << ", " << sy
+		os << "subdivided_grid(ctx, " << x.to_string() << ", " << y.to_string()
+			<< ", " << dx.to_string() << ", " << dy.to_string()
+			<< ", " << nx.to_string() << ", " << ny.to_string()
+			<< ", " << sx.to_string() << ", " << sy.to_string()
 			<< ", \"" << bgstyle << "\", \"" << fgstyle << "\""
 			<< ");\n";
 	}
@@ -141,7 +149,9 @@ function subdivided_grid(ctx, x, y, dx, dy, nx, ny, sx, sy, bgstyle, fgstyle) {
 
 
 /// Draw a nx-by-ny grid starting at x,y of dx,dy pixels size
-auto grid(CoordType x, CoordType y, CoordType dx, CoordType dy, SizeType nx, SizeType ny) {
+auto grid(const CoordExpressionValue& x, const CoordExpressionValue& y,
+	const CoordExpressionValue& dx, const CoordExpressionValue& dy,
+	const CoordExpressionValue& nx, const CoordExpressionValue& ny) {
 	return std::make_unique<Grid>(x, y, dx, dy, nx, ny);};
 
 auto regular_polygon(const CoordExpressionValue& x, const CoordExpressionValue& y,
@@ -149,8 +159,11 @@ auto regular_polygon(const CoordExpressionValue& x, const CoordExpressionValue& 
 	return std::make_unique<RegularPolygon>(x, y, r, edges, fill);};
 
 /// Draw a nx-by-ny grid starting at x,y of dx,dy pixels size with each block subdivided into sx/sy elements
-auto subdivided_grid(CoordType x, CoordType y, CoordType dx, CoordType dy, SizeType nx, SizeType ny,
-	SizeType sx, SizeType sy, const std::string& bgstyle = "silver", const std::string& fgstyle = "gray") {
+auto subdivided_grid(const CoordExpressionValue& x, const CoordExpressionValue& y,
+	const CoordExpressionValue& dx, const CoordExpressionValue& dy,
+	const CoordExpressionValue& nx, const CoordExpressionValue& ny,
+	const CoordExpressionValue& sx, const CoordExpressionValue& sy,
+	const std::string& bgstyle = "silver", const std::string& fgstyle = "gray") {
 	return std::make_unique<SubdividedGrid>(x, y, dx, dy, nx, ny, sx, sy, bgstyle, fgstyle);};
 
 } // namespace HtmlAnimShapes

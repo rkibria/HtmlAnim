@@ -18,6 +18,8 @@ var repeat_current_frame = false;
 var expressions = {};
 
 function grid(ctx, x, y, dx, dy, nx, ny) {
+	nx = Math.trunc(nx);
+	ny = Math.trunc(ny);
 	const max_y = ny * dy;
 	for(let ix = 0; ix < nx + 1; ++ix) {
 		ctx.beginPath();
@@ -39,6 +41,8 @@ function grid(ctx, x, y, dx, dy, nx, ny) {
 }
 
 function subdivided_grid(ctx, x, y, dx, dy, nx, ny, sx, sy, bgstyle, fgstyle) {
+	sx = Math.trunc(sx);
+	sy = Math.trunc(sy);
 	ctx.save();
 	ctx.strokeStyle = bgstyle;
 	grid(ctx, x, y, dx / sx, dy / sy, nx * sx, ny * sy);
