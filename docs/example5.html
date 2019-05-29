@@ -559,36 +559,7 @@ window.onload = function() {
 </script>
 <noscript>JavaScript is required to display this content.</noscript>
 
-<p>The animation above can be generated using this code:</p>
-<p><pre>
-#include "htmlanim.hpp"
-int main() {
-	HtmlAnim::HtmlAnim anim("HtmlAnim example 5 - Macros, context saving, translation, rotation and scaling", 400, 300);
-	const auto n_frames = 60;
-	const constexpr char* smiley = "smiley";
-	anim.frame().define_macro(smiley)
-		.line_width(3)
-		.arc(0, 0, 80)
-		.fill_style("yellow")
-		.arc(0, 0, 80, true)
-		.fill_style("black")
-		.arc(-30, -30, 10, true)
-		.arc(30, -30, 10, true)
-		.arc(0, 0, 50, false, 0, M_PI);
-	for(auto frame = 0; frame < n_frames; ++frame) {
-		const auto rot = 2 * M_PI / n_frames * frame;
-		anim.frame()
-			.save()
-			.translate(anim.get_width() / 2, anim.get_height() / 2)
-			.rotate(rot)
-			.scale(1 + 0.5 * sin(rot), 1 + 0.5 * cos(rot))
-			.draw_macro(smiley);
-		anim.next_frame();
-	}
-	anim.remove_last_frame();
-	anim.write_file("trans_rot_scale.html");
-}
-</pre></p>
+<p>See docs/generate_index.cpp for code.</p>
 <hr>
 <p>
 <small><a href="index.html">Back to index</a></small><br>

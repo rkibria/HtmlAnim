@@ -1601,30 +1601,7 @@ window.onload = function() {
 </script>
 <noscript>JavaScript is required to display this content.</noscript>
 
-<p>The animation above can be generated using this code:</p>
-<p><pre>
-#include "htmlanim.hpp"
-void draw_binary_tree(HtmlAnim::HtmlAnim& anim, double x, double y, double delta_y, int depth = 0) {
-	if(depth > 7)
-		return;
-	const auto next_x = x + 20;
-	const auto next_y1 = y - delta_y;
-	const auto next_y2 = y + delta_y;
-	anim.frame().line(x, y, next_x, next_y1);
-	anim.next_frame();
-	draw_binary_tree(anim, next_x, next_y1, delta_y / 2, depth + 1);
-	anim.frame().line(x, y, next_x, next_y2);
-	anim.next_frame();
-	draw_binary_tree(anim, next_x, next_y2, delta_y / 2, depth + 1);
-}
-
-int main() {
-	HtmlAnim::HtmlAnim anim("HtmlAnim example 2 - Draw a binary tree", 400, 600);
-	anim.set_no_clear(true);
-	draw_binary_tree(anim, 0, 300, 150);
-	anim.write_file("binarytree.html");
-}
-</pre></p>
+<p>See docs/generate_index.cpp for code.</p>
 <hr>
 <p>
 <small><a href="index.html">Back to index</a></small><br>

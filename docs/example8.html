@@ -3073,45 +3073,7 @@ window.onload = function() {
 </script>
 <noscript>JavaScript is required to display this content.</noscript>
 
-<p>The animation above can be generated using this code:</p>
-<p><pre>
-#include "htmlanim.hpp"
-
-auto count = 0;
-void rec_circles(HtmlAnim::HtmlAnim& anim, double x, double y, double r, bool inside, int d=0) {
-	if(d > 5)
-		return;
-
-	anim.frame().arc(x, y, r);
-
-	const auto f = 0.5;
-	if(inside) {
-		rec_circles(anim, x - f*r, y, r*f, inside, d+1);
-		rec_circles(anim, x + f*r, y, r*f, inside, d+1);
-		rec_circles(anim, x, y + f*r, r*f, inside, d+1);
-		rec_circles(anim, x, y - f*r, r*f, inside, d+1);
-	}
-	else {
-		rec_circles(anim, x - r - f*r, y, f*r, inside, d+1);
-		rec_circles(anim, x + r + f*r, y, f*r, inside, d+1);
-		rec_circles(anim, x, y + r + f*r, f*r, inside, d+1);
-		rec_circles(anim, x, y - r - f*r, f*r, inside, d+1);
-	}
-
-	if(++count % 10 == 0)
-		anim.next_frame();
-}
-
-int main() {
-	HtmlAnim::HtmlAnim anim("HtmlAnim example 8 - Rewind", 800, 400);
-	anim.set_no_clear(true);
-	rec_circles(anim, 200, 200, 90, true);
-	anim.rewind();
-	rec_circles(anim, 600, 200, 45, false);
-	anim.remove_last_frame();
-	anim.write_file("rewind.html");
-}
-</pre></p>
+<p>See docs/generate_index.cpp for code.</p>
 <hr>
 <p>
 <small><a href="index.html">Back to index</a></small><br>
