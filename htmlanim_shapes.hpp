@@ -36,15 +36,16 @@ namespace HtmlAnimShapes {
 using namespace HtmlAnim;
 
 class RegularPolygon : public Drawable {
-	CoordType x, y, r;
-	SizeType edges;
-	bool fill;
+	CoordExpressionValue x, y, r, edges;
+	BoolExpressionValue fill;
 public:
-	explicit RegularPolygon(CoordType x, CoordType y, CoordType r, SizeType edges, bool fill)
-		: x{x}, y{y}, r{r}, edges{edges}, fill{fill} {}
+	explicit RegularPolygon(const CoordExpressionValue& x, const CoordExpressionValue& y,
+		const CoordExpressionValue& r, const CoordExpressionValue& edges, const BoolExpressionValue& fill)
+		: x{ x }, y{ y }, r{ r }, edges{ edges }, fill{ fill } {}
 	virtual void define(DefinitionsStream &ds) const override {
 		ds.write_if_undefined(typeid(RegularPolygon).hash_code(), R"(
 function regular_polygon(ctx, x, y, r, edges, fill) {
+	edges = Math.trunc(edges);
 	ctx.beginPath();
 	for(let i = 0; i < edges; ++i) {
 		const phi = 2 * Math.PI / edges * i;
@@ -64,8 +65,8 @@ function regular_polygon(ctx, x, y, r, edges, fill) {
 )");
 	}
 	virtual void draw(std::ostream& os) const override {
-		os << "regular_polygon(ctx, " << static_cast<int>(x) << ", " << static_cast<int>(y)
-			<< ", " << static_cast<int>(r) << ", " << edges << ", " << (fill ? "true" : "false") << ");\n";
+		os << "regular_polygon(ctx, " << x.to_string() << ", " << y.to_string()
+			<< ", " << r.to_string() << ", " << edges.to_string() << ", " << fill.to_string() << ");\n";
 	}
 };
 
@@ -143,7 +144,8 @@ function subdivided_grid(ctx, x, y, dx, dy, nx, ny, sx, sy, bgstyle, fgstyle) {
 auto grid(CoordType x, CoordType y, CoordType dx, CoordType dy, SizeType nx, SizeType ny) {
 	return std::make_unique<Grid>(x, y, dx, dy, nx, ny);};
 
-auto regular_polygon(CoordType x, CoordType y, CoordType r, SizeType edges, bool fill=false) {
+auto regular_polygon(const CoordExpressionValue& x, const CoordExpressionValue& y,
+	const CoordExpressionValue& r, const CoordExpressionValue& edges, const BoolExpressionValue& fill=false) {
 	return std::make_unique<RegularPolygon>(x, y, r, edges, fill);};
 
 /// Draw a nx-by-ny grid starting at x,y of dx,dy pixels size with each block subdivided into sx/sy elements

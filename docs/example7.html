@@ -18,6 +18,7 @@ var repeat_current_frame = false;
 var expressions = {};
 
 function regular_polygon(ctx, x, y, r, edges, fill) {
+	edges = Math.trunc(edges);
 	ctx.beginPath();
 	for(let i = 0; i < edges; ++i) {
 		const phi = 2 * Math.PI / edges * i;
