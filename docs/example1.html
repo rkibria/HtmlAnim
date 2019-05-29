@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="Description" content="Generated with HtmlAnim">
+<title>Expressions</title>
+</head>
+<style type='text/css'>body{background-color:#f2f2f2;color:#000000;font-family:sans-serif;font-size:medium;font-weight:normal;}</style>
+<body>
+<h2>Expressions</h2>
+<canvas id='anim_canvas_1' width='120' height='120'></canvas>
+<script>
+<!--
+var frame_counter = 0;
+const num_frames = 1;
+var canvas = document.getElementById('anim_canvas_1');
+var no_clear = false;
+var repeat_current_frame = false;
+var expressions = {};
+
+function rect(ctx, x, y, w, h, fill) {
+	ctx.beginPath();
+	ctx.rect(x, y, w, h);
+	if(fill)
+		ctx.fill();
+	else
+		ctx.stroke();
+}
+function draw_bkgnd(ctx) {
+ctx.save();
+ctx.fillStyle = "white";
+rect(ctx, 0, 0, 120, 120, true);
+ctx.restore();
+}
+
+function draw_frgnd(ctx) {
+}
+
+frames = [
+(function(ctx) {
+if(expressions.linear_range_23 == null) expressions.linear_range_23 = 10;
+if(expressions.linear_range_24 == null) expressions.linear_range_24 = 15;
+if(expressions.linear_range_25 == null) expressions.linear_range_25 = 70;
+if(expressions.linear_range_26 == null) expressions.linear_range_26 = 75;
+rect(ctx, expressions.linear_range_23, 15, 40, 40, false);
+rect(ctx, 70, expressions.linear_range_24, 40, 40, true);
+rect(ctx, expressions.linear_range_25, 75, 40, 40, false);
+rect(ctx, 10, expressions.linear_range_26, 40, 40, true);
+if(expressions.linear_range_23 < 70) {
+expressions.linear_range_23 += 1;
+repeat_current_frame = true;
+}
+if(expressions.linear_range_24 < 75) {
+expressions.linear_range_24 += 1;
+repeat_current_frame = true;
+}
+if(expressions.linear_range_25 > 10) {
+expressions.linear_range_25 -= 1;
+repeat_current_frame = true;
+}
+if(expressions.linear_range_26 > 15) {
+expressions.linear_range_26 -= 1;
+repeat_current_frame = true;
+}
+}),
+];
+
+window.onload = function() {
+	ctx = canvas.getContext('2d'),
+	(function drawFrame () {
+		if(frame_counter == 0 || !no_clear)
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+		repeat_current_frame = false;
+		draw_bkgnd(ctx);
+		(frames[frame_counter])(ctx);
+		draw_frgnd(ctx);
+		if(!repeat_current_frame) {
+			frame_counter = (frame_counter + 1) % num_frames;
+			expressions = {};
+		}
+		window.requestAnimationFrame(drawFrame, canvas);
+	}());
+}
+
+//-->
+</script>
+<noscript>JavaScript is required to display this content.</noscript>
+
+<p>The animation above can be generated using this code:</p>
+<p><pre>
+#include "htmlanim.hpp"
+int main() {
+	HtmlAnim::HtmlAnim anim("Wandering rectangles", 120, 120);
+	constexpr auto n_frames = 60;
+	constexpr auto w = 40;
+	constexpr auto h = 40;
+	anim.frame().rect(anim.frame().linear_range(10, 10 + n_frames, 60), 15, w, h);
+	anim.frame().rect(10 + n_frames, anim.frame().linear_range(15, 15 + n_frames, 60), w, h, true);
+	anim.frame().rect(anim.frame().linear_range(10 + n_frames, 10, 60), 15 + n_frames, w, h);
+	anim.frame().rect(10, anim.frame().linear_range(15 + n_frames, 15, 60), w, h, true);
+	anim.write_file("animation.html");
+}
+</pre></p>
+<hr>
+<p>
+<small><a href="index.html">Back to index</a></small><br>
+<small>Github project: <a href="https://github.com/rkibria/HtmlAnim">https://github.com/rkibria/HtmlAnim</a></small>
+</p>
+
+
+</body>
+</html>

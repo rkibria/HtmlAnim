@@ -11,7 +11,7 @@
 <h1>HtmlAnim</h1>
 <h2>A header-only C++ HTML animation library</h2>
 
-<canvas id='anim_canvas_1' width='120' height='120'></canvas>
+<canvas id='anim_canvas_1' width='800' height='450'></canvas>
 <script>
 <!--
 var frame_counter = 0;
@@ -29,10 +29,38 @@ function rect(ctx, x, y, w, h, fill) {
 	else
 		ctx.stroke();
 }
+
+function text(ctx, x, y, txt, fill) {
+	ctx.beginPath();
+	if(fill)
+		ctx.fillText(txt, x, y);
+	else
+		ctx.strokeText(txt, x, y);
+}
+
+function regular_polygon(ctx, x, y, r, edges, fill) {
+	edges = Math.trunc(edges);
+	ctx.beginPath();
+	for(let i = 0; i < edges; ++i) {
+		const phi = 2 * Math.PI / edges * i;
+		px = x + r * Math.cos(phi);
+		py = y + r * Math.sin(phi);
+		if(i == 0)
+			ctx.moveTo(px, py);
+		else
+			ctx.lineTo(px, py);
+	}
+	ctx.closePath();
+	if(fill)
+		ctx.fill();
+	else
+		ctx.stroke();
+}
 function draw_bkgnd(ctx) {
+ctx.font = "bold 160px sans-serif";
 ctx.save();
 ctx.fillStyle = "white";
-rect(ctx, 0, 0, 120, 120, true);
+rect(ctx, 0, 0, 800, 450, true);
 ctx.restore();
 }
 
@@ -41,28 +69,163 @@ function draw_frgnd(ctx) {
 
 frames = [
 (function(ctx) {
-if(expressions.linear_range_0 == null) expressions.linear_range_0 = 10;
-if(expressions.linear_range_1 == null) expressions.linear_range_1 = 15;
-if(expressions.linear_range_2 == null) expressions.linear_range_2 = 70;
-if(expressions.linear_range_3 == null) expressions.linear_range_3 = 75;
-rect(ctx, expressions.linear_range_0, 15, 40, 40, false);
-rect(ctx, 70, expressions.linear_range_1, 40, 40, true);
-rect(ctx, expressions.linear_range_2, 75, 40, 40, false);
-rect(ctx, 10, expressions.linear_range_3, 40, 40, true);
-if(expressions.linear_range_0 < 70) {
-expressions.linear_range_0 += 1;
+if(expressions.linear_range_0 == null) expressions.linear_range_0 = -100;
+if(expressions.linear_range_1 == null) expressions.linear_range_1 = 0;
+if(expressions.linear_range_2 == null) expressions.linear_range_2 = 730;
+if(expressions.linear_range_3 == null) expressions.linear_range_3 = 0;
+if(expressions.linear_range_4 == null) expressions.linear_range_4 = 0;
+if(expressions.linear_range_5 == null) expressions.linear_range_5 = 730;
+if(expressions.linear_range_6 == null) expressions.linear_range_6 = 0;
+if(expressions.linear_range_7 == null) expressions.linear_range_7 = 0;
+if(expressions.linear_range_8 == null) expressions.linear_range_8 = 730;
+if(expressions.linear_range_9 == null) expressions.linear_range_9 = 0;
+if(expressions.linear_range_10 == null) expressions.linear_range_10 = 0;
+if(expressions.linear_range_11 == null) expressions.linear_range_11 = 730;
+if(expressions.linear_range_12 == null) expressions.linear_range_12 = 0;
+if(expressions.linear_range_13 == null) expressions.linear_range_13 = 0;
+if(expressions.linear_range_14 == null) expressions.linear_range_14 = 730;
+if(expressions.linear_range_15 == null) expressions.linear_range_15 = 0;
+if(expressions.linear_range_16 == null) expressions.linear_range_16 = 0;
+if(expressions.linear_range_17 == null) expressions.linear_range_17 = 730;
+if(expressions.linear_range_18 == null) expressions.linear_range_18 = 0;
+if(expressions.linear_range_19 == null) expressions.linear_range_19 = 0;
+if(expressions.linear_range_20 == null) expressions.linear_range_20 = 730;
+if(expressions.linear_range_21 == null) expressions.linear_range_21 = 0;
+if(expressions.linear_range_22 == null) expressions.linear_range_22 = 550;
+text(ctx, 10, expressions.linear_range_0, `Html`, true);
+ctx.save();
+ctx.fillStyle = "#9400D3";
+ctx.translate(expressions.linear_range_2, 380);
+ctx.rotate(expressions.linear_range_3);
+regular_polygon(ctx, 0, 0, 60, 9, true);
+ctx.restore();
+ctx.save();
+ctx.fillStyle = "#4B0082";
+ctx.translate(expressions.linear_range_5, 380);
+ctx.rotate(expressions.linear_range_6);
+regular_polygon(ctx, 0, 0, 60, 8, true);
+ctx.restore();
+ctx.save();
+ctx.fillStyle = "#0000FF";
+ctx.translate(expressions.linear_range_8, 380);
+ctx.rotate(expressions.linear_range_9);
+regular_polygon(ctx, 0, 0, 60, 7, true);
+ctx.restore();
+ctx.save();
+ctx.fillStyle = "#00FF00";
+ctx.translate(expressions.linear_range_11, 380);
+ctx.rotate(expressions.linear_range_12);
+regular_polygon(ctx, 0, 0, 60, 6, true);
+ctx.restore();
+ctx.save();
+ctx.fillStyle = "#FFFF00";
+ctx.translate(expressions.linear_range_14, 380);
+ctx.rotate(expressions.linear_range_15);
+regular_polygon(ctx, 0, 0, 60, 5, true);
+ctx.restore();
+ctx.save();
+ctx.fillStyle = "#FF7F00";
+ctx.translate(expressions.linear_range_17, 380);
+ctx.rotate(expressions.linear_range_18);
+regular_polygon(ctx, 0, 0, 60, 4, true);
+ctx.restore();
+ctx.save();
+ctx.fillStyle = "#FF0000";
+ctx.translate(expressions.linear_range_20, 380);
+ctx.rotate(expressions.linear_range_21);
+regular_polygon(ctx, 0, 0, 60, 3, true);
+ctx.restore();
+text(ctx, 370, expressions.linear_range_22, `Anim`, true);
+if(expressions.linear_range_0 < 310) {
+expressions.linear_range_0 += 6.83333;
 repeat_current_frame = true;
 }
-if(expressions.linear_range_1 < 75) {
+if(expressions.linear_range_1 < 300) {
 expressions.linear_range_1 += 1;
 repeat_current_frame = true;
 }
-if(expressions.linear_range_2 > 10) {
-expressions.linear_range_2 -= 1;
+if(expressions.linear_range_2 > 64) {
+expressions.linear_range_2 -= 7.4;
 repeat_current_frame = true;
 }
-if(expressions.linear_range_3 > 15) {
-expressions.linear_range_3 -= 1;
+if(expressions.linear_range_3 < 6.28319) {
+expressions.linear_range_3 += 0.020944;
+repeat_current_frame = true;
+}
+if(expressions.linear_range_4 < 300) {
+expressions.linear_range_4 += 1;
+repeat_current_frame = true;
+}
+if(expressions.linear_range_5 > 175) {
+expressions.linear_range_5 -= 6.16667;
+repeat_current_frame = true;
+}
+if(expressions.linear_range_6 < 12.5664) {
+expressions.linear_range_6 += 0.0418879;
+repeat_current_frame = true;
+}
+if(expressions.linear_range_7 < 300) {
+expressions.linear_range_7 += 1;
+repeat_current_frame = true;
+}
+if(expressions.linear_range_8 > 286) {
+expressions.linear_range_8 -= 4.93333;
+repeat_current_frame = true;
+}
+if(expressions.linear_range_9 < 18.8496) {
+expressions.linear_range_9 += 0.0628319;
+repeat_current_frame = true;
+}
+if(expressions.linear_range_10 < 300) {
+expressions.linear_range_10 += 1;
+repeat_current_frame = true;
+}
+if(expressions.linear_range_11 > 397) {
+expressions.linear_range_11 -= 3.7;
+repeat_current_frame = true;
+}
+if(expressions.linear_range_12 < 25.1327) {
+expressions.linear_range_12 += 0.0837758;
+repeat_current_frame = true;
+}
+if(expressions.linear_range_13 < 300) {
+expressions.linear_range_13 += 1;
+repeat_current_frame = true;
+}
+if(expressions.linear_range_14 > 508) {
+expressions.linear_range_14 -= 2.46667;
+repeat_current_frame = true;
+}
+if(expressions.linear_range_15 < 31.4159) {
+expressions.linear_range_15 += 0.10472;
+repeat_current_frame = true;
+}
+if(expressions.linear_range_16 < 300) {
+expressions.linear_range_16 += 1;
+repeat_current_frame = true;
+}
+if(expressions.linear_range_17 > 619) {
+expressions.linear_range_17 -= 1.23333;
+repeat_current_frame = true;
+}
+if(expressions.linear_range_18 < 37.6991) {
+expressions.linear_range_18 += 0.125664;
+repeat_current_frame = true;
+}
+if(expressions.linear_range_19 < 300) {
+expressions.linear_range_19 += 1;
+repeat_current_frame = true;
+}
+if(expressions.linear_range_20 > 730) {
+expressions.linear_range_20 -= 0;
+repeat_current_frame = true;
+}
+if(expressions.linear_range_21 < 43.9823) {
+expressions.linear_range_21 += 0.146608;
+repeat_current_frame = true;
+}
+if(expressions.linear_range_22 > 320) {
+expressions.linear_range_22 -= 3.83333;
 repeat_current_frame = true;
 }
 }),
@@ -89,32 +252,18 @@ window.onload = function() {
 </script>
 <noscript>JavaScript is required to display this content.</noscript>
 
-<p>The animation above can be generated using this code:</p>
-<p><pre>
-#include "htmlanim.hpp"
-int main() {
-	HtmlAnim::HtmlAnim anim("Wandering rectangles", 120, 120);
-	constexpr auto n_frames = 60;
-	constexpr auto w = 40;
-	constexpr auto h = 40;
-	anim.frame().rect(anim.frame().linear_range(10, 10 + n_frames, 60), 15, w, h);
-	anim.frame().rect(10 + n_frames, anim.frame().linear_range(15, 15 + n_frames, 60), w, h, true);
-	anim.frame().rect(anim.frame().linear_range(10 + n_frames, 10, 60), 15 + n_frames, w, h);
-	anim.frame().rect(10, anim.frame().linear_range(15 + n_frames, 15, 60), w, h, true);
-	anim.write_file("animation.html");
-}
-</pre></p>
 <p>
-<h3>More examples</h3>
+<h3>Examples</h3>
 <ul>
-<li><a href="example2.html">Example 2 - Lines: drawing a binary tree</a></li>
-<li><a href="example3.html">Example 3 - Circles: bubble sort visualization</a></li>
-<li><a href="example4.html">Example 4 - Line colors and styles</a></li>
-<li><a href="example5.html">Example 5 - Macros, context saving, translation, rotation and scaling</a></li>
-<li><a href="example6.html">Example 6 - Line paths: polygons</a></li>
-<li><a href="example7.html">Example 7 - Extensions</a></li>
-<li><a href="example8.html">Example 8 - Rewind</a></li>
-<li><a href="example9.html">Example 9 - Fonts: normal distribution</a></li>
+<li><a href="example1.html">Basics</a></li>
+<li><a href="example2.html">Lines: drawing a binary tree</a></li>
+<li><a href="example3.html">Circles: bubble sort visualization</a></li>
+<li><a href="example4.html">Line colors and styles</a></li>
+<li><a href="example5.html">Macros, context saving, translation, rotation and scaling</a></li>
+<li><a href="example6.html">Line paths: polygons</a></li>
+<li><a href="example7.html">Extensions</a></li>
+<li><a href="example8.html">Rewind</a></li>
+<li><a href="example9.html">Fonts: normal distribution</a></li>
 
 <li><a href="demo_sierpinski.html">Demo - Sierpinski triangle</a></li>
 </ul>

@@ -16,13 +16,87 @@ static const constexpr auto footer = R"(<hr>
 )";
 
 void make_index() {
-	HtmlAnim::HtmlAnim anim("HtmlAnim", 120, 120);
+	const auto width = 800;
+	const auto height = 450;
+	HtmlAnim::HtmlAnim anim("HtmlAnim", width, height);
 
 	anim.pre_text() << R"(
 <h1>HtmlAnim</h1>
 <h2>A header-only C++ HTML animation library</h2>
 )";
 
+	anim.post_text() << R"(
+<p>
+<h3>Examples</h3>
+<ul>
+<li><a href="example1.html">Basics</a></li>
+<li><a href="example2.html">Lines: drawing a binary tree</a></li>
+<li><a href="example3.html">Circles: bubble sort visualization</a></li>
+<li><a href="example4.html">Line colors and styles</a></li>
+<li><a href="example5.html">Macros, context saving, translation, rotation and scaling</a></li>
+<li><a href="example6.html">Line paths: polygons</a></li>
+<li><a href="example7.html">Extensions</a></li>
+<li><a href="example8.html">Rewind</a></li>
+<li><a href="example9.html">Fonts: normal distribution</a></li>
+
+<li><a href="demo_sierpinski.html">Demo - Sierpinski triangle</a></li>
+</ul>
+</p>
+<p>
+<h3>Other</h3>
+<ul>
+<li><a href="doxygen/html/index.html">Doygen-generated API documentation.</a></li>
+</ul>
+</p>
+)";
+	anim.post_text() << footer;
+
+	anim.background()
+		.font("bold 160px sans-serif")
+		.save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
+
+	const std::vector<std::string> rainbow_cols = { "#9400D3", "#4B0082", "#0000FF", "#00FF00", "#FFFF00", "#FF7F00", "#FF0000" };
+
+	const auto total_time = 5;
+	const auto radius = 60;
+	const auto right_edge = width - radius - 10;
+	const auto lower_edge = height - radius - 10;
+
+	anim.frame().text(
+		10,
+		anim.frame().linear_range(-100.0, lower_edge - radius - 10, 1 * HtmlAnim::FPS),
+		"Html"
+		);
+
+	const auto n_cols = rainbow_cols.size();
+	for (size_t i = 0; i < n_cols; ++i) {
+		const auto inv_i = n_cols - 1 - i;
+		const auto n_points = 9 - i;
+		anim.frame()
+			.wait(total_time * HtmlAnim::FPS)
+			.save()
+			.fill_style(rainbow_cols[i])
+			.translate(anim.frame().linear_range(
+					right_edge,
+					right_edge - (inv_i) * radius * 1.85,
+					1.5 * HtmlAnim::FPS),
+				lower_edge)
+			.rotate(anim.frame().linear_range(0, 2 * HtmlAnim::PI * (i + 1), total_time * HtmlAnim::FPS))
+			.add_drawable(HtmlAnimShapes::regular_polygon(0, 0, radius, n_points, true));
+	}
+
+	anim.frame().text(
+		370,
+		anim.frame().linear_range(height + 100, lower_edge - radius, 1 * HtmlAnim::FPS),
+		"Anim"
+	);
+
+	anim.write_file("index.html");
+}
+
+void make_example_1() {
+	HtmlAnim::HtmlAnim anim("Expressions", 120, 120);
+	anim.pre_text() << "<h2>Expressions</h2>";
 	anim.post_text() << R"(
 <p>The animation above can be generated using this code:</p>
 <p><pre>
@@ -39,27 +113,6 @@ int main() {
 	anim.write_file("animation.html");
 }
 </pre></p>
-<p>
-<h3>More examples</h3>
-<ul>
-<li><a href="example2.html">Example 2 - Lines: drawing a binary tree</a></li>
-<li><a href="example3.html">Example 3 - Circles: bubble sort visualization</a></li>
-<li><a href="example4.html">Example 4 - Line colors and styles</a></li>
-<li><a href="example5.html">Example 5 - Macros, context saving, translation, rotation and scaling</a></li>
-<li><a href="example6.html">Example 6 - Line paths: polygons</a></li>
-<li><a href="example7.html">Example 7 - Extensions</a></li>
-<li><a href="example8.html">Example 8 - Rewind</a></li>
-<li><a href="example9.html">Example 9 - Fonts: normal distribution</a></li>
-
-<li><a href="demo_sierpinski.html">Demo - Sierpinski triangle</a></li>
-</ul>
-</p>
-<p>
-<h3>Other</h3>
-<ul>
-<li><a href="doxygen/html/index.html">Doygen-generated API documentation.</a></li>
-</ul>
-</p>
 )";
 	anim.post_text() << footer;
 
@@ -71,7 +124,8 @@ int main() {
 	anim.frame().rect(10 + n_frames, anim.frame().linear_range(15, 15 + n_frames, 60), w, h, true);
 	anim.frame().rect(anim.frame().linear_range(10 + n_frames, 10, 60), 15 + n_frames, w, h);
 	anim.frame().rect(10, anim.frame().linear_range(15 + n_frames, 15, 60), w, h, true);
-	anim.write_file("index.html");
+
+	anim.write_file("example1.html");
 }
 
 void draw_binary_tree(HtmlAnim::HtmlAnim& anim, double x, double y, double delta_y, int depth = 0) {
@@ -89,10 +143,9 @@ void draw_binary_tree(HtmlAnim::HtmlAnim& anim, double x, double y, double delta
 }
 
 void make_example_2() {
-	HtmlAnim::HtmlAnim anim("HtmlAnim example 2 - Lines: drawing a binary tree", 400, 600);
+	HtmlAnim::HtmlAnim anim("Lines: drawing a binary tree", 400, 600);
 	anim.set_no_clear(true);
 
-	anim.pre_text() << "<h2>Example 2</h2>";
 	anim.post_text() << R"(
 <p>See docs/generate_index.cpp for code.</p>
 )";
@@ -105,9 +158,8 @@ void make_example_2() {
 }
 
 void make_example_3() {
-	HtmlAnim::HtmlAnim anim("HtmlAnim example 3 - Circles: bubble sort visualization", 840, 180);
+	HtmlAnim::HtmlAnim anim("Circles: bubble sort visualization", 840, 180);
 
-	anim.pre_text() << "<h2>Example 3</h2>";
 	anim.post_text() << R"(
 <p>See docs/generate_index.cpp for code.</p>
 )";
@@ -144,9 +196,8 @@ void make_example_3() {
 }
 
 void make_example_4() {
-	HtmlAnim::HtmlAnim anim("HtmlAnim example 4 - Line colors and styles", 600, 300);
+	HtmlAnim::HtmlAnim anim("Line colors and styles", 600, 300);
 
-	anim.pre_text() << "<h2>Example 4</h2>";
 	anim.post_text() << R"(
 <p>See docs/generate_index.cpp for code.</p>
 )";
@@ -176,9 +227,8 @@ void make_example_4() {
 }
 
 void make_example_5() {
-	HtmlAnim::HtmlAnim anim("HtmlAnim example 5 - Macros, context saving, translation, rotation and scaling", 400, 300);
+	HtmlAnim::HtmlAnim anim("Macros, context saving, translation, rotation and scaling", 400, 300);
 
-	anim.pre_text() << "<h2>Example 5</h2>";
 	anim.post_text() << R"(
 <p>See docs/generate_index.cpp for code.</p>
 )";
@@ -211,9 +261,8 @@ void make_example_5() {
 }
 
 void make_example_6() {
-	HtmlAnim::HtmlAnim anim("HtmlAnim example 6 - Line paths: polygons", 600, 250);
+	HtmlAnim::HtmlAnim anim("Line paths: polygons", 600, 250);
 
-	anim.pre_text() << "<h2>Example 6</h2>";
 	anim.post_text() << R"(
 <p>See docs/generate_index.cpp for code.</p>
 )";
@@ -248,9 +297,8 @@ void make_example_6() {
 }
 
 void make_example_7() {
-	HtmlAnim::HtmlAnim anim("HtmlAnim example 7 - Extensions", 600, 250);
+	HtmlAnim::HtmlAnim anim("Extensions", 600, 250);
 
-	anim.pre_text() << "<h2>Example 7</h2>";
 	anim.post_text() << R"(
 <p>See docs/generate_index.cpp for code.</p>
 )";
@@ -300,10 +348,9 @@ void rec_circles(HtmlAnim::HtmlAnim& anim, double x, double y, double r, bool in
 }
 
 void make_example_8() {
-	HtmlAnim::HtmlAnim anim("HtmlAnim example 8 - Rewind", 800, 400);
+	HtmlAnim::HtmlAnim anim("Rewind", 800, 400);
 	anim.set_no_clear(true);
 
-	anim.pre_text() << "<h2>Example 8</h2>";
 	anim.post_text() << R"(
 <p>See docs/generate_index.cpp for code.</p>
 )";
@@ -319,9 +366,8 @@ void make_example_8() {
 }
 
 void make_example_9() {
-	HtmlAnim::HtmlAnim anim("HtmlAnim example 9: Fonts: normal distribution", 520, 620);
+	HtmlAnim::HtmlAnim anim("Fonts: normal distribution", 520, 620);
 
-	anim.pre_text() << "<h2>Example 9</h2>";
 	anim.post_text() << R"(
 <p>See docs/generate_index.cpp for code.</p>
 )";
@@ -378,7 +424,7 @@ void sierpinski(HtmlAnim::HtmlAnim &anim, double x, double y, double d, int dept
 void make_demo_sierpinski() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim - Demo: Sierpinski triangle", 600, 500);
 	anim.set_no_clear(true);
-	anim.pre_text() << "<h2>Demo: Sierpinski triangle</h2>";
+
 	anim.post_text() << R"(
 <p>See docs/generate_index.cpp for code.</p>
 )";
@@ -390,6 +436,7 @@ void make_demo_sierpinski() {
 
 int main() {
 	make_index();
+	make_example_1();
 	make_example_2();
 	make_example_3();
 	make_example_4();
