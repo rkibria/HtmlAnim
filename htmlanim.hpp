@@ -495,7 +495,7 @@ public:
 	{
 		return add_drawable(std::make_unique<LineCap>(style));
 	}
-	Frame& line_width(SizeType width)
+	Frame& line_width(const CoordExpressionValue& width)
 	{
 		return add_drawable(std::make_unique<LineWidth>(width));
 	}
