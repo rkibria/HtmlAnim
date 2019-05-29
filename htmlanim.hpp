@@ -359,12 +359,12 @@ public:
 };
 
 class Text : public Drawable {
-	CoordType x, y;
+	CoordExpressionValue x, y;
 	std::string txt;
-	bool fill;
+	BoolExpressionValue fill;
 public:
-	explicit Text(CoordType x, CoordType y, const char* txt, bool fill)
-		: x{x}, y{y}, txt{txt}, fill{fill} {}
+	explicit Text(const CoordExpressionValue& x, const CoordExpressionValue& y, const char* txt, const BoolExpressionValue& fill)
+		: x{ x }, y{ y }, txt{ txt }, fill{ fill } {}
 	virtual void define(DefinitionsStream &ds) const override {
 		ds.write_if_undefined(typeid(Text).hash_code(), R"(
 function text(ctx, x, y, txt, fill) {
@@ -377,8 +377,8 @@ function text(ctx, x, y, txt, fill) {
 )");
 	}
 	virtual void draw(std::ostream& os) const override {
-		os << "text(ctx, " << static_cast<int>(x) << ", " << static_cast<int>(y)
-			<< ", `" << txt << "`, " << (fill ? "true" : "false") << ");\n";
+		os << "text(ctx, " << x.to_string() << ", " << y.to_string()
+			<< ", `" << txt << "`, " << fill.to_string() << ");\n";
 	}
 };
 
