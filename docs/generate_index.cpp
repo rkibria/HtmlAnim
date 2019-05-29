@@ -336,8 +336,9 @@ void make_example_9() {
 	std::array<int, 50> bins;
 	bins.fill(0);
 	for(int j = 0; j < 10; ++j) {
-		anim.frame().text(10, 10+50, std::string("Samples: ") + std::to_string((j+1) * 100));
-		for(int i = 0; i < 1000; ++i) {
+		constexpr auto inner_count = 1000;
+		anim.frame().text(10, 10+50, std::string("Samples: ") + std::to_string((j+1) * inner_count));
+		for(int i = 0; i < inner_count; ++i) {
 			const auto number = distribution(generator);
 			if((number >= 0.0) && (number < 50.0))
 				++bins[static_cast<int>(number)];
