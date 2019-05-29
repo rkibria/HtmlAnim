@@ -86,6 +86,8 @@ using Vec2Vector = std::vector<Vec2>;
 
 using SizeType = unsigned int;
 
+constexpr SizeType FPS = 60;
+
 std::string rgb_color(SizeType r, SizeType g, SizeType b) {
 	std::stringstream ss;
 	ss << "#" << std::hex << std::setw(2) << std::setfill('0') << (r % 256)
