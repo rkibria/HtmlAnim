@@ -383,11 +383,12 @@ function text(ctx, x, y, txt, fill) {
 };
 
 class Scale : public Drawable {
-	CoordType x, y;
+	CoordExpressionValue x, y;
 public:
-	explicit Scale(CoordType x, CoordType y) : x{x}, y{y} {}
+	explicit Scale(const CoordExpressionValue& x, const CoordExpressionValue& y)
+		: x{ x }, y{ y } {}
 	virtual void draw(std::ostream& os) const override {
-		os << "ctx.scale(" << x << ", " << y << ");\n";
+		os << "ctx.scale(" << x.to_string() << ", " << y.to_string() << ");\n";
 	}
 };
 
