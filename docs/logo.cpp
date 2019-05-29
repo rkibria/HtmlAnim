@@ -20,7 +20,7 @@ int main() {
 	anim.frame().text(
 		10,
 		anim.frame().linear_range(-100.0, lower_edge - radius - 10, 1 * HtmlAnim::FPS),
-		"HtmlAnim"
+		"Html"
 		);
 
 	const auto n_cols = rainbow_cols.size();
@@ -40,6 +40,11 @@ int main() {
 			.add_drawable(HtmlAnimShapes::regular_polygon(0, 0, radius, n_points, true));
 	}
 
-	//anim.remove_last_frame();
+	anim.frame().text(
+		370,
+		anim.frame().linear_range(height + 100, lower_edge - radius, 1 * HtmlAnim::FPS),
+		"Anim"
+	);
+
 	anim.write_file("logo.html");
 }
