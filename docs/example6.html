@@ -18,6 +18,15 @@ var no_clear = false;
 var repeat_current_frame = false;
 var expressions = {};
 
+function rect(ctx, x, y, w, h, fill) {
+	ctx.beginPath();
+	ctx.rect(x, y, w, h);
+	if(fill)
+		ctx.fill();
+	else
+		ctx.stroke();
+}
+
 function line(ctx, x1, y1, x2, y2) {
 	ctx.beginPath();
 	ctx.moveTo(x1, y1);
@@ -25,6 +34,10 @@ function line(ctx, x1, y1, x2, y2) {
 	ctx.stroke();
 }
 function draw_bkgnd(ctx) {
+ctx.save();
+ctx.fillStyle = "white";
+rect(ctx, 0, 0, 600, 250, true);
+ctx.restore();
 }
 
 function draw_frgnd(ctx) {

@@ -66,6 +66,7 @@ int main() {
 	constexpr auto n_frames = 60;
 	constexpr auto w = 40;
 	constexpr auto h = 40;
+	anim.background().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
 	anim.frame().rect(anim.frame().linear_range(10, 10 + n_frames, 60), 15, w, h);
 	anim.frame().rect(10 + n_frames, anim.frame().linear_range(15, 15 + n_frames, 60), w, h, true);
 	anim.frame().rect(anim.frame().linear_range(10 + n_frames, 10, 60), 15 + n_frames, w, h);
@@ -121,12 +122,14 @@ int main() {
 )";
 	anim.post_text() << footer;
 
+	anim.frame().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
+	anim.next_frame();
 	draw_binary_tree(anim, 0, 300, 150);
 	anim.write_file("example2.html");
 }
 
 void make_example_3() {
-	HtmlAnim::HtmlAnim anim("HtmlAnim example 3 - Circles: bubble sort visualization", 800, 180);
+	HtmlAnim::HtmlAnim anim("HtmlAnim example 3 - Circles: bubble sort visualization", 840, 180);
 
 	anim.pre_text() << "<h2>Example 3</h2>";
 
@@ -171,6 +174,7 @@ int main() {
 </pre></p>
 )";
 	anim.post_text() << footer;
+	anim.background().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
 
 	std::array<int, 8> numbers{7, 6, 2, 8, 5, 1, 4, 3};
 	int iteration = 1;
@@ -178,7 +182,7 @@ int main() {
 	auto draw = [&iteration, &anim, &numbers](size_t swap_pos=99) {
 		anim.frame().text(10, 150, std::string("Iteration: ") + std::to_string(iteration));
 		for(size_t i = 0; i < numbers.size(); ++i)
-			anim.frame().arc(50 + i * 100, 50, 10 + numbers[i] * 5, i == swap_pos || i == swap_pos + 1);
+			anim.frame().arc(50 + i * 100, 70, 10 + numbers[i] * 5, i == swap_pos || i == swap_pos + 1);
 		anim.frame().wait(20);
 		anim.next_frame();
 	};
@@ -236,6 +240,7 @@ int main() {
 </pre></p>
 )";
 	anim.post_text() << footer;
+	anim.background().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
 
 	const auto n_parts = 16;
 	const auto part_len = (anim.get_width() - 60) / n_parts;
@@ -297,6 +302,7 @@ int main() {
 </pre></p>
 )";
 	anim.post_text() << footer;
+	anim.background().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
 
 	const auto n_frames = 60;
 	const constexpr char* smiley = "smiley";
@@ -364,6 +370,7 @@ int main() {
 <p>See <a href="example7.html">Example 7</a> for how to use an extension to draw regular polygons easily.</p>
 )";
 	anim.post_text() << footer;
+	anim.background().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
 
 	auto poly_points = [](auto n_points, auto radius) {
 		HtmlAnim::Vec2Vector pv(n_points);
@@ -422,6 +429,7 @@ int main() {
 </pre></p>
 )";
 	anim.post_text() << footer;
+	anim.background().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
 
 	for(size_t n_points = 2; n_points < 9; ++n_points) {
 		anim.frame()
@@ -513,6 +521,7 @@ int main() {
 </pre></p>
 )";
 	anim.post_text() << footer;
+	anim.frame().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
 
 	rec_circles(anim, 200, 200, 90, true);
 	anim.rewind();
@@ -560,6 +569,7 @@ int main() {
 </pre></p>
 )";
 	anim.post_text() << footer;
+	anim.background().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
 
 	anim.background()
 		.add_drawable(HtmlAnimShapes::subdivided_grid(10,10, 50,50, 10,12, 5,5))
@@ -615,6 +625,7 @@ void make_demo_sierpinski() {
 <p>See function make_demo_sierpinski() in file docs/generate_index.cpp for code.</p>
 )";
 	anim.post_text() << footer;
+	anim.frame().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
 	sierpinski(anim, 10, 490, 560);
 	anim.write_file("demo_sierpinski.html");
 }

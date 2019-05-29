@@ -18,6 +18,15 @@ var no_clear = true;
 var repeat_current_frame = false;
 var expressions = {};
 
+function rect(ctx, x, y, w, h, fill) {
+	ctx.beginPath();
+	ctx.rect(x, y, w, h);
+	if(fill)
+		ctx.fill();
+	else
+		ctx.stroke();
+}
+
 function arc(ctx, x, y, r, sa, ea, fill) {
 	ctx.beginPath();
 	ctx.arc(x, y, r, sa, ea);
@@ -34,6 +43,10 @@ function draw_frgnd(ctx) {
 
 frames = [
 (function(ctx) {
+ctx.save();
+ctx.fillStyle = "white";
+rect(ctx, 0, 0, 800, 400, true);
+ctx.restore();
 arc(ctx, 200.000000, 200.000000, 90.000000, 0.000000, 6.283185, false);
 arc(ctx, 155.000000, 200.000000, 45.000000, 0.000000, 6.283185, false);
 arc(ctx, 132.500000, 200.000000, 22.500000, 0.000000, 6.283185, false);

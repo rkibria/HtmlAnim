@@ -30,6 +30,10 @@ function rect(ctx, x, y, w, h, fill) {
 		ctx.stroke();
 }
 function draw_bkgnd(ctx) {
+ctx.save();
+ctx.fillStyle = "white";
+rect(ctx, 0, 0, 120, 120, true);
+ctx.restore();
 }
 
 function draw_frgnd(ctx) {

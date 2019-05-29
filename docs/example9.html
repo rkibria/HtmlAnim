@@ -18,6 +18,15 @@ var no_clear = false;
 var repeat_current_frame = false;
 var expressions = {};
 
+function rect(ctx, x, y, w, h, fill) {
+	ctx.beginPath();
+	ctx.rect(x, y, w, h);
+	if(fill)
+		ctx.fill();
+	else
+		ctx.stroke();
+}
+
 function grid(ctx, x, y, dx, dy, nx, ny) {
 	nx = Math.trunc(nx);
 	ny = Math.trunc(ny);
@@ -59,16 +68,11 @@ function text(ctx, x, y, txt, fill) {
 	else
 		ctx.strokeText(txt, x, y);
 }
-
-function rect(ctx, x, y, w, h, fill) {
-	ctx.beginPath();
-	ctx.rect(x, y, w, h);
-	if(fill)
-		ctx.fill();
-	else
-		ctx.stroke();
-}
 function draw_bkgnd(ctx) {
+ctx.save();
+ctx.fillStyle = "white";
+rect(ctx, 0, 0, 520, 620, true);
+ctx.restore();
 subdivided_grid(ctx, 10, 10, 50, 50, 10, 12, 5, 5, "silver", "gray");
 ctx.font = "bold 20px sans-serif";
 }
