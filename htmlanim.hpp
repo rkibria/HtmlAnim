@@ -393,11 +393,11 @@ public:
 };
 
 class Rotate : public Drawable {
-	CoordType rot;
+	CoordExpressionValue rot;
 public:
-	explicit Rotate(CoordType rot) : rot{rot} {}
+	explicit Rotate(const CoordExpressionValue& rot) : rot{ rot } {}
 	virtual void draw(std::ostream& os) const override {
-		os << "ctx.rotate(" << rot << ");\n";
+		os << "ctx.rotate(" << rot.to_string() << ");\n";
 	}
 };
 
