@@ -143,6 +143,7 @@ class CoordExpressionValue : public ExpressionValue {
 public:
 	CoordExpressionValue(const std::string& v) : ExpressionValue{ v } {}
 	CoordExpressionValue(const int& v) : ExpressionValue{ std::to_string(v) } {}
+	CoordExpressionValue(const SizeType& v) : ExpressionValue{ std::to_string(v) } {}
 	CoordExpressionValue(const size_t& v) : ExpressionValue{ std::to_string(v) } {}
 	CoordExpressionValue(const CoordType& v) : ExpressionValue{ std::to_string(v) } {}
 };
@@ -276,6 +277,7 @@ function rect(ctx, x, y, w, h, fill) {
 	}
 };
 
+// TODO allow expressions as input
 class Line : public Drawable {
 	Vec2Vector points;
 	bool fill;
@@ -349,11 +351,11 @@ public:
 };
 
 class LineWidth : public Drawable {
-	SizeType width;
+	CoordExpressionValue width;
 public:
-	explicit LineWidth(SizeType width) : width{width} {}
+	explicit LineWidth(const CoordExpressionValue& width) : width{width} {}
 	virtual void draw(std::ostream& os) const override
-		{os << "ctx.lineWidth = " << width << ";\n";}
+		{os << "ctx.lineWidth = " << width.to_string() << ";\n";}
 };
 
 class Text : public Drawable {
