@@ -507,7 +507,7 @@ public:
 	{
 		return add_drawable(std::make_unique<StrokeStyle>(style));
 	}
-	Frame& text(CoordType x, CoordType y, std::string txt, bool fill = true)
+	Frame& text(const CoordExpressionValue& x, const CoordExpressionValue& y, std::string txt, const BoolExpressionValue& fill = true)
 	{
 		return add_drawable(std::make_unique<Text>(x, y, txt.c_str(), fill));
 	}
