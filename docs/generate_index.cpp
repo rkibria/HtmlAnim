@@ -51,9 +51,8 @@ void make_index() {
 )";
 	anim.post_text() << footer;
 
-	anim.background()
-		.font("bold 160px sans-serif")
-		.save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
+	anim.frame().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
+	anim.add_layer();
 
 	const std::vector<std::string> rainbow_cols = { "#9400D3", "#4B0082", "#0000FF", "#00FF00", "#FFFF00", "#FF7F00", "#FF0000" };
 
@@ -62,7 +61,9 @@ void make_index() {
 	const auto right_edge = width - radius - 10;
 	const auto lower_edge = height - radius - 10;
 
-	anim.frame().text(
+	anim.frame()
+		.font("bold 160px sans-serif")
+		.text(
 		10,
 		anim.frame().linear_range(-100.0, lower_edge - radius - 10, 1 * HtmlAnim::FPS),
 		"Html"
@@ -119,7 +120,9 @@ int main() {
 	constexpr auto n_frames = 60;
 	constexpr auto w = 40;
 	constexpr auto h = 40;
-	anim.background().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
+	anim.frame().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
+	anim.add_layer();
+
 	anim.frame().rect(anim.frame().linear_range(10, 10 + n_frames, 60), 15, w, h);
 	anim.frame().rect(10 + n_frames, anim.frame().linear_range(15, 15 + n_frames, 60), w, h, true);
 	anim.frame().rect(anim.frame().linear_range(10 + n_frames, 10, 60), 15 + n_frames, w, h);
@@ -144,7 +147,7 @@ void draw_binary_tree(HtmlAnim::HtmlAnim& anim, double x, double y, double delta
 
 void make_example_2() {
 	HtmlAnim::HtmlAnim anim("Lines: drawing a binary tree", 400, 600);
-	anim.set_no_clear(true);
+	anim.layer().set_no_clear(true);
 
 	anim.post_text() << R"(
 <p>See docs/generate_index.cpp for code.</p>
@@ -164,7 +167,9 @@ void make_example_3() {
 <p>See docs/generate_index.cpp for code.</p>
 )";
 	anim.post_text() << footer;
-	anim.background().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
+
+	anim.frame().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
+	anim.add_layer();
 
 	std::array<int, 8> numbers{7, 6, 2, 8, 5, 1, 4, 3};
 	int iteration = 1;
@@ -202,7 +207,8 @@ void make_example_4() {
 <p>See docs/generate_index.cpp for code.</p>
 )";
 	anim.post_text() << footer;
-	anim.background().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
+	anim.frame().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
+	anim.add_layer();
 
 	const auto n_parts = 16;
 	const auto part_len = (anim.get_width() - 60) / n_parts;
@@ -222,7 +228,7 @@ void make_example_4() {
 		}
 		anim.next_frame();
 	}
-	anim.remove_last_frame();
+	anim.layer().remove_last_frame();
 	anim.write_file("example4.html");
 }
 
@@ -233,7 +239,9 @@ void make_example_5() {
 <p>See docs/generate_index.cpp for code.</p>
 )";
 	anim.post_text() << footer;
-	anim.background().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
+
+	anim.frame().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
+	anim.add_layer();
 
 	const auto n_frames = 60;
 	const constexpr char* smiley = "smiley";
@@ -256,7 +264,7 @@ void make_example_5() {
 			.draw_macro(smiley);
 		anim.next_frame();
 	}
-	anim.remove_last_frame();
+	anim.layer().remove_last_frame();
 	anim.write_file("example5.html");
 }
 
@@ -267,7 +275,9 @@ void make_example_6() {
 <p>See docs/generate_index.cpp for code.</p>
 )";
 	anim.post_text() << footer;
-	anim.background().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
+
+	anim.frame().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
+	anim.add_layer();
 
 	auto poly_points = [](auto n_points, auto radius) {
 		HtmlAnim::Vec2Vector pv(n_points);
@@ -292,7 +302,7 @@ void make_example_6() {
 		anim.frame().wait(20);
 		anim.next_frame();
 	}
-	anim.remove_last_frame();
+	anim.layer().remove_last_frame();
 	anim.write_file("example6.html");
 }
 
@@ -303,7 +313,9 @@ void make_example_7() {
 <p>See docs/generate_index.cpp for code.</p>
 )";
 	anim.post_text() << footer;
-	anim.background().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
+
+	anim.frame().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
+	anim.add_layer();
 
 	for(size_t n_points = 2; n_points < 9; ++n_points) {
 		anim.frame()
@@ -317,7 +329,7 @@ void make_example_7() {
 		anim.frame().wait(20);
 		anim.next_frame();
 	}
-	anim.remove_last_frame();
+	anim.layer().remove_last_frame();
 	anim.write_file("example7.html");
 }
 
@@ -349,7 +361,7 @@ void rec_circles(HtmlAnim::HtmlAnim& anim, double x, double y, double r, bool in
 
 void make_example_8() {
 	HtmlAnim::HtmlAnim anim("Rewind", 800, 400);
-	anim.set_no_clear(true);
+	anim.layer().set_no_clear(true);
 
 	anim.post_text() << R"(
 <p>See docs/generate_index.cpp for code.</p>
@@ -358,10 +370,10 @@ void make_example_8() {
 	anim.frame().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
 
 	rec_circles(anim, 200, 200, 90, true);
-	anim.rewind();
+	anim.layer().rewind();
 	rec_circles(anim, 600, 200, 45, false);
 
-	anim.remove_last_frame();
+	anim.layer().remove_last_frame();
 	anim.write_file("example8.html");
 }
 
@@ -372,15 +384,15 @@ void make_example_9() {
 <p>See docs/generate_index.cpp for code.</p>
 )";
 	anim.post_text() << footer;
-	anim.background().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
+	anim.frame().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
+	anim.frame().add_drawable(HtmlAnimShapes::subdivided_grid(10,10, 50,50, 10,12, 5,5));
+	anim.add_layer();
 
-	anim.background()
-		.add_drawable(HtmlAnimShapes::subdivided_grid(10,10, 50,50, 10,12, 5,5))
-		.font("bold 20px sans-serif");
 	std::default_random_engine generator;
 	std::normal_distribution<double> distribution(25.0, 7.5);
 	std::array<int, 50> bins;
 	bins.fill(0);
+	anim.frame().font("bold 20px sans-serif");
 	for(int j = 0; j < 10; ++j) {
 		constexpr auto inner_count = 1000;
 		anim.frame().text(10, 10+50, std::string("Samples: ") + std::to_string((j+1) * inner_count));
@@ -423,7 +435,7 @@ void sierpinski(HtmlAnim::HtmlAnim &anim, double x, double y, double d, int dept
 
 void make_demo_sierpinski() {
 	HtmlAnim::HtmlAnim anim("HtmlAnim - Demo: Sierpinski triangle", 600, 500);
-	anim.set_no_clear(true);
+	anim.layer().set_no_clear(true);
 
 	anim.post_text() << R"(
 <p>See docs/generate_index.cpp for code.</p>

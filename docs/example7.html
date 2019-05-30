@@ -11,12 +11,8 @@
 <canvas id='anim_canvas_1' width='600' height='250'></canvas>
 <script>
 <!--
-var frame_counter = 0;
-const num_frames = 7;
 var canvas = document.getElementById('anim_canvas_1');
-var no_clear = false;
-var repeat_current_frame = false;
-var expressions = {};
+var offscreens = [];
 
 function rect(ctx, x, y, w, h, fill) {
 	ctx.beginPath();
@@ -45,19 +41,27 @@ function regular_polygon(ctx, x, y, r, edges, fill) {
 	else
 		ctx.stroke();
 }
-function draw_bkgnd(ctx) {
+layers = [
+{frame_counter: 0,
+no_clear : false,
+repeat_current_frame : false,
+expressions : {},
+frames: [
+(function(ctx, layer) {
 ctx.save();
 ctx.fillStyle = "white";
 rect(ctx, 0, 0, 600, 250, true);
 ctx.restore();
-}
-
-function draw_frgnd(ctx) {
-}
-
-frames = [
-(function(ctx) {
-if(expressions.linear_range_100 == null) expressions.linear_range_100 = 0;
+}),
+],
+},
+{frame_counter: 0,
+no_clear : false,
+repeat_current_frame : false,
+expressions : {},
+frames: [
+(function(ctx, layer) {
+if(layer.expressions.linear_range_100 == null) layer.expressions.linear_range_100 = 0;
 ctx.save();
 ctx.translate(110, 110);
 regular_polygon(ctx, 0, 0, 100, 2, false);
@@ -66,13 +70,13 @@ ctx.save();
 ctx.translate(320, 110);
 regular_polygon(ctx, 0, 0, 100, 2, true);
 ctx.restore();
-if(expressions.linear_range_100 < 20) {
-expressions.linear_range_100 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_100 < 20) {
+layer.expressions.linear_range_100 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_101 == null) expressions.linear_range_101 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_101 == null) layer.expressions.linear_range_101 = 0;
 ctx.save();
 ctx.translate(110, 110);
 regular_polygon(ctx, 0, 0, 100, 3, false);
@@ -81,13 +85,13 @@ ctx.save();
 ctx.translate(320, 110);
 regular_polygon(ctx, 0, 0, 100, 3, true);
 ctx.restore();
-if(expressions.linear_range_101 < 20) {
-expressions.linear_range_101 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_101 < 20) {
+layer.expressions.linear_range_101 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_102 == null) expressions.linear_range_102 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_102 == null) layer.expressions.linear_range_102 = 0;
 ctx.save();
 ctx.translate(110, 110);
 regular_polygon(ctx, 0, 0, 100, 4, false);
@@ -96,13 +100,13 @@ ctx.save();
 ctx.translate(320, 110);
 regular_polygon(ctx, 0, 0, 100, 4, true);
 ctx.restore();
-if(expressions.linear_range_102 < 20) {
-expressions.linear_range_102 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_102 < 20) {
+layer.expressions.linear_range_102 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_103 == null) expressions.linear_range_103 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_103 == null) layer.expressions.linear_range_103 = 0;
 ctx.save();
 ctx.translate(110, 110);
 regular_polygon(ctx, 0, 0, 100, 5, false);
@@ -111,13 +115,13 @@ ctx.save();
 ctx.translate(320, 110);
 regular_polygon(ctx, 0, 0, 100, 5, true);
 ctx.restore();
-if(expressions.linear_range_103 < 20) {
-expressions.linear_range_103 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_103 < 20) {
+layer.expressions.linear_range_103 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_104 == null) expressions.linear_range_104 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_104 == null) layer.expressions.linear_range_104 = 0;
 ctx.save();
 ctx.translate(110, 110);
 regular_polygon(ctx, 0, 0, 100, 6, false);
@@ -126,13 +130,13 @@ ctx.save();
 ctx.translate(320, 110);
 regular_polygon(ctx, 0, 0, 100, 6, true);
 ctx.restore();
-if(expressions.linear_range_104 < 20) {
-expressions.linear_range_104 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_104 < 20) {
+layer.expressions.linear_range_104 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_105 == null) expressions.linear_range_105 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_105 == null) layer.expressions.linear_range_105 = 0;
 ctx.save();
 ctx.translate(110, 110);
 regular_polygon(ctx, 0, 0, 100, 7, false);
@@ -141,13 +145,13 @@ ctx.save();
 ctx.translate(320, 110);
 regular_polygon(ctx, 0, 0, 100, 7, true);
 ctx.restore();
-if(expressions.linear_range_105 < 20) {
-expressions.linear_range_105 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_105 < 20) {
+layer.expressions.linear_range_105 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_106 == null) expressions.linear_range_106 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_106 == null) layer.expressions.linear_range_106 = 0;
 ctx.save();
 ctx.translate(110, 110);
 regular_polygon(ctx, 0, 0, 100, 8, false);
@@ -156,27 +160,47 @@ ctx.save();
 ctx.translate(320, 110);
 regular_polygon(ctx, 0, 0, 100, 8, true);
 ctx.restore();
-if(expressions.linear_range_106 < 20) {
-expressions.linear_range_106 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_106 < 20) {
+layer.expressions.linear_range_106 += 1;
+layer.repeat_current_frame = true;
 }
 }),
+],
+},
 ];
 
-window.onload = function() {
-	ctx = canvas.getContext('2d'),
-	(function drawFrame () {
-		if(frame_counter == 0 || !no_clear)
+const num_layers = layers.length;
+
+for(var i = 0; i < num_layers; i++) {
+	var cv = document.createElement('canvas');
+	cv.width = canvas.width;
+	cv.height = canvas.height;
+	offscreens.push(cv);
+}
+
+function draw_layer(ctx, layer) {
+		if(layer.frame_counter == 0 || !layer.no_clear)
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
-		repeat_current_frame = false;
-		draw_bkgnd(ctx);
-		(frames[frame_counter])(ctx);
-		draw_frgnd(ctx);
-		if(!repeat_current_frame) {
-			frame_counter = (frame_counter + 1) % num_frames;
-			expressions = {};
+		layer.repeat_current_frame = false;
+		(layer.frames[layer.frame_counter])(ctx, layer);
+		if(!layer.repeat_current_frame) {
+			layer.frame_counter = (layer.frame_counter + 1) % layer.frames.length;
+			layer.expressions = {};
 		}
-		window.requestAnimationFrame(drawFrame, canvas);
+}
+
+window.onload = function() {
+	(function draw_canvas () {
+		for (var i = 0; i < num_layers; i++) {
+			var ctx = offscreens[i].getContext('2d');
+			var layer = layers[i];
+			draw_layer(ctx, layer);
+		}
+		var ctx = canvas.getContext('2d');
+		for (var i = 0; i < num_layers; i++) {
+			ctx.drawImage(offscreens[i], 0, 0);
+		}
+		window.requestAnimationFrame(draw_canvas, canvas);
 	}());
 }
 

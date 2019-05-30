@@ -11,12 +11,8 @@
 <canvas id='anim_canvas_1' width='400' height='600'></canvas>
 <script>
 <!--
-var frame_counter = 0;
-const num_frames = 512;
 var canvas = document.getElementById('anim_canvas_1');
-var no_clear = true;
-var repeat_current_frame = false;
-var expressions = {};
+var offscreens = [];
 
 function rect(ctx, x, y, w, h, fill) {
 	ctx.beginPath();
@@ -33,1567 +29,1586 @@ function line(ctx, x1, y1, x2, y2) {
 	ctx.lineTo(x2, y2);
 	ctx.stroke();
 }
-function draw_bkgnd(ctx) {
-}
-
-function draw_frgnd(ctx) {
-}
-
-frames = [
-(function(ctx) {
+layers = [
+{frame_counter: 0,
+no_clear : false,
+repeat_current_frame : false,
+expressions : {},
+frames: [
+(function(ctx, layer) {
 ctx.save();
 ctx.fillStyle = "white";
 rect(ctx, 0, 0, 400, 600, true);
 ctx.restore();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 0, 300, 20, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 20, 150, 40, 75);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 40, 75, 60, 37);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 60, 37, 80, 18);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 18, 100, 9);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 9, 120, 4);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 4, 140, 2);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 2, 160, 1);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 2, 160, 3);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 4, 140, 7);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 7, 160, 5);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 7, 160, 8);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 9, 120, 14);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 14, 140, 11);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 11, 160, 10);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 11, 160, 12);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 14, 140, 16);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 16, 160, 15);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 16, 160, 17);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 18, 100, 28);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 28, 120, 23);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 23, 140, 21);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 21, 160, 19);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 21, 160, 22);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 23, 140, 25);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 25, 160, 24);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 25, 160, 26);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 28, 120, 32);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 32, 140, 30);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 30, 160, 29);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 30, 160, 31);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 32, 140, 35);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 35, 160, 33);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 35, 160, 36);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 60, 37, 80, 56);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 56, 100, 46);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 46, 120, 42);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 42, 140, 39);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 39, 160, 38);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 39, 160, 41);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 42, 140, 44);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 44, 160, 43);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 44, 160, 45);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 46, 120, 51);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 51, 140, 49);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 49, 160, 48);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 49, 160, 50);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 51, 140, 53);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 53, 160, 52);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 53, 160, 55);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 56, 100, 65);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 65, 120, 60);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 60, 140, 58);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 58, 160, 57);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 58, 160, 59);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 60, 140, 63);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 63, 160, 62);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 63, 160, 64);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 65, 120, 70);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 70, 140, 67);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 67, 160, 66);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 67, 160, 69);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 70, 140, 72);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 72, 160, 71);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 72, 160, 73);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 40, 75, 60, 112);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 60, 112, 80, 93);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 93, 100, 84);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 84, 120, 79);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 79, 140, 77);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 77, 160, 76);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 77, 160, 78);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 79, 140, 82);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 82, 160, 80);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 82, 160, 83);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 84, 120, 89);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 89, 140, 86);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 86, 160, 85);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 86, 160, 87);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 89, 140, 91);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 91, 160, 90);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 91, 160, 92);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 93, 100, 103);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 103, 120, 98);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 98, 140, 96);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 96, 160, 94);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 96, 160, 97);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 98, 140, 100);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 100, 160, 99);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 100, 160, 101);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 103, 120, 107);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 107, 140, 105);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 105, 160, 104);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 105, 160, 106);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 107, 140, 110);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 110, 160, 108);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 110, 160, 111);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 60, 112, 80, 131);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 131, 100, 121);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 121, 120, 117);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 117, 140, 114);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 114, 160, 113);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 114, 160, 116);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 117, 140, 119);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 119, 160, 118);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 119, 160, 120);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 121, 120, 126);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 126, 140, 124);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 124, 160, 123);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 124, 160, 125);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 126, 140, 128);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 128, 160, 127);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 128, 160, 130);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 131, 100, 140);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 140, 120, 135);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 135, 140, 133);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 133, 160, 132);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 133, 160, 134);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 135, 140, 138);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 138, 160, 137);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 138, 160, 139);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 140, 120, 145);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 145, 140, 142);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 142, 160, 141);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 142, 160, 144);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 145, 140, 147);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 147, 160, 146);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 147, 160, 148);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 20, 150, 40, 225);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 40, 225, 60, 187);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 60, 187, 80, 168);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 168, 100, 159);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 159, 120, 154);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 154, 140, 152);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 152, 160, 151);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 152, 160, 153);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 154, 140, 157);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 157, 160, 155);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 157, 160, 158);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 159, 120, 164);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 164, 140, 161);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 161, 160, 160);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 161, 160, 162);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 164, 140, 166);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 166, 160, 165);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 166, 160, 167);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 168, 100, 178);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 178, 120, 173);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 173, 140, 171);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 171, 160, 169);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 171, 160, 172);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 173, 140, 175);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 175, 160, 174);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 175, 160, 176);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 178, 120, 182);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 182, 140, 180);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 180, 160, 179);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 180, 160, 181);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 182, 140, 185);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 185, 160, 183);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 185, 160, 186);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 60, 187, 80, 206);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 206, 100, 196);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 196, 120, 192);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 192, 140, 189);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 189, 160, 188);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 189, 160, 191);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 192, 140, 194);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 194, 160, 193);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 194, 160, 195);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 196, 120, 201);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 201, 140, 199);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 199, 160, 198);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 199, 160, 200);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 201, 140, 203);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 203, 160, 202);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 203, 160, 205);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 206, 100, 215);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 215, 120, 210);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 210, 140, 208);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 208, 160, 207);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 208, 160, 209);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 210, 140, 213);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 213, 160, 212);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 213, 160, 214);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 215, 120, 220);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 220, 140, 217);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 217, 160, 216);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 217, 160, 219);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 220, 140, 222);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 222, 160, 221);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 222, 160, 223);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 40, 225, 60, 262);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 60, 262, 80, 243);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 243, 100, 234);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 234, 120, 229);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 229, 140, 227);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 227, 160, 226);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 227, 160, 228);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 229, 140, 232);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 232, 160, 230);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 232, 160, 233);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 234, 120, 239);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 239, 140, 236);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 236, 160, 235);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 236, 160, 237);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 239, 140, 241);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 241, 160, 240);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 241, 160, 242);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 243, 100, 253);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 253, 120, 248);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 248, 140, 246);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 246, 160, 244);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 246, 160, 247);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 248, 140, 250);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 250, 160, 249);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 250, 160, 251);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 253, 120, 257);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 257, 140, 255);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 255, 160, 254);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 255, 160, 256);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 257, 140, 260);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 260, 160, 258);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 260, 160, 261);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 60, 262, 80, 281);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 281, 100, 271);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 271, 120, 267);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 267, 140, 264);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 264, 160, 263);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 264, 160, 266);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 267, 140, 269);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 269, 160, 268);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 269, 160, 270);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 271, 120, 276);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 276, 140, 274);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 274, 160, 273);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 274, 160, 275);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 276, 140, 278);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 278, 160, 277);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 278, 160, 280);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 281, 100, 290);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 290, 120, 285);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 285, 140, 283);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 283, 160, 282);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 283, 160, 284);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 285, 140, 288);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 288, 160, 287);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 288, 160, 289);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 290, 120, 295);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 295, 140, 292);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 292, 160, 291);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 292, 160, 294);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 295, 140, 297);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 297, 160, 296);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 297, 160, 298);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 0, 300, 20, 450);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 20, 450, 40, 375);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 40, 375, 60, 337);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 60, 337, 80, 318);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 318, 100, 309);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 309, 120, 304);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 304, 140, 302);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 302, 160, 301);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 302, 160, 303);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 304, 140, 307);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 307, 160, 305);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 307, 160, 308);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 309, 120, 314);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 314, 140, 311);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 311, 160, 310);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 311, 160, 312);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 314, 140, 316);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 316, 160, 315);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 316, 160, 317);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 318, 100, 328);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 328, 120, 323);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 323, 140, 321);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 321, 160, 319);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 321, 160, 322);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 323, 140, 325);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 325, 160, 324);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 325, 160, 326);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 328, 120, 332);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 332, 140, 330);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 330, 160, 329);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 330, 160, 331);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 332, 140, 335);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 335, 160, 333);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 335, 160, 336);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 60, 337, 80, 356);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 356, 100, 346);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 346, 120, 342);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 342, 140, 339);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 339, 160, 338);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 339, 160, 341);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 342, 140, 344);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 344, 160, 343);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 344, 160, 345);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 346, 120, 351);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 351, 140, 349);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 349, 160, 348);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 349, 160, 350);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 351, 140, 353);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 353, 160, 352);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 353, 160, 355);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 356, 100, 365);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 365, 120, 360);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 360, 140, 358);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 358, 160, 357);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 358, 160, 359);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 360, 140, 363);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 363, 160, 362);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 363, 160, 364);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 365, 120, 370);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 370, 140, 367);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 367, 160, 366);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 367, 160, 369);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 370, 140, 372);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 372, 160, 371);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 372, 160, 373);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 40, 375, 60, 412);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 60, 412, 80, 393);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 393, 100, 384);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 384, 120, 379);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 379, 140, 377);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 377, 160, 376);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 377, 160, 378);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 379, 140, 382);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 382, 160, 380);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 382, 160, 383);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 384, 120, 389);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 389, 140, 386);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 386, 160, 385);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 386, 160, 387);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 389, 140, 391);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 391, 160, 390);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 391, 160, 392);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 393, 100, 403);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 403, 120, 398);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 398, 140, 396);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 396, 160, 394);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 396, 160, 397);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 398, 140, 400);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 400, 160, 399);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 400, 160, 401);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 403, 120, 407);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 407, 140, 405);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 405, 160, 404);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 405, 160, 406);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 407, 140, 410);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 410, 160, 408);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 410, 160, 411);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 60, 412, 80, 431);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 431, 100, 421);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 421, 120, 417);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 417, 140, 414);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 414, 160, 413);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 414, 160, 416);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 417, 140, 419);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 419, 160, 418);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 419, 160, 420);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 421, 120, 426);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 426, 140, 424);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 424, 160, 423);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 424, 160, 425);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 426, 140, 428);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 428, 160, 427);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 428, 160, 430);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 431, 100, 440);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 440, 120, 435);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 435, 140, 433);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 433, 160, 432);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 433, 160, 434);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 435, 140, 438);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 438, 160, 437);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 438, 160, 439);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 440, 120, 445);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 445, 140, 442);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 442, 160, 441);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 442, 160, 444);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 445, 140, 447);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 447, 160, 446);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 447, 160, 448);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 20, 450, 40, 525);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 40, 525, 60, 487);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 60, 487, 80, 468);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 468, 100, 459);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 459, 120, 454);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 454, 140, 452);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 452, 160, 451);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 452, 160, 453);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 454, 140, 457);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 457, 160, 455);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 457, 160, 458);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 459, 120, 464);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 464, 140, 461);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 461, 160, 460);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 461, 160, 462);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 464, 140, 466);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 466, 160, 465);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 466, 160, 467);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 468, 100, 478);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 478, 120, 473);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 473, 140, 471);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 471, 160, 469);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 471, 160, 472);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 473, 140, 475);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 475, 160, 474);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 475, 160, 476);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 478, 120, 482);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 482, 140, 480);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 480, 160, 479);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 480, 160, 481);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 482, 140, 485);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 485, 160, 483);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 485, 160, 486);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 60, 487, 80, 506);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 506, 100, 496);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 496, 120, 492);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 492, 140, 489);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 489, 160, 488);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 489, 160, 491);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 492, 140, 494);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 494, 160, 493);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 494, 160, 495);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 496, 120, 501);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 501, 140, 499);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 499, 160, 498);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 499, 160, 500);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 501, 140, 503);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 503, 160, 502);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 503, 160, 505);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 506, 100, 515);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 515, 120, 510);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 510, 140, 508);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 508, 160, 507);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 508, 160, 509);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 510, 140, 513);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 513, 160, 512);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 513, 160, 514);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 515, 120, 520);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 520, 140, 517);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 517, 160, 516);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 517, 160, 519);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 520, 140, 522);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 522, 160, 521);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 522, 160, 523);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 40, 525, 60, 562);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 60, 562, 80, 543);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 543, 100, 534);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 534, 120, 529);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 529, 140, 527);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 527, 160, 526);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 527, 160, 528);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 529, 140, 532);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 532, 160, 530);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 532, 160, 533);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 534, 120, 539);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 539, 140, 536);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 536, 160, 535);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 536, 160, 537);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 539, 140, 541);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 541, 160, 540);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 541, 160, 542);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 543, 100, 553);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 553, 120, 548);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 548, 140, 546);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 546, 160, 544);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 546, 160, 547);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 548, 140, 550);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 550, 160, 549);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 550, 160, 551);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 553, 120, 557);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 557, 140, 555);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 555, 160, 554);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 555, 160, 556);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 557, 140, 560);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 560, 160, 558);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 560, 160, 561);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 60, 562, 80, 581);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 581, 100, 571);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 571, 120, 567);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 567, 140, 564);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 564, 160, 563);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 564, 160, 566);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 567, 140, 569);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 569, 160, 568);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 569, 160, 570);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 571, 120, 576);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 576, 140, 574);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 574, 160, 573);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 574, 160, 575);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 576, 140, 578);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 578, 160, 577);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 578, 160, 580);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 80, 581, 100, 590);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 590, 120, 585);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 585, 140, 583);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 583, 160, 582);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 583, 160, 584);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 585, 140, 588);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 588, 160, 587);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 588, 160, 589);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 100, 590, 120, 595);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 595, 140, 592);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 592, 160, 591);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 592, 160, 594);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 120, 595, 140, 597);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 597, 160, 596);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 line(ctx, 140, 597, 160, 598);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 }),
+],
+},
 ];
 
-window.onload = function() {
-	ctx = canvas.getContext('2d'),
-	(function drawFrame () {
-		if(frame_counter == 0 || !no_clear)
+const num_layers = layers.length;
+
+for(var i = 0; i < num_layers; i++) {
+	var cv = document.createElement('canvas');
+	cv.width = canvas.width;
+	cv.height = canvas.height;
+	offscreens.push(cv);
+}
+
+function draw_layer(ctx, layer) {
+		if(layer.frame_counter == 0 || !layer.no_clear)
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
-		repeat_current_frame = false;
-		draw_bkgnd(ctx);
-		(frames[frame_counter])(ctx);
-		draw_frgnd(ctx);
-		if(!repeat_current_frame) {
-			frame_counter = (frame_counter + 1) % num_frames;
-			expressions = {};
+		layer.repeat_current_frame = false;
+		(layer.frames[layer.frame_counter])(ctx, layer);
+		if(!layer.repeat_current_frame) {
+			layer.frame_counter = (layer.frame_counter + 1) % layer.frames.length;
+			layer.expressions = {};
 		}
-		window.requestAnimationFrame(drawFrame, canvas);
+}
+
+window.onload = function() {
+	(function draw_canvas () {
+		for (var i = 0; i < num_layers; i++) {
+			var ctx = offscreens[i].getContext('2d');
+			var layer = layers[i];
+			draw_layer(ctx, layer);
+		}
+		var ctx = canvas.getContext('2d');
+		for (var i = 0; i < num_layers; i++) {
+			ctx.drawImage(offscreens[i], 0, 0);
+		}
+		window.requestAnimationFrame(draw_canvas, canvas);
 	}());
 }
 

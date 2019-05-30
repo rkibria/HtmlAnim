@@ -11,12 +11,8 @@
 <canvas id='anim_canvas_1' width='600' height='300'></canvas>
 <script>
 <!--
-var frame_counter = 0;
-const num_frames = 60;
 var canvas = document.getElementById('anim_canvas_1');
-var no_clear = false;
-var repeat_current_frame = false;
-var expressions = {};
+var offscreens = [];
 
 function rect(ctx, x, y, w, h, fill) {
 	ctx.beginPath();
@@ -33,18 +29,26 @@ function line(ctx, x1, y1, x2, y2) {
 	ctx.lineTo(x2, y2);
 	ctx.stroke();
 }
-function draw_bkgnd(ctx) {
+layers = [
+{frame_counter: 0,
+no_clear : false,
+repeat_current_frame : false,
+expressions : {},
+frames: [
+(function(ctx, layer) {
 ctx.save();
 ctx.fillStyle = "white";
 rect(ctx, 0, 0, 600, 300, true);
 ctx.restore();
-}
-
-function draw_frgnd(ctx) {
-}
-
-frames = [
-(function(ctx) {
+}),
+],
+},
+{frame_counter: 0,
+no_clear : false,
+repeat_current_frame : false,
+expressions : {},
+frames: [
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 5;
 ctx.strokeStyle = "#00ff80";
@@ -110,7 +114,7 @@ ctx.lineWidth = 10;
 ctx.strokeStyle = "#e11e61";
 line(ctx, 525, 150, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 5;
 ctx.strokeStyle = "#00ff80";
@@ -176,7 +180,7 @@ ctx.lineWidth = 10;
 ctx.strokeStyle = "#e11e61";
 line(ctx, 525, 145, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 5;
 ctx.strokeStyle = "#00ff80";
@@ -242,7 +246,7 @@ ctx.lineWidth = 10;
 ctx.strokeStyle = "#e11e61";
 line(ctx, 525, 141, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 5;
 ctx.strokeStyle = "#00ff80";
@@ -308,7 +312,7 @@ ctx.lineWidth = 10;
 ctx.strokeStyle = "#e11e61";
 line(ctx, 525, 136, 558, 149);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 10;
 ctx.strokeStyle = "#0ff08f";
@@ -374,7 +378,7 @@ ctx.lineWidth = 5;
 ctx.strokeStyle = "#f00f70";
 line(ctx, 525, 132, 558, 149);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 10;
 ctx.strokeStyle = "#0ff08f";
@@ -440,7 +444,7 @@ ctx.lineWidth = 5;
 ctx.strokeStyle = "#f00f70";
 line(ctx, 525, 128, 558, 149);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 10;
 ctx.strokeStyle = "#0ff08f";
@@ -506,7 +510,7 @@ ctx.lineWidth = 5;
 ctx.strokeStyle = "#f00f70";
 line(ctx, 525, 124, 558, 149);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 10;
 ctx.strokeStyle = "#0ff08f";
@@ -572,7 +576,7 @@ ctx.lineWidth = 5;
 ctx.strokeStyle = "#f00f70";
 line(ctx, 525, 121, 558, 149);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 15;
 ctx.strokeStyle = "#1ee19e";
@@ -638,7 +642,7 @@ ctx.lineWidth = 10;
 ctx.strokeStyle = "#ff007f";
 line(ctx, 525, 118, 558, 149);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 15;
 ctx.strokeStyle = "#1ee19e";
@@ -704,7 +708,7 @@ ctx.lineWidth = 10;
 ctx.strokeStyle = "#ff007f";
 line(ctx, 525, 115, 558, 149);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 15;
 ctx.strokeStyle = "#1ee19e";
@@ -770,7 +774,7 @@ ctx.lineWidth = 10;
 ctx.strokeStyle = "#ff007f";
 line(ctx, 525, 112, 558, 149);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 15;
 ctx.strokeStyle = "#1ee19e";
@@ -836,7 +840,7 @@ ctx.lineWidth = 10;
 ctx.strokeStyle = "#ff007f";
 line(ctx, 525, 110, 558, 149);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 20;
 ctx.strokeStyle = "#2dd2ad";
@@ -902,7 +906,7 @@ ctx.lineWidth = 15;
 ctx.strokeStyle = "#0ef18e";
 line(ctx, 525, 109, 558, 149);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 20;
 ctx.strokeStyle = "#2dd2ad";
@@ -968,7 +972,7 @@ ctx.lineWidth = 15;
 ctx.strokeStyle = "#0ef18e";
 line(ctx, 525, 107, 558, 149);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 20;
 ctx.strokeStyle = "#2dd2ad";
@@ -1034,7 +1038,7 @@ ctx.lineWidth = 15;
 ctx.strokeStyle = "#0ef18e";
 line(ctx, 525, 107, 558, 149);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 20;
 ctx.strokeStyle = "#2dd2ad";
@@ -1100,7 +1104,7 @@ ctx.lineWidth = 15;
 ctx.strokeStyle = "#0ef18e";
 line(ctx, 525, 106, 558, 149);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 25;
 ctx.strokeStyle = "#3cc3bc";
@@ -1166,7 +1170,7 @@ ctx.lineWidth = 20;
 ctx.strokeStyle = "#1de29d";
 line(ctx, 525, 107, 558, 149);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 25;
 ctx.strokeStyle = "#3cc3bc";
@@ -1232,7 +1236,7 @@ ctx.lineWidth = 20;
 ctx.strokeStyle = "#1de29d";
 line(ctx, 525, 107, 558, 149);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 25;
 ctx.strokeStyle = "#3cc3bc";
@@ -1298,7 +1302,7 @@ ctx.lineWidth = 20;
 ctx.strokeStyle = "#1de29d";
 line(ctx, 525, 109, 558, 149);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 25;
 ctx.strokeStyle = "#3cc3bc";
@@ -1364,7 +1368,7 @@ ctx.lineWidth = 20;
 ctx.strokeStyle = "#1de29d";
 line(ctx, 525, 110, 558, 149);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 30;
 ctx.strokeStyle = "#4bb4cb";
@@ -1430,7 +1434,7 @@ ctx.lineWidth = 25;
 ctx.strokeStyle = "#2cd3ac";
 line(ctx, 525, 112, 558, 149);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 30;
 ctx.strokeStyle = "#4bb4cb";
@@ -1496,7 +1500,7 @@ ctx.lineWidth = 25;
 ctx.strokeStyle = "#2cd3ac";
 line(ctx, 525, 115, 558, 149);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 30;
 ctx.strokeStyle = "#4bb4cb";
@@ -1562,7 +1566,7 @@ ctx.lineWidth = 25;
 ctx.strokeStyle = "#2cd3ac";
 line(ctx, 525, 118, 558, 149);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 30;
 ctx.strokeStyle = "#4bb4cb";
@@ -1628,7 +1632,7 @@ ctx.lineWidth = 25;
 ctx.strokeStyle = "#2cd3ac";
 line(ctx, 525, 121, 558, 149);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 35;
 ctx.strokeStyle = "#5aa5da";
@@ -1694,7 +1698,7 @@ ctx.lineWidth = 30;
 ctx.strokeStyle = "#3bc4bb";
 line(ctx, 525, 124, 558, 149);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 35;
 ctx.strokeStyle = "#5aa5da";
@@ -1760,7 +1764,7 @@ ctx.lineWidth = 30;
 ctx.strokeStyle = "#3bc4bb";
 line(ctx, 525, 128, 558, 149);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 35;
 ctx.strokeStyle = "#5aa5da";
@@ -1826,7 +1830,7 @@ ctx.lineWidth = 30;
 ctx.strokeStyle = "#3bc4bb";
 line(ctx, 525, 132, 558, 149);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 35;
 ctx.strokeStyle = "#5aa5da";
@@ -1892,7 +1896,7 @@ ctx.lineWidth = 30;
 ctx.strokeStyle = "#3bc4bb";
 line(ctx, 525, 136, 558, 149);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 40;
 ctx.strokeStyle = "#6996e9";
@@ -1958,7 +1962,7 @@ ctx.lineWidth = 35;
 ctx.strokeStyle = "#4ab5ca";
 line(ctx, 525, 141, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 40;
 ctx.strokeStyle = "#6996e9";
@@ -2024,7 +2028,7 @@ ctx.lineWidth = 35;
 ctx.strokeStyle = "#4ab5ca";
 line(ctx, 525, 145, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 40;
 ctx.strokeStyle = "#6996e9";
@@ -2090,7 +2094,7 @@ ctx.lineWidth = 35;
 ctx.strokeStyle = "#4ab5ca";
 line(ctx, 525, 150, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 40;
 ctx.strokeStyle = "#6996e9";
@@ -2156,7 +2160,7 @@ ctx.lineWidth = 35;
 ctx.strokeStyle = "#4ab5ca";
 line(ctx, 525, 154, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 45;
 ctx.strokeStyle = "#7887f8";
@@ -2222,7 +2226,7 @@ ctx.lineWidth = 40;
 ctx.strokeStyle = "#59a6d9";
 line(ctx, 525, 158, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 45;
 ctx.strokeStyle = "#7887f8";
@@ -2288,7 +2292,7 @@ ctx.lineWidth = 40;
 ctx.strokeStyle = "#59a6d9";
 line(ctx, 525, 163, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 45;
 ctx.strokeStyle = "#7887f8";
@@ -2354,7 +2358,7 @@ ctx.lineWidth = 40;
 ctx.strokeStyle = "#59a6d9";
 line(ctx, 525, 167, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 45;
 ctx.strokeStyle = "#7887f8";
@@ -2420,7 +2424,7 @@ ctx.lineWidth = 40;
 ctx.strokeStyle = "#59a6d9";
 line(ctx, 525, 171, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 40;
 ctx.strokeStyle = "#877807";
@@ -2486,7 +2490,7 @@ ctx.lineWidth = 45;
 ctx.strokeStyle = "#6897e8";
 line(ctx, 525, 175, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 40;
 ctx.strokeStyle = "#877807";
@@ -2552,7 +2556,7 @@ ctx.lineWidth = 45;
 ctx.strokeStyle = "#6897e8";
 line(ctx, 525, 178, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 40;
 ctx.strokeStyle = "#877807";
@@ -2618,7 +2622,7 @@ ctx.lineWidth = 45;
 ctx.strokeStyle = "#6897e8";
 line(ctx, 525, 181, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 40;
 ctx.strokeStyle = "#877807";
@@ -2684,7 +2688,7 @@ ctx.lineWidth = 45;
 ctx.strokeStyle = "#6897e8";
 line(ctx, 525, 184, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 35;
 ctx.strokeStyle = "#966916";
@@ -2750,7 +2754,7 @@ ctx.lineWidth = 40;
 ctx.strokeStyle = "#7788f7";
 line(ctx, 525, 187, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 35;
 ctx.strokeStyle = "#966916";
@@ -2816,7 +2820,7 @@ ctx.lineWidth = 40;
 ctx.strokeStyle = "#7788f7";
 line(ctx, 525, 189, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 35;
 ctx.strokeStyle = "#966916";
@@ -2882,7 +2886,7 @@ ctx.lineWidth = 40;
 ctx.strokeStyle = "#7788f7";
 line(ctx, 525, 190, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 35;
 ctx.strokeStyle = "#966916";
@@ -2948,7 +2952,7 @@ ctx.lineWidth = 40;
 ctx.strokeStyle = "#7788f7";
 line(ctx, 525, 192, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 30;
 ctx.strokeStyle = "#a55a25";
@@ -3014,7 +3018,7 @@ ctx.lineWidth = 35;
 ctx.strokeStyle = "#867906";
 line(ctx, 525, 192, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 30;
 ctx.strokeStyle = "#a55a25";
@@ -3080,7 +3084,7 @@ ctx.lineWidth = 35;
 ctx.strokeStyle = "#867906";
 line(ctx, 525, 193, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 30;
 ctx.strokeStyle = "#a55a25";
@@ -3146,7 +3150,7 @@ ctx.lineWidth = 35;
 ctx.strokeStyle = "#867906";
 line(ctx, 525, 192, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 30;
 ctx.strokeStyle = "#a55a25";
@@ -3212,7 +3216,7 @@ ctx.lineWidth = 35;
 ctx.strokeStyle = "#867906";
 line(ctx, 525, 192, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 25;
 ctx.strokeStyle = "#b44b34";
@@ -3278,7 +3282,7 @@ ctx.lineWidth = 30;
 ctx.strokeStyle = "#956a15";
 line(ctx, 525, 190, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 25;
 ctx.strokeStyle = "#b44b34";
@@ -3344,7 +3348,7 @@ ctx.lineWidth = 30;
 ctx.strokeStyle = "#956a15";
 line(ctx, 525, 189, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 25;
 ctx.strokeStyle = "#b44b34";
@@ -3410,7 +3414,7 @@ ctx.lineWidth = 30;
 ctx.strokeStyle = "#956a15";
 line(ctx, 525, 187, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 25;
 ctx.strokeStyle = "#b44b34";
@@ -3476,7 +3480,7 @@ ctx.lineWidth = 30;
 ctx.strokeStyle = "#956a15";
 line(ctx, 525, 184, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 20;
 ctx.strokeStyle = "#c33c43";
@@ -3542,7 +3546,7 @@ ctx.lineWidth = 25;
 ctx.strokeStyle = "#a45b24";
 line(ctx, 525, 181, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 20;
 ctx.strokeStyle = "#c33c43";
@@ -3608,7 +3612,7 @@ ctx.lineWidth = 25;
 ctx.strokeStyle = "#a45b24";
 line(ctx, 525, 178, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 20;
 ctx.strokeStyle = "#c33c43";
@@ -3674,7 +3678,7 @@ ctx.lineWidth = 25;
 ctx.strokeStyle = "#a45b24";
 line(ctx, 525, 175, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 20;
 ctx.strokeStyle = "#c33c43";
@@ -3740,7 +3744,7 @@ ctx.lineWidth = 25;
 ctx.strokeStyle = "#a45b24";
 line(ctx, 525, 171, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 15;
 ctx.strokeStyle = "#d22d52";
@@ -3806,7 +3810,7 @@ ctx.lineWidth = 20;
 ctx.strokeStyle = "#b34c33";
 line(ctx, 525, 167, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 15;
 ctx.strokeStyle = "#d22d52";
@@ -3872,7 +3876,7 @@ ctx.lineWidth = 20;
 ctx.strokeStyle = "#b34c33";
 line(ctx, 525, 163, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 15;
 ctx.strokeStyle = "#d22d52";
@@ -3938,7 +3942,7 @@ ctx.lineWidth = 20;
 ctx.strokeStyle = "#b34c33";
 line(ctx, 525, 158, 558, 150);
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.lineCap = "round";
 ctx.lineWidth = 15;
 ctx.strokeStyle = "#d22d52";
@@ -4004,22 +4008,42 @@ ctx.lineWidth = 20;
 ctx.strokeStyle = "#b34c33";
 line(ctx, 525, 154, 558, 150);
 }),
+],
+},
 ];
 
-window.onload = function() {
-	ctx = canvas.getContext('2d'),
-	(function drawFrame () {
-		if(frame_counter == 0 || !no_clear)
+const num_layers = layers.length;
+
+for(var i = 0; i < num_layers; i++) {
+	var cv = document.createElement('canvas');
+	cv.width = canvas.width;
+	cv.height = canvas.height;
+	offscreens.push(cv);
+}
+
+function draw_layer(ctx, layer) {
+		if(layer.frame_counter == 0 || !layer.no_clear)
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
-		repeat_current_frame = false;
-		draw_bkgnd(ctx);
-		(frames[frame_counter])(ctx);
-		draw_frgnd(ctx);
-		if(!repeat_current_frame) {
-			frame_counter = (frame_counter + 1) % num_frames;
-			expressions = {};
+		layer.repeat_current_frame = false;
+		(layer.frames[layer.frame_counter])(ctx, layer);
+		if(!layer.repeat_current_frame) {
+			layer.frame_counter = (layer.frame_counter + 1) % layer.frames.length;
+			layer.expressions = {};
 		}
-		window.requestAnimationFrame(drawFrame, canvas);
+}
+
+window.onload = function() {
+	(function draw_canvas () {
+		for (var i = 0; i < num_layers; i++) {
+			var ctx = offscreens[i].getContext('2d');
+			var layer = layers[i];
+			draw_layer(ctx, layer);
+		}
+		var ctx = canvas.getContext('2d');
+		for (var i = 0; i < num_layers; i++) {
+			ctx.drawImage(offscreens[i], 0, 0);
+		}
+		window.requestAnimationFrame(draw_canvas, canvas);
 	}());
 }
 

@@ -11,12 +11,8 @@
 <canvas id='anim_canvas_1' width='840' height='180'></canvas>
 <script>
 <!--
-var frame_counter = 0;
-const num_frames = 67;
 var canvas = document.getElementById('anim_canvas_1');
-var no_clear = false;
-var repeat_current_frame = false;
-var expressions = {};
+var offscreens = [];
 
 function rect(ctx, x, y, w, h, fill) {
 	ctx.beginPath();
@@ -43,19 +39,27 @@ function arc(ctx, x, y, r, sa, ea, fill) {
 	else
 		ctx.stroke();
 }
-function draw_bkgnd(ctx) {
+layers = [
+{frame_counter: 0,
+no_clear : false,
+repeat_current_frame : false,
+expressions : {},
+frames: [
+(function(ctx, layer) {
 ctx.save();
 ctx.fillStyle = "white";
 rect(ctx, 0, 0, 840, 180, true);
 ctx.restore();
-}
-
-function draw_frgnd(ctx) {
-}
-
-frames = [
-(function(ctx) {
-if(expressions.linear_range_27 == null) expressions.linear_range_27 = 0;
+}),
+],
+},
+{frame_counter: 0,
+no_clear : false,
+repeat_current_frame : false,
+expressions : {},
+frames: [
+(function(ctx, layer) {
+if(layer.expressions.linear_range_27 == null) layer.expressions.linear_range_27 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
 arc(ctx, 50, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 40, 0.000000, 6.283185, false);
@@ -65,13 +69,13 @@ arc(ctx, 450, 70, 35, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 15, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 25, 0.000000, 6.283185, false);
-if(expressions.linear_range_27 < 20) {
-expressions.linear_range_27 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_27 < 20) {
+layer.expressions.linear_range_27 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_28 == null) expressions.linear_range_28 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_28 == null) layer.expressions.linear_range_28 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
 arc(ctx, 50, 70, 45, 0.000000, 6.283185, true);
 arc(ctx, 150, 70, 40, 0.000000, 6.283185, true);
@@ -81,13 +85,13 @@ arc(ctx, 450, 70, 35, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 15, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 25, 0.000000, 6.283185, false);
-if(expressions.linear_range_28 < 20) {
-expressions.linear_range_28 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_28 < 20) {
+layer.expressions.linear_range_28 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_29 == null) expressions.linear_range_29 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_29 == null) layer.expressions.linear_range_29 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
 arc(ctx, 50, 70, 40, 0.000000, 6.283185, true);
 arc(ctx, 150, 70, 45, 0.000000, 6.283185, true);
@@ -97,13 +101,13 @@ arc(ctx, 450, 70, 35, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 15, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 25, 0.000000, 6.283185, false);
-if(expressions.linear_range_29 < 20) {
-expressions.linear_range_29 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_29 < 20) {
+layer.expressions.linear_range_29 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_30 == null) expressions.linear_range_30 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_30 == null) layer.expressions.linear_range_30 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
 arc(ctx, 50, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 45, 0.000000, 6.283185, false);
@@ -113,13 +117,13 @@ arc(ctx, 450, 70, 35, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 15, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 25, 0.000000, 6.283185, false);
-if(expressions.linear_range_30 < 20) {
-expressions.linear_range_30 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_30 < 20) {
+layer.expressions.linear_range_30 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_31 == null) expressions.linear_range_31 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_31 == null) layer.expressions.linear_range_31 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
 arc(ctx, 50, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 45, 0.000000, 6.283185, true);
@@ -129,13 +133,13 @@ arc(ctx, 450, 70, 35, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 15, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 25, 0.000000, 6.283185, false);
-if(expressions.linear_range_31 < 20) {
-expressions.linear_range_31 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_31 < 20) {
+layer.expressions.linear_range_31 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_32 == null) expressions.linear_range_32 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_32 == null) layer.expressions.linear_range_32 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
 arc(ctx, 50, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 20, 0.000000, 6.283185, true);
@@ -145,13 +149,13 @@ arc(ctx, 450, 70, 35, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 15, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 25, 0.000000, 6.283185, false);
-if(expressions.linear_range_32 < 20) {
-expressions.linear_range_32 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_32 < 20) {
+layer.expressions.linear_range_32 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_33 == null) expressions.linear_range_33 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_33 == null) layer.expressions.linear_range_33 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
 arc(ctx, 50, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 20, 0.000000, 6.283185, false);
@@ -161,13 +165,13 @@ arc(ctx, 450, 70, 35, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 15, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 25, 0.000000, 6.283185, false);
-if(expressions.linear_range_33 < 20) {
-expressions.linear_range_33 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_33 < 20) {
+layer.expressions.linear_range_33 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_34 == null) expressions.linear_range_34 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_34 == null) layer.expressions.linear_range_34 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
 arc(ctx, 50, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 20, 0.000000, 6.283185, false);
@@ -177,13 +181,13 @@ arc(ctx, 450, 70, 35, 0.000000, 6.283185, true);
 arc(ctx, 550, 70, 15, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 25, 0.000000, 6.283185, false);
-if(expressions.linear_range_34 < 20) {
-expressions.linear_range_34 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_34 < 20) {
+layer.expressions.linear_range_34 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_35 == null) expressions.linear_range_35 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_35 == null) layer.expressions.linear_range_35 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
 arc(ctx, 50, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 20, 0.000000, 6.283185, false);
@@ -193,13 +197,13 @@ arc(ctx, 450, 70, 50, 0.000000, 6.283185, true);
 arc(ctx, 550, 70, 15, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 25, 0.000000, 6.283185, false);
-if(expressions.linear_range_35 < 20) {
-expressions.linear_range_35 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_35 < 20) {
+layer.expressions.linear_range_35 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_36 == null) expressions.linear_range_36 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_36 == null) layer.expressions.linear_range_36 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
 arc(ctx, 50, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 20, 0.000000, 6.283185, false);
@@ -209,13 +213,13 @@ arc(ctx, 450, 70, 50, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 15, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 25, 0.000000, 6.283185, false);
-if(expressions.linear_range_36 < 20) {
-expressions.linear_range_36 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_36 < 20) {
+layer.expressions.linear_range_36 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_37 == null) expressions.linear_range_37 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_37 == null) layer.expressions.linear_range_37 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
 arc(ctx, 50, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 20, 0.000000, 6.283185, false);
@@ -225,13 +229,13 @@ arc(ctx, 450, 70, 50, 0.000000, 6.283185, true);
 arc(ctx, 550, 70, 15, 0.000000, 6.283185, true);
 arc(ctx, 650, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 25, 0.000000, 6.283185, false);
-if(expressions.linear_range_37 < 20) {
-expressions.linear_range_37 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_37 < 20) {
+layer.expressions.linear_range_37 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_38 == null) expressions.linear_range_38 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_38 == null) layer.expressions.linear_range_38 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
 arc(ctx, 50, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 20, 0.000000, 6.283185, false);
@@ -241,13 +245,13 @@ arc(ctx, 450, 70, 15, 0.000000, 6.283185, true);
 arc(ctx, 550, 70, 50, 0.000000, 6.283185, true);
 arc(ctx, 650, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 25, 0.000000, 6.283185, false);
-if(expressions.linear_range_38 < 20) {
-expressions.linear_range_38 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_38 < 20) {
+layer.expressions.linear_range_38 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_39 == null) expressions.linear_range_39 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_39 == null) layer.expressions.linear_range_39 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
 arc(ctx, 50, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 20, 0.000000, 6.283185, false);
@@ -257,13 +261,13 @@ arc(ctx, 450, 70, 15, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 50, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 25, 0.000000, 6.283185, false);
-if(expressions.linear_range_39 < 20) {
-expressions.linear_range_39 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_39 < 20) {
+layer.expressions.linear_range_39 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_40 == null) expressions.linear_range_40 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_40 == null) layer.expressions.linear_range_40 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
 arc(ctx, 50, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 20, 0.000000, 6.283185, false);
@@ -273,13 +277,13 @@ arc(ctx, 450, 70, 15, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 50, 0.000000, 6.283185, true);
 arc(ctx, 650, 70, 30, 0.000000, 6.283185, true);
 arc(ctx, 750, 70, 25, 0.000000, 6.283185, false);
-if(expressions.linear_range_40 < 20) {
-expressions.linear_range_40 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_40 < 20) {
+layer.expressions.linear_range_40 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_41 == null) expressions.linear_range_41 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_41 == null) layer.expressions.linear_range_41 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
 arc(ctx, 50, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 20, 0.000000, 6.283185, false);
@@ -289,13 +293,13 @@ arc(ctx, 450, 70, 15, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 30, 0.000000, 6.283185, true);
 arc(ctx, 650, 70, 50, 0.000000, 6.283185, true);
 arc(ctx, 750, 70, 25, 0.000000, 6.283185, false);
-if(expressions.linear_range_41 < 20) {
-expressions.linear_range_41 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_41 < 20) {
+layer.expressions.linear_range_41 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_42 == null) expressions.linear_range_42 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_42 == null) layer.expressions.linear_range_42 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
 arc(ctx, 50, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 20, 0.000000, 6.283185, false);
@@ -305,13 +309,13 @@ arc(ctx, 450, 70, 15, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 50, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 25, 0.000000, 6.283185, false);
-if(expressions.linear_range_42 < 20) {
-expressions.linear_range_42 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_42 < 20) {
+layer.expressions.linear_range_42 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_43 == null) expressions.linear_range_43 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_43 == null) layer.expressions.linear_range_43 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
 arc(ctx, 50, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 20, 0.000000, 6.283185, false);
@@ -321,13 +325,13 @@ arc(ctx, 450, 70, 15, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 50, 0.000000, 6.283185, true);
 arc(ctx, 750, 70, 25, 0.000000, 6.283185, true);
-if(expressions.linear_range_43 < 20) {
-expressions.linear_range_43 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_43 < 20) {
+layer.expressions.linear_range_43 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_44 == null) expressions.linear_range_44 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_44 == null) layer.expressions.linear_range_44 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
 arc(ctx, 50, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 20, 0.000000, 6.283185, false);
@@ -337,13 +341,13 @@ arc(ctx, 450, 70, 15, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 25, 0.000000, 6.283185, true);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, true);
-if(expressions.linear_range_44 < 20) {
-expressions.linear_range_44 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_44 < 20) {
+layer.expressions.linear_range_44 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_45 == null) expressions.linear_range_45 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_45 == null) layer.expressions.linear_range_45 = 0;
 text(ctx, 10, 150, `Iteration: 1`, true);
 arc(ctx, 50, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 20, 0.000000, 6.283185, false);
@@ -353,13 +357,13 @@ arc(ctx, 450, 70, 15, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_45 < 20) {
-expressions.linear_range_45 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_45 < 20) {
+layer.expressions.linear_range_45 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_46 == null) expressions.linear_range_46 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_46 == null) layer.expressions.linear_range_46 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
 arc(ctx, 50, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 20, 0.000000, 6.283185, false);
@@ -369,13 +373,13 @@ arc(ctx, 450, 70, 15, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_46 < 20) {
-expressions.linear_range_46 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_46 < 20) {
+layer.expressions.linear_range_46 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_47 == null) expressions.linear_range_47 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_47 == null) layer.expressions.linear_range_47 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
 arc(ctx, 50, 70, 40, 0.000000, 6.283185, true);
 arc(ctx, 150, 70, 20, 0.000000, 6.283185, true);
@@ -385,13 +389,13 @@ arc(ctx, 450, 70, 15, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_47 < 20) {
-expressions.linear_range_47 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_47 < 20) {
+layer.expressions.linear_range_47 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_48 == null) expressions.linear_range_48 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_48 == null) layer.expressions.linear_range_48 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, true);
 arc(ctx, 150, 70, 40, 0.000000, 6.283185, true);
@@ -401,13 +405,13 @@ arc(ctx, 450, 70, 15, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_48 < 20) {
-expressions.linear_range_48 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_48 < 20) {
+layer.expressions.linear_range_48 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_49 == null) expressions.linear_range_49 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_49 == null) layer.expressions.linear_range_49 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 40, 0.000000, 6.283185, false);
@@ -417,13 +421,13 @@ arc(ctx, 450, 70, 15, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_49 < 20) {
-expressions.linear_range_49 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_49 < 20) {
+layer.expressions.linear_range_49 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_50 == null) expressions.linear_range_50 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_50 == null) layer.expressions.linear_range_50 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 40, 0.000000, 6.283185, false);
@@ -433,13 +437,13 @@ arc(ctx, 450, 70, 15, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_50 < 20) {
-expressions.linear_range_50 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_50 < 20) {
+layer.expressions.linear_range_50 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_51 == null) expressions.linear_range_51 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_51 == null) layer.expressions.linear_range_51 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 40, 0.000000, 6.283185, false);
@@ -449,13 +453,13 @@ arc(ctx, 450, 70, 15, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_51 < 20) {
-expressions.linear_range_51 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_51 < 20) {
+layer.expressions.linear_range_51 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_52 == null) expressions.linear_range_52 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_52 == null) layer.expressions.linear_range_52 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 40, 0.000000, 6.283185, false);
@@ -465,13 +469,13 @@ arc(ctx, 450, 70, 15, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_52 < 20) {
-expressions.linear_range_52 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_52 < 20) {
+layer.expressions.linear_range_52 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_53 == null) expressions.linear_range_53 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_53 == null) layer.expressions.linear_range_53 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 40, 0.000000, 6.283185, false);
@@ -481,13 +485,13 @@ arc(ctx, 450, 70, 15, 0.000000, 6.283185, true);
 arc(ctx, 550, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_53 < 20) {
-expressions.linear_range_53 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_53 < 20) {
+layer.expressions.linear_range_53 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_54 == null) expressions.linear_range_54 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_54 == null) layer.expressions.linear_range_54 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 40, 0.000000, 6.283185, false);
@@ -497,13 +501,13 @@ arc(ctx, 450, 70, 45, 0.000000, 6.283185, true);
 arc(ctx, 550, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_54 < 20) {
-expressions.linear_range_54 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_54 < 20) {
+layer.expressions.linear_range_54 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_55 == null) expressions.linear_range_55 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_55 == null) layer.expressions.linear_range_55 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 40, 0.000000, 6.283185, false);
@@ -513,13 +517,13 @@ arc(ctx, 450, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_55 < 20) {
-expressions.linear_range_55 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_55 < 20) {
+layer.expressions.linear_range_55 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_56 == null) expressions.linear_range_56 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_56 == null) layer.expressions.linear_range_56 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 40, 0.000000, 6.283185, false);
@@ -529,13 +533,13 @@ arc(ctx, 450, 70, 45, 0.000000, 6.283185, true);
 arc(ctx, 550, 70, 30, 0.000000, 6.283185, true);
 arc(ctx, 650, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_56 < 20) {
-expressions.linear_range_56 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_56 < 20) {
+layer.expressions.linear_range_56 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_57 == null) expressions.linear_range_57 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_57 == null) layer.expressions.linear_range_57 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 40, 0.000000, 6.283185, false);
@@ -545,13 +549,13 @@ arc(ctx, 450, 70, 30, 0.000000, 6.283185, true);
 arc(ctx, 550, 70, 45, 0.000000, 6.283185, true);
 arc(ctx, 650, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_57 < 20) {
-expressions.linear_range_57 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_57 < 20) {
+layer.expressions.linear_range_57 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_58 == null) expressions.linear_range_58 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_58 == null) layer.expressions.linear_range_58 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 40, 0.000000, 6.283185, false);
@@ -561,13 +565,13 @@ arc(ctx, 450, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_58 < 20) {
-expressions.linear_range_58 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_58 < 20) {
+layer.expressions.linear_range_58 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_59 == null) expressions.linear_range_59 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_59 == null) layer.expressions.linear_range_59 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 40, 0.000000, 6.283185, false);
@@ -577,13 +581,13 @@ arc(ctx, 450, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 45, 0.000000, 6.283185, true);
 arc(ctx, 650, 70, 25, 0.000000, 6.283185, true);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_59 < 20) {
-expressions.linear_range_59 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_59 < 20) {
+layer.expressions.linear_range_59 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_60 == null) expressions.linear_range_60 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_60 == null) layer.expressions.linear_range_60 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 40, 0.000000, 6.283185, false);
@@ -593,13 +597,13 @@ arc(ctx, 450, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 25, 0.000000, 6.283185, true);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, true);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_60 < 20) {
-expressions.linear_range_60 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_60 < 20) {
+layer.expressions.linear_range_60 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_61 == null) expressions.linear_range_61 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_61 == null) layer.expressions.linear_range_61 = 0;
 text(ctx, 10, 150, `Iteration: 2`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 40, 0.000000, 6.283185, false);
@@ -609,13 +613,13 @@ arc(ctx, 450, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_61 < 20) {
-expressions.linear_range_61 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_61 < 20) {
+layer.expressions.linear_range_61 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_62 == null) expressions.linear_range_62 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_62 == null) layer.expressions.linear_range_62 = 0;
 text(ctx, 10, 150, `Iteration: 3`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 40, 0.000000, 6.283185, false);
@@ -625,13 +629,13 @@ arc(ctx, 450, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_62 < 20) {
-expressions.linear_range_62 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_62 < 20) {
+layer.expressions.linear_range_62 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_63 == null) expressions.linear_range_63 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_63 == null) layer.expressions.linear_range_63 = 0;
 text(ctx, 10, 150, `Iteration: 3`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 40, 0.000000, 6.283185, true);
@@ -641,13 +645,13 @@ arc(ctx, 450, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_63 < 20) {
-expressions.linear_range_63 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_63 < 20) {
+layer.expressions.linear_range_63 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_64 == null) expressions.linear_range_64 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_64 == null) layer.expressions.linear_range_64 = 0;
 text(ctx, 10, 150, `Iteration: 3`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 35, 0.000000, 6.283185, true);
@@ -657,13 +661,13 @@ arc(ctx, 450, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_64 < 20) {
-expressions.linear_range_64 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_64 < 20) {
+layer.expressions.linear_range_64 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_65 == null) expressions.linear_range_65 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_65 == null) layer.expressions.linear_range_65 = 0;
 text(ctx, 10, 150, `Iteration: 3`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 35, 0.000000, 6.283185, false);
@@ -673,13 +677,13 @@ arc(ctx, 450, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_65 < 20) {
-expressions.linear_range_65 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_65 < 20) {
+layer.expressions.linear_range_65 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_66 == null) expressions.linear_range_66 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_66 == null) layer.expressions.linear_range_66 = 0;
 text(ctx, 10, 150, `Iteration: 3`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 35, 0.000000, 6.283185, false);
@@ -689,13 +693,13 @@ arc(ctx, 450, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_66 < 20) {
-expressions.linear_range_66 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_66 < 20) {
+layer.expressions.linear_range_66 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_67 == null) expressions.linear_range_67 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_67 == null) layer.expressions.linear_range_67 = 0;
 text(ctx, 10, 150, `Iteration: 3`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 35, 0.000000, 6.283185, false);
@@ -705,13 +709,13 @@ arc(ctx, 450, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_67 < 20) {
-expressions.linear_range_67 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_67 < 20) {
+layer.expressions.linear_range_67 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_68 == null) expressions.linear_range_68 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_68 == null) layer.expressions.linear_range_68 = 0;
 text(ctx, 10, 150, `Iteration: 3`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 35, 0.000000, 6.283185, false);
@@ -721,13 +725,13 @@ arc(ctx, 450, 70, 30, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_68 < 20) {
-expressions.linear_range_68 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_68 < 20) {
+layer.expressions.linear_range_68 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_69 == null) expressions.linear_range_69 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_69 == null) layer.expressions.linear_range_69 = 0;
 text(ctx, 10, 150, `Iteration: 3`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 35, 0.000000, 6.283185, false);
@@ -737,13 +741,13 @@ arc(ctx, 450, 70, 30, 0.000000, 6.283185, true);
 arc(ctx, 550, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_69 < 20) {
-expressions.linear_range_69 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_69 < 20) {
+layer.expressions.linear_range_69 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_70 == null) expressions.linear_range_70 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_70 == null) layer.expressions.linear_range_70 = 0;
 text(ctx, 10, 150, `Iteration: 3`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 35, 0.000000, 6.283185, false);
@@ -753,13 +757,13 @@ arc(ctx, 450, 70, 40, 0.000000, 6.283185, true);
 arc(ctx, 550, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_70 < 20) {
-expressions.linear_range_70 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_70 < 20) {
+layer.expressions.linear_range_70 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_71 == null) expressions.linear_range_71 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_71 == null) layer.expressions.linear_range_71 = 0;
 text(ctx, 10, 150, `Iteration: 3`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 35, 0.000000, 6.283185, false);
@@ -769,13 +773,13 @@ arc(ctx, 450, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_71 < 20) {
-expressions.linear_range_71 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_71 < 20) {
+layer.expressions.linear_range_71 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_72 == null) expressions.linear_range_72 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_72 == null) layer.expressions.linear_range_72 = 0;
 text(ctx, 10, 150, `Iteration: 3`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 35, 0.000000, 6.283185, false);
@@ -785,13 +789,13 @@ arc(ctx, 450, 70, 40, 0.000000, 6.283185, true);
 arc(ctx, 550, 70, 25, 0.000000, 6.283185, true);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_72 < 20) {
-expressions.linear_range_72 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_72 < 20) {
+layer.expressions.linear_range_72 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_73 == null) expressions.linear_range_73 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_73 == null) layer.expressions.linear_range_73 = 0;
 text(ctx, 10, 150, `Iteration: 3`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 35, 0.000000, 6.283185, false);
@@ -801,13 +805,13 @@ arc(ctx, 450, 70, 25, 0.000000, 6.283185, true);
 arc(ctx, 550, 70, 40, 0.000000, 6.283185, true);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_73 < 20) {
-expressions.linear_range_73 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_73 < 20) {
+layer.expressions.linear_range_73 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_74 == null) expressions.linear_range_74 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_74 == null) layer.expressions.linear_range_74 = 0;
 text(ctx, 10, 150, `Iteration: 3`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 35, 0.000000, 6.283185, false);
@@ -817,13 +821,13 @@ arc(ctx, 450, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_74 < 20) {
-expressions.linear_range_74 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_74 < 20) {
+layer.expressions.linear_range_74 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_75 == null) expressions.linear_range_75 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_75 == null) layer.expressions.linear_range_75 = 0;
 text(ctx, 10, 150, `Iteration: 4`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 35, 0.000000, 6.283185, false);
@@ -833,13 +837,13 @@ arc(ctx, 450, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_75 < 20) {
-expressions.linear_range_75 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_75 < 20) {
+layer.expressions.linear_range_75 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_76 == null) expressions.linear_range_76 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_76 == null) layer.expressions.linear_range_76 = 0;
 text(ctx, 10, 150, `Iteration: 4`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 35, 0.000000, 6.283185, true);
@@ -849,13 +853,13 @@ arc(ctx, 450, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_76 < 20) {
-expressions.linear_range_76 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_76 < 20) {
+layer.expressions.linear_range_76 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_77 == null) expressions.linear_range_77 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_77 == null) layer.expressions.linear_range_77 = 0;
 text(ctx, 10, 150, `Iteration: 4`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 15, 0.000000, 6.283185, true);
@@ -865,13 +869,13 @@ arc(ctx, 450, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_77 < 20) {
-expressions.linear_range_77 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_77 < 20) {
+layer.expressions.linear_range_77 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_78 == null) expressions.linear_range_78 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_78 == null) layer.expressions.linear_range_78 = 0;
 text(ctx, 10, 150, `Iteration: 4`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 15, 0.000000, 6.283185, false);
@@ -881,13 +885,13 @@ arc(ctx, 450, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_78 < 20) {
-expressions.linear_range_78 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_78 < 20) {
+layer.expressions.linear_range_78 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_79 == null) expressions.linear_range_79 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_79 == null) layer.expressions.linear_range_79 = 0;
 text(ctx, 10, 150, `Iteration: 4`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 15, 0.000000, 6.283185, false);
@@ -897,13 +901,13 @@ arc(ctx, 450, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_79 < 20) {
-expressions.linear_range_79 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_79 < 20) {
+layer.expressions.linear_range_79 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_80 == null) expressions.linear_range_80 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_80 == null) layer.expressions.linear_range_80 = 0;
 text(ctx, 10, 150, `Iteration: 4`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 15, 0.000000, 6.283185, false);
@@ -913,13 +917,13 @@ arc(ctx, 450, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_80 < 20) {
-expressions.linear_range_80 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_80 < 20) {
+layer.expressions.linear_range_80 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_81 == null) expressions.linear_range_81 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_81 == null) layer.expressions.linear_range_81 = 0;
 text(ctx, 10, 150, `Iteration: 4`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 15, 0.000000, 6.283185, false);
@@ -929,13 +933,13 @@ arc(ctx, 450, 70, 25, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_81 < 20) {
-expressions.linear_range_81 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_81 < 20) {
+layer.expressions.linear_range_81 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_82 == null) expressions.linear_range_82 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_82 == null) layer.expressions.linear_range_82 = 0;
 text(ctx, 10, 150, `Iteration: 4`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 15, 0.000000, 6.283185, false);
@@ -945,13 +949,13 @@ arc(ctx, 450, 70, 25, 0.000000, 6.283185, true);
 arc(ctx, 550, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_82 < 20) {
-expressions.linear_range_82 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_82 < 20) {
+layer.expressions.linear_range_82 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_83 == null) expressions.linear_range_83 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_83 == null) layer.expressions.linear_range_83 = 0;
 text(ctx, 10, 150, `Iteration: 4`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 15, 0.000000, 6.283185, false);
@@ -961,13 +965,13 @@ arc(ctx, 450, 70, 35, 0.000000, 6.283185, true);
 arc(ctx, 550, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_83 < 20) {
-expressions.linear_range_83 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_83 < 20) {
+layer.expressions.linear_range_83 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_84 == null) expressions.linear_range_84 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_84 == null) layer.expressions.linear_range_84 = 0;
 text(ctx, 10, 150, `Iteration: 4`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 15, 0.000000, 6.283185, false);
@@ -977,13 +981,13 @@ arc(ctx, 450, 70, 35, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_84 < 20) {
-expressions.linear_range_84 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_84 < 20) {
+layer.expressions.linear_range_84 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_85 == null) expressions.linear_range_85 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_85 == null) layer.expressions.linear_range_85 = 0;
 text(ctx, 10, 150, `Iteration: 5`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 15, 0.000000, 6.283185, false);
@@ -993,13 +997,13 @@ arc(ctx, 450, 70, 35, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_85 < 20) {
-expressions.linear_range_85 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_85 < 20) {
+layer.expressions.linear_range_85 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_86 == null) expressions.linear_range_86 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_86 == null) layer.expressions.linear_range_86 = 0;
 text(ctx, 10, 150, `Iteration: 5`, true);
 arc(ctx, 50, 70, 20, 0.000000, 6.283185, true);
 arc(ctx, 150, 70, 15, 0.000000, 6.283185, true);
@@ -1009,13 +1013,13 @@ arc(ctx, 450, 70, 35, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_86 < 20) {
-expressions.linear_range_86 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_86 < 20) {
+layer.expressions.linear_range_86 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_87 == null) expressions.linear_range_87 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_87 == null) layer.expressions.linear_range_87 = 0;
 text(ctx, 10, 150, `Iteration: 5`, true);
 arc(ctx, 50, 70, 15, 0.000000, 6.283185, true);
 arc(ctx, 150, 70, 20, 0.000000, 6.283185, true);
@@ -1025,13 +1029,13 @@ arc(ctx, 450, 70, 35, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_87 < 20) {
-expressions.linear_range_87 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_87 < 20) {
+layer.expressions.linear_range_87 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_88 == null) expressions.linear_range_88 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_88 == null) layer.expressions.linear_range_88 = 0;
 text(ctx, 10, 150, `Iteration: 5`, true);
 arc(ctx, 50, 70, 15, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 20, 0.000000, 6.283185, false);
@@ -1041,13 +1045,13 @@ arc(ctx, 450, 70, 35, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_88 < 20) {
-expressions.linear_range_88 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_88 < 20) {
+layer.expressions.linear_range_88 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_89 == null) expressions.linear_range_89 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_89 == null) layer.expressions.linear_range_89 = 0;
 text(ctx, 10, 150, `Iteration: 5`, true);
 arc(ctx, 50, 70, 15, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 20, 0.000000, 6.283185, false);
@@ -1057,13 +1061,13 @@ arc(ctx, 450, 70, 35, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_89 < 20) {
-expressions.linear_range_89 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_89 < 20) {
+layer.expressions.linear_range_89 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_90 == null) expressions.linear_range_90 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_90 == null) layer.expressions.linear_range_90 = 0;
 text(ctx, 10, 150, `Iteration: 5`, true);
 arc(ctx, 50, 70, 15, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 20, 0.000000, 6.283185, false);
@@ -1073,13 +1077,13 @@ arc(ctx, 450, 70, 35, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_90 < 20) {
-expressions.linear_range_90 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_90 < 20) {
+layer.expressions.linear_range_90 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_91 == null) expressions.linear_range_91 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_91 == null) layer.expressions.linear_range_91 = 0;
 text(ctx, 10, 150, `Iteration: 5`, true);
 arc(ctx, 50, 70, 15, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 20, 0.000000, 6.283185, false);
@@ -1089,13 +1093,13 @@ arc(ctx, 450, 70, 35, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_91 < 20) {
-expressions.linear_range_91 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_91 < 20) {
+layer.expressions.linear_range_91 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_92 == null) expressions.linear_range_92 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_92 == null) layer.expressions.linear_range_92 = 0;
 text(ctx, 10, 150, `Iteration: 6`, true);
 arc(ctx, 50, 70, 15, 0.000000, 6.283185, false);
 arc(ctx, 150, 70, 20, 0.000000, 6.283185, false);
@@ -1105,29 +1109,49 @@ arc(ctx, 450, 70, 35, 0.000000, 6.283185, false);
 arc(ctx, 550, 70, 40, 0.000000, 6.283185, false);
 arc(ctx, 650, 70, 45, 0.000000, 6.283185, false);
 arc(ctx, 750, 70, 50, 0.000000, 6.283185, false);
-if(expressions.linear_range_92 < 20) {
-expressions.linear_range_92 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_92 < 20) {
+layer.expressions.linear_range_92 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
+(function(ctx, layer) {
 }),
+],
+},
 ];
 
-window.onload = function() {
-	ctx = canvas.getContext('2d'),
-	(function drawFrame () {
-		if(frame_counter == 0 || !no_clear)
+const num_layers = layers.length;
+
+for(var i = 0; i < num_layers; i++) {
+	var cv = document.createElement('canvas');
+	cv.width = canvas.width;
+	cv.height = canvas.height;
+	offscreens.push(cv);
+}
+
+function draw_layer(ctx, layer) {
+		if(layer.frame_counter == 0 || !layer.no_clear)
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
-		repeat_current_frame = false;
-		draw_bkgnd(ctx);
-		(frames[frame_counter])(ctx);
-		draw_frgnd(ctx);
-		if(!repeat_current_frame) {
-			frame_counter = (frame_counter + 1) % num_frames;
-			expressions = {};
+		layer.repeat_current_frame = false;
+		(layer.frames[layer.frame_counter])(ctx, layer);
+		if(!layer.repeat_current_frame) {
+			layer.frame_counter = (layer.frame_counter + 1) % layer.frames.length;
+			layer.expressions = {};
 		}
-		window.requestAnimationFrame(drawFrame, canvas);
+}
+
+window.onload = function() {
+	(function draw_canvas () {
+		for (var i = 0; i < num_layers; i++) {
+			var ctx = offscreens[i].getContext('2d');
+			var layer = layers[i];
+			draw_layer(ctx, layer);
+		}
+		var ctx = canvas.getContext('2d');
+		for (var i = 0; i < num_layers; i++) {
+			ctx.drawImage(offscreens[i], 0, 0);
+		}
+		window.requestAnimationFrame(draw_canvas, canvas);
 	}());
 }
 

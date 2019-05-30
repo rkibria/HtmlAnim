@@ -11,12 +11,8 @@
 <canvas id='anim_canvas_1' width='520' height='620'></canvas>
 <script>
 <!--
-var frame_counter = 0;
-const num_frames = 11;
 var canvas = document.getElementById('anim_canvas_1');
-var no_clear = false;
-var repeat_current_frame = false;
-var expressions = {};
+var offscreens = [];
 
 function rect(ctx, x, y, w, h, fill) {
 	ctx.beginPath();
@@ -68,21 +64,29 @@ function text(ctx, x, y, txt, fill) {
 	else
 		ctx.strokeText(txt, x, y);
 }
-function draw_bkgnd(ctx) {
+layers = [
+{frame_counter: 0,
+no_clear : false,
+repeat_current_frame : false,
+expressions : {},
+frames: [
+(function(ctx, layer) {
 ctx.save();
 ctx.fillStyle = "white";
 rect(ctx, 0, 0, 520, 620, true);
 ctx.restore();
 subdivided_grid(ctx, 10, 10, 50, 50, 10, 12, 5, 5, "silver", "gray");
+}),
+],
+},
+{frame_counter: 0,
+no_clear : false,
+repeat_current_frame : false,
+expressions : {},
+frames: [
+(function(ctx, layer) {
+if(layer.expressions.linear_range_107 == null) layer.expressions.linear_range_107 = 0;
 ctx.font = "bold 20px sans-serif";
-}
-
-function draw_frgnd(ctx) {
-}
-
-frames = [
-(function(ctx) {
-if(expressions.linear_range_107 == null) expressions.linear_range_107 = 0;
 text(ctx, 10, 60, `Samples: 1000`, true);
 rect(ctx, 10, 610, 10, 0, true);
 rect(ctx, 20, 610, 10, 0, true);
@@ -134,13 +138,13 @@ rect(ctx, 470, 609, 10, 1, true);
 rect(ctx, 480, 610, 10, 0, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
-if(expressions.linear_range_107 < 20) {
-expressions.linear_range_107 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_107 < 20) {
+layer.expressions.linear_range_107 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_108 == null) expressions.linear_range_108 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_108 == null) layer.expressions.linear_range_108 = 0;
 text(ctx, 10, 60, `Samples: 2000`, true);
 rect(ctx, 10, 609, 10, 1, true);
 rect(ctx, 20, 609, 10, 1, true);
@@ -192,13 +196,13 @@ rect(ctx, 470, 608, 10, 2, true);
 rect(ctx, 480, 609, 10, 1, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
-if(expressions.linear_range_108 < 20) {
-expressions.linear_range_108 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_108 < 20) {
+layer.expressions.linear_range_108 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_109 == null) expressions.linear_range_109 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_109 == null) layer.expressions.linear_range_109 = 0;
 text(ctx, 10, 60, `Samples: 3000`, true);
 rect(ctx, 10, 608, 10, 2, true);
 rect(ctx, 20, 609, 10, 1, true);
@@ -250,13 +254,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 608, 10, 2, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
-if(expressions.linear_range_109 < 20) {
-expressions.linear_range_109 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_109 < 20) {
+layer.expressions.linear_range_109 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_110 == null) expressions.linear_range_110 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_110 == null) layer.expressions.linear_range_110 = 0;
 text(ctx, 10, 60, `Samples: 4000`, true);
 rect(ctx, 10, 607, 10, 3, true);
 rect(ctx, 20, 609, 10, 1, true);
@@ -308,13 +312,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 607, 10, 3, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 610, 10, 0, true);
-if(expressions.linear_range_110 < 20) {
-expressions.linear_range_110 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_110 < 20) {
+layer.expressions.linear_range_110 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_111 == null) expressions.linear_range_111 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_111 == null) layer.expressions.linear_range_111 = 0;
 text(ctx, 10, 60, `Samples: 5000`, true);
 rect(ctx, 10, 607, 10, 3, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -366,13 +370,13 @@ rect(ctx, 470, 606, 10, 4, true);
 rect(ctx, 480, 607, 10, 3, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
-if(expressions.linear_range_111 < 20) {
-expressions.linear_range_111 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_111 < 20) {
+layer.expressions.linear_range_111 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_112 == null) expressions.linear_range_112 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_112 == null) layer.expressions.linear_range_112 = 0;
 text(ctx, 10, 60, `Samples: 6000`, true);
 rect(ctx, 10, 607, 10, 3, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -424,13 +428,13 @@ rect(ctx, 470, 605, 10, 5, true);
 rect(ctx, 480, 606, 10, 4, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
-if(expressions.linear_range_112 < 20) {
-expressions.linear_range_112 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_112 < 20) {
+layer.expressions.linear_range_112 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_113 == null) expressions.linear_range_113 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_113 == null) layer.expressions.linear_range_113 = 0;
 text(ctx, 10, 60, `Samples: 7000`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 606, 10, 4, true);
@@ -482,13 +486,13 @@ rect(ctx, 470, 604, 10, 6, true);
 rect(ctx, 480, 606, 10, 4, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
-if(expressions.linear_range_113 < 20) {
-expressions.linear_range_113 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_113 < 20) {
+layer.expressions.linear_range_113 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_114 == null) expressions.linear_range_114 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_114 == null) layer.expressions.linear_range_114 = 0;
 text(ctx, 10, 60, `Samples: 8000`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 605, 10, 5, true);
@@ -540,13 +544,13 @@ rect(ctx, 470, 602, 10, 8, true);
 rect(ctx, 480, 605, 10, 5, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
-if(expressions.linear_range_114 < 20) {
-expressions.linear_range_114 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_114 < 20) {
+layer.expressions.linear_range_114 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_115 == null) expressions.linear_range_115 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_115 == null) layer.expressions.linear_range_115 = 0;
 text(ctx, 10, 60, `Samples: 9000`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 605, 10, 5, true);
@@ -598,13 +602,13 @@ rect(ctx, 470, 602, 10, 8, true);
 rect(ctx, 480, 604, 10, 6, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
-if(expressions.linear_range_115 < 20) {
-expressions.linear_range_115 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_115 < 20) {
+layer.expressions.linear_range_115 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_116 == null) expressions.linear_range_116 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_116 == null) layer.expressions.linear_range_116 = 0;
 text(ctx, 10, 60, `Samples: 10000`, true);
 rect(ctx, 10, 606, 10, 4, true);
 rect(ctx, 20, 605, 10, 5, true);
@@ -656,29 +660,49 @@ rect(ctx, 470, 602, 10, 8, true);
 rect(ctx, 480, 604, 10, 6, true);
 rect(ctx, 490, 610, 10, 0, true);
 rect(ctx, 500, 608, 10, 2, true);
-if(expressions.linear_range_116 < 20) {
-expressions.linear_range_116 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_116 < 20) {
+layer.expressions.linear_range_116 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
+(function(ctx, layer) {
 }),
+],
+},
 ];
 
-window.onload = function() {
-	ctx = canvas.getContext('2d'),
-	(function drawFrame () {
-		if(frame_counter == 0 || !no_clear)
+const num_layers = layers.length;
+
+for(var i = 0; i < num_layers; i++) {
+	var cv = document.createElement('canvas');
+	cv.width = canvas.width;
+	cv.height = canvas.height;
+	offscreens.push(cv);
+}
+
+function draw_layer(ctx, layer) {
+		if(layer.frame_counter == 0 || !layer.no_clear)
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
-		repeat_current_frame = false;
-		draw_bkgnd(ctx);
-		(frames[frame_counter])(ctx);
-		draw_frgnd(ctx);
-		if(!repeat_current_frame) {
-			frame_counter = (frame_counter + 1) % num_frames;
-			expressions = {};
+		layer.repeat_current_frame = false;
+		(layer.frames[layer.frame_counter])(ctx, layer);
+		if(!layer.repeat_current_frame) {
+			layer.frame_counter = (layer.frame_counter + 1) % layer.frames.length;
+			layer.expressions = {};
 		}
-		window.requestAnimationFrame(drawFrame, canvas);
+}
+
+window.onload = function() {
+	(function draw_canvas () {
+		for (var i = 0; i < num_layers; i++) {
+			var ctx = offscreens[i].getContext('2d');
+			var layer = layers[i];
+			draw_layer(ctx, layer);
+		}
+		var ctx = canvas.getContext('2d');
+		for (var i = 0; i < num_layers; i++) {
+			ctx.drawImage(offscreens[i], 0, 0);
+		}
+		window.requestAnimationFrame(draw_canvas, canvas);
 	}());
 }
 

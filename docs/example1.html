@@ -11,12 +11,8 @@
 <canvas id='anim_canvas_1' width='120' height='120'></canvas>
 <script>
 <!--
-var frame_counter = 0;
-const num_frames = 1;
 var canvas = document.getElementById('anim_canvas_1');
-var no_clear = false;
-var repeat_current_frame = false;
-var expressions = {};
+var offscreens = [];
 
 function rect(ctx, x, y, w, h, fill) {
 	ctx.beginPath();
@@ -26,59 +22,87 @@ function rect(ctx, x, y, w, h, fill) {
 	else
 		ctx.stroke();
 }
-function draw_bkgnd(ctx) {
+layers = [
+{frame_counter: 0,
+no_clear : false,
+repeat_current_frame : false,
+expressions : {},
+frames: [
+(function(ctx, layer) {
 ctx.save();
 ctx.fillStyle = "white";
 rect(ctx, 0, 0, 120, 120, true);
 ctx.restore();
+}),
+],
+},
+{frame_counter: 0,
+no_clear : false,
+repeat_current_frame : false,
+expressions : {},
+frames: [
+(function(ctx, layer) {
+if(layer.expressions.linear_range_23 == null) layer.expressions.linear_range_23 = 10;
+if(layer.expressions.linear_range_24 == null) layer.expressions.linear_range_24 = 15;
+if(layer.expressions.linear_range_25 == null) layer.expressions.linear_range_25 = 70;
+if(layer.expressions.linear_range_26 == null) layer.expressions.linear_range_26 = 75;
+rect(ctx, layer.expressions.linear_range_23, 15, 40, 40, false);
+rect(ctx, 70, layer.expressions.linear_range_24, 40, 40, true);
+rect(ctx, layer.expressions.linear_range_25, 75, 40, 40, false);
+rect(ctx, 10, layer.expressions.linear_range_26, 40, 40, true);
+if(layer.expressions.linear_range_23 < 70) {
+layer.expressions.linear_range_23 += 1;
+layer.repeat_current_frame = true;
 }
-
-function draw_frgnd(ctx) {
+if(layer.expressions.linear_range_24 < 75) {
+layer.expressions.linear_range_24 += 1;
+layer.repeat_current_frame = true;
 }
-
-frames = [
-(function(ctx) {
-if(expressions.linear_range_23 == null) expressions.linear_range_23 = 10;
-if(expressions.linear_range_24 == null) expressions.linear_range_24 = 15;
-if(expressions.linear_range_25 == null) expressions.linear_range_25 = 70;
-if(expressions.linear_range_26 == null) expressions.linear_range_26 = 75;
-rect(ctx, expressions.linear_range_23, 15, 40, 40, false);
-rect(ctx, 70, expressions.linear_range_24, 40, 40, true);
-rect(ctx, expressions.linear_range_25, 75, 40, 40, false);
-rect(ctx, 10, expressions.linear_range_26, 40, 40, true);
-if(expressions.linear_range_23 < 70) {
-expressions.linear_range_23 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_25 > 10) {
+layer.expressions.linear_range_25 -= 1;
+layer.repeat_current_frame = true;
 }
-if(expressions.linear_range_24 < 75) {
-expressions.linear_range_24 += 1;
-repeat_current_frame = true;
-}
-if(expressions.linear_range_25 > 10) {
-expressions.linear_range_25 -= 1;
-repeat_current_frame = true;
-}
-if(expressions.linear_range_26 > 15) {
-expressions.linear_range_26 -= 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_26 > 15) {
+layer.expressions.linear_range_26 -= 1;
+layer.repeat_current_frame = true;
 }
 }),
+],
+},
 ];
 
-window.onload = function() {
-	ctx = canvas.getContext('2d'),
-	(function drawFrame () {
-		if(frame_counter == 0 || !no_clear)
+const num_layers = layers.length;
+
+for(var i = 0; i < num_layers; i++) {
+	var cv = document.createElement('canvas');
+	cv.width = canvas.width;
+	cv.height = canvas.height;
+	offscreens.push(cv);
+}
+
+function draw_layer(ctx, layer) {
+		if(layer.frame_counter == 0 || !layer.no_clear)
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
-		repeat_current_frame = false;
-		draw_bkgnd(ctx);
-		(frames[frame_counter])(ctx);
-		draw_frgnd(ctx);
-		if(!repeat_current_frame) {
-			frame_counter = (frame_counter + 1) % num_frames;
-			expressions = {};
+		layer.repeat_current_frame = false;
+		(layer.frames[layer.frame_counter])(ctx, layer);
+		if(!layer.repeat_current_frame) {
+			layer.frame_counter = (layer.frame_counter + 1) % layer.frames.length;
+			layer.expressions = {};
 		}
-		window.requestAnimationFrame(drawFrame, canvas);
+}
+
+window.onload = function() {
+	(function draw_canvas () {
+		for (var i = 0; i < num_layers; i++) {
+			var ctx = offscreens[i].getContext('2d');
+			var layer = layers[i];
+			draw_layer(ctx, layer);
+		}
+		var ctx = canvas.getContext('2d');
+		for (var i = 0; i < num_layers; i++) {
+			ctx.drawImage(offscreens[i], 0, 0);
+		}
+		window.requestAnimationFrame(draw_canvas, canvas);
 	}());
 }
 

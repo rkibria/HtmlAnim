@@ -11,12 +11,8 @@
 <canvas id='anim_canvas_1' width='600' height='500'></canvas>
 <script>
 <!--
-var frame_counter = 0;
-const num_frames = 329;
 var canvas = document.getElementById('anim_canvas_1');
-var no_clear = true;
-var repeat_current_frame = false;
-var expressions = {};
+var offscreens = [];
 
 function rect(ctx, x, y, w, h, fill) {
 	ctx.beginPath();
@@ -33,14 +29,13 @@ function line(ctx, x1, y1, x2, y2) {
 	ctx.lineTo(x2, y2);
 	ctx.stroke();
 }
-function draw_bkgnd(ctx) {
-}
-
-function draw_frgnd(ctx) {
-}
-
-frames = [
-(function(ctx) {
+layers = [
+{frame_counter: 0,
+no_clear : false,
+repeat_current_frame : false,
+expressions : {},
+frames: [
+(function(ctx, layer) {
 ctx.save();
 ctx.fillStyle = "white";
 rect(ctx, 0, 0, 600, 500, true);
@@ -148,7 +143,7 @@ ctx.lineTo(20, 478);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(16, 478);
 ctx.lineTo(20, 478);
@@ -210,7 +205,7 @@ ctx.lineTo(40, 482);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(31, 482);
 ctx.lineTo(40, 482);
@@ -266,7 +261,7 @@ ctx.lineTo(23, 467);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(27, 474);
 ctx.lineTo(36, 474);
@@ -316,7 +311,7 @@ ctx.lineTo(27, 459);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(45, 490);
 ctx.lineTo(80, 490);
@@ -396,7 +391,7 @@ ctx.lineTo(55, 478);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(51, 478);
 ctx.lineTo(55, 478);
@@ -458,7 +453,7 @@ ctx.lineTo(75, 482);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(66, 482);
 ctx.lineTo(75, 482);
@@ -514,7 +509,7 @@ ctx.lineTo(58, 467);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(62, 474);
 ctx.lineTo(71, 474);
@@ -564,7 +559,7 @@ ctx.lineTo(62, 459);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(27, 459);
 ctx.lineTo(62, 459);
@@ -644,7 +639,7 @@ ctx.lineTo(38, 448);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(34, 448);
 ctx.lineTo(38, 448);
@@ -706,7 +701,7 @@ ctx.lineTo(58, 452);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(49, 452);
 ctx.lineTo(58, 452);
@@ -762,7 +757,7 @@ ctx.lineTo(40, 436);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(45, 444);
 ctx.lineTo(53, 444);
@@ -812,7 +807,7 @@ ctx.lineTo(45, 429);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(80, 490);
 ctx.lineTo(150, 490);
@@ -892,7 +887,7 @@ ctx.lineTo(86, 478);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(88, 482);
 ctx.lineTo(93, 482);
@@ -954,7 +949,7 @@ ctx.lineTo(112, 486);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(108, 486);
 ctx.lineTo(112, 486);
@@ -1016,7 +1011,7 @@ ctx.lineTo(93, 467);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(97, 474);
 ctx.lineTo(106, 474);
@@ -1066,7 +1061,7 @@ ctx.lineTo(97, 459);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(115, 490);
 ctx.lineTo(150, 490);
@@ -1140,7 +1135,7 @@ ctx.lineTo(121, 478);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(123, 482);
 ctx.lineTo(128, 482);
@@ -1202,7 +1197,7 @@ ctx.lineTo(147, 486);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(143, 486);
 ctx.lineTo(147, 486);
@@ -1264,7 +1259,7 @@ ctx.lineTo(128, 467);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(132, 474);
 ctx.lineTo(141, 474);
@@ -1314,7 +1309,7 @@ ctx.lineTo(132, 459);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(97, 459);
 ctx.lineTo(132, 459);
@@ -1388,7 +1383,7 @@ ctx.lineTo(104, 448);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(106, 452);
 ctx.lineTo(110, 452);
@@ -1450,7 +1445,7 @@ ctx.lineTo(130, 455);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(125, 455);
 ctx.lineTo(130, 455);
@@ -1512,7 +1507,7 @@ ctx.lineTo(110, 436);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(115, 444);
 ctx.lineTo(123, 444);
@@ -1562,7 +1557,7 @@ ctx.lineTo(115, 429);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(45, 429);
 ctx.lineTo(115, 429);
@@ -1630,7 +1625,7 @@ ctx.lineTo(58, 421);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(49, 421);
 ctx.lineTo(58, 421);
@@ -1698,7 +1693,7 @@ ctx.lineTo(73, 425);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(75, 429);
 ctx.lineTo(80, 429);
@@ -1760,7 +1755,7 @@ ctx.lineTo(60, 410);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(55, 410);
 ctx.lineTo(60, 410);
@@ -1816,7 +1811,7 @@ ctx.lineTo(62, 399);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(80, 429);
 ctx.lineTo(115, 429);
@@ -1878,7 +1873,7 @@ ctx.lineTo(93, 421);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(84, 421);
 ctx.lineTo(93, 421);
@@ -1946,7 +1941,7 @@ ctx.lineTo(108, 425);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(110, 429);
 ctx.lineTo(115, 429);
@@ -2008,7 +2003,7 @@ ctx.lineTo(95, 410);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(90, 410);
 ctx.lineTo(95, 410);
@@ -2064,7 +2059,7 @@ ctx.lineTo(97, 399);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(62, 399);
 ctx.lineTo(97, 399);
@@ -2126,7 +2121,7 @@ ctx.lineTo(75, 391);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(66, 391);
 ctx.lineTo(75, 391);
@@ -2194,7 +2189,7 @@ ctx.lineTo(90, 395);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(93, 399);
 ctx.lineTo(97, 399);
@@ -2256,7 +2251,7 @@ ctx.lineTo(77, 380);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(73, 380);
 ctx.lineTo(77, 380);
@@ -2312,7 +2307,7 @@ ctx.lineTo(80, 368);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(150, 490);
 ctx.lineTo(290, 490);
@@ -2380,7 +2375,7 @@ ctx.lineTo(165, 486);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(160, 486);
 ctx.lineTo(165, 486);
@@ -2442,7 +2437,7 @@ ctx.lineTo(171, 482);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(176, 490);
 ctx.lineTo(185, 490);
@@ -2492,7 +2487,7 @@ ctx.lineTo(176, 474);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(158, 474);
 ctx.lineTo(176, 474);
@@ -2566,7 +2561,7 @@ ctx.lineTo(169, 463);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(165, 463);
 ctx.lineTo(169, 463);
@@ -2628,7 +2623,7 @@ ctx.lineTo(200, 486);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(195, 486);
 ctx.lineTo(200, 486);
@@ -2690,7 +2685,7 @@ ctx.lineTo(206, 482);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(211, 490);
 ctx.lineTo(220, 490);
@@ -2740,7 +2735,7 @@ ctx.lineTo(211, 474);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(193, 474);
 ctx.lineTo(211, 474);
@@ -2814,7 +2809,7 @@ ctx.lineTo(204, 463);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(200, 463);
 ctx.lineTo(204, 463);
@@ -2876,7 +2871,7 @@ ctx.lineTo(182, 455);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(178, 455);
 ctx.lineTo(182, 455);
@@ -2938,7 +2933,7 @@ ctx.lineTo(189, 452);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(193, 459);
 ctx.lineTo(202, 459);
@@ -2988,7 +2983,7 @@ ctx.lineTo(193, 444);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(176, 444);
 ctx.lineTo(193, 444);
@@ -3062,7 +3057,7 @@ ctx.lineTo(187, 433);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(182, 433);
 ctx.lineTo(187, 433);
@@ -3124,7 +3119,7 @@ ctx.lineTo(230, 486);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(233, 490);
 ctx.lineTo(237, 490);
@@ -3186,7 +3181,7 @@ ctx.lineTo(244, 486);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(239, 486);
 ctx.lineTo(244, 486);
@@ -3242,7 +3237,7 @@ ctx.lineTo(246, 474);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(228, 474);
 ctx.lineTo(246, 474);
@@ -3310,7 +3305,7 @@ ctx.lineTo(235, 463);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(237, 467);
 ctx.lineTo(241, 467);
@@ -3372,7 +3367,7 @@ ctx.lineTo(265, 486);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(268, 490);
 ctx.lineTo(272, 490);
@@ -3434,7 +3429,7 @@ ctx.lineTo(279, 486);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(274, 486);
 ctx.lineTo(279, 486);
@@ -3490,7 +3485,7 @@ ctx.lineTo(281, 474);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(263, 474);
 ctx.lineTo(281, 474);
@@ -3558,7 +3553,7 @@ ctx.lineTo(270, 463);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(272, 467);
 ctx.lineTo(276, 467);
@@ -3620,7 +3615,7 @@ ctx.lineTo(248, 455);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(250, 459);
 ctx.lineTo(255, 459);
@@ -3682,7 +3677,7 @@ ctx.lineTo(261, 455);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(257, 455);
 ctx.lineTo(261, 455);
@@ -3738,7 +3733,7 @@ ctx.lineTo(263, 444);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(246, 444);
 ctx.lineTo(263, 444);
@@ -3806,7 +3801,7 @@ ctx.lineTo(252, 433);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(255, 436);
 ctx.lineTo(259, 436);
@@ -3862,7 +3857,7 @@ ctx.lineTo(189, 421);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(193, 429);
 ctx.lineTo(202, 429);
@@ -3930,7 +3925,7 @@ ctx.lineTo(204, 425);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(206, 429);
 ctx.lineTo(211, 429);
@@ -3992,7 +3987,7 @@ ctx.lineTo(211, 414);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(193, 414);
 ctx.lineTo(211, 414);
@@ -4048,7 +4043,7 @@ ctx.lineTo(206, 406);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(198, 406);
 ctx.lineTo(206, 406);
@@ -4110,7 +4105,7 @@ ctx.lineTo(224, 421);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(228, 429);
 ctx.lineTo(237, 429);
@@ -4178,7 +4173,7 @@ ctx.lineTo(239, 425);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(241, 429);
 ctx.lineTo(246, 429);
@@ -4240,7 +4235,7 @@ ctx.lineTo(246, 414);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(228, 414);
 ctx.lineTo(246, 414);
@@ -4296,7 +4291,7 @@ ctx.lineTo(241, 406);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(233, 406);
 ctx.lineTo(241, 406);
@@ -4358,7 +4353,7 @@ ctx.lineTo(206, 391);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(211, 399);
 ctx.lineTo(220, 399);
@@ -4426,7 +4421,7 @@ ctx.lineTo(222, 395);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(224, 399);
 ctx.lineTo(228, 399);
@@ -4488,7 +4483,7 @@ ctx.lineTo(228, 383);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(211, 383);
 ctx.lineTo(228, 383);
@@ -4544,7 +4539,7 @@ ctx.lineTo(224, 376);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(215, 376);
 ctx.lineTo(224, 376);
@@ -4612,7 +4607,7 @@ ctx.lineTo(86, 364);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(82, 364);
 ctx.lineTo(86, 364);
@@ -4668,7 +4663,7 @@ ctx.lineTo(88, 353);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(97, 368);
 ctx.lineTo(115, 368);
@@ -4736,7 +4731,7 @@ ctx.lineTo(104, 357);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(106, 361);
 ctx.lineTo(110, 361);
@@ -4798,7 +4793,7 @@ ctx.lineTo(104, 349);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(99, 349);
 ctx.lineTo(104, 349);
@@ -4860,7 +4855,7 @@ ctx.lineTo(121, 364);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(117, 364);
 ctx.lineTo(121, 364);
@@ -4916,7 +4911,7 @@ ctx.lineTo(123, 353);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(132, 368);
 ctx.lineTo(150, 368);
@@ -4984,7 +4979,7 @@ ctx.lineTo(139, 357);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(141, 361);
 ctx.lineTo(145, 361);
@@ -5046,7 +5041,7 @@ ctx.lineTo(139, 349);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(134, 349);
 ctx.lineTo(139, 349);
@@ -5108,7 +5103,7 @@ ctx.lineTo(104, 334);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(99, 334);
 ctx.lineTo(104, 334);
@@ -5164,7 +5159,7 @@ ctx.lineTo(106, 323);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(115, 338);
 ctx.lineTo(132, 338);
@@ -5232,7 +5227,7 @@ ctx.lineTo(121, 327);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(123, 330);
 ctx.lineTo(128, 330);
@@ -5294,7 +5289,7 @@ ctx.lineTo(121, 319);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(117, 319);
 ctx.lineTo(121, 319);
@@ -5356,7 +5351,7 @@ ctx.lineTo(152, 364);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(154, 368);
 ctx.lineTo(158, 368);
@@ -5418,7 +5413,7 @@ ctx.lineTo(158, 353);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(167, 368);
 ctx.lineTo(185, 368);
@@ -5474,7 +5469,7 @@ ctx.lineTo(180, 361);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(171, 361);
 ctx.lineTo(180, 361);
@@ -5542,7 +5537,7 @@ ctx.lineTo(169, 349);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(171, 353);
 ctx.lineTo(176, 353);
@@ -5604,7 +5599,7 @@ ctx.lineTo(187, 364);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(189, 368);
 ctx.lineTo(193, 368);
@@ -5666,7 +5661,7 @@ ctx.lineTo(193, 353);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(202, 368);
 ctx.lineTo(220, 368);
@@ -5722,7 +5717,7 @@ ctx.lineTo(215, 361);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(206, 361);
 ctx.lineTo(215, 361);
@@ -5790,7 +5785,7 @@ ctx.lineTo(204, 349);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(206, 353);
 ctx.lineTo(211, 353);
@@ -5852,7 +5847,7 @@ ctx.lineTo(169, 334);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(171, 338);
 ctx.lineTo(176, 338);
@@ -5914,7 +5909,7 @@ ctx.lineTo(176, 323);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(185, 338);
 ctx.lineTo(202, 338);
@@ -5970,7 +5965,7 @@ ctx.lineTo(198, 330);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(189, 330);
 ctx.lineTo(198, 330);
@@ -6038,7 +6033,7 @@ ctx.lineTo(187, 319);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(189, 323);
 ctx.lineTo(193, 323);
@@ -6076,7 +6071,7 @@ ctx.lineTo(185, 308);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(115, 308);
 ctx.lineTo(185, 308);
@@ -6162,7 +6157,7 @@ ctx.lineTo(125, 296);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(121, 296);
 ctx.lineTo(125, 296);
@@ -6224,7 +6219,7 @@ ctx.lineTo(145, 300);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(136, 300);
 ctx.lineTo(145, 300);
@@ -6280,7 +6275,7 @@ ctx.lineTo(128, 285);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(132, 292);
 ctx.lineTo(141, 292);
@@ -6330,7 +6325,7 @@ ctx.lineTo(132, 277);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(150, 308);
 ctx.lineTo(185, 308);
@@ -6410,7 +6405,7 @@ ctx.lineTo(160, 296);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(156, 296);
 ctx.lineTo(160, 296);
@@ -6472,7 +6467,7 @@ ctx.lineTo(180, 300);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(171, 300);
 ctx.lineTo(180, 300);
@@ -6528,7 +6523,7 @@ ctx.lineTo(163, 285);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(167, 292);
 ctx.lineTo(176, 292);
@@ -6578,7 +6573,7 @@ ctx.lineTo(167, 277);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(132, 277);
 ctx.lineTo(167, 277);
@@ -6658,7 +6653,7 @@ ctx.lineTo(143, 266);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(139, 266);
 ctx.lineTo(143, 266);
@@ -6720,7 +6715,7 @@ ctx.lineTo(163, 270);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(154, 270);
 ctx.lineTo(163, 270);
@@ -6776,7 +6771,7 @@ ctx.lineTo(145, 255);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(150, 262);
 ctx.lineTo(158, 262);
@@ -6826,7 +6821,7 @@ ctx.lineTo(150, 247);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(290, 490);
 ctx.lineTo(570, 490);
@@ -6906,7 +6901,7 @@ ctx.lineTo(303, 482);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(294, 482);
 ctx.lineTo(303, 482);
@@ -6962,7 +6957,7 @@ ctx.lineTo(311, 482);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(316, 490);
 ctx.lineTo(325, 490);
@@ -7030,7 +7025,7 @@ ctx.lineTo(300, 471);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(303, 474);
 ctx.lineTo(307, 474);
@@ -7092,7 +7087,7 @@ ctx.lineTo(307, 459);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(325, 490);
 ctx.lineTo(360, 490);
@@ -7154,7 +7149,7 @@ ctx.lineTo(338, 482);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(329, 482);
 ctx.lineTo(338, 482);
@@ -7210,7 +7205,7 @@ ctx.lineTo(346, 482);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(351, 490);
 ctx.lineTo(360, 490);
@@ -7278,7 +7273,7 @@ ctx.lineTo(335, 471);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(338, 474);
 ctx.lineTo(342, 474);
@@ -7340,7 +7335,7 @@ ctx.lineTo(342, 459);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(307, 459);
 ctx.lineTo(342, 459);
@@ -7402,7 +7397,7 @@ ctx.lineTo(320, 452);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(311, 452);
 ctx.lineTo(320, 452);
@@ -7458,7 +7453,7 @@ ctx.lineTo(329, 452);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(333, 459);
 ctx.lineTo(342, 459);
@@ -7526,7 +7521,7 @@ ctx.lineTo(318, 440);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(320, 444);
 ctx.lineTo(325, 444);
@@ -7588,7 +7583,7 @@ ctx.lineTo(325, 429);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(360, 490);
 ctx.lineTo(430, 490);
@@ -7650,7 +7645,7 @@ ctx.lineTo(375, 486);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(370, 486);
 ctx.lineTo(375, 486);
@@ -7712,7 +7707,7 @@ ctx.lineTo(381, 482);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(386, 490);
 ctx.lineTo(395, 490);
@@ -7762,7 +7757,7 @@ ctx.lineTo(386, 474);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(368, 474);
 ctx.lineTo(386, 474);
@@ -7836,7 +7831,7 @@ ctx.lineTo(379, 463);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(375, 463);
 ctx.lineTo(379, 463);
@@ -7898,7 +7893,7 @@ ctx.lineTo(410, 486);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(405, 486);
 ctx.lineTo(410, 486);
@@ -7960,7 +7955,7 @@ ctx.lineTo(416, 482);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(421, 490);
 ctx.lineTo(430, 490);
@@ -8010,7 +8005,7 @@ ctx.lineTo(421, 474);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(403, 474);
 ctx.lineTo(421, 474);
@@ -8084,7 +8079,7 @@ ctx.lineTo(414, 463);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(410, 463);
 ctx.lineTo(414, 463);
@@ -8146,7 +8141,7 @@ ctx.lineTo(392, 455);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(388, 455);
 ctx.lineTo(392, 455);
@@ -8208,7 +8203,7 @@ ctx.lineTo(399, 452);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(403, 459);
 ctx.lineTo(412, 459);
@@ -8258,7 +8253,7 @@ ctx.lineTo(403, 444);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(386, 444);
 ctx.lineTo(403, 444);
@@ -8332,7 +8327,7 @@ ctx.lineTo(397, 433);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(392, 433);
 ctx.lineTo(397, 433);
@@ -8394,7 +8389,7 @@ ctx.lineTo(335, 425);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(338, 429);
 ctx.lineTo(342, 429);
@@ -8456,7 +8451,7 @@ ctx.lineTo(349, 425);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(344, 425);
 ctx.lineTo(349, 425);
@@ -8512,7 +8507,7 @@ ctx.lineTo(351, 414);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(333, 414);
 ctx.lineTo(351, 414);
@@ -8580,7 +8575,7 @@ ctx.lineTo(340, 402);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(342, 406);
 ctx.lineTo(346, 406);
@@ -8642,7 +8637,7 @@ ctx.lineTo(370, 425);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(373, 429);
 ctx.lineTo(377, 429);
@@ -8704,7 +8699,7 @@ ctx.lineTo(384, 425);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(379, 425);
 ctx.lineTo(384, 425);
@@ -8760,7 +8755,7 @@ ctx.lineTo(386, 414);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(368, 414);
 ctx.lineTo(386, 414);
@@ -8828,7 +8823,7 @@ ctx.lineTo(375, 402);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(377, 406);
 ctx.lineTo(381, 406);
@@ -8890,7 +8885,7 @@ ctx.lineTo(353, 395);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(355, 399);
 ctx.lineTo(360, 399);
@@ -8952,7 +8947,7 @@ ctx.lineTo(366, 395);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(362, 395);
 ctx.lineTo(366, 395);
@@ -9008,7 +9003,7 @@ ctx.lineTo(368, 383);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(351, 383);
 ctx.lineTo(368, 383);
@@ -9076,7 +9071,7 @@ ctx.lineTo(357, 372);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(360, 376);
 ctx.lineTo(364, 376);
@@ -9138,7 +9133,7 @@ ctx.lineTo(434, 482);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(438, 490);
 ctx.lineTo(447, 490);
@@ -9188,7 +9183,7 @@ ctx.lineTo(438, 474);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(447, 490);
 ctx.lineTo(465, 490);
@@ -9262,7 +9257,7 @@ ctx.lineTo(458, 478);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(454, 478);
 ctx.lineTo(458, 478);
@@ -9324,7 +9319,7 @@ ctx.lineTo(451, 467);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(443, 467);
 ctx.lineTo(451, 467);
@@ -9386,7 +9381,7 @@ ctx.lineTo(469, 482);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(473, 490);
 ctx.lineTo(482, 490);
@@ -9436,7 +9431,7 @@ ctx.lineTo(473, 474);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(482, 490);
 ctx.lineTo(500, 490);
@@ -9510,7 +9505,7 @@ ctx.lineTo(493, 478);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(489, 478);
 ctx.lineTo(493, 478);
@@ -9572,7 +9567,7 @@ ctx.lineTo(486, 467);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(478, 467);
 ctx.lineTo(486, 467);
@@ -9634,7 +9629,7 @@ ctx.lineTo(451, 452);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(456, 459);
 ctx.lineTo(465, 459);
@@ -9684,7 +9679,7 @@ ctx.lineTo(456, 444);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(465, 459);
 ctx.lineTo(482, 459);
@@ -9758,7 +9753,7 @@ ctx.lineTo(475, 448);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(471, 448);
 ctx.lineTo(475, 448);
@@ -9820,7 +9815,7 @@ ctx.lineTo(469, 436);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(460, 436);
 ctx.lineTo(469, 436);
@@ -9882,7 +9877,7 @@ ctx.lineTo(506, 486);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(502, 486);
 ctx.lineTo(506, 486);
@@ -9938,7 +9933,7 @@ ctx.lineTo(508, 474);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(517, 490);
 ctx.lineTo(535, 490);
@@ -10006,7 +10001,7 @@ ctx.lineTo(524, 478);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(526, 482);
 ctx.lineTo(530, 482);
@@ -10068,7 +10063,7 @@ ctx.lineTo(524, 471);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(519, 471);
 ctx.lineTo(524, 471);
@@ -10130,7 +10125,7 @@ ctx.lineTo(541, 486);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(537, 486);
 ctx.lineTo(541, 486);
@@ -10186,7 +10181,7 @@ ctx.lineTo(543, 474);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(552, 490);
 ctx.lineTo(570, 490);
@@ -10254,7 +10249,7 @@ ctx.lineTo(559, 478);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(561, 482);
 ctx.lineTo(565, 482);
@@ -10316,7 +10311,7 @@ ctx.lineTo(559, 471);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(554, 471);
 ctx.lineTo(559, 471);
@@ -10378,7 +10373,7 @@ ctx.lineTo(524, 455);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(519, 455);
 ctx.lineTo(524, 455);
@@ -10434,7 +10429,7 @@ ctx.lineTo(526, 444);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(535, 459);
 ctx.lineTo(552, 459);
@@ -10502,7 +10497,7 @@ ctx.lineTo(541, 448);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(543, 452);
 ctx.lineTo(548, 452);
@@ -10564,7 +10559,7 @@ ctx.lineTo(541, 440);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(537, 440);
 ctx.lineTo(541, 440);
@@ -10626,7 +10621,7 @@ ctx.lineTo(467, 425);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(469, 429);
 ctx.lineTo(473, 429);
@@ -10688,7 +10683,7 @@ ctx.lineTo(473, 414);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(482, 429);
 ctx.lineTo(500, 429);
@@ -10744,7 +10739,7 @@ ctx.lineTo(495, 421);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(486, 421);
 ctx.lineTo(495, 421);
@@ -10812,7 +10807,7 @@ ctx.lineTo(484, 410);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(486, 414);
 ctx.lineTo(491, 414);
@@ -10874,7 +10869,7 @@ ctx.lineTo(502, 425);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(504, 429);
 ctx.lineTo(508, 429);
@@ -10936,7 +10931,7 @@ ctx.lineTo(508, 414);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(517, 429);
 ctx.lineTo(535, 429);
@@ -10992,7 +10987,7 @@ ctx.lineTo(530, 421);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(521, 421);
 ctx.lineTo(530, 421);
@@ -11060,7 +11055,7 @@ ctx.lineTo(519, 410);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(521, 414);
 ctx.lineTo(526, 414);
@@ -11122,7 +11117,7 @@ ctx.lineTo(484, 395);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(486, 399);
 ctx.lineTo(491, 399);
@@ -11184,7 +11179,7 @@ ctx.lineTo(491, 383);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(500, 399);
 ctx.lineTo(517, 399);
@@ -11240,7 +11235,7 @@ ctx.lineTo(513, 391);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(504, 391);
 ctx.lineTo(513, 391);
@@ -11308,7 +11303,7 @@ ctx.lineTo(502, 380);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(504, 383);
 ctx.lineTo(508, 383);
@@ -11346,7 +11341,7 @@ ctx.lineTo(500, 368);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(360, 368);
 ctx.lineTo(500, 368);
@@ -11432,7 +11427,7 @@ ctx.lineTo(366, 357);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(368, 361);
 ctx.lineTo(373, 361);
@@ -11494,7 +11489,7 @@ ctx.lineTo(392, 364);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(388, 364);
 ctx.lineTo(392, 364);
@@ -11556,7 +11551,7 @@ ctx.lineTo(373, 346);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(377, 353);
 ctx.lineTo(386, 353);
@@ -11606,7 +11601,7 @@ ctx.lineTo(377, 338);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(395, 368);
 ctx.lineTo(430, 368);
@@ -11680,7 +11675,7 @@ ctx.lineTo(401, 357);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(403, 361);
 ctx.lineTo(408, 361);
@@ -11742,7 +11737,7 @@ ctx.lineTo(427, 364);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(423, 364);
 ctx.lineTo(427, 364);
@@ -11804,7 +11799,7 @@ ctx.lineTo(408, 346);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(412, 353);
 ctx.lineTo(421, 353);
@@ -11854,7 +11849,7 @@ ctx.lineTo(412, 338);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(377, 338);
 ctx.lineTo(412, 338);
@@ -11928,7 +11923,7 @@ ctx.lineTo(384, 327);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(386, 330);
 ctx.lineTo(390, 330);
@@ -11990,7 +11985,7 @@ ctx.lineTo(410, 334);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(405, 334);
 ctx.lineTo(410, 334);
@@ -12052,7 +12047,7 @@ ctx.lineTo(390, 315);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(395, 323);
 ctx.lineTo(403, 323);
@@ -12102,7 +12097,7 @@ ctx.lineTo(395, 308);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(430, 368);
 ctx.lineTo(500, 368);
@@ -12170,7 +12165,7 @@ ctx.lineTo(443, 361);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(434, 361);
 ctx.lineTo(443, 361);
@@ -12238,7 +12233,7 @@ ctx.lineTo(458, 364);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(460, 368);
 ctx.lineTo(465, 368);
@@ -12300,7 +12295,7 @@ ctx.lineTo(445, 349);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(440, 349);
 ctx.lineTo(445, 349);
@@ -12356,7 +12351,7 @@ ctx.lineTo(447, 338);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(465, 368);
 ctx.lineTo(500, 368);
@@ -12418,7 +12413,7 @@ ctx.lineTo(478, 361);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(469, 361);
 ctx.lineTo(478, 361);
@@ -12486,7 +12481,7 @@ ctx.lineTo(493, 364);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(495, 368);
 ctx.lineTo(500, 368);
@@ -12548,7 +12543,7 @@ ctx.lineTo(480, 349);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(475, 349);
 ctx.lineTo(480, 349);
@@ -12604,7 +12599,7 @@ ctx.lineTo(482, 338);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(447, 338);
 ctx.lineTo(482, 338);
@@ -12666,7 +12661,7 @@ ctx.lineTo(460, 330);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(451, 330);
 ctx.lineTo(460, 330);
@@ -12734,7 +12729,7 @@ ctx.lineTo(475, 334);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(478, 338);
 ctx.lineTo(482, 338);
@@ -12796,7 +12791,7 @@ ctx.lineTo(462, 319);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(458, 319);
 ctx.lineTo(462, 319);
@@ -12852,7 +12847,7 @@ ctx.lineTo(465, 308);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(395, 308);
 ctx.lineTo(465, 308);
@@ -12920,7 +12915,7 @@ ctx.lineTo(408, 300);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(399, 300);
 ctx.lineTo(408, 300);
@@ -12976,7 +12971,7 @@ ctx.lineTo(416, 300);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(421, 308);
 ctx.lineTo(430, 308);
@@ -13044,7 +13039,7 @@ ctx.lineTo(405, 289);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(408, 292);
 ctx.lineTo(412, 292);
@@ -13106,7 +13101,7 @@ ctx.lineTo(412, 277);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(430, 308);
 ctx.lineTo(465, 308);
@@ -13168,7 +13163,7 @@ ctx.lineTo(443, 300);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(434, 300);
 ctx.lineTo(443, 300);
@@ -13224,7 +13219,7 @@ ctx.lineTo(451, 300);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(456, 308);
 ctx.lineTo(465, 308);
@@ -13292,7 +13287,7 @@ ctx.lineTo(440, 289);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(443, 292);
 ctx.lineTo(447, 292);
@@ -13354,7 +13349,7 @@ ctx.lineTo(447, 277);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(412, 277);
 ctx.lineTo(447, 277);
@@ -13416,7 +13411,7 @@ ctx.lineTo(425, 270);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(416, 270);
 ctx.lineTo(425, 270);
@@ -13472,7 +13467,7 @@ ctx.lineTo(434, 270);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(438, 277);
 ctx.lineTo(447, 277);
@@ -13540,7 +13535,7 @@ ctx.lineTo(423, 258);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(425, 262);
 ctx.lineTo(430, 262);
@@ -13602,7 +13597,7 @@ ctx.lineTo(430, 247);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(150, 247);
 ctx.lineTo(430, 247);
@@ -13658,7 +13653,7 @@ ctx.lineTo(154, 239);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(158, 247);
 ctx.lineTo(167, 247);
@@ -13726,7 +13721,7 @@ ctx.lineTo(169, 243);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(171, 247);
 ctx.lineTo(176, 247);
@@ -13788,7 +13783,7 @@ ctx.lineTo(176, 232);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(158, 232);
 ctx.lineTo(176, 232);
@@ -13844,7 +13839,7 @@ ctx.lineTo(171, 224);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(163, 224);
 ctx.lineTo(171, 224);
@@ -13906,7 +13901,7 @@ ctx.lineTo(189, 239);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(193, 247);
 ctx.lineTo(202, 247);
@@ -13974,7 +13969,7 @@ ctx.lineTo(204, 243);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(206, 247);
 ctx.lineTo(211, 247);
@@ -14036,7 +14031,7 @@ ctx.lineTo(211, 232);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(193, 232);
 ctx.lineTo(211, 232);
@@ -14092,7 +14087,7 @@ ctx.lineTo(206, 224);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(198, 224);
 ctx.lineTo(206, 224);
@@ -14154,7 +14149,7 @@ ctx.lineTo(171, 209);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(176, 217);
 ctx.lineTo(185, 217);
@@ -14222,7 +14217,7 @@ ctx.lineTo(187, 213);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(189, 217);
 ctx.lineTo(193, 217);
@@ -14284,7 +14279,7 @@ ctx.lineTo(193, 202);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(176, 202);
 ctx.lineTo(193, 202);
@@ -14340,7 +14335,7 @@ ctx.lineTo(189, 194);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(180, 194);
 ctx.lineTo(189, 194);
@@ -14408,7 +14403,7 @@ ctx.lineTo(224, 239);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(228, 247);
 ctx.lineTo(237, 247);
@@ -14458,7 +14453,7 @@ ctx.lineTo(228, 232);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(237, 247);
 ctx.lineTo(255, 247);
@@ -14532,7 +14527,7 @@ ctx.lineTo(248, 236);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(244, 236);
 ctx.lineTo(248, 236);
@@ -14594,7 +14589,7 @@ ctx.lineTo(241, 224);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(233, 224);
 ctx.lineTo(241, 224);
@@ -14656,7 +14651,7 @@ ctx.lineTo(259, 239);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(263, 247);
 ctx.lineTo(272, 247);
@@ -14706,7 +14701,7 @@ ctx.lineTo(263, 232);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(272, 247);
 ctx.lineTo(290, 247);
@@ -14780,7 +14775,7 @@ ctx.lineTo(283, 236);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(279, 236);
 ctx.lineTo(283, 236);
@@ -14842,7 +14837,7 @@ ctx.lineTo(276, 224);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(268, 224);
 ctx.lineTo(276, 224);
@@ -14904,7 +14899,7 @@ ctx.lineTo(241, 209);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(246, 217);
 ctx.lineTo(255, 217);
@@ -14954,7 +14949,7 @@ ctx.lineTo(246, 202);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(255, 217);
 ctx.lineTo(272, 217);
@@ -15028,7 +15023,7 @@ ctx.lineTo(265, 205);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(261, 205);
 ctx.lineTo(265, 205);
@@ -15090,7 +15085,7 @@ ctx.lineTo(259, 194);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(250, 194);
 ctx.lineTo(259, 194);
@@ -15152,7 +15147,7 @@ ctx.lineTo(191, 183);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(187, 183);
 ctx.lineTo(191, 183);
@@ -15208,7 +15203,7 @@ ctx.lineTo(193, 171);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(202, 186);
 ctx.lineTo(220, 186);
@@ -15276,7 +15271,7 @@ ctx.lineTo(209, 175);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(211, 179);
 ctx.lineTo(215, 179);
@@ -15338,7 +15333,7 @@ ctx.lineTo(209, 167);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(204, 167);
 ctx.lineTo(209, 167);
@@ -15400,7 +15395,7 @@ ctx.lineTo(226, 183);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(222, 183);
 ctx.lineTo(226, 183);
@@ -15456,7 +15451,7 @@ ctx.lineTo(228, 171);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(237, 186);
 ctx.lineTo(255, 186);
@@ -15524,7 +15519,7 @@ ctx.lineTo(244, 175);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(246, 179);
 ctx.lineTo(250, 179);
@@ -15586,7 +15581,7 @@ ctx.lineTo(244, 167);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(239, 167);
 ctx.lineTo(244, 167);
@@ -15648,7 +15643,7 @@ ctx.lineTo(209, 152);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(204, 152);
 ctx.lineTo(209, 152);
@@ -15704,7 +15699,7 @@ ctx.lineTo(211, 141);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(220, 156);
 ctx.lineTo(237, 156);
@@ -15772,7 +15767,7 @@ ctx.lineTo(226, 145);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(228, 149);
 ctx.lineTo(233, 149);
@@ -15834,7 +15829,7 @@ ctx.lineTo(226, 137);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(222, 137);
 ctx.lineTo(226, 137);
@@ -15866,7 +15861,7 @@ ctx.lineTo(220, 126);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(290, 247);
 ctx.lineTo(430, 247);
@@ -15958,7 +15953,7 @@ ctx.lineTo(300, 236);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(296, 236);
 ctx.lineTo(300, 236);
@@ -16020,7 +16015,7 @@ ctx.lineTo(320, 239);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(311, 239);
 ctx.lineTo(320, 239);
@@ -16076,7 +16071,7 @@ ctx.lineTo(303, 224);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(307, 232);
 ctx.lineTo(316, 232);
@@ -16126,7 +16121,7 @@ ctx.lineTo(307, 217);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(325, 247);
 ctx.lineTo(360, 247);
@@ -16206,7 +16201,7 @@ ctx.lineTo(335, 236);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(331, 236);
 ctx.lineTo(335, 236);
@@ -16268,7 +16263,7 @@ ctx.lineTo(355, 239);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(346, 239);
 ctx.lineTo(355, 239);
@@ -16324,7 +16319,7 @@ ctx.lineTo(338, 224);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(342, 232);
 ctx.lineTo(351, 232);
@@ -16374,7 +16369,7 @@ ctx.lineTo(342, 217);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(307, 217);
 ctx.lineTo(342, 217);
@@ -16454,7 +16449,7 @@ ctx.lineTo(318, 205);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(314, 205);
 ctx.lineTo(318, 205);
@@ -16516,7 +16511,7 @@ ctx.lineTo(338, 209);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(329, 209);
 ctx.lineTo(338, 209);
@@ -16572,7 +16567,7 @@ ctx.lineTo(320, 194);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(325, 202);
 ctx.lineTo(333, 202);
@@ -16622,7 +16617,7 @@ ctx.lineTo(325, 186);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(360, 247);
 ctx.lineTo(430, 247);
@@ -16702,7 +16697,7 @@ ctx.lineTo(366, 236);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(368, 239);
 ctx.lineTo(373, 239);
@@ -16764,7 +16759,7 @@ ctx.lineTo(392, 243);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(388, 243);
 ctx.lineTo(392, 243);
@@ -16826,7 +16821,7 @@ ctx.lineTo(373, 224);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(377, 232);
 ctx.lineTo(386, 232);
@@ -16876,7 +16871,7 @@ ctx.lineTo(377, 217);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(395, 247);
 ctx.lineTo(430, 247);
@@ -16950,7 +16945,7 @@ ctx.lineTo(401, 236);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(403, 239);
 ctx.lineTo(408, 239);
@@ -17012,7 +17007,7 @@ ctx.lineTo(427, 243);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(423, 243);
 ctx.lineTo(427, 243);
@@ -17074,7 +17069,7 @@ ctx.lineTo(408, 224);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(412, 232);
 ctx.lineTo(421, 232);
@@ -17124,7 +17119,7 @@ ctx.lineTo(412, 217);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(377, 217);
 ctx.lineTo(412, 217);
@@ -17198,7 +17193,7 @@ ctx.lineTo(384, 205);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(386, 209);
 ctx.lineTo(390, 209);
@@ -17260,7 +17255,7 @@ ctx.lineTo(410, 213);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(405, 213);
 ctx.lineTo(410, 213);
@@ -17322,7 +17317,7 @@ ctx.lineTo(390, 194);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(395, 202);
 ctx.lineTo(403, 202);
@@ -17372,7 +17367,7 @@ ctx.lineTo(395, 186);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(325, 186);
 ctx.lineTo(395, 186);
@@ -17440,7 +17435,7 @@ ctx.lineTo(338, 179);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(329, 179);
 ctx.lineTo(338, 179);
@@ -17508,7 +17503,7 @@ ctx.lineTo(353, 183);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(355, 186);
 ctx.lineTo(360, 186);
@@ -17570,7 +17565,7 @@ ctx.lineTo(340, 167);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(335, 167);
 ctx.lineTo(340, 167);
@@ -17626,7 +17621,7 @@ ctx.lineTo(342, 156);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(360, 186);
 ctx.lineTo(395, 186);
@@ -17688,7 +17683,7 @@ ctx.lineTo(373, 179);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(364, 179);
 ctx.lineTo(373, 179);
@@ -17756,7 +17751,7 @@ ctx.lineTo(388, 183);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(390, 186);
 ctx.lineTo(395, 186);
@@ -17818,7 +17813,7 @@ ctx.lineTo(375, 167);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(370, 167);
 ctx.lineTo(375, 167);
@@ -17874,7 +17869,7 @@ ctx.lineTo(377, 156);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(342, 156);
 ctx.lineTo(377, 156);
@@ -17936,7 +17931,7 @@ ctx.lineTo(355, 149);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(346, 149);
 ctx.lineTo(355, 149);
@@ -18004,7 +17999,7 @@ ctx.lineTo(370, 152);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(373, 156);
 ctx.lineTo(377, 156);
@@ -18066,7 +18061,7 @@ ctx.lineTo(357, 137);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(353, 137);
 ctx.lineTo(357, 137);
@@ -18122,7 +18117,7 @@ ctx.lineTo(360, 126);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(220, 126);
 ctx.lineTo(360, 126);
@@ -18190,7 +18185,7 @@ ctx.lineTo(235, 122);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(230, 122);
 ctx.lineTo(235, 122);
@@ -18252,7 +18247,7 @@ ctx.lineTo(241, 118);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(246, 126);
 ctx.lineTo(255, 126);
@@ -18302,7 +18297,7 @@ ctx.lineTo(246, 111);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(228, 111);
 ctx.lineTo(246, 111);
@@ -18376,7 +18371,7 @@ ctx.lineTo(239, 99);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(235, 99);
 ctx.lineTo(239, 99);
@@ -18438,7 +18433,7 @@ ctx.lineTo(270, 122);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(265, 122);
 ctx.lineTo(270, 122);
@@ -18500,7 +18495,7 @@ ctx.lineTo(276, 118);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(281, 126);
 ctx.lineTo(290, 126);
@@ -18550,7 +18545,7 @@ ctx.lineTo(281, 111);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(263, 111);
 ctx.lineTo(281, 111);
@@ -18624,7 +18619,7 @@ ctx.lineTo(274, 99);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(270, 99);
 ctx.lineTo(274, 99);
@@ -18686,7 +18681,7 @@ ctx.lineTo(252, 92);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(248, 92);
 ctx.lineTo(252, 92);
@@ -18748,7 +18743,7 @@ ctx.lineTo(259, 88);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(263, 95);
 ctx.lineTo(272, 95);
@@ -18798,7 +18793,7 @@ ctx.lineTo(263, 80);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(246, 80);
 ctx.lineTo(263, 80);
@@ -18872,7 +18867,7 @@ ctx.lineTo(257, 69);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(252, 69);
 ctx.lineTo(257, 69);
@@ -18934,7 +18929,7 @@ ctx.lineTo(300, 122);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(303, 126);
 ctx.lineTo(307, 126);
@@ -18996,7 +18991,7 @@ ctx.lineTo(314, 122);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(309, 122);
 ctx.lineTo(314, 122);
@@ -19052,7 +19047,7 @@ ctx.lineTo(316, 111);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(298, 111);
 ctx.lineTo(316, 111);
@@ -19120,7 +19115,7 @@ ctx.lineTo(305, 99);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(307, 103);
 ctx.lineTo(311, 103);
@@ -19182,7 +19177,7 @@ ctx.lineTo(335, 122);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(338, 126);
 ctx.lineTo(342, 126);
@@ -19244,7 +19239,7 @@ ctx.lineTo(349, 122);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(344, 122);
 ctx.lineTo(349, 122);
@@ -19300,7 +19295,7 @@ ctx.lineTo(351, 111);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(333, 111);
 ctx.lineTo(351, 111);
@@ -19368,7 +19363,7 @@ ctx.lineTo(340, 99);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(342, 103);
 ctx.lineTo(346, 103);
@@ -19430,7 +19425,7 @@ ctx.lineTo(318, 92);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(320, 95);
 ctx.lineTo(325, 95);
@@ -19492,7 +19487,7 @@ ctx.lineTo(331, 92);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(327, 92);
 ctx.lineTo(331, 92);
@@ -19548,7 +19543,7 @@ ctx.lineTo(333, 80);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(316, 80);
 ctx.lineTo(333, 80);
@@ -19616,7 +19611,7 @@ ctx.lineTo(322, 69);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(325, 73);
 ctx.lineTo(329, 73);
@@ -19672,7 +19667,7 @@ ctx.lineTo(259, 58);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(263, 65);
 ctx.lineTo(272, 65);
@@ -19740,7 +19735,7 @@ ctx.lineTo(274, 61);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(276, 65);
 ctx.lineTo(281, 65);
@@ -19802,7 +19797,7 @@ ctx.lineTo(281, 50);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(263, 50);
 ctx.lineTo(281, 50);
@@ -19858,7 +19853,7 @@ ctx.lineTo(276, 42);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(268, 42);
 ctx.lineTo(276, 42);
@@ -19920,7 +19915,7 @@ ctx.lineTo(294, 58);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(298, 65);
 ctx.lineTo(307, 65);
@@ -19988,7 +19983,7 @@ ctx.lineTo(309, 61);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(311, 65);
 ctx.lineTo(316, 65);
@@ -20050,7 +20045,7 @@ ctx.lineTo(316, 50);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(298, 50);
 ctx.lineTo(316, 50);
@@ -20106,7 +20101,7 @@ ctx.lineTo(311, 42);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(303, 42);
 ctx.lineTo(311, 42);
@@ -20168,7 +20163,7 @@ ctx.lineTo(276, 27);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(281, 35);
 ctx.lineTo(290, 35);
@@ -20236,7 +20231,7 @@ ctx.lineTo(292, 31);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(294, 35);
 ctx.lineTo(298, 35);
@@ -20298,7 +20293,7 @@ ctx.lineTo(298, 20);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(281, 20);
 ctx.lineTo(298, 20);
@@ -20354,7 +20349,7 @@ ctx.lineTo(294, 12);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 ctx.beginPath();
 ctx.moveTo(285, 12);
 ctx.lineTo(294, 12);
@@ -20380,24 +20375,44 @@ ctx.lineTo(290, 5);
 ctx.closePath();
 ctx.stroke();
 }),
-(function(ctx) {
+(function(ctx, layer) {
 }),
+],
+},
 ];
 
-window.onload = function() {
-	ctx = canvas.getContext('2d'),
-	(function drawFrame () {
-		if(frame_counter == 0 || !no_clear)
+const num_layers = layers.length;
+
+for(var i = 0; i < num_layers; i++) {
+	var cv = document.createElement('canvas');
+	cv.width = canvas.width;
+	cv.height = canvas.height;
+	offscreens.push(cv);
+}
+
+function draw_layer(ctx, layer) {
+		if(layer.frame_counter == 0 || !layer.no_clear)
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
-		repeat_current_frame = false;
-		draw_bkgnd(ctx);
-		(frames[frame_counter])(ctx);
-		draw_frgnd(ctx);
-		if(!repeat_current_frame) {
-			frame_counter = (frame_counter + 1) % num_frames;
-			expressions = {};
+		layer.repeat_current_frame = false;
+		(layer.frames[layer.frame_counter])(ctx, layer);
+		if(!layer.repeat_current_frame) {
+			layer.frame_counter = (layer.frame_counter + 1) % layer.frames.length;
+			layer.expressions = {};
 		}
-		window.requestAnimationFrame(drawFrame, canvas);
+}
+
+window.onload = function() {
+	(function draw_canvas () {
+		for (var i = 0; i < num_layers; i++) {
+			var ctx = offscreens[i].getContext('2d');
+			var layer = layers[i];
+			draw_layer(ctx, layer);
+		}
+		var ctx = canvas.getContext('2d');
+		for (var i = 0; i < num_layers; i++) {
+			ctx.drawImage(offscreens[i], 0, 0);
+		}
+		window.requestAnimationFrame(draw_canvas, canvas);
 	}());
 }
 

@@ -11,12 +11,8 @@
 <canvas id='anim_canvas_1' width='600' height='250'></canvas>
 <script>
 <!--
-var frame_counter = 0;
-const num_frames = 7;
 var canvas = document.getElementById('anim_canvas_1');
-var no_clear = false;
-var repeat_current_frame = false;
-var expressions = {};
+var offscreens = [];
 
 function rect(ctx, x, y, w, h, fill) {
 	ctx.beginPath();
@@ -33,19 +29,27 @@ function line(ctx, x1, y1, x2, y2) {
 	ctx.lineTo(x2, y2);
 	ctx.stroke();
 }
-function draw_bkgnd(ctx) {
+layers = [
+{frame_counter: 0,
+no_clear : false,
+repeat_current_frame : false,
+expressions : {},
+frames: [
+(function(ctx, layer) {
 ctx.save();
 ctx.fillStyle = "white";
 rect(ctx, 0, 0, 600, 250, true);
 ctx.restore();
-}
-
-function draw_frgnd(ctx) {
-}
-
-frames = [
-(function(ctx) {
-if(expressions.linear_range_93 == null) expressions.linear_range_93 = 0;
+}),
+],
+},
+{frame_counter: 0,
+no_clear : false,
+repeat_current_frame : false,
+expressions : {},
+frames: [
+(function(ctx, layer) {
+if(layer.expressions.linear_range_93 == null) layer.expressions.linear_range_93 = 0;
 ctx.save();
 ctx.translate(110, 110);
 line(ctx, 100, 0, -100, 0);
@@ -54,13 +58,13 @@ ctx.save();
 ctx.translate(320, 110);
 line(ctx, 100, 0, -100, 0);
 ctx.restore();
-if(expressions.linear_range_93 < 20) {
-expressions.linear_range_93 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_93 < 20) {
+layer.expressions.linear_range_93 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_94 == null) expressions.linear_range_94 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_94 == null) layer.expressions.linear_range_94 = 0;
 ctx.save();
 ctx.translate(110, 110);
 ctx.beginPath();
@@ -78,13 +82,13 @@ ctx.lineTo(-49, 86);
 ctx.lineTo(-50, -86);
 ctx.fill();
 ctx.restore();
-if(expressions.linear_range_94 < 20) {
-expressions.linear_range_94 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_94 < 20) {
+layer.expressions.linear_range_94 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_95 == null) expressions.linear_range_95 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_95 == null) layer.expressions.linear_range_95 = 0;
 ctx.save();
 ctx.translate(110, 110);
 ctx.beginPath();
@@ -104,13 +108,13 @@ ctx.lineTo(-100, 0);
 ctx.lineTo(0, -100);
 ctx.fill();
 ctx.restore();
-if(expressions.linear_range_95 < 20) {
-expressions.linear_range_95 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_95 < 20) {
+layer.expressions.linear_range_95 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_96 == null) expressions.linear_range_96 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_96 == null) layer.expressions.linear_range_96 = 0;
 ctx.save();
 ctx.translate(110, 110);
 ctx.beginPath();
@@ -132,13 +136,13 @@ ctx.lineTo(-80, -58);
 ctx.lineTo(30, -95);
 ctx.fill();
 ctx.restore();
-if(expressions.linear_range_96 < 20) {
-expressions.linear_range_96 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_96 < 20) {
+layer.expressions.linear_range_96 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_97 == null) expressions.linear_range_97 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_97 == null) layer.expressions.linear_range_97 = 0;
 ctx.save();
 ctx.translate(110, 110);
 ctx.beginPath();
@@ -162,13 +166,13 @@ ctx.lineTo(-50, -86);
 ctx.lineTo(49, -86);
 ctx.fill();
 ctx.restore();
-if(expressions.linear_range_97 < 20) {
-expressions.linear_range_97 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_97 < 20) {
+layer.expressions.linear_range_97 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_98 == null) expressions.linear_range_98 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_98 == null) layer.expressions.linear_range_98 = 0;
 ctx.save();
 ctx.translate(110, 110);
 ctx.beginPath();
@@ -194,13 +198,13 @@ ctx.lineTo(-22, -97);
 ctx.lineTo(62, -78);
 ctx.fill();
 ctx.restore();
-if(expressions.linear_range_98 < 20) {
-expressions.linear_range_98 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_98 < 20) {
+layer.expressions.linear_range_98 += 1;
+layer.repeat_current_frame = true;
 }
 }),
-(function(ctx) {
-if(expressions.linear_range_99 == null) expressions.linear_range_99 = 0;
+(function(ctx, layer) {
+if(layer.expressions.linear_range_99 == null) layer.expressions.linear_range_99 = 0;
 ctx.save();
 ctx.translate(110, 110);
 ctx.beginPath();
@@ -228,27 +232,47 @@ ctx.lineTo(0, -100);
 ctx.lineTo(70, -70);
 ctx.fill();
 ctx.restore();
-if(expressions.linear_range_99 < 20) {
-expressions.linear_range_99 += 1;
-repeat_current_frame = true;
+if(layer.expressions.linear_range_99 < 20) {
+layer.expressions.linear_range_99 += 1;
+layer.repeat_current_frame = true;
 }
 }),
+],
+},
 ];
 
-window.onload = function() {
-	ctx = canvas.getContext('2d'),
-	(function drawFrame () {
-		if(frame_counter == 0 || !no_clear)
+const num_layers = layers.length;
+
+for(var i = 0; i < num_layers; i++) {
+	var cv = document.createElement('canvas');
+	cv.width = canvas.width;
+	cv.height = canvas.height;
+	offscreens.push(cv);
+}
+
+function draw_layer(ctx, layer) {
+		if(layer.frame_counter == 0 || !layer.no_clear)
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
-		repeat_current_frame = false;
-		draw_bkgnd(ctx);
-		(frames[frame_counter])(ctx);
-		draw_frgnd(ctx);
-		if(!repeat_current_frame) {
-			frame_counter = (frame_counter + 1) % num_frames;
-			expressions = {};
+		layer.repeat_current_frame = false;
+		(layer.frames[layer.frame_counter])(ctx, layer);
+		if(!layer.repeat_current_frame) {
+			layer.frame_counter = (layer.frame_counter + 1) % layer.frames.length;
+			layer.expressions = {};
 		}
-		window.requestAnimationFrame(drawFrame, canvas);
+}
+
+window.onload = function() {
+	(function draw_canvas () {
+		for (var i = 0; i < num_layers; i++) {
+			var ctx = offscreens[i].getContext('2d');
+			var layer = layers[i];
+			draw_layer(ctx, layer);
+		}
+		var ctx = canvas.getContext('2d');
+		for (var i = 0; i < num_layers; i++) {
+			ctx.drawImage(offscreens[i], 0, 0);
+		}
+		window.requestAnimationFrame(draw_canvas, canvas);
 	}());
 }
 
