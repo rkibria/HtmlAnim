@@ -750,8 +750,12 @@ void HtmlAnim::write_script(std::ostream& os) const {
 
 	os << R"(
 const num_layers = layers.length;
+
 for(var i = 0; i < num_layers; i++) {
-	offscreens.push(document.createElement('canvas'));
+	var cv = document.createElement('canvas');
+	cv.width = canvas.width;
+	cv.height = canvas.height;
+	offscreens.push(cv);
 }
 
 function draw_layer(ctx, layer) {
