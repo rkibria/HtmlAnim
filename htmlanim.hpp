@@ -743,10 +743,17 @@ void HtmlAnim::write_script(std::ostream& os) const {
 	os << "<script>\n";
 	os << "<!--\n";
 	os << "var canvas = document.getElementById('" << canvas_name << "');\n";
+	os << "var offscreens = [];\n";
+
 	write_definitions(os);
 	write_layers(os);
 
 	os << R"(
+const num_layers = layers.length;
+for(var i = 0; i < num_layers; i++) {
+	offscreens.push(document.createElement('canvas'));
+}
+
 function draw_layer(ctx, layer) {
 		if(layer.frame_counter == 0 || !layer.no_clear)
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -759,12 +766,15 @@ function draw_layer(ctx, layer) {
 }
 
 window.onload = function() {
-	var ctx = canvas.getContext('2d');
 	(function draw_canvas () {
-		const num_layers = layers.length;
 		for (var i = 0; i < num_layers; i++) {
+			var ctx = offscreens[i].getContext('2d');
 			var layer = layers[i];
 			draw_layer(ctx, layer);
+		}
+		var ctx = canvas.getContext('2d');
+		for (var i = 0; i < num_layers; i++) {
+			ctx.drawImage(offscreens[i], 0, 0);
 		}
 		window.requestAnimationFrame(draw_canvas, canvas);
 	}());
