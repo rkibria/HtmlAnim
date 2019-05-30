@@ -51,7 +51,10 @@ void make_index() {
 )";
 	anim.post_text() << footer;
 
-	anim.frame().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
+	anim.frame()
+		.save()
+		.fill_style_linear_gradient(anim.get_width() / 2, 0, anim.get_width() / 2, anim.get_height(), "blue", "white")
+		.rect(0, 0, anim.get_width(), anim.get_height(), true);
 	anim.add_layer();
 
 	const std::vector<std::string> rainbow_cols = { "#9400D3", "#4B0082", "#0000FF", "#00FF00", "#FFFF00", "#FF7F00", "#FF0000" };

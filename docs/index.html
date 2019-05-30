@@ -60,7 +60,10 @@ expressions : {},
 frames: [
 (function(ctx, layer) {
 ctx.save();
-ctx.fillStyle = "white";
+var grd = ctx.createLinearGradient(400, 0, 400, 450);
+grd.addColorStop(0, "blue");
+grd.addColorStop(1, "white");
+ctx.fillStyle = grd;
 rect(ctx, 0, 0, 800, 450, true);
 ctx.restore();
 }),

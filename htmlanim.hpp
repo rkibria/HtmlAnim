@@ -336,6 +336,28 @@ public:
 		{os << "ctx.fillStyle = \"" << style << "\";\n";}
 };
 
+class FillStyleLinearGradient : public Drawable {
+	CoordExpressionValue x0, y0, x1, y1;
+	std::string color1, color2;
+public:
+	explicit FillStyleLinearGradient(const CoordExpressionValue& x0, const CoordExpressionValue& y0,
+		const CoordExpressionValue& x1, const CoordExpressionValue& y1,
+		const std::string& color1, const std::string& color2)
+		: x0{ x0 }, y0{ y0 }, x1{ x1 }, y1{ y1 }, color1{ color1 }, color2{ color2 }
+	{}
+	virtual void draw(std::ostream& os) const override
+	{
+		os << "var grd = ctx.createLinearGradient("
+			<< x0.to_string() << ", "
+			<< y0.to_string() << ", "
+			<< x1.to_string() << ", "
+			<< y1.to_string() << ");\n";
+		os << "grd.addColorStop(0, \"" << color1 << "\");\n";
+		os << "grd.addColorStop(1, \"" << color2 << "\");\n";
+		os << "ctx.fillStyle = grd;\n";
+	}
+};
+
 class StrokeStyle : public Drawable {
 	std::string style;
 public:
@@ -504,6 +526,12 @@ public:
 	Frame& fill_style(const std::string& style)
 	{
 		return add_drawable(std::make_unique<FillStyle>(style));
+	}
+	Frame& fill_style_linear_gradient(const CoordExpressionValue& x0, const CoordExpressionValue& y0,
+		const CoordExpressionValue& x1, const CoordExpressionValue& y1,
+		const std::string& color1, const std::string& color2)
+	{
+		return add_drawable(std::make_unique<FillStyleLinearGradient>(x0, y0, x1, y1, color1, color2));
 	}
 	Frame& stroke_style(const std::string& style)
 	{
