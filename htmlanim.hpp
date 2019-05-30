@@ -682,7 +682,6 @@ void HtmlAnim::write_script(std::ostream& os) const {
 	os << "<script>\n";
 	os << "<!--\n";
 	os << "var frame_counter = 0;\n";
-	os << "const num_frames = " << get_num_frames() << ";\n";
 	os << "var canvas = document.getElementById('" << canvas_name << "');\n";
 	os << "var no_clear = " << (no_clear ? "true" : "false") << ";\n";
 	os << "var repeat_current_frame = false;\n";
@@ -701,7 +700,7 @@ window.onload = function() {
 		repeat_current_frame = false;
 		(frames[frame_counter])(ctx);
 		if(!repeat_current_frame) {
-			frame_counter = (frame_counter + 1) % num_frames;
+			frame_counter = (frame_counter + 1) % frames.length;
 			expressions = {};
 		}
 		window.requestAnimationFrame(drawFrame, canvas);
