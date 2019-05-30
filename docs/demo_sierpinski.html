@@ -20376,6 +20376,11 @@ ctx.closePath();
 ctx.stroke();
 }),
 (function(ctx, layer) {
+if(layer.expressions.linear_range_110 == null) layer.expressions.linear_range_110 = 0;
+if(layer.expressions.linear_range_110 < 120) {
+layer.expressions.linear_range_110 += 1;
+layer.repeat_current_frame = true;
+}
 }),
 ],
 },

@@ -446,6 +446,7 @@ void make_demo_sierpinski() {
 	anim.post_text() << footer;
 	anim.frame().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
 	sierpinski(anim, 10, 490, 560);
+	anim.frame().wait(HtmlAnim::FPS * 2);
 	anim.write_file("demo_sierpinski.html");
 }
 
