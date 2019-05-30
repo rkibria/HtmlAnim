@@ -488,11 +488,7 @@ public:
 		}
 	}
 
-	Frame& wait(SizeType n_frames)
-	{
-		add_coord_expression(std::make_unique<LinearRangeExpression>(0, n_frames, n_frames));
-		return *this;
-	}
+	// DRAWABLE WRAPPERS
 	Frame& arc(const CoordExpressionValue& x, const CoordExpressionValue& y, const CoordExpressionValue& r,
 		const BoolExpressionValue& fill = false, const CoordExpressionValue& sa = 0.0, const CoordExpressionValue& ea = 2 * PI)
 	{
@@ -503,9 +499,22 @@ public:
 	{
 		return add_drawable(std::make_unique<Arc>(p.to_string(), p.to_string_2(), r, sa, ea, fill));
 	}
-	Frame& rect(const CoordExpressionValue& x, const CoordExpressionValue& y, const CoordExpressionValue& w, const CoordExpressionValue& h, const BoolExpressionValue& fill = false)
+	Frame& draw_macro(const std::string& name) {
+		return add_drawable(std::make_unique<DrawMacro>(name));
+	}
+	Frame& fill_style(const std::string& style)
 	{
-		return add_drawable(std::make_unique<Rect>(x, y, w, h, fill));
+		return add_drawable(std::make_unique<FillStyle>(style));
+	}
+	Frame& fill_style_linear_gradient(const CoordExpressionValue& x0, const CoordExpressionValue& y0,
+		const CoordExpressionValue& x1, const CoordExpressionValue& y1,
+		const std::string& color1, const std::string& color2)
+	{
+		return add_drawable(std::make_unique<FillStyleLinearGradient>(x0, y0, x1, y1, color1, color2));
+	}
+	Frame& font(const std::string& font)
+	{
+		return add_drawable(std::make_unique<Font>(font));
 	}
 	Frame& line(CoordType x1, CoordType y1, CoordType x2, CoordType y2)
 	{
@@ -523,15 +532,17 @@ public:
 	{
 		return add_drawable(std::make_unique<LineWidth>(width));
 	}
-	Frame& fill_style(const std::string& style)
+	Frame& rect(const CoordExpressionValue& x, const CoordExpressionValue& y, const CoordExpressionValue& w, const CoordExpressionValue& h, const BoolExpressionValue& fill = false)
 	{
-		return add_drawable(std::make_unique<FillStyle>(style));
+		return add_drawable(std::make_unique<Rect>(x, y, w, h, fill));
 	}
-	Frame& fill_style_linear_gradient(const CoordExpressionValue& x0, const CoordExpressionValue& y0,
-		const CoordExpressionValue& x1, const CoordExpressionValue& y1,
-		const std::string& color1, const std::string& color2)
+	Frame& rotate(const CoordExpressionValue& rot)
 	{
-		return add_drawable(std::make_unique<FillStyleLinearGradient>(x0, y0, x1, y1, color1, color2));
+		return add_drawable(std::make_unique<Rotate>(rot));
+	}
+	Frame& scale(const CoordExpressionValue& x, const CoordExpressionValue& y)
+	{
+		return add_drawable(std::make_unique<Scale>(x, y));
 	}
 	Frame& stroke_style(const std::string& style)
 	{
@@ -541,33 +552,24 @@ public:
 	{
 		return add_drawable(std::make_unique<Text>(x, y, txt.c_str(), fill));
 	}
-	Frame& rotate(const CoordExpressionValue& rot)
-	{
-		return add_drawable(std::make_unique<Rotate>(rot));
-	}
 	Frame& translate(const CoordExpressionValue& x, const CoordExpressionValue& y)
 	{
 		return add_drawable(std::make_unique<Translate>(x, y));
 	}
-	Frame& scale(const CoordExpressionValue& x, const CoordExpressionValue& y)
+	Frame& wait(SizeType n_frames)
 	{
-		return add_drawable(std::make_unique<Scale>(x, y));
-	}
-	Frame& draw_macro(const std::string& name) {
-		return add_drawable(std::make_unique<DrawMacro>(name));
-	}
-	Frame& font(const std::string& font)
-	{
-		return add_drawable(std::make_unique<Font>(font));
+		add_coord_expression(std::make_unique<LinearRangeExpression>(0, n_frames, n_frames));
+		return *this;
 	}
 
-	const CoordExpressionValue& linear_range(CoordType start, CoordType stop, SizeType inc)
-	{
-		return add_coord_expression(std::make_unique<LinearRangeExpression>(start, stop, inc));
-	}
+	// EXPRESSION WRAPPERS
 	const PointExpressionValue& linear_point_range(const Vec2& start, const Vec2& stop, SizeType inc)
 	{
 		return add_point_expression(std::make_unique<LinearPointExpression>(start, stop, inc));
+	}
+	const CoordExpressionValue& linear_range(CoordType start, CoordType stop, SizeType inc)
+	{
+		return add_coord_expression(std::make_unique<LinearRangeExpression>(start, stop, inc));
 	}
 
 	Frame& save();
