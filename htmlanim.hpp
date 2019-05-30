@@ -181,7 +181,7 @@ class LinearRangeExpression : public Expression {
 public:
 	LinearRangeExpression(CoordType start, CoordType stop, SizeType steps)
 		: start{ start }, stop{ stop }, steps{ steps },
-		var_name{ std::string("expressions.linear_range_") + std::to_string(count++) } {}
+		var_name{ std::string("layer.expressions.linear_range_") + std::to_string(count++) } {}
 	virtual void init(std::ostream& os) const override {
 		os << "if(" << var_name.to_string() << " == null) " << var_name.to_string() << " = " << start << ";\n";
 	}
@@ -190,14 +190,14 @@ public:
 			const auto inc = (stop - start) / steps;
 			os << "if(" << var_name.to_string() << " < " << stop << ") {\n"
 				<< var_name.to_string() << " += " << inc << ";\n"
-				<< "repeat_current_frame = true;\n"
+				<< "layer.repeat_current_frame = true;\n"
 				<< "}\n";
 		}
 		else {
 			const auto inc = (start - stop) / steps;
 			os << "if(" << var_name.to_string() << " > " << stop << ") {\n"
 				<< var_name.to_string() << " -= " << inc << ";\n"
-				<< "repeat_current_frame = true;\n"
+				<< "layer.repeat_current_frame = true;\n"
 				<< "}\n";
 		}
 	}
@@ -585,6 +585,7 @@ class Layer {
 private:
 	FrameVector frame_vec;
 	size_t cur_frame;
+	bool no_clear = false;
 
 public:
 	Layer() { clear(); }
@@ -599,6 +600,7 @@ public:
 	auto get_num_frames() const { return frame_vec.size(); }
 	void rewind() { cur_frame = 0; }
 	auto get_frame_index() const { return cur_frame; }
+	void set_no_clear(bool do_clear) { no_clear = do_clear; }
 
 	void next_frame() {
 		if (cur_frame == frame_vec.size() - 1) {
@@ -648,8 +650,6 @@ private:
 	std::stringstream pre_text_stream;
 	std::stringstream post_text_stream;
 
-	bool no_clear = false;
-
 	const std::string canvas_name = "anim_canvas_1";
 
 	LayerVector layer_vec;
@@ -673,8 +673,6 @@ public:
 	auto& css_style() {return css_style_stream;}
 	auto& pre_text() {return pre_text_stream;}
 	auto& post_text() {return post_text_stream;}
-
-	void set_no_clear(bool do_clear) {no_clear = do_clear;}
 
 	auto& layer() { return *layer_vec[cur_layer]; }
 	auto& frame() { return layer().frame(); }
