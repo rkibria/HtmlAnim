@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="Description" content="Generated with HtmlAnim">
+<title>HtmlAnim</title>
+</head>
+<style type='text/css'>body{background-color:#f2f2f2;color:#000000;font-family:sans-serif;font-size:medium;font-weight:normal;}</style>
+<body>
+
+<canvas id='anim_canvas_1' width='800' height='450'></canvas>
+<script>
+<!--
+var canvas = document.getElementById('anim_canvas_1');
+
+function text(ctx, x, y, txt, fill) {
+	ctx.beginPath();
+	if(fill)
+		ctx.fillText(txt, x, y);
+	else
+		ctx.strokeText(txt, x, y);
+}
+
+layers = [
+{
+frame_counter: 0,
+no_clear: false,
+repeat_current_frame: false,
+expressions: {},
+frames: [
+(function(ctx, layer) {
+text(ctx, 20, 20, `1`, true);
+}),
+(function(ctx, layer) {
+text(ctx, 20, 20, `2`, true);
+}),
+(function(ctx, layer) {
+text(ctx, 20, 20, `3`, true);
+}),
+],
+},
+];
+
+function draw_layer(ctx, layer) {
+		if(layer.frame_counter == 0 || !layer.no_clear)
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+		layer.repeat_current_frame = false;
+		(layer.frames[layer.frame_counter])(ctx, layer);
+		if(!layer.repeat_current_frame) {
+			layer.frame_counter = (layer.frame_counter + 1) % layer.frames.length;
+			layer.expressions = {};
+		}
+}
+
+window.onload = function() {
+	var ctx = canvas.getContext('2d');
+	(function draw_canvas () {
+		const num_layers = layers.length;
+		for (var i = 0; i < num_layers; i++) {
+			var layer = layers[i];
+			draw_layer(ctx, layer);
+		}
+		window.requestAnimationFrame(draw_canvas, canvas);
+	}());
+}
+
+//-->
+</script>
+<noscript>JavaScript is required to display this content.</noscript>
+
+
+</body>
+</html>
