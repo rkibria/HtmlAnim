@@ -675,6 +675,14 @@ public:
 	auto& post_text() {return post_text_stream;}
 
 	auto& layer() { return *layer_vec[cur_layer]; }
+
+	void add_layer() {
+		if (cur_layer == layer_vec.size() - 1) {
+			layer_vec.emplace_back(std::make_unique<Layer>());
+		}
+		++cur_layer;
+	}
+
 	auto& frame() { return layer().frame(); }
 	void next_frame() { layer().next_frame(); }
 
