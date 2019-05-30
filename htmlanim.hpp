@@ -581,6 +581,63 @@ Frame& Frame::define_macro(const std::string& name) {
 
 using FrameVector = std::vector<std::unique_ptr<Frame>>;
 
+class Layer {
+private:
+	FrameVector frame_vec;
+	size_t cur_frame;
+
+public:
+	Layer() { clear(); }
+
+	void clear() {
+		frame_vec.clear();
+		cur_frame = 0;
+		frame_vec.emplace_back(std::make_unique<Frame>());
+	}
+
+	auto& frame() { return *frame_vec[cur_frame]; }
+	auto get_num_frames() const { return frame_vec.size(); }
+	void rewind() { cur_frame = 0; }
+	auto get_frame_index() const { return cur_frame; }
+
+	void next_frame() {
+		if (cur_frame == frame_vec.size() - 1) {
+			frame_vec.emplace_back(std::make_unique<Frame>());
+		}
+		++cur_frame;
+	}
+
+	void remove_last_frame() {
+		if (!frame_vec.empty())
+			frame_vec.pop_back();
+	}
+
+	void write_frames(std::ostream& os) const {
+		os << R"({frame_counter: 0,
+no_clear : false,
+repeat_current_frame : false,
+expressions : {},
+)";
+		os << "frames: [\n";
+		for (size_t frame_i = 0; frame_i < frame_vec.size(); ++frame_i) {
+			os << "(function(ctx, layer) {\n";
+			frame_vec[frame_i]->draw(os);
+			os << "}),\n";
+		}
+		os << "],\n";
+		os << "},\n";
+	}
+
+	void write_definitions(DefinitionsStream& ds) const {
+		for (const auto& frm : frame_vec) {
+			frm->define(ds);
+		}
+	}
+
+};
+
+using LayerVector = std::vector<std::unique_ptr<Layer>>;
+
 class HtmlAnim {
 private:
 	std::string title;
@@ -595,22 +652,22 @@ private:
 
 	const std::string canvas_name = "anim_canvas_1";
 
-	FrameVector frame_vec;
-	size_t cur_frame;
+	LayerVector layer_vec;
+	size_t cur_layer;
 
 public:
-	HtmlAnim() {clear();}
+	HtmlAnim() { clear(); }
 	explicit HtmlAnim(const char* title = "HtmlAnim",
 		SizeType width = 1024, SizeType height = 768)
-		: title{title}, width{width}, height{height} {
+		: title{ title }, width{ width }, height{ height }, cur_layer{ 0 } {
 		clear();
 		css_style_stream << "body{background-color:#f2f2f2;color:#000000;font-family:sans-serif;font-size:medium;font-weight:normal;}";
 	}
 
 	void clear() {
-		frame_vec.clear();
-		cur_frame = 0;
-		frame_vec.emplace_back(std::make_unique<Frame>());
+		layer_vec.clear();
+		cur_layer = 0;
+		layer_vec.emplace_back(std::make_unique<Layer>());
 	}
 
 	auto& css_style() {return css_style_stream;}
@@ -619,25 +676,9 @@ public:
 
 	void set_no_clear(bool do_clear) {no_clear = do_clear;}
 
-	auto& frame() {return *frame_vec[cur_frame];}
-
-	auto get_num_frames() const {return frame_vec.size();}
-
-	void rewind() {cur_frame = 0;}
-
-	auto get_frame_index() const {return cur_frame;}
-
-	void next_frame() {
-		if(cur_frame == frame_vec.size() - 1) {
-			frame_vec.emplace_back(std::make_unique<Frame>());
-		}
-		++cur_frame;
-	}
-
-	void remove_last_frame() {
-		if(!frame_vec.empty())
-			frame_vec.pop_back();
-	}
+	auto& layer() { return *layer_vec[cur_layer]; }
+	auto& frame() { return layer().frame(); }
+	void next_frame() { layer().next_frame(); }
 
 	void write_stream(std::ostream&) const;
 	void write_file(const char*) const;
@@ -648,13 +689,27 @@ public:
 private:
 	void write_header(std::ostream& os) const;
 	void write_canvas(std::ostream& os) const;
-
 	void write_script(std::ostream& os) const;
 	void write_definitions(std::ostream& os) const;
-	void write_frames(std::ostream& os) const;
-
+	void write_layers(std::ostream& os) const;
 	void write_footer(std::ostream& os) const;
 };
+
+void HtmlAnim::write_file(const char* path) const {
+	std::ofstream outfile;
+	outfile.open(path);
+	write_stream(outfile);
+	outfile.close();
+}
+
+void HtmlAnim::write_stream(std::ostream& os) const {
+	write_header(os);
+	os << pre_text_stream.str() << "\n";
+	write_canvas(os);
+	write_script(os);
+	os << post_text_stream.str() << "\n";
+	write_footer(os);
+}
 
 void HtmlAnim::write_header(std::ostream& os) const {
 	os << R"(<!doctype html>
@@ -681,29 +736,31 @@ void HtmlAnim::write_canvas(std::ostream& os) const {
 void HtmlAnim::write_script(std::ostream& os) const {
 	os << "<script>\n";
 	os << "<!--\n";
-	os << "var frame_counter = 0;\n";
 	os << "var canvas = document.getElementById('" << canvas_name << "');\n";
-	os << "var no_clear = " << (no_clear ? "true" : "false") << ";\n";
-	os << "var repeat_current_frame = false;\n";
-	os << "var expressions = {};\n";
-
 	write_definitions(os);
-
-	write_frames(os);
+	write_layers(os);
 
 	os << R"(
-window.onload = function() {
-	ctx = canvas.getContext('2d'),
-	(function drawFrame () {
-		if(frame_counter == 0 || !no_clear)
+function draw_layer(ctx, layer) {
+		if(layer.frame_counter == 0 || !layer.no_clear)
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
-		repeat_current_frame = false;
-		(frames[frame_counter])(ctx);
-		if(!repeat_current_frame) {
-			frame_counter = (frame_counter + 1) % frames.length;
-			expressions = {};
+		layer.repeat_current_frame = false;
+		(layer.frames[layer.frame_counter])(ctx, layer);
+		if(!layer.repeat_current_frame) {
+			layer.frame_counter = (layer.frame_counter + 1) % layer.frames.length;
+			layer.expressions = {};
 		}
-		window.requestAnimationFrame(drawFrame, canvas);
+}
+
+window.onload = function() {
+	var ctx = canvas.getContext('2d');
+	(function draw_canvas () {
+		const num_layers = layers.length;
+		for (var i = 0; i < num_layers; i++) {
+			var layer = layers[i];
+			draw_layer(ctx, layer);
+		}
+		window.requestAnimationFrame(draw_canvas, canvas);
 	}());
 }
 
@@ -713,21 +770,19 @@ window.onload = function() {
 )";
 }
 
-void HtmlAnim::write_frames(std::ostream& os) const {
-	os << "frames = [\n";
-	for(size_t frame_i = 0; frame_i < frame_vec.size(); ++frame_i) {
-		os << "(function(ctx) {\n";
-		frame_vec[frame_i]->draw(os);
-		os << "}),\n";
-	}
-	os << "];\n";
-}
-
 void HtmlAnim::write_definitions(std::ostream& os) const {
 	DefinitionsStream ds(os);
-	for(const auto& frm : frame_vec) {
-		frm->define(ds);
+	for(const auto& lyr : layer_vec) {
+		lyr->write_definitions(ds);
 	}
+}
+
+void HtmlAnim::write_layers(std::ostream& os) const {
+	os << "layers = [\n";
+	for (const auto& lyr : layer_vec) {
+		lyr->write_frames(os);
+	}
+	os << "];\n";
 }
 
 void HtmlAnim::write_footer(std::ostream& os) const {
@@ -735,22 +790,6 @@ void HtmlAnim::write_footer(std::ostream& os) const {
 </body>
 </html>
 )";
-}
-
-void HtmlAnim::write_stream(std::ostream& os) const {
-	write_header(os);
-	os << pre_text_stream.str() << "\n";
-	write_canvas(os);
-	write_script(os);
-	os << post_text_stream.str() << "\n";
-	write_footer(os);
-}
-
-void HtmlAnim::write_file(const char* path) const {
-	std::ofstream outfile;
-	outfile.open(path);
-	write_stream(outfile);
-	outfile.close();
 }
 
 } // namespace HtmlAnim
