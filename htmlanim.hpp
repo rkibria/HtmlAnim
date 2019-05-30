@@ -598,8 +598,6 @@ private:
 	FrameVector frame_vec;
 	size_t cur_frame;
 
-	Frame bkgnd_frame, frgnd_frame;
-
 public:
 	HtmlAnim() {clear();}
 	explicit HtmlAnim(const char* title = "HtmlAnim",
@@ -610,9 +608,6 @@ public:
 	}
 
 	void clear() {
-		bkgnd_frame.clear();
-		frgnd_frame.clear();
-
 		frame_vec.clear();
 		cur_frame = 0;
 		frame_vec.emplace_back(std::make_unique<Frame>());
@@ -623,9 +618,6 @@ public:
 	auto& post_text() {return post_text_stream;}
 
 	void set_no_clear(bool do_clear) {no_clear = do_clear;}
-
-	auto& background() {return bkgnd_frame;}
-	auto& foreground() {return frgnd_frame;}
 
 	auto& frame() {return *frame_vec[cur_frame];}
 
@@ -659,7 +651,6 @@ private:
 
 	void write_script(std::ostream& os) const;
 	void write_definitions(std::ostream& os) const;
-	void write_back_and_foreground(std::ostream& os) const;
 	void write_frames(std::ostream& os) const;
 
 	void write_footer(std::ostream& os) const;
@@ -699,7 +690,6 @@ void HtmlAnim::write_script(std::ostream& os) const {
 
 	write_definitions(os);
 
-	write_back_and_foreground(os);
 	write_frames(os);
 
 	os << R"(
@@ -709,9 +699,7 @@ window.onload = function() {
 		if(frame_counter == 0 || !no_clear)
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
 		repeat_current_frame = false;
-		draw_bkgnd(ctx);
 		(frames[frame_counter])(ctx);
-		draw_frgnd(ctx);
 		if(!repeat_current_frame) {
 			frame_counter = (frame_counter + 1) % num_frames;
 			expressions = {};
@@ -726,16 +714,6 @@ window.onload = function() {
 )";
 }
 
-void HtmlAnim::write_back_and_foreground(std::ostream& os) const {
-	os << "function draw_bkgnd(ctx) {\n";
-	bkgnd_frame.draw(os);
-	os << "}\n\n";
-
-	os << "function draw_frgnd(ctx) {\n";
-	frgnd_frame.draw(os);
-	os << "}\n\n";
-}
-
 void HtmlAnim::write_frames(std::ostream& os) const {
 	os << "frames = [\n";
 	for(size_t frame_i = 0; frame_i < frame_vec.size(); ++frame_i) {
@@ -748,8 +726,6 @@ void HtmlAnim::write_frames(std::ostream& os) const {
 
 void HtmlAnim::write_definitions(std::ostream& os) const {
 	DefinitionsStream ds(os);
-	bkgnd_frame.define(ds);
-	frgnd_frame.define(ds);
 	for(const auto& frm : frame_vec) {
 		frm->define(ds);
 	}
