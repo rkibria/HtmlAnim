@@ -205,6 +205,37 @@ public:
 };
 SizeType LinearRangeExpression::count = 0;
 
+class LinearTransformExpression : public Expression {
+	LinearRangeExpression linear_range;
+	CoordExpressionValue transform_var_name;
+	std::string transform;
+	static SizeType count;
+public:
+	LinearTransformExpression(CoordType start, CoordType stop, SizeType steps, const std::string& transform)
+		: linear_range(start, stop, steps),
+		transform_var_name{ std::string("layer.expressions.linear_transform_") + std::to_string(count++) },
+		transform{ transform } {}
+	virtual void init(std::ostream& os) const override {
+		linear_range.init(os);
+		const auto& linear_var = linear_range.value().to_string();
+		std::stringstream transform_expression;
+		for (const auto& c : transform) {
+			if (c == 'X') {
+				transform_expression << linear_var;
+			}
+			else {
+				transform_expression << c;
+			}
+		}
+		os << transform_var_name.to_string() << " = " << transform_expression.str() << ";\n";
+	}
+	virtual void exit(std::ostream& os) const override {
+		linear_range.exit(os);
+	}
+	virtual const ExpressionValue& value() const override { return transform_var_name; }
+};
+SizeType LinearTransformExpression::count = 0;
+
 class LinearPointExpression : public Expression {
 	LinearRangeExpression range_1, range_2;
 	PointExpressionValue point;
@@ -563,13 +594,17 @@ public:
 	}
 
 	// EXPRESSION WRAPPERS
-	const PointExpressionValue& linear_point_range(const Vec2& start, const Vec2& stop, SizeType inc)
+	const CoordExpressionValue& linear_transform(CoordType start, CoordType stop, SizeType steps, const std::string& transform)
 	{
-		return add_point_expression(std::make_unique<LinearPointExpression>(start, stop, inc));
+		return add_coord_expression(std::make_unique<LinearTransformExpression>(start, stop, steps, transform));
 	}
-	const CoordExpressionValue& linear_range(CoordType start, CoordType stop, SizeType inc)
+	const PointExpressionValue& linear_point_range(const Vec2& start, const Vec2& stop, SizeType steps)
 	{
-		return add_coord_expression(std::make_unique<LinearRangeExpression>(start, stop, inc));
+		return add_point_expression(std::make_unique<LinearPointExpression>(start, stop, steps));
+	}
+	const CoordExpressionValue& linear_range(CoordType start, CoordType stop, SizeType steps)
+	{
+		return add_coord_expression(std::make_unique<LinearRangeExpression>(start, stop, steps));
 	}
 
 	Frame& save();
@@ -752,7 +787,7 @@ void HtmlAnim::write_header(std::ostream& os) const {
 <html>
 <head>
 <meta charset="utf-8">
-<meta name="Description" content="Generated with HtmlAnim">
+<meta name="Description" content="Generated with HtmlAnim https://github.com/rkibria/HtmlAnim">
 )";
 
 	os << "<title>" << title << "</title>\n";
