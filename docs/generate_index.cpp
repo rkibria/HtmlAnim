@@ -43,12 +43,6 @@ void make_index() {
 <li><a href="demo_sierpinski.html">Demo - Sierpinski triangle</a></li>
 </ul>
 </p>
-<p>
-<h3>Other</h3>
-<ul>
-<li><a href="doxygen/html/index.html">Doygen-generated API documentation.</a></li>
-</ul>
-</p>
 )";
 	anim.post_text() << footer;
 
