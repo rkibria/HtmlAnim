@@ -70,6 +70,49 @@ function regular_polygon(ctx, x, y, r, edges, fill) {
 	}
 };
 
+class Smiley : public Drawable {
+	CoordExpressionValue x, y, r;
+public:
+	explicit Smiley(const CoordExpressionValue& x, const CoordExpressionValue& y,
+		const CoordExpressionValue& r)
+		: x{ x }, y{ y }, r{ r } {}
+	virtual void define(DefinitionsStream& ds) const override {
+		ds.write_if_undefined(typeid(Smiley).hash_code(), R"(
+function smiley(ctx, x, y, r) {
+ctx.save();
+
+ctx.lineWidth = 0.05 * r;
+ctx.strokeStyle = "black";
+ctx.fillStyle = "yellow";
+
+ctx.beginPath();
+ctx.arc(x, y, r, 0, 2 * Math.PI);
+ctx.fill();
+ctx.stroke();
+
+ctx.fillStyle = "black";
+ctx.beginPath();
+arc(ctx, x - 0.375 * r, y - 0.375 * r, 0.125 * r, 0, 2 * Math.PI);
+ctx.fill();
+
+ctx.beginPath();
+arc(ctx, x + 0.375 * r, y - 0.375 * r, 0.125 * r, 0, 2 * Math.PI);
+ctx.fill();
+
+ctx.beginPath();
+arc(ctx, x, y, 0.625 * r, 0.1 * Math.PI, 0.9 * Math.PI);
+ctx.stroke();
+
+ctx.restore();
+}
+)");
+	}
+	virtual void draw(std::ostream& os) const override {
+		os << "smiley(ctx, " << x.to_string() << ", " << y.to_string()
+			<< ", " << r.to_string() << ");\n";
+	}
+};
+
 class Grid : public Drawable {
 protected:
 	CoordExpressionValue x, y, dx, dy, nx, ny;
@@ -152,11 +195,13 @@ function subdivided_grid(ctx, x, y, dx, dy, nx, ny, sx, sy, bgstyle, fgstyle) {
 auto grid(const CoordExpressionValue& x, const CoordExpressionValue& y,
 	const CoordExpressionValue& dx, const CoordExpressionValue& dy,
 	const CoordExpressionValue& nx, const CoordExpressionValue& ny) {
-	return std::make_unique<Grid>(x, y, dx, dy, nx, ny);};
+	return std::make_unique<Grid>(x, y, dx, dy, nx, ny);
+}
 
 auto regular_polygon(const CoordExpressionValue& x, const CoordExpressionValue& y,
 	const CoordExpressionValue& r, const CoordExpressionValue& edges, const BoolExpressionValue& fill=false) {
-	return std::make_unique<RegularPolygon>(x, y, r, edges, fill);};
+	return std::make_unique<RegularPolygon>(x, y, r, edges, fill);
+}
 
 /// Draw a nx-by-ny grid starting at x,y of dx,dy pixels size with each block subdivided into sx/sy elements
 auto subdivided_grid(const CoordExpressionValue& x, const CoordExpressionValue& y,
@@ -164,6 +209,13 @@ auto subdivided_grid(const CoordExpressionValue& x, const CoordExpressionValue& 
 	const CoordExpressionValue& nx, const CoordExpressionValue& ny,
 	const CoordExpressionValue& sx, const CoordExpressionValue& sy,
 	const std::string& bgstyle = "silver", const std::string& fgstyle = "gray") {
-	return std::make_unique<SubdividedGrid>(x, y, dx, dy, nx, ny, sx, sy, bgstyle, fgstyle);};
+	return std::make_unique<SubdividedGrid>(x, y, dx, dy, nx, ny, sx, sy, bgstyle, fgstyle);
+}
+
+/// Draw a smiley at x,y with radius r
+auto smiley(const CoordExpressionValue& x, const CoordExpressionValue& y,
+	const CoordExpressionValue& r) {
+	return std::make_unique<Smiley>(x, y, r);
+}
 
 } // namespace HtmlAnimShapes
