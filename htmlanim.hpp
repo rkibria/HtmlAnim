@@ -191,6 +191,9 @@ public:
 			os << "if(" << var_name.to_string() << " < " << stop << ") {\n"
 				<< var_name.to_string() << " += " << inc << ";\n"
 				<< "layer.repeat_current_frame = true;\n"
+				<< "}\n"
+				<< "if (" << var_name.to_string() << " > " << stop << ") {\n"
+				<< var_name.to_string() << " = " << stop << ";\n"
 				<< "}\n";
 		}
 		else {
@@ -198,6 +201,9 @@ public:
 			os << "if(" << var_name.to_string() << " > " << stop << ") {\n"
 				<< var_name.to_string() << " -= " << inc << ";\n"
 				<< "layer.repeat_current_frame = true;\n"
+				<< "}\n"
+				<< "if (" << var_name.to_string() << " < " << stop << ") {\n"
+				<< var_name.to_string() << " = " << stop << ";\n"
 				<< "}\n";
 		}
 	}
