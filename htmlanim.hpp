@@ -254,6 +254,25 @@ public:
 	virtual const ExpressionValue& value() const override { return point; }
 };
 
+class LinearTransformPointExpression : public Expression {
+	LinearTransformExpression range_1, range_2;
+	PointExpressionValue point;
+public:
+	LinearTransformPointExpression(const Vec2& start, const Vec2& stop, SizeType steps,
+		const std::string& transform_x, const std::string& transform_y)
+		: range_1( start.x, stop.x, steps, transform_x ), range_2( start.y, stop.y, steps, transform_y ),
+		point(range_1.value().to_string(), range_2.value().to_string()) {}
+	virtual void init(std::ostream& os) const override {
+		range_1.init(os);
+		range_2.init(os);
+	}
+	virtual void exit(std::ostream& os) const override {
+		range_1.exit(os);
+		range_2.exit(os);
+	}
+	virtual const ExpressionValue& value() const override { return point; }
+};
+
 class Arc : public Drawable {
 	CoordExpressionValue x, y, r, sa, ea;
 	BoolExpressionValue fill;
@@ -597,6 +616,12 @@ public:
 	const CoordExpressionValue& linear_transform(CoordType start, CoordType stop, SizeType steps, const std::string& transform)
 	{
 		return add_coord_expression(std::make_unique<LinearTransformExpression>(start, stop, steps, transform));
+	}
+	const PointExpressionValue& linear_transform_point(const Vec2& start, const Vec2& stop, SizeType steps,
+		const std::string& transform_x, const std::string& transform_y)
+	{
+		return add_point_expression(std::make_unique<LinearTransformPointExpression>(start, stop, steps,
+			transform_x, transform_y));
 	}
 	const PointExpressionValue& linear_point_range(const Vec2& start, const Vec2& stop, SizeType steps)
 	{
