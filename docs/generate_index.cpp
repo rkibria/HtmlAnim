@@ -26,6 +26,7 @@ void make_index() {
 )";
 
 	anim.post_text() << R"(
+<p>See docs/generate_index.cpp for the code to generate the above animation.</p>
 <p>
 <h3>Examples</h3>
 <ul>
@@ -55,7 +56,6 @@ void make_index() {
 		.save()
 		.fill_style_linear_gradient(anim.get_width() / 2, 0, anim.get_width() / 2, anim.get_height(), "blue", "white")
 		.rect(0, 0, anim.get_width(), anim.get_height(), true);
-	anim.add_layer();
 
 	const std::vector<std::string> rainbow_clrs = { "#9400D3", "#4B0082", "#0000FF", "#00FF00",
 		"#FFFF00", "#FF7F00", "#FF0000" };
@@ -76,7 +76,7 @@ void make_index() {
 				radius - i * rainbow_linewidth);
 	}
 
-	const auto& text_1_expression = anim.frame().linear_range(-100.0, lower_edge - 10, 1 * HtmlAnim::FPS);
+	const auto& text_1_expression = anim.frame().linear_range(-100.0, lower_edge, 1 * HtmlAnim::FPS);
 	anim.frame()
 		.font("bold 160px sans-serif")
 		.save()
@@ -94,6 +94,15 @@ void make_index() {
 		.fill_style("lightgray")
 		.text(370, text_2_expression, "Anim")
 		.text(370, text_2_expression, "Anim", false);
+
+	const auto smiley_time = 2 * HtmlAnim::FPS;
+	anim.frame()
+		.save()
+		.translate(
+			anim.frame().linear_transform(0, 1, smiley_time, "-30 + 635 * X"),
+			anim.frame().linear_transform(0, 1, smiley_time, "260 - 60 * Math.abs(Math.sin(3 * Math.PI * X))"))
+		.rotate(anim.frame().linear_range(-HtmlAnim::PI, 2 * HtmlAnim::PI, smiley_time))
+		.add_drawable(HtmlAnimShapes::smiley(0, 0, 30));
 
 	anim.write_file("index.html");
 }

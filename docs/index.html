@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<meta name="Description" content="Generated with HtmlAnim">
+<meta name="Description" content="Generated with HtmlAnim https://github.com/rkibria/HtmlAnim">
 <title>HtmlAnim</title>
 </head>
 <style type='text/css'>body{background-color:#f2f2f2;color:#000000;font-family:sans-serif;font-size:medium;font-weight:normal;}</style>
@@ -42,23 +42,35 @@ function text(ctx, x, y, txt, fill) {
 	else
 		ctx.strokeText(txt, x, y);
 }
-layers = [
-{frame_counter: 0,
-no_clear : false,
-repeat_current_frame : false,
-expressions : {},
-frames: [
-(function(ctx, layer) {
+
+function smiley(ctx, x, y, r) {
 ctx.save();
-var grd = ctx.createLinearGradient(400, 0, 400, 450);
-grd.addColorStop(0, "blue");
-grd.addColorStop(1, "white");
-ctx.fillStyle = grd;
-rect(ctx, 0, 0, 800, 450, true);
+
+ctx.lineWidth = 0.05 * r;
+ctx.strokeStyle = "black";
+ctx.fillStyle = "yellow";
+
+ctx.beginPath();
+ctx.arc(x, y, r, 0, 2 * Math.PI);
+ctx.fill();
+ctx.stroke();
+
+ctx.fillStyle = "black";
+ctx.beginPath();
+arc(ctx, x - 0.375 * r, y - 0.375 * r, 0.125 * r, 0, 2 * Math.PI);
+ctx.fill();
+
+ctx.beginPath();
+arc(ctx, x + 0.375 * r, y - 0.375 * r, 0.125 * r, 0, 2 * Math.PI);
+ctx.fill();
+
+ctx.beginPath();
+arc(ctx, x, y, 0.625 * r, 0.1 * Math.PI, 0.9 * Math.PI);
+ctx.stroke();
+
 ctx.restore();
-}),
-],
-},
+}
+layers = [
 {frame_counter: 0,
 no_clear : false,
 repeat_current_frame : false,
@@ -81,6 +93,18 @@ if(layer.expressions.linear_range_12 == null) layer.expressions.linear_range_12 
 if(layer.expressions.linear_range_13 == null) layer.expressions.linear_range_13 = 780;
 if(layer.expressions.linear_range_14 == null) layer.expressions.linear_range_14 = -100;
 if(layer.expressions.linear_range_15 == null) layer.expressions.linear_range_15 = 550;
+if(layer.expressions.linear_range_16 == null) layer.expressions.linear_range_16 = 0;
+layer.expressions.linear_transform_0 = 260 - 60 * Math.abs(Math.sin(3 * Math.PI * layer.expressions.linear_range_16));
+if(layer.expressions.linear_range_17 == null) layer.expressions.linear_range_17 = 0;
+layer.expressions.linear_transform_1 = -30 + 635 * layer.expressions.linear_range_17;
+if(layer.expressions.linear_range_18 == null) layer.expressions.linear_range_18 = -3.14159;
+ctx.save();
+var grd = ctx.createLinearGradient(400, 0, 400, 450);
+grd.addColorStop(0, "blue");
+grd.addColorStop(1, "white");
+ctx.fillStyle = grd;
+rect(ctx, 0, 0, 800, 450, true);
+ctx.restore();
 ctx.save();
 ctx.strokeStyle = "#9400D3";
 ctx.lineWidth = 31;
@@ -131,69 +155,143 @@ ctx.fillStyle = "lightgray";
 text(ctx, 370, layer.expressions.linear_range_15, `Anim`, true);
 text(ctx, 370, layer.expressions.linear_range_15, `Anim`, false);
 ctx.restore();
+ctx.save();
+ctx.translate(layer.expressions.linear_transform_1, layer.expressions.linear_transform_0);
+ctx.rotate(layer.expressions.linear_range_18);
+smiley(ctx, 0, 0, 30);
+ctx.restore();
 if(layer.expressions.linear_range_0 < 300) {
 layer.expressions.linear_range_0 += 1;
 layer.repeat_current_frame = true;
+}
+if (layer.expressions.linear_range_0 > 300) {
+layer.expressions.linear_range_0 = 300;
 }
 if(layer.expressions.linear_range_1 > 500) {
 layer.expressions.linear_range_1 -= 1.55556;
 layer.repeat_current_frame = true;
 }
+if (layer.expressions.linear_range_1 < 500) {
+layer.expressions.linear_range_1 = 500;
+}
 if(layer.expressions.linear_range_2 < 300) {
 layer.expressions.linear_range_2 += 1;
 layer.repeat_current_frame = true;
+}
+if (layer.expressions.linear_range_2 > 300) {
+layer.expressions.linear_range_2 = 300;
 }
 if(layer.expressions.linear_range_3 > 500) {
 layer.expressions.linear_range_3 -= 1.55556;
 layer.repeat_current_frame = true;
 }
+if (layer.expressions.linear_range_3 < 500) {
+layer.expressions.linear_range_3 = 500;
+}
 if(layer.expressions.linear_range_4 < 300) {
 layer.expressions.linear_range_4 += 1;
 layer.repeat_current_frame = true;
+}
+if (layer.expressions.linear_range_4 > 300) {
+layer.expressions.linear_range_4 = 300;
 }
 if(layer.expressions.linear_range_5 > 500) {
 layer.expressions.linear_range_5 -= 1.55556;
 layer.repeat_current_frame = true;
 }
+if (layer.expressions.linear_range_5 < 500) {
+layer.expressions.linear_range_5 = 500;
+}
 if(layer.expressions.linear_range_6 < 300) {
 layer.expressions.linear_range_6 += 1;
 layer.repeat_current_frame = true;
+}
+if (layer.expressions.linear_range_6 > 300) {
+layer.expressions.linear_range_6 = 300;
 }
 if(layer.expressions.linear_range_7 > 500) {
 layer.expressions.linear_range_7 -= 1.55556;
 layer.repeat_current_frame = true;
 }
+if (layer.expressions.linear_range_7 < 500) {
+layer.expressions.linear_range_7 = 500;
+}
 if(layer.expressions.linear_range_8 < 300) {
 layer.expressions.linear_range_8 += 1;
 layer.repeat_current_frame = true;
+}
+if (layer.expressions.linear_range_8 > 300) {
+layer.expressions.linear_range_8 = 300;
 }
 if(layer.expressions.linear_range_9 > 500) {
 layer.expressions.linear_range_9 -= 1.55556;
 layer.repeat_current_frame = true;
 }
+if (layer.expressions.linear_range_9 < 500) {
+layer.expressions.linear_range_9 = 500;
+}
 if(layer.expressions.linear_range_10 < 300) {
 layer.expressions.linear_range_10 += 1;
 layer.repeat_current_frame = true;
+}
+if (layer.expressions.linear_range_10 > 300) {
+layer.expressions.linear_range_10 = 300;
 }
 if(layer.expressions.linear_range_11 > 500) {
 layer.expressions.linear_range_11 -= 1.55556;
 layer.repeat_current_frame = true;
 }
+if (layer.expressions.linear_range_11 < 500) {
+layer.expressions.linear_range_11 = 500;
+}
 if(layer.expressions.linear_range_12 < 300) {
 layer.expressions.linear_range_12 += 1;
 layer.repeat_current_frame = true;
+}
+if (layer.expressions.linear_range_12 > 300) {
+layer.expressions.linear_range_12 = 300;
 }
 if(layer.expressions.linear_range_13 > 500) {
 layer.expressions.linear_range_13 -= 1.55556;
 layer.repeat_current_frame = true;
 }
-if(layer.expressions.linear_range_14 < 370) {
-layer.expressions.linear_range_14 += 7.83333;
+if (layer.expressions.linear_range_13 < 500) {
+layer.expressions.linear_range_13 = 500;
+}
+if(layer.expressions.linear_range_14 < 380) {
+layer.expressions.linear_range_14 += 8;
 layer.repeat_current_frame = true;
+}
+if (layer.expressions.linear_range_14 > 380) {
+layer.expressions.linear_range_14 = 380;
 }
 if(layer.expressions.linear_range_15 > 380) {
 layer.expressions.linear_range_15 -= 2.83333;
 layer.repeat_current_frame = true;
+}
+if (layer.expressions.linear_range_15 < 380) {
+layer.expressions.linear_range_15 = 380;
+}
+if(layer.expressions.linear_range_16 < 1) {
+layer.expressions.linear_range_16 += 0.00833333;
+layer.repeat_current_frame = true;
+}
+if (layer.expressions.linear_range_16 > 1) {
+layer.expressions.linear_range_16 = 1;
+}
+if(layer.expressions.linear_range_17 < 1) {
+layer.expressions.linear_range_17 += 0.00833333;
+layer.repeat_current_frame = true;
+}
+if (layer.expressions.linear_range_17 > 1) {
+layer.expressions.linear_range_17 = 1;
+}
+if(layer.expressions.linear_range_18 < 6.28319) {
+layer.expressions.linear_range_18 += 0.0785398;
+layer.repeat_current_frame = true;
+}
+if (layer.expressions.linear_range_18 > 6.28319) {
+layer.expressions.linear_range_18 = 6.28319;
 }
 }),
 ],
@@ -239,6 +337,7 @@ window.onload = function() {
 </script>
 <noscript>JavaScript is required to display this content.</noscript>
 
+<p>See docs/generate_index.cpp for the code to generate the above animation.</p>
 <p>
 <h3>Examples</h3>
 <ul>
