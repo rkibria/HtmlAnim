@@ -33,3 +33,6 @@
 
 # Visual Studio files
 .vs
+out
+*.ilk
+*.pdb
