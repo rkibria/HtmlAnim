@@ -638,6 +638,14 @@ public:
 			transform_x, transform_y));
 	}
 
+	// TWEENING EXPRESSIONS
+	const CoordExpressionValue& linear_tween(CoordType begin, CoordType change, CoordType duration_sec)
+	{
+		const auto steps = static_cast<SizeType>(duration_sec * FPS);
+		const auto transform = std::to_string(change) + " * X + " + std::to_string(begin);
+		return add_coord_expression(std::make_unique<LinearTransformExpression>(0, 1, steps, transform));
+	}
+
 	Frame& save();
 	Frame& define_macro(const std::string& name);
 };
