@@ -619,6 +619,14 @@ public:
 	}
 
 	// EXPRESSION WRAPPERS
+	const PointExpressionValue& linear_point_range(const Vec2& start, const Vec2& stop, SizeType steps)
+	{
+		return add_point_expression(std::make_unique<LinearPointExpression>(start, stop, steps));
+	}
+	const CoordExpressionValue& linear_range(CoordType start, CoordType stop, SizeType steps)
+	{
+		return add_coord_expression(std::make_unique<LinearRangeExpression>(start, stop, steps));
+	}
 	const CoordExpressionValue& linear_transform(CoordType start, CoordType stop, SizeType steps, const std::string& transform)
 	{
 		return add_coord_expression(std::make_unique<LinearTransformExpression>(start, stop, steps, transform));
@@ -628,14 +636,6 @@ public:
 	{
 		return add_point_expression(std::make_unique<LinearTransformPointExpression>(start, stop, steps,
 			transform_x, transform_y));
-	}
-	const PointExpressionValue& linear_point_range(const Vec2& start, const Vec2& stop, SizeType steps)
-	{
-		return add_point_expression(std::make_unique<LinearPointExpression>(start, stop, steps));
-	}
-	const CoordExpressionValue& linear_range(CoordType start, CoordType stop, SizeType steps)
-	{
-		return add_coord_expression(std::make_unique<LinearRangeExpression>(start, stop, steps));
 	}
 
 	Frame& save();
