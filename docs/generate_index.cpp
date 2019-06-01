@@ -70,7 +70,7 @@ void make_index() {
 				radius - i * rainbow_linewidth);
 	}
 
-	const auto& text_1_expression = anim.frame().linear_range(-100.0, lower_edge, 1 * HtmlAnim::FPS);
+	const auto& text_1_expression = anim.frame().ease_in(-100.0, 100 + lower_edge, 1.25);
 	anim.frame()
 		.font("bold 160px sans-serif")
 		.save()
@@ -80,7 +80,7 @@ void make_index() {
 		.text(10, text_1_expression, "Html")
 		.text(10, text_1_expression, "Html", false);
 
-	const auto& text_2_expression = anim.frame().linear_range(height + 100, lower_edge, 1 * HtmlAnim::FPS);
+	const auto& text_2_expression = anim.frame().ease_out(height + 100, -170, 1.25);
 	anim.frame()
 		.save()
 		.line_width(5)
@@ -89,13 +89,13 @@ void make_index() {
 		.text(370, text_2_expression, "Anim")
 		.text(370, text_2_expression, "Anim", false);
 
-	const auto smiley_time = 2 * HtmlAnim::FPS;
+	const auto smiley_sec = 2;
 	anim.frame()
 		.save()
 		.translate(
-			anim.frame().linear_transform(0, 1, smiley_time, "-30 + 635 * X"),
-			anim.frame().linear_transform(0, 1, smiley_time, "260 - 60 * Math.abs(Math.sin(3 * Math.PI * X))"))
-		.rotate(anim.frame().linear_range(-HtmlAnim::PI, 2 * HtmlAnim::PI, smiley_time))
+			anim.frame().ease_out(-30, 635, smiley_sec, 3),
+			anim.frame().linear_transform(0, 1, smiley_sec * HtmlAnim::FPS, "260 - (1 - X) * 150 * Math.abs(Math.sin(3 * Math.PI * X))"))
+		.rotate(anim.frame().ease_out(-HtmlAnim::PI, 3 * HtmlAnim::PI, smiley_sec))
 		.add_drawable(HtmlAnimShapes::smiley(0, 0, 30));
 
 	anim.write_file("index.html");
