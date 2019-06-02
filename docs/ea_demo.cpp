@@ -16,13 +16,10 @@ class Solution {
 public:
 	Solution() = delete;
 
-	Solution(size_t s) : fitness{ 0 }, gene_vec(s, 0) {
+	Solution(size_t s) : fitness{ 0 }, gene_vec(s * 2, 0) {
 	}
 
 	auto get_fitness() const { return fitness; }
-
-	auto n_genes() const { return gene_vec.size(); }
-	const auto get_gene(size_t i) const { return gene_vec[i]; }
 
 	void randomize(GeneType lb, GeneType ub) {
 		const auto seed = static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count());
@@ -49,7 +46,20 @@ public:
 			const auto y = gene_vec[2 * i + 1];
 			anim.frame().arc(x + 300, y + 300, radius);
 		}
+	}
 
+	void evaluate() {
+		fitness = 0;
+		for (size_t i = 0; i < gene_vec.size() / 2; ++i) {
+			const auto x1 = gene_vec[2 * i];
+			const auto y1 = gene_vec[2 * i + 1];
+			for (size_t j = i + 1; j < gene_vec.size() / 2; ++j) {
+				const auto x2 = gene_vec[2 * i];
+				const auto y2 = gene_vec[2 * i + 1];
+				const auto d = (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1);
+				fitness += abs(d - (radius + radius));
+			}
+		}
 	}
 };
 
@@ -71,14 +81,19 @@ public:
 		sol_vec.resize(s);
 		for (size_t i = 0; i < s; ++i) {
 			sol_vec[i] = std::make_unique<Solution>(n_genes);
-			sol_vec[i]->randomize(0, 100);
+			sol_vec[i]->randomize(-100, 100);
 		}
 	}
 
 	const auto& get_best() const { return sol_vec.front(); }
 
 	void evolve() {
-		sol_vec[0]->mutate(0, 1);
+		for (auto& sol : sol_vec) {
+			sol->mutate(0, 1);
+			sol->evaluate();
+		}
+		sort_by_fitness();
+
 	}
 
 };
@@ -88,7 +103,7 @@ int main() {
 	anim.frame().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
 	anim.add_layer();
 
-	Population pop(100, 2 * 10);
+	Population pop(100, 10);
 
 	for (int i = 0; i < 50; ++i) {
 		pop.get_best()->draw(anim);
