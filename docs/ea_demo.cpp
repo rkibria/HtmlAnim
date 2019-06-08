@@ -13,6 +13,10 @@ class Solution {
 	GeneVector gene_vec;
 	const GeneType radius = 10.0;
 
+	auto get_random_seed() {
+		return static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count());
+	}
+
 public:
 	Solution() = delete;
 
@@ -22,8 +26,7 @@ public:
 	auto get_fitness() const { return fitness; }
 
 	void randomize(GeneType lb, GeneType ub) {
-		const auto seed = static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count());
-		std::default_random_engine generator(seed);
+		std::default_random_engine generator(get_random_seed());
 		std::uniform_real_distribution<GeneType> distribution(lb, ub);
 		for (auto& g : gene_vec) {
 			g = distribution(generator);
@@ -31,8 +34,7 @@ public:
 	}
 
 	void mutate(GeneType mean, GeneType stddev) {
-		const auto seed = static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count());
-		std::default_random_engine generator(seed);
+		std::default_random_engine generator(get_random_seed());
 		std::normal_distribution<GeneType> distribution(mean, stddev);
 		for (auto& g : gene_vec) {
 			const auto r = distribution(generator);
