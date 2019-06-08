@@ -3,6 +3,7 @@
 
 #include <chrono>
 #include <random>
+#include <algorithm>
 
 using FitnessType = double;
 using GeneType = double;
@@ -18,9 +19,14 @@ class Solution {
 	}
 
 public:
-	Solution() = delete;
+	Solution() : fitness{ 0 } {}
 
 	Solution(size_t s) : fitness{ 0 }, gene_vec(s * 2, 0) {
+	}
+
+	Solution& operator=(const Solution& rhs) {
+		gene_vec = rhs.gene_vec;
+		return *this;
 	}
 
 	auto get_fitness() const { return fitness; }
@@ -55,10 +61,14 @@ public:
 		for (size_t i = 0; i < gene_vec.size() / 2; ++i) {
 			const auto x1 = gene_vec[2 * i];
 			const auto y1 = gene_vec[2 * i + 1];
+
+			//fitness += x1 * x1 + y1 * y1;
+
 			for (size_t j = i + 1; j < gene_vec.size() / 2; ++j) {
-				const auto x2 = gene_vec[2 * i];
-				const auto y2 = gene_vec[2 * i + 1];
+				const auto x2 = gene_vec[2 * j];
+				const auto y2 = gene_vec[2 * j + 1];
 				const auto d = (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1);
+
 				fitness += abs(d - (radius + radius));
 			}
 		}
@@ -71,11 +81,28 @@ class Population {
 	SolutionVector sol_vec;
 
 	void sort_by_fitness() {
-
+		std::sort(sol_vec.begin(), sol_vec.end(),
+			[](const auto& sol1, const auto& sol2) {
+				return sol1->get_fitness() < sol2->get_fitness(); 
+			});
 	}
 
 	void evaluate() {
+		for (auto& sol : sol_vec) {
+			sol->evaluate();
+		}
+	}
 
+	void mutate() {
+		for (auto& sol : sol_vec) {
+			sol->mutate(0, 0.5);
+		}
+	}
+
+	void randomize() {
+		for (auto& sol : sol_vec) {
+			sol->randomize(-100, 100);
+		}
 	}
 
 public:
@@ -83,19 +110,25 @@ public:
 		sol_vec.resize(s);
 		for (size_t i = 0; i < s; ++i) {
 			sol_vec[i] = std::make_unique<Solution>(n_genes);
-			sol_vec[i]->randomize(-100, 100);
 		}
+		randomize();
+		evaluate();
+		sort_by_fitness();
 	}
 
-	const auto& get_best() const { return sol_vec.front(); }
+	const auto& get_best() const {
+		return sol_vec.front();
+	}
 
 	void evolve() {
-		for (auto& sol : sol_vec) {
-			sol->mutate(0, 1);
-			sol->evaluate();
+		for (size_t i = 0; i < sol_vec.size() / 2; ++i) {
+			*sol_vec[sol_vec.size() / 2 + i] = *sol_vec[i];
 		}
-		sort_by_fitness();
 
+		mutate();
+
+		evaluate();
+		sort_by_fitness();
 	}
 
 };
@@ -105,15 +138,25 @@ int main() {
 	anim.frame().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
 	anim.add_layer();
 
-	Population pop(100, 10);
+	Population pop(10000, 10);
 
-	for (int i = 0; i < 50; ++i) {
-		pop.get_best()->draw(anim);
+	FitnessType best_fitness = 0;
+	Solution best_solution;
+
+	for (int i = 0; i < 100; ++i) {
+		const auto& current_best = pop.get_best();
+		if (i == 0 || current_best->get_fitness() < best_fitness) {
+			best_fitness = current_best->get_fitness();
+			best_solution = *current_best;
+		}
+		best_solution.draw(anim);
 
 		anim.frame().wait(HtmlAnim::FPS / 10);
 		anim.next_frame();
 
-		pop.evolve();
+		for (int j = 0; j < 10; ++j) {
+			pop.evolve();
+		}
 	}
 
 	anim.write_file("evolution.html");
