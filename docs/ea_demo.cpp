@@ -19,9 +19,9 @@ class Solution {
 	}
 
 public:
-	Solution() : fitness(1, 0) {}
+	Solution() : fitness(2, 0) {}
 
-	Solution(size_t s) : fitness(1, 0), gene_vec(s * 2, 0) {
+	Solution(size_t s) : fitness(2, 0), gene_vec(s * 2, 0) {
 	}
 
 	Solution& operator=(const Solution& rhs) {
@@ -58,19 +58,23 @@ public:
 	}
 
 	void evaluate() {
-		fitness[0] = 0;
+		std::fill(fitness.begin(), fitness.end(), 0);
 		for (size_t i = 0; i < gene_vec.size() / 2; ++i) {
 			const auto x1 = gene_vec[2 * i];
 			const auto y1 = gene_vec[2 * i + 1];
 
-			//fitness += x1 * x1 + y1 * y1;
+			fitness[1] += x1 * x1 + y1 * y1;
 
 			for (size_t j = i + 1; j < gene_vec.size() / 2; ++j) {
 				const auto x2 = gene_vec[2 * j];
 				const auto y2 = gene_vec[2 * j + 1];
-				const auto d = (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1);
+				const auto sq_d = (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1);
+				const auto d = sqrt(sq_d);
 
-				fitness[0] += abs(d - (radius + radius));
+				const auto touch_d = 2 * radius;
+				if (d < touch_d) {
+					fitness[0] += touch_d - d;
+				}
 			}
 		}
 	}
@@ -96,7 +100,7 @@ class Population {
 
 	void mutate() {
 		for (auto& sol : sol_vec) {
-			sol->mutate(0, 0.5);
+			sol->mutate(0, 5);
 		}
 	}
 
@@ -137,14 +141,15 @@ public:
 int main() {
 	HtmlAnim::HtmlAnim anim("Evolutionary algorithm", 600, 600);
 	anim.frame().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
+	anim.frame().font("bold 30px sans-serif");
 	anim.add_layer();
 
-	Population pop(10000, 10);
+	Population pop(1000, 10);
 
 	FitnessType best_fitness;
 	Solution best_solution;
 
-	for (int i = 0; i < 100; ++i) {
+	for (int i = 0; i < 50; ++i) {
 		const auto& current_best = pop.get_best();
 		if (i == 0 || current_best->get_fitness() < best_fitness) {
 			best_fitness = current_best->get_fitness();
@@ -152,10 +157,13 @@ int main() {
 		}
 		best_solution.draw(anim);
 
-		anim.frame().wait(HtmlAnim::FPS / 10);
+		anim.frame()
+			.font("bold 30px sans-serif")
+			.text(30, 30, std::to_string(i))
+			.wait(HtmlAnim::FPS / 10);
 		anim.next_frame();
 
-		for (int j = 0; j < 10; ++j) {
+		for (int j = 0; j < 1; ++j) {
 			pop.evolve();
 		}
 	}
