@@ -10,6 +10,7 @@ using GeneType = double;
 using GeneVector = std::vector<GeneType>;
 
 class Solution {
+	static constexpr size_t fitness_size = 3;
 	FitnessType fitness;
 	GeneVector gene_vec;
 	const GeneType radius = 10.0;
@@ -19,14 +20,13 @@ class Solution {
 	}
 
 public:
-	Solution() : fitness(2, 0) {}
+	Solution() : fitness(fitness_size, 0) {}
 
-	Solution(size_t s) : fitness(2, 0), gene_vec(s * 2, 0) {
+	Solution(size_t s) : fitness(fitness_size, 0), gene_vec(s * 2, 0) {
 	}
 
 	Solution& operator=(const Solution& rhs) {
 		gene_vec = rhs.gene_vec;
-		// fitness = rhs.fitness;
 		return *this;
 	}
 
@@ -53,7 +53,7 @@ public:
 		for (size_t i = 0; i < gene_vec.size() / 2; ++i) {
 			const auto x = gene_vec[2 * i];
 			const auto y = gene_vec[2 * i + 1];
-			anim.frame().arc(x + 300, y + 300, radius);
+			anim.frame().arc(x + 300, y + 300, radius, true);
 		}
 	}
 
@@ -63,8 +63,10 @@ public:
 			const auto x1 = gene_vec[2 * i];
 			const auto y1 = gene_vec[2 * i + 1];
 
-			fitness[1] += x1 * x1 + y1 * y1;
+			const auto d_origin = x1 * x1 + y1 * y1;
 
+			double overlap = 0.0;
+			double d_others = 0.0;
 			for (size_t j = i + 1; j < gene_vec.size() / 2; ++j) {
 				const auto x2 = gene_vec[2 * j];
 				const auto y2 = gene_vec[2 * j + 1];
@@ -73,9 +75,18 @@ public:
 
 				const auto touch_d = 2 * radius;
 				if (d < touch_d) {
-					fitness[0] += touch_d - d;
+					overlap += touch_d - d;
+				}
+				else {
+					d_others += d;
 				}
 			}
+
+			fitness[0] = overlap;
+			fitness[1] = d_others;
+			fitness[2] = d_origin;
+
+			//fitness[0] = overlap + d_origin;
 		}
 	}
 };
@@ -106,7 +117,7 @@ class Population {
 
 	void randomize() {
 		for (auto& sol : sol_vec) {
-			sol->randomize(-100, 100);
+			sol->randomize(-300, 300);
 		}
 	}
 
@@ -141,15 +152,15 @@ public:
 int main() {
 	HtmlAnim::HtmlAnim anim("Evolutionary algorithm", 600, 600);
 	anim.frame().save().fill_style("white").rect(0, 0, anim.get_width(), anim.get_height(), true);
-	anim.frame().font("bold 30px sans-serif");
+	anim.frame().add_drawable(HtmlAnimShapes::subdivided_grid(0, 0, 50, 50, 12, 12, 5, 5));
 	anim.add_layer();
 
-	Population pop(1000, 10);
+	Population pop(10000, 10);
 
 	FitnessType best_fitness;
 	Solution best_solution;
 
-	for (int i = 0; i < 50; ++i) {
+	for (int i = 0; i < 500; ++i) {
 		const auto& current_best = pop.get_best();
 		if (i == 0 || current_best->get_fitness() < best_fitness) {
 			best_fitness = current_best->get_fitness();
@@ -159,8 +170,8 @@ int main() {
 
 		anim.frame()
 			.font("bold 30px sans-serif")
-			.text(30, 30, std::to_string(i))
-			.wait(HtmlAnim::FPS / 10);
+			.text(30, 30, std::to_string(i));
+			//.wait(HtmlAnim::FPS / 10);
 		anim.next_frame();
 
 		for (int j = 0; j < 1; ++j) {
