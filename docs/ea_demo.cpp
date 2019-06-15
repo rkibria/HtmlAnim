@@ -5,7 +5,7 @@
 #include <random>
 #include <algorithm>
 
-using FitnessType = double;
+using FitnessType = std::vector<double>;
 using GeneType = double;
 using GeneVector = std::vector<GeneType>;
 
@@ -19,17 +19,18 @@ class Solution {
 	}
 
 public:
-	Solution() : fitness{ 0 } {}
+	Solution() : fitness(1, 0) {}
 
-	Solution(size_t s) : fitness{ 0 }, gene_vec(s * 2, 0) {
+	Solution(size_t s) : fitness(1, 0), gene_vec(s * 2, 0) {
 	}
 
 	Solution& operator=(const Solution& rhs) {
 		gene_vec = rhs.gene_vec;
+		// fitness = rhs.fitness;
 		return *this;
 	}
 
-	auto get_fitness() const { return fitness; }
+	const auto& get_fitness() const { return fitness; }
 
 	void randomize(GeneType lb, GeneType ub) {
 		std::default_random_engine generator(get_random_seed());
@@ -57,7 +58,7 @@ public:
 	}
 
 	void evaluate() {
-		fitness = 0;
+		fitness[0] = 0;
 		for (size_t i = 0; i < gene_vec.size() / 2; ++i) {
 			const auto x1 = gene_vec[2 * i];
 			const auto y1 = gene_vec[2 * i + 1];
@@ -69,7 +70,7 @@ public:
 				const auto y2 = gene_vec[2 * j + 1];
 				const auto d = (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1);
 
-				fitness += abs(d - (radius + radius));
+				fitness[0] += abs(d - (radius + radius));
 			}
 		}
 	}
@@ -140,7 +141,7 @@ int main() {
 
 	Population pop(10000, 10);
 
-	FitnessType best_fitness = 0;
+	FitnessType best_fitness;
 	Solution best_solution;
 
 	for (int i = 0; i < 100; ++i) {
