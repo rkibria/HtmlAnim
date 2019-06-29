@@ -10,7 +10,7 @@ using GeneType = double;
 using GeneVector = std::vector<GeneType>;
 
 class Solution {
-	static constexpr size_t fitness_size = 3;
+	static constexpr size_t fitness_size = 2;
 	FitnessType fitness;
 	GeneVector gene_vec;
 	const GeneType radius = 10.0;
@@ -63,11 +63,11 @@ public:
 			const auto x1 = gene_vec[2 * i];
 			const auto y1 = gene_vec[2 * i + 1];
 
-			const auto d_origin = x1 * x1 + y1 * y1;
-
 			double overlap = 0.0;
 			double d_others = 0.0;
-			for (size_t j = i + 1; j < gene_vec.size() / 2; ++j) {
+			for (size_t j = 0; j < gene_vec.size() / 2; ++j) {
+				if (i == j)
+					continue;
 				const auto x2 = gene_vec[2 * j];
 				const auto y2 = gene_vec[2 * j + 1];
 				const auto sq_d = (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1);
@@ -82,11 +82,8 @@ public:
 				}
 			}
 
-			fitness[0] = overlap;
-			fitness[1] = d_others;
-			fitness[2] = d_origin;
-
-			//fitness[0] = overlap + d_origin;
+			fitness[0] += overlap;
+			fitness[1] += d_others;
 		}
 	}
 };
@@ -109,9 +106,9 @@ class Population {
 		}
 	}
 
-	void mutate() {
+	void mutate(GeneType stddev) {
 		for (auto& sol : sol_vec) {
-			sol->mutate(0, 5);
+			sol->mutate(0, stddev);
 		}
 	}
 
@@ -136,12 +133,12 @@ public:
 		return sol_vec.front();
 	}
 
-	void evolve() {
+	void evolve(int gen) {
 		for (size_t i = 0; i < sol_vec.size() / 2; ++i) {
 			*sol_vec[sol_vec.size() / 2 + i] = *sol_vec[i];
 		}
 
-		mutate();
+		mutate(0.5 + 10.0 / (static_cast<GeneType>(gen) + 1));
 
 		evaluate();
 		sort_by_fitness();
@@ -155,12 +152,12 @@ int main() {
 	anim.frame().add_drawable(HtmlAnimShapes::subdivided_grid(0, 0, 50, 50, 12, 12, 5, 5));
 	anim.add_layer();
 
-	Population pop(10000, 10);
+	Population pop(10000, 20);
 
 	FitnessType best_fitness;
 	Solution best_solution;
 
-	for (int i = 0; i < 500; ++i) {
+	for (int i = 0; i < 2000; ++i) {
 		const auto& current_best = pop.get_best();
 		if (i == 0 || current_best->get_fitness() < best_fitness) {
 			best_fitness = current_best->get_fitness();
@@ -174,9 +171,7 @@ int main() {
 			//.wait(HtmlAnim::FPS / 10);
 		anim.next_frame();
 
-		for (int j = 0; j < 1; ++j) {
-			pop.evolve();
-		}
+		pop.evolve(i);
 	}
 
 	anim.write_file("evolution.html");
