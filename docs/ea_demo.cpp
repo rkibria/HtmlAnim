@@ -157,7 +157,9 @@ int main() {
 	FitnessType best_fitness;
 	Solution best_solution;
 
-	for (int i = 0; i < 2000; ++i) {
+	const auto start_time = std::chrono::high_resolution_clock::now();
+
+	for (int i = 0; i < 500; ++i) {
 		const auto& current_best = pop.get_best();
 		if (i == 0 || current_best->get_fitness() < best_fitness) {
 			best_fitness = current_best->get_fitness();
@@ -165,10 +167,15 @@ int main() {
 		}
 		best_solution.draw(anim);
 
+		const auto current_time = std::chrono::high_resolution_clock::now();
+		std::chrono::duration<double> elapsed = current_time - start_time;
+
 		anim.frame()
 			.font("bold 30px sans-serif")
-			.text(30, 30, std::to_string(i));
-			//.wait(HtmlAnim::FPS / 10);
+			.text(30, 30, "Gen " + std::to_string(i))
+			.font("bold 14px sans-serif")
+			.text(30, 50, std::to_string(i / elapsed.count()) + " gens/sec");
+		//.wait(HtmlAnim::FPS / 10);
 		anim.next_frame();
 
 		pop.evolve(0.5 + 10.0 / (static_cast<GeneType>(i) + 1));
