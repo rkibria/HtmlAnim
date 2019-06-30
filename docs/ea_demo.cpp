@@ -133,12 +133,12 @@ public:
 		return sol_vec.front();
 	}
 
-	void evolve(int gen) {
+	void evolve(GeneType stddev) {
 		for (size_t i = 0; i < sol_vec.size() / 2; ++i) {
 			*sol_vec[sol_vec.size() / 2 + i] = *sol_vec[i];
 		}
 
-		mutate(0.5 + 10.0 / (static_cast<GeneType>(gen) + 1));
+		mutate(stddev);
 
 		evaluate();
 		sort_by_fitness();
@@ -171,7 +171,7 @@ int main() {
 			//.wait(HtmlAnim::FPS / 10);
 		anim.next_frame();
 
-		pop.evolve(i);
+		pop.evolve(0.5 + 10.0 / (static_cast<GeneType>(i) + 1));
 	}
 
 	anim.write_file("evolution.html");
