@@ -15,10 +15,13 @@ class Solution {
 	static constexpr size_t fitness_size = 2;
 	FitnessType fitness;
 	GeneVector gene_vec;
-	const GeneType radius = 10.0;
 
 	auto get_random_seed() {
 		return static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count());
+	}
+
+	GeneType radius(size_t i) const {
+		return static_cast<GeneType>(i/5 + 1) * 5.0;
 	}
 
 public:
@@ -55,7 +58,7 @@ public:
 		for (size_t i = 0; i < gene_vec.size() / 2; ++i) {
 			const auto x = gene_vec[2 * i];
 			const auto y = gene_vec[2 * i + 1];
-			anim.frame().arc(x + 300, y + 300, radius, true);
+			anim.frame().arc(x + 300, y + 300, radius(i), true);
 		}
 	}
 
@@ -75,7 +78,7 @@ public:
 				const auto sq_d = (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1);
 				const auto d = sqrt(sq_d);
 
-				const auto touch_d = 2 * radius;
+				const auto touch_d = radius(i) + radius(j);
 				if (d < touch_d) {
 					overlap += touch_d - d;
 				}
@@ -168,7 +171,7 @@ int main() {
 	anim.frame().add_drawable(HtmlAnimShapes::subdivided_grid(0, 0, 50, 50, 12, 12, 5, 5));
 	anim.add_layer();
 
-	Population pop(10000, 20);
+	Population pop(10000, 25);
 
 	FitnessType best_fitness;
 	Solution best_solution;
@@ -181,7 +184,7 @@ int main() {
 		return ss.str();
 	};
 
-	for (int i = 0; i < 1000; ++i) {
+	for (int i = 0; i < 2000; ++i) {
 		const auto& current_best = pop.get_best();
 		if (i == 0 || current_best->get_fitness() < best_fitness) {
 			best_fitness = current_best->get_fitness();
@@ -191,13 +194,15 @@ int main() {
 
 		const std::chrono::duration<double> elapsed = std::chrono::high_resolution_clock::now() - start_time;
 
-		anim.frame()
-			.font("bold 30px sans-serif")
-			.text(30, 30, "Gen " + std::to_string(i))
-			.font("bold 14px sans-serif")
-			.text(30, 50, round_time(i / elapsed.count()) + " gens/sec");
-		//.wait(HtmlAnim::FPS / 10);
-		anim.next_frame();
+		if (i % 10 == 0) {
+			anim.frame()
+				.font("bold 30px sans-serif")
+				.text(30, 30, "Gen " + std::to_string(i))
+				.font("bold 14px sans-serif")
+				.text(30, 50, round_time(i / elapsed.count()) + " gens/sec")
+				.wait(HtmlAnim::FPS / 10);
+			anim.next_frame();
+		}
 
 		pop.evolve(0.5 + 10.0 / (static_cast<GeneType>(i) + 1));
 	}
