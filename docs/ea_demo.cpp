@@ -4,6 +4,7 @@
 #include <chrono>
 #include <random>
 #include <algorithm>
+#include <iomanip>
 
 using FitnessType = std::vector<double>;
 using GeneType = double;
@@ -159,7 +160,13 @@ int main() {
 
 	const auto start_time = std::chrono::high_resolution_clock::now();
 
-	for (int i = 0; i < 500; ++i) {
+	auto round_time = [](double t) {
+		std::ostringstream ss;
+		ss << std::fixed << std::setprecision(1) << t;
+		return ss.str();
+	};
+
+	for (int i = 0; i < 50; ++i) {
 		const auto& current_best = pop.get_best();
 		if (i == 0 || current_best->get_fitness() < best_fitness) {
 			best_fitness = current_best->get_fitness();
@@ -167,14 +174,13 @@ int main() {
 		}
 		best_solution.draw(anim);
 
-		const auto current_time = std::chrono::high_resolution_clock::now();
-		std::chrono::duration<double> elapsed = current_time - start_time;
+		const std::chrono::duration<double> elapsed = std::chrono::high_resolution_clock::now() - start_time;
 
 		anim.frame()
 			.font("bold 30px sans-serif")
 			.text(30, 30, "Gen " + std::to_string(i))
 			.font("bold 14px sans-serif")
-			.text(30, 50, std::to_string(i / elapsed.count()) + " gens/sec");
+			.text(30, 50, round_time(i / elapsed.count()) + " gens/sec");
 		//.wait(HtmlAnim::FPS / 10);
 		anim.next_frame();
 
