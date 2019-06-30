@@ -5,6 +5,7 @@
 #include <random>
 #include <algorithm>
 #include <iomanip>
+#include <thread>
 
 using FitnessType = std::vector<double>;
 using GeneType = double;
@@ -94,6 +95,8 @@ using SolutionVector = std::vector<std::unique_ptr<Solution>>;
 class Population {
 	SolutionVector sol_vec;
 
+	static const constexpr size_t n_threads = 8;
+
 	void sort_by_fitness() {
 		std::sort(sol_vec.begin(), sol_vec.end(),
 			[](const auto& sol1, const auto& sol2) {
@@ -101,15 +104,28 @@ class Population {
 			});
 	}
 
-	void evaluate() {
-		for (auto& sol : sol_vec) {
-			sol->evaluate();
+	void evaluate(GeneType mutation_stddev) {
+		std::vector<std::thread> threads;
+		if (sol_vec.size() % n_threads != 0) {
+			throw std::exception("Population size must be multiple of n_threads");
 		}
-	}
 
-	void mutate(GeneType stddev) {
-		for (auto& sol : sol_vec) {
-			sol->mutate(0, stddev);
+		auto evaluate_thread = [this, mutation_stddev](size_t start_i, size_t end_i) {
+			for (size_t i = start_i; i < end_i; ++i) {
+				auto& sol = sol_vec[i];
+				sol->mutate(0, mutation_stddev);
+				sol->evaluate();
+			}
+		};
+
+		const auto batch_size = sol_vec.size() / n_threads;
+		for (size_t i = 0; i < n_threads; ++i) {
+			threads.push_back(std::thread(evaluate_thread, i * batch_size, (i + 1) * batch_size));
+		}
+
+		for (auto& t : threads) {
+			if (t.joinable())
+				t.join();
 		}
 	}
 
@@ -126,7 +142,7 @@ public:
 			sol_vec[i] = std::make_unique<Solution>(n_genes);
 		}
 		randomize();
-		evaluate();
+		evaluate(0);
 		sort_by_fitness();
 	}
 
@@ -139,9 +155,8 @@ public:
 			*sol_vec[sol_vec.size() / 2 + i] = *sol_vec[i];
 		}
 
-		mutate(stddev);
+		evaluate(stddev);
 
-		evaluate();
 		sort_by_fitness();
 	}
 
@@ -166,7 +181,7 @@ int main() {
 		return ss.str();
 	};
 
-	for (int i = 0; i < 50; ++i) {
+	for (int i = 0; i < 1000; ++i) {
 		const auto& current_best = pop.get_best();
 		if (i == 0 || current_best->get_fitness() < best_fitness) {
 			best_fitness = current_best->get_fitness();
