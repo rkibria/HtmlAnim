@@ -57,11 +57,9 @@ public:
 
 using SolutionVector = std::vector<std::unique_ptr<SolutionBase>>;
 
-template<class T>
+template<class T, size_t n_threads>
 class Population {
 	SolutionVector sol_vec;
-
-	static const constexpr size_t n_threads = 8;
 
 	void sort_by_fitness() {
 		std::sort(sol_vec.begin(), sol_vec.end(),

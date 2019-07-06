@@ -63,7 +63,7 @@ int main() {
 	anim.frame().add_drawable(HtmlAnimShapes::subdivided_grid(0, 0, 50, 50, 12, 12, 5, 5));
 	anim.add_layer();
 
-	Population<CirclesSolution> pop(10000);
+	Population<CirclesSolution, 8> pop(10000);
 
 	FitnessType best_fitness;
 	CirclesSolution best_solution;
