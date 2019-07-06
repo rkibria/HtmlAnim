@@ -55,10 +55,9 @@ public:
 	virtual void evaluate() = 0;
 };
 
-using SolutionVector = std::vector<std::unique_ptr<SolutionBase>>;
-
 template<class T, size_t n_threads>
 class Population {
+	using SolutionVector = std::vector<std::unique_ptr<SolutionBase>>;
 	SolutionVector sol_vec;
 
 	void sort_by_fitness() {
@@ -68,7 +67,7 @@ class Population {
 			});
 	}
 
-	void evaluate(GeneType mutation_stddev) {
+	void mutate_and_evaluate(GeneType mutation_stddev) {
 		std::vector<std::thread> threads;
 		if (sol_vec.size() % n_threads != 0) {
 			throw std::exception("Population size must be multiple of n_threads");
@@ -93,6 +92,12 @@ class Population {
 		}
 	}
 
+	void procreate() {
+		for (size_t i = 0; i < sol_vec.size() / 2; ++i) {
+			*sol_vec[sol_vec.size() / 2 + i] = *sol_vec[i];
+		}
+	}
+
 public:
 	Population(size_t s) {
 		sol_vec.resize(s);
@@ -100,7 +105,7 @@ public:
 			sol_vec[i] = std::make_unique<T>();
 		}
 
-		evaluate(0);
+		mutate_and_evaluate(0);
 		sort_by_fitness();
 	}
 
@@ -109,11 +114,8 @@ public:
 	}
 
 	void evolve(GeneType stddev) {
-		for (size_t i = 0; i < sol_vec.size() / 2; ++i) {
-			*sol_vec[sol_vec.size() / 2 + i] = *sol_vec[i];
-		}
-
-		evaluate(stddev);
+		procreate();
+		mutate_and_evaluate(stddev);
 		sort_by_fitness();
 	}
 
