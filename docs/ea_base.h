@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <iomanip>
 #include <thread>
+#include <stdexcept>
 
 namespace EA {
 
@@ -70,7 +71,7 @@ class Population {
 	void mutate_and_evaluate(GeneType mutation_stddev) {
 		std::vector<std::thread> threads;
 		if (sol_vec.size() % n_threads != 0) {
-			throw std::exception("Population size must be multiple of n_threads");
+			throw std::invalid_argument("Population size must be multiple of n_threads");
 		}
 
 		auto evaluate_thread = [this, mutation_stddev](size_t start_i, size_t end_i) {
