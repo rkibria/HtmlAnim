@@ -6,37 +6,24 @@
 using namespace EA;
 
 class CirclesSolution : public SolutionBase {
-	static constexpr size_t fitness_size = 1;
-	static constexpr size_t num_circles = 1;
+	static constexpr size_t radius = 5;
 
-	GeneType radius(size_t i) const {
-		return static_cast<GeneType>(i/5 + 1) * 5.0;
-	}
-
-	auto get_x(size_t i) const { return gene_vec[2 * i]; }
-	auto get_y(size_t i) const { return gene_vec[2 * i + 1]; }
+	auto get_x() const { return gene_vec[0]; }
+	auto get_y() const { return gene_vec[1]; }
 
 public:
 	static constexpr int range = 300;
 
-	CirclesSolution() : SolutionBase(fitness_size, num_circles * 2) {
+	CirclesSolution() : SolutionBase(1, 2) {
 		randomize(-range, range);
 	}
 
 	void draw(HtmlAnim::HtmlAnim& anim) const {
-		for (size_t i = 0; i < gene_vec.size() / 2; ++i) {
-			anim.frame().arc(get_x(i) + range, get_y(i) + range, radius(i), true);
-		}
+		anim.frame().arc(get_x() + range, get_y() + range, radius, true);
 	}
 
 	virtual void evaluate() override {
-		std::fill(fitness.begin(), fitness.end(), 0);
-
-		for (size_t i = 0; i < gene_vec.size() / 2; ++i) {
-			const auto x1 = get_x(i);
-			const auto y1 = get_y(i);
-			fitness[0] += x1 * x1 + y1 * y1;
-		}
+		fitness[0] = get_x() * get_x() + get_y() * get_y();
 	}
 };
 
