@@ -106,7 +106,7 @@ public:
 			sol_vec[i] = std::make_unique<T>();
 		}
 
-		mutate_and_evaluate(0);
+		mutate_and_evaluate(10E-99);
 		sort_by_fitness();
 	}
 
