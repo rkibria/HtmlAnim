@@ -110,6 +110,14 @@ public:
 		sort_by_fitness();
 	}
 
+	const auto size() const {
+		return sol_vec.size();
+	}
+
+	const auto get(size_t i) const {
+		return dynamic_cast<T*>(sol_vec[i].get());
+	}
+
 	const auto& get_best() const {
 		return sol_vec.front();
 	}

@@ -46,7 +46,13 @@ int main() {
 			best_fitness = current_best->get_fitness();
 			best_solution = dynamic_cast<CirclesSolution&>(*current_best);
 		}
-		best_solution.draw(anim);
+
+		for (size_t j = 0; j < pop.size(); ++j) {
+			pop.get(j)->draw(anim);
+		}
+
+		// best_solution.draw(anim);
+
 		anim.next_frame();
 
 		pop.evolve(10);
