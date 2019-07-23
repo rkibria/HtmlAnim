@@ -145,7 +145,9 @@ class CoordExpressionValue : public ExpressionValue {
 public:
 	CoordExpressionValue(const std::string& v) : ExpressionValue{ v } {}
 	CoordExpressionValue(const int& v) : ExpressionValue{ std::to_string(v) } {}
-	// CoordExpressionValue(const SizeType& v) : ExpressionValue{ std::to_string(v) } {}
+#ifdef _WIN64
+	CoordExpressionValue(const SizeType& v) : ExpressionValue{ std::to_string(v) } {}
+#endif
 	CoordExpressionValue(const size_t& v) : ExpressionValue{ std::to_string(v) } {}
 	CoordExpressionValue(const CoordType& v) : ExpressionValue{ std::to_string(v) } {}
 };
