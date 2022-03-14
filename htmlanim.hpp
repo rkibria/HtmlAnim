@@ -820,6 +820,8 @@ private:
 	size_t cur_layer{ 0 };
 	size_t num_surfaces{ 0 };
 
+	std::string output_file;
+
 public:
 	HtmlAnim() { clear(); }
 	explicit HtmlAnim(const char* title = "HtmlAnim",
@@ -827,6 +829,13 @@ public:
 		: title{ title }, width{ width }, height{ height } {
 		clear();
 		css_style_stream << "body{background-color:#f2f2f2;color:#000000;font-family:sans-serif;font-size:medium;font-weight:normal;}";
+	}
+
+	~HtmlAnim()
+	{
+		if(!output_file.empty()) {
+			write_file(output_file.c_str());
+		}
 	}
 
 	void set_num_surfaces(size_t n) { num_surfaces = n; }
@@ -858,6 +867,8 @@ public:
 
 	auto get_width() const {return width;}
 	auto get_height() const {return height;}
+
+	void write_file_on_destruct(const std::string& file) { output_file = file; }
 
 private:
 	void write_header(std::ostream& os) const;
